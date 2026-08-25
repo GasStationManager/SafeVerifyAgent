@@ -7,11 +7,13 @@ It never proves anything. A claimed proof is a conjunction — sound only
 if every obligation is sound — so it is unsound if *some* obligation is
 unsound, and the job is to find one or run out of ways to look.
 
-> **Status: early.** The checker ensemble, the verdict types and the
-> aggregation are implemented and tested; the agent stages have prompts
-> and skeleton drivers, and the pipeline has **not been run end to end
-> against a real claim**. No number in this repo has been measured
-> against a public corpus. See [DESIGN.md §10](DESIGN.md#10-status).
+> **Status: early, but it runs.** The pipeline has been driven end to end
+> on a matched pair (`examples/`): a Lean specification that drifts by one
+> token, and its honest twin. Both elaborate clean with identical axioms,
+> so no checker separates them — the coherence rung refuted the drifted
+> one and left the control alone. That is n = 1 per arm, same-family, and
+> eleven lines long. No number here has been measured against a public
+> corpus. See [DESIGN.md §10](DESIGN.md#10-status).
 
 ## Why this exists
 
@@ -111,12 +113,31 @@ python3 -c "from safeverifyagent import checkers; print(checkers.available())"
 ## Use
 
 ```bash
-# Claude Code: render one task per obligation, dispatch them in parallel
-python3 drivers/claude_code/render_tasks.py Claimed.lean --rung check
+# Each worker is its own `claude -p` agent. No API key needed, and the
+# check rung gets real tools — it actually runs Lean.
+python3 drivers/audit.py Claimed.lean --model claude-cli --json
 
-# API driver (needs `pip install anthropic`)
-python3 drivers/api_driver.py Claimed.lean --intake bare --json
+# Any other one-shot CLI, for a cross-family audit (see DESIGN.md §7)
+python3 drivers/audit.py Claimed.lean --model cli:codex:codex:exec:{prompt}
+
+# The Messages API (needs `pip install anthropic`). Text-only, so the
+# check rung is REFUSED rather than faked — see below.
+python3 drivers/audit.py Claimed.lean --model api:claude-opus-5
+
+# Or dispatch by hand from an interactive Claude Code session
+python3 drivers/claude_code/render_tasks.py Claimed.lean --rung check
 ```
+
+### Who may audit what
+
+Tool capability decides which rungs an adapter may serve, and it is
+enforced rather than documented. The check rung has to *run* the
+ensemble; a text-only model asked to do that will not fail, it will
+describe a checker run that never happened. So a tool-less adapter is
+refused the check rung and that rung is reported as never-run, on the
+same principle as an ensemble member that could not vote.
+
+That is why `claude-cli` is the default and the SDK adapter is not.
 
 ## What a verdict means
 

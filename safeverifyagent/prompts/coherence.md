@@ -78,3 +78,21 @@ that flags nothing both fail that check.
 - **You do not price the claim.** Whether this becomes an accept, a
   rejection or an escalation is decided by the aggregator. File what you
   found.
+
+## Report format
+
+Do your reasoning in prose first — it is the artifact your verdict is
+traceable to, and a verdict with no reconstruction behind it is worth
+nothing. Then end your reply with a single fenced JSON block, and put
+nothing after it:
+
+```json
+{"outcome": "clean | refuted | undetermined",
+ "evidence": "stated | informal",
+ "note": "one or two lines: the argument, or the reason it fails, or what stopped you"}
+```
+
+`outcome` and `evidence` must be exactly one of the listed words. If the
+block is missing or unparseable the harness records `undetermined` — your
+reading is then lost, and the obligation is reported as unaudited rather
+than as clean.

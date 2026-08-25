@@ -57,3 +57,22 @@ independent kernel, or a human) may close formally.
 A `refuted`/`formal` is different and allowed: a unanimous reject with
 transcripts is evidence the claim is broken, not evidence that a checker
 was right.
+
+## Report format
+
+Run the tiers first and quote what they actually printed. Then end your
+reply with a single fenced JSON block, and put nothing after it:
+
+```json
+{"outcome": "clean | refuted | undetermined",
+ "evidence": "stated | formal | informal",
+ "tier": "quick | medium | high",
+ "ensemble": "which checkers ran and what each said",
+ "disagreement": false,
+ "note": "what came back, including any off-whitelist axioms"}
+```
+
+`tier` is the highest tier that actually ran — and remember the ceiling:
+a `clean` result may only carry `formal` from the high tier. If the block
+is missing or unparseable the harness records `undetermined`, which puts
+the obligation in the residue as unaudited.

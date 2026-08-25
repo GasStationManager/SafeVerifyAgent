@@ -58,3 +58,18 @@ These are **measurements, not judgments**. They do not refute anything
 and they do not decide what gets audited — every obligation is audited
 regardless. They go in the report so a reader can see where the artifact
 reaches outside the ordinary elaboration path.
+
+## Report format
+
+End your reply with a single fenced JSON block, and put nothing after it:
+
+```json
+{"obligations": [
+   {"id": "h1", "statement": "...", "kind": "have | suffices | theorem | final",
+    "depends_on": ["h0"], "used": true, "anomalies": ["native_decide"]}],
+ "disagreements": ["what you would add to or drop from `extracted`, and why"]}
+```
+
+`claim` must appear as an obligation. If the block is missing or
+unparseable the harness falls back to `extracted` verbatim — no
+obligation is lost, but your dependency analysis is.

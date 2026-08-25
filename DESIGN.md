@@ -357,10 +357,29 @@ not implement the early-exit path yet (§10).
 
 ## 7. Model dispatch, and the confound this repo exists to fix
 
-The reference worker calls Claude through the official Anthropic SDK
-(`claude-opus-5` by default). But the model is behind a small `Model`
-interface, and that is not incidental architecture-astronautics — it is
-the fix for the sharpest known weakness in the predecessor's numbers:
+Workers run behind a small `Model` interface (`safeverifyagent/models.py`)
+with three adapters, and the difference between them turns out to decide
+which rungs each may serve:
+
+| adapter | how it runs | tools? |
+|---|---|---|
+| `ClaudeCliModel` | `claude -p`, one Claude Code agent per call | **yes** |
+| `GenericCliModel` | any one-shot CLI (`codex exec`, `gemini -p`, …) | declared by the caller |
+| `AnthropicApiModel` | the Messages API, official SDK | **no** |
+
+**Tool capability is a hard gate, and it is why the CLI adapter is the
+default rather than the SDK one** — the reverse of what you would guess.
+The check rung's job is to RUN the ensemble: elaborate the obligation,
+read its axioms, compare kernels. A text-in/text-out model cannot do any
+of that, and asked to anyway it does not fail — it produces a confident
+description of a checker run that never happened, indistinguishable in
+the report from a real one. So `require_tools` refuses a text-only
+adapter the check rung, and the driver lists that rung in the residue as
+never-run instead. This is `Verdict.informative` one layer up: something
+that could not run has not voted.
+
+The interface is also the fix for the sharpest known weakness in the
+predecessor's numbers:
 
 > Four of the five items in the internal corpus were written by Claude
 > and audited by Claude. An auditor reading an artifact from its own
@@ -368,9 +387,19 @@ the fix for the sharpest known weakness in the predecessor's numbers:
 
 Same-family authorship is a confound that no amount of *n* removes. The
 only fix is staffing: items authored by one family, audited by another.
-So the worker layer takes the model family as a parameter, and a run
-records which family audited which artifact. A cross-family run is a
-first-class configuration, not a fork.
+So the worker layer takes the model family as a parameter, a run records
+which family audited which artifact, and every other frontier agent ships
+a one-shot CLI that `GenericCliModel` can drive. A cross-family run is a
+command-line argument:
+
+```bash
+python3 drivers/audit.py Claimed.lean --model claude-cli:claude-opus-5
+python3 drivers/audit.py Claimed.lean --model cli:codex:codex:exec:{prompt}
+```
+
+A CLI with no tools is accepted for the coherence rung — reconstructing
+an argument is reading and thinking, which is exactly what it can do —
+and refused for the check rung, per the gate above.
 
 The same applies to panels — several auditors on one obligation, ideally
 from different families, with agreement reported rather than collapsed.
@@ -382,11 +411,18 @@ from different families, with agreement reported rather than collapsed.
 The stages are agents; the code around them is deterministic. Two ways to
 run them:
 
-- **Claude Code subagents** (`drivers/claude_code/`) — the planner and
-  workers are subagent definitions; the fan-out is the harness's. Nothing
-  to deploy; this is the path for auditing something today.
-- **API driver** (`drivers/api_driver.py`) — a plain Python driver on the
-  Messages API. Reproducible, scriptable, and what a benchmark run uses.
+- **`drivers/audit.py`** — the driver. Runs the planner and fans the
+  workers out in parallel over whichever `--model` adapter you name.
+  With `claude-cli` each worker is its own `claude -p` agent, which is
+  what gives the check rung real tools and needs no API key.
+- **Claude Code subagents** (`drivers/claude_code/`) — renders one task
+  per obligation for dispatch inside an interactive session, and
+  aggregates the JSON they return. For auditing something by hand.
+
+Each `claude -p` worker gets a fresh `--session-id`. Without one the
+subprocess can land in the caller's own session, and worker isolation is
+load-bearing: auditors that can see each other's findings can talk each
+other into a verdict.
 
 **Prompts live in `safeverifyagent/prompts/` as data, and both drivers
 render the same files.** This is load-bearing rather than tidy: the
@@ -428,15 +464,24 @@ about anything except the fix.
 | output parsing, verdict types, aggregation, residue | **implemented and unit-tested** (fixtures, no toolchain needed) |
 | lemma extraction through Lean's frontend | **implemented and tested** against Lean v4.33.0 (`tests/test_lean.py`, skipped without a toolchain) |
 | prompts (planner, check, coherence, aggregator) | **written** |
-| Claude Code driver | skeleton |
-| API driver | skeleton |
+| model adapters (`claude -p`, generic CLI, SDK) + the tool gate | **implemented**, `claude -p` exercised live |
+| `drivers/audit.py` | **runs end to end** |
+| Claude Code driver | renders tasks and aggregates; not exercised live |
 | corpus loader + teeth check | contract specified (`corpus/SPEC.md`), loader stubbed |
-| end-to-end run on a real claim | **not yet done** |
+| end-to-end run on a real claim | **done** — one matched pair, `examples/` |
 
-Nothing in this table is a promise about detection rates. No number in
-this repo has been measured against a public corpus, and the internal
-one (n=5, same-family) is an upper bound on a mechanism, not a
-measurement of a detector.
+The end-to-end run is one matched pair (`examples/`): a specification
+that drifts by one token, and its honest twin. Both elaborate clean with
+identical axioms, so no checker rung separates them; the coherence rung
+refuted the drifted one and left the control alone. That is the teeth
+check passing, and it is the first evidence the coherence prompt survives
+contact with a real file.
+
+It is also n = 1 per arm, same-family, and eleven lines long. Nothing in
+this table is a promise about detection rates. No number in this repo has
+been measured against a public corpus, and the internal one (n=5,
+same-family) is an upper bound on a mechanism, not a measurement of a
+detector.
 
 ---
 
