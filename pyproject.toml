@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "safeverifyagent"
+version = "0.1.0"
+description = "An agent that audits a claimed Lean 4 proof: mechanical checker ensemble plus an argument-level reading, fanned out one worker per lemma."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "Apache-2.0"
+authors = [{ name = "GasStationManager" }]
+keywords = ["lean4", "formal-verification", "ai-safety", "proof-checking", "llm-agents"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+# The core has no dependencies on purpose: the ensemble adapters shell
+# out, and the verdict logic is pure. Only the reference driver needs an
+# SDK, which keeps `pip install safeverifyagent` from deciding your
+# model provider for you.
+dependencies = []
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.40"]
+
+[project.urls]
+Homepage = "https://github.com/GasStationManager/SafeVerifyAgent"
+
+[tool.setuptools.packages.find]
+include = ["safeverifyagent*"]
+
+[tool.setuptools.package-data]
+safeverifyagent = ["prompts/*.md", "lean/*.lean"]
