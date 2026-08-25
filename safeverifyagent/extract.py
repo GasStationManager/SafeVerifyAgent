@@ -7,9 +7,12 @@ module and its own warning.
 fail silently:
 
 - a *regex over lines* collapses dense proofs. On the pattern real proofs
-  actually use — `have h : T := ?_;` chained on one line — it finds
-  **zero** obligations, and a claim that extracts to nothing is a claim
-  the audit cannot help with.
+  actually use — `have h : T := ?_;` chained on one line — it sees only
+  the FIRST `have` on each line: measured against the frontend on
+  `tests/test_lean.py::DENSE`, 2 obligations found against 4. When the
+  proof sits entirely on the theorem's own line it finds **zero**. A
+  claim that extracts to nothing is a claim the audit cannot help with,
+  and it looks exactly like an easy file.
 - a *bare parse loop* cannot see `open`, so scoped notation fails to
   parse, the tactic block vanishes from the syntax tree, and the file
   reads as a proof with no steps in it — with no error surfaced.
@@ -76,8 +79,32 @@ def scan_trust_surface(text: str) -> List[str]:
     return sorted({m for m in TRUST_SURFACE if m in stripped})
 
 
+_LEAN_OK: Optional[bool] = None
+
+
 def lean_available() -> bool:
-    return _elan("lean") is not None
+    """Is there a Lean that actually RUNS?
+
+    Not "is there a file called lean". elan installs a shim that resolves
+    a toolchain at call time, so the binary can exist and still fail —
+    a toolchain that was never fetched, or a HOME the shim cannot read.
+    Probing costs one subprocess, once, and buys the difference between
+    a clean fall back to the regex path and a pile of confusing errors
+    from a frontend that was never going to start.
+    """
+    global _LEAN_OK
+    if _LEAN_OK is None:
+        lean = _elan("lean")
+        if lean is None:
+            _LEAN_OK = False
+        else:
+            try:
+                p = subprocess.run([lean, "--version"], capture_output=True,
+                                   text=True, timeout=120)
+                _LEAN_OK = p.returncode == 0 and "Lean" in (p.stdout + p.stderr)
+            except (subprocess.SubprocessError, OSError):
+                _LEAN_OK = False
+    return _LEAN_OK
 
 
 def extract(path: str, project_dir: Optional[str] = None,

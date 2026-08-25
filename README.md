@@ -78,8 +78,24 @@ Both bugs once inverted a verdict; both are now pinned by tests.
 ```bash
 git clone https://github.com/GasStationManager/SafeVerifyAgent
 cd SafeVerifyAgent
-python3 -m unittest discover -s tests     # 43 tests, no toolchain needed
+python3 -m unittest discover -s tests     # 43 pass, 10 skip — no toolchain needed
 ```
+
+For the Lean-gated half — frontend extraction and the quick tier — install
+a toolchain:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+  | sh -s -- -y --default-toolchain leanprover/lean4:v4.33.0
+export PATH="$HOME/.elan/bin:$PATH"
+python3 -m unittest discover -s tests     # 53 tests
+```
+
+`lean_available()` probes that Lean actually *runs* rather than that a
+file called `lean` exists — elan installs a shim that resolves a
+toolchain at call time, so the binary can be present and still fail, and
+the difference between a clean fall back to the regex path and a pile of
+confusing errors is worth one subprocess.
 
 The core has no dependencies. Checkers are discovered by environment
 variable and every one of them degrades to "unavailable" — never to a

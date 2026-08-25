@@ -424,9 +424,9 @@ about anything except the fix.
 
 | component | state |
 |---|---|
-| checker ensemble + adapters | **ported, real.** Needs the binaries; degrades to "unavailable" and says so |
+| checker ensemble + adapters | **ported, real.** The quick tier is verified against Lean v4.33.0; the medium and high tiers need their binaries and degrade to "unavailable" rather than to a verdict |
 | output parsing, verdict types, aggregation, residue | **implemented and unit-tested** (fixtures, no toolchain needed) |
-| lemma extraction through Lean's frontend | **ported**, untested here — needs a Lean toolchain |
+| lemma extraction through Lean's frontend | **implemented and tested** against Lean v4.33.0 (`tests/test_lean.py`, skipped without a toolchain) |
 | prompts (planner, check, coherence, aggregator) | **written** |
 | Claude Code driver | skeleton |
 | API driver | skeleton |
