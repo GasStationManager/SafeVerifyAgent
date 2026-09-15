@@ -805,3 +805,38 @@ at `Euler/Solution.lean:41` is in force for lines **43-56 only**, i.e. for
 `exists_compact_smooth_euler_singularity` — **not** for `euler_breakdown_R3` at :33. Combined with
 `euler-spine`'s mechanism (Mathlib's only `CompletePartialOrder ℝ≥0∞` route yields `ENNReal`'s own
 `sSup`), A3/E2 is now closed as benign with the affected line range pinned.
+
+---
+
+## W15 `euler-stage-fields` — all 26 `Stage` fields earned; the junk value points AGAINST the claimant
+
+Report: `workers/euler-stage-fields.md`. 269 declarations read line-by-line across 20 files.
+**26 of 26 `Stage` fields OK**; 48 supporting declarations = 46 OK + 2 UNCLEAR; **0 KERNEL-RISK,
+0 SUSPICIOUS**. No circularity: `joinedNext` carries no `Stage (n+1)` hypothesis.
+
+- **Degeneracy is closed by an identity chain, not by rhetoric.** `frame_shear` forces the new
+  frame's `primaryShear` to be `shear J X n`, and `ParentFrame.remainder_bound`
+  (`Euler/PacketSourceGeometryData.lean:45`) ties that number to the **actual strain field** with
+  slack `k^(-1/4)`. It is realisable because `deriv (profile δ) 0 = δ⁻¹`
+  (`Euler/EulerProof.lean:11818`, with `profile δ t = arctan (sin t / (1 + δ - cos t))`).
+- **The junk value here runs against the claimant, which is the direction we want.** If `δ = 0`
+  were admissible, `deriv` would collapse to junk `0` and the stage invariant would be vacuous —
+  so `0 < δ` is a **field** of the geometry record (`Euler/ParentGeometryForwardChoice.lean:38`),
+  obtained from `spike J X n > 0`. A construction that *needs* non-degeneracy to state its own
+  invariant cannot be satisfied by the degenerate object.
+- Two fields are literally `le_rfl` (`Euler/PacketForwardSuccessor.lean:154,157`) and are
+  nonetheless honest: `renewal_costs` supplies `G = K` and `error = k^(-1/4)` by `⟨rfl, rfl⟩`
+  (`Euler/ParentGeometryChoiceRenewal.lean:66`), and `olderShear (n+1) ≡ previousShear n`,
+  `previousFrequency (n+1) ≡ frequency n` hold by iota. The real burden sits in `B_bound` and
+  `remainder_bound`, which are proved.
+- **The `attribute [local irreducible] Parent.child initialParent` question (W2-E4) is answered:
+  it is an elaboration-cost device, not a semantic one.** The repo documents the measurement
+  itself — 353,857 → 3,224 heartbeats for `GeometryForwardChoice.mk.inj`
+  (`Euler/ParentGeometryForwardChoiceNoOptions.lean:6-32`). Nothing *needs* the opacity; in fact
+  `horizon_eq := rfl` requires `child` to be **transparent**. And reducibility is elaborator-only,
+  so the kernel ignores it entirely.
+- Kernel surface: zero `decide`, zero large numerals, zero metaprogramming, structural recursion,
+  symbolic iota only.
+- Two declarations left unread (`forward_uniform_child_label_bounds`, `forwardGeometryFrame`).
+  **Dispatched:** worker `euler-forward-frame` to close the thread, with the specific instruction
+  to check they cannot admit a degenerate instance.

@@ -388,3 +388,66 @@ claims `propext`, `Classical.choice`, `Quot.sound` only, for `firstStage`; I cou
 * **Numerical plausibility.** Whether `shear_separation`, `activation_small` and the six `SmallSeries`
   bounds are *simultaneously* satisfiable at the chosen `J, D, X, δ` is an arithmetic question about
   `exists_scales`, already covered by `workers/euler-packet.md` §B; I did not re-audit it.
+
+## Per-declaration findings — the supporting declarations (outside the field table)
+
+| declaration | file:line | statement, in my words | how proved | cone | verdict |
+|---|---|---|---|---|---|
+| `Stage.forwardNext` | `PacketForwardSuccessor.lean:92` | a `Stage S 1` exists given a `Stage S 0` | `refine {…}` with 26 fields, table above | True | OK |
+| `Stage.joinedNext` | `PacketJoinedSuccessor.lean:97` | a `Stage S (n+1)` exists given a `Stage S n`, `n ≠ 0` | same shape | True | OK |
+| `Stage.chooseForward` | `PacketForwardSuccessor.lean:32` | picks one `ForwardChoice` | `Classical.choice` on a *proved* `Nonempty` | True | OK |
+| `Stage.chooseJoined` | `PacketJoinedSuccessor.lean:36` | same, joined | idem, plus `rfl` for `hterminal` | True | OK |
+| `exists_geometryForwardChoice` | `ParentGeometryForwardChoice.lean:96` | that `Nonempty` | `obtain` from `forward_uniform_child`; only `erw [forwardPressureTerm_eq_coefficient]` is manipulation | True | OK |
+| `exists_geometryJoinedChoice` | `ParentGeometryJoinedChoice.lean:46` | joined version | idem, plus `simp only [← hterminal]` | True | OK |
+| `GeometryForwardChoice` (structure) | `ParentGeometryForwardChoice.lean:77` | packet + flow + labels + errors bundle | record; `errors` field is a real `ForwardSourceErrors` | True | OK |
+| `GeometryJoinedChoice` (structure) | `ParentGeometryJoinedChoice.lean:26` | same with history | record | True | OK |
+| `forward_smallness` | `PacketForwardSuccessor.lean:45` | the `≤ 1/2` side condition for `lowBounds` | `next_localized` + `positivity` + `convert … ; ring` | True | OK |
+| `joined_smallness` | `PacketJoinedSuccessor.lean:50` | idem | idem | True | OK |
+| `Stage.forwardRenewal` / `joinedRenewal` | `:68` / `:74` | the renewed frame at `targetTime` | `F.renewal` with `K = frameConstant(1+previousShear n)`, `error = k^(-1/4)` | True | OK |
+| `forwardRenewal_matches` / `joinedRenewal_matches` | `:78` / `:84` | the frame's `B,m,v,c` really are the geometry's | `F.renewal_matches` → 2 `rfl` + 2 field identities | True | OK |
+| `GeometryForwardChoice.renewal_costs` | `ParentGeometryChoiceRenewal.lean:66` | `Pnew.G = K ∧ Pnew.error = k^(-1/4)` | `⟨rfl,rfl⟩` — the witness that the two `le_rfl` field proofs are honest | **False** | OK |
+| `…ChoiceLow.lowBounds_values` | `ParentGeometryChoiceLow.lean:39`, `:105` | child low bounds are old + one increment, `.r` inherited, `.L` formula | `⟨rfl,rfl,rfl,rfl,rfl⟩` | **False** | OK |
+| `…ChoiceLow.physical_bounds` | `:56`, `:122` | new gradient/Hessian ≤ old + `hchild(good+bad) + k^(-1/4)` | `exactForwardPacket_whole_horizon_low_bounds` + `erw` on `pressure_hessian_eq_force` | True | OK |
+| `ratio_absorption` | `PacketStageLowPropagation.lean:50` | the increment is absorbed into the next shear level | `S.shear_separation n` + `nlinarith only` | True | OK |
+| `next_frame_bounds` | `:81` | `1 ≤ K`, `CM ≤ K`, `CM²+CH ≤ K²` for `K = frameConstant(1+previousShear n)` | `nlinarith only` from `frame_properties` | True | OK |
+| `initial_step_bound` / `pressure_step_bound` | `:18` / `:24` | cumulative sums extend by one term | `sum_range_succ` + `linarith only` | True | OK |
+| `next_localized` | `:30` | the `≤ 1/2` localisation budget survives the step | `S.localized_guard` + partial sums | True | OK |
+| `coupling_step` | `:102` | `\|a−1\|` stays within `2∑_{range(n+1)}` | triangle inequality + `relative_step_error` | True | OK |
+| `tilt_step` | `:112` | tilt stays in `[1/2,2]` | `abs_le` + `nlinarith only` | **False** | OK |
+| `literal_step` | `ParentRenewalScaleApplication.lean:25` | coupling and tilt bounds at the new index | `tilt_interval` + `nlinarith only`; needs `hy : G.y = scaleSequence(n+1)⁻¹` (supplied by `rfl`) | True | OK |
+| `joinedGuards` / `forwardGuards` | `PacketStageGuards.lean:48` / `:115` | the geometry guards for the next packet | `geometryGuardsOfStage` fed 20+ current-stage facts incl. `P.compression hn` | True | OK |
+| `joinedGeometry_targetTime` / `forwardGeometry_targetTime` | `:93` / `:143` | the geometric target time *is* `nextTime` | `physical_target_eq_nextTime` (`Restriction:75`) | True | OK |
+| `joined_bad_cost` / `forward_bad_cost` | `PacketStageEstimates.lean:37` / `:101` | the packet's bad-ratio cost ≤ `badCost` | label-data cost lemma with ~25 explicit arguments | True | OK |
+| `joined_initial_cost` / `_pressure_cost` (+forward) | `:49`,`:60`,`:111`,`:122` | new costs ≤ `initialIncrement n` / `pressureIncrement n` | `unfold` + `nlinarith only` from the bad cost | True | OK |
+| `joined_renewal_errors` / `forward_renewal_errors` | `:77` / `:132` | coupling and tilt errors ≤ `renewalCost n` | `renewal_errors_on_scales`, consuming `P.frame_bound`, `P.frame_error` | True | OK |
+| `Stage.step_bounds` | `PacketStageRestriction.lean:25` | `timeWidth/6 ≤ step ≤ 2·timeWidth/3` | `activation_time_bounds` from coupling/tilt | True | OK |
+| `Stage.nextHorizon_lt` | `:47` | the new horizon is strictly inside the old | `source_stage.next_width` + `linarith only` | True | OK |
+| `restrictedParent/State/Low/Frame` + 16 `rfl` projections | `:82-109` | restriction preserves everything | all `rfl` | True | OK |
+| `ParentFrame.changeActivation` (+9 lemmas) | `PacketStageGeometry.lean:40-50` | transport a frame along `s = t` | `h ▸ P`; lemmas `by cases h; rfl` | True | OK (§B5) |
+| `Stage.zeroFrame` / `forwardFrame` / `joinedFrame` (+ 12 projections) | `PacketStageGeometry.lean:102-202` | the activation frame at `time`, parameters unchanged | `activation_parameters` / `forward_parameters` chains | True | OK |
+| `Stage.forwardInput` / `joinedInput` (+ 12 `rfl` projections) | `PacketStageInputs.lean:112` / `:41` | the input record for the packet factory | field-by-field from the restricted stage | True | OK |
+| `forwardInput_frequency` / `joinedInput_frequency` | `:153` / `:89` | the frequency guard holds at `frequency J X n` | `S.source_frequency` + the `parameterSize` envelope bound | True | OK |
+| `Scales.firstStage` | `BaseInductionStage.lean:22` | the base `Stage S 0` | 12 explicit sub-proofs; 2 fields vacuous by index guard | True | OK |
+| `Stage.successor` | `PacketInfiniteConstruction.lean:21` | dispatch `0 ↦ forwardNext`, `n+1 ↦ joinedNext` | `cases n` | True | OK |
+| `stages` | `:39` | the infinite family | **structural** recursion, no `termination_by` | True | OK |
+| `stages_zero` / `stages_succ` | `:43` / `:45` | unfolding equations | `rfl` (evidence of structural, not WF, recursion) | **False** | OK |
+| `stages_initial_step` | `:52` | consecutive initial data differ by `high k + mean k` | `cases n` + `joinedNext_initial_velocity` | True | OK |
+| `constructionScales` / `packets` | `:68` / `:72` | the chosen scales and the family at them | `Classical.choice (exists_scales …)`; `le_rfl le_rfl` | True | OK |
+| `joinedNext_initial_increment` | `PacketJoinedSuccessor.lean:183` | the increment is exactly `high k + mean k` | `GeometryJoinedChoice.initial_increment_eq` (`ChoiceInitial.lean:65`) | **False** | OK |
+| `joinedNext_initial_velocity` | `:189` | ditto in additive form | same lemma | True | OK |
+| `joinedNext_initial_support` / `forwardNext_…` / `successor_…` | `StageInitialSupport.lean:23`,`PacketFirstStageSupport.lean:18`,`:32` | support stays in `closedBall 0 2` | `GeometryJoinedChoice.initial_support`; upper bound only — non-vacuity comes from `gradient_lower` | True | OK |
+| `Stage.gradient_lower` | `PacketStageGrowth.lean:52` | actual gradient at origin `≥ previousShear/2` | frame decomposition + `remainder_bound` + `activation_small` | True | OK (the anti-degeneracy keystone) |
+| `profile_deriv_zero` | `EulerProof.lean:11818` | `deriv (profile δ) 0 = δ⁻¹`, `0 < δ` | needed so the packet really carries the claimed shear | True | OK |
+| `forward_primary_center_term` | `ParentPacketPrimaryCenter.lean:23` | centre term `= (α/δ)•rankOne(sourceVelocity, sourceNormal)` | `profile_deriv_zero` + `innerCutoff_zero` | True | OK |
+| `target_shear_normalization` | `ParentRenewalParameters.lean:98` | `(amplitude/δ)·targetSize = hchild` | `amplitude_normalization` + `field_simp` | True | OK |
+| `forward_uniform_child` / `joined_uniform_child` | `ParentUniformForwardChild.lean:36` / `ParentUniformJoinedChild.lean:38` | the packet, flow, labels and both error bounds exist | wrapper around `*_label_bounds` — **not read** | True | UNCLEAR (escalation 1) |
+| `SmoothState.forwardRenewal` / `joinedRenewal` | `ParentStateGeometry.lean:53` / `:70` | build the new `ParentFrame` from `hsource` | `A.forwardGeometryFrame` — **not read** | True | UNCLEAR (escalation 2) |
+
+### Verdict counts
+
+* `Stage` fields audited: **26 / 26 OK** (2 of them vacuous-by-index-guard at the base stage only, and
+  both re-established for real at index 1).
+* Supporting declarations tabulated: **48**, of which **46 OK**, **2 UNCLEAR** (the two unread
+  existence engines, escalations 1-2).
+* **0 KERNEL-RISK**, **0 SUSPICIOUS** in this scope.
+* Declarations read line by line: **269** across 20 files (plus ~14 files read in part).
