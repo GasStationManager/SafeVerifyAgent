@@ -14,6 +14,13 @@ No step in the negative claim needs the converse. Two analytic sub-steps carry t
 audited by three sub-workers (their notes are cited below): the all-order L² jet recovery from a
 *compact vorticity support* and the local propagation of that support.
 
+**Verdict counts** over the 30 declarations I examined individually (table in §B, plus the 8 in the
+positive-headline table): **30 OK, 0 UNCLEAR, 0 KERNEL-RISK, 0 SUSPICIOUS**, with 3 delegated cores
+(`l2_stability_gradientIntegral`, BKM, `FiniteLifespan`) left to their owning workers and 4
+escalations, of which E1/E2/E4 are answered/downgraded by sub-audits and only E3 (H³ point evaluation)
+plus E5 (= `euler-packet` P1) remain open. All three sub-workers independently report "nothing
+smuggled".
+
 ## Scope
 
 Files read for this question (declaration counts from the regenerated `CONE.csv`, which lists
@@ -129,7 +136,7 @@ structure EulerSobolevExistenceAndSmoothnessR3On (I) (u₀ v p) : Prop where
 |---|---|---|---|
 | `velocity t : SmoothL2Field` → `.smooth` | `velocity_smooth` (joint `ContDiffOn ∞`) | `velocity_smooth.spatial_smooth` | `ClassicalBridge.lean:21` `velocity_contDiff` — restriction of the joint ContDiffOn. **Direct.** |
 | `.integrable 0` (v ∈ L²) | `integrable : MemLp (‖v · t‖) 2` | `velocity_smooth.integrable` | `ClassicalBridge.lean:29` `velocity_memLp` via `memLp_norm_iff` + a.e.-strong-measurability from continuity. **Direct.** |
-| `.integrable n`, **all n** (all jets in L²) | **NO COUNTERPART** | `jets_integrable` (direct) | classical case: `smoothL2Field_of_curl_compact` (`DivCurlTensorRecovery.lean:79`) — div-curl/elliptic recovery from `v(·,t)` smooth + L² + div-free + **compact curl support**. **Derived (audited by `_sub-evoclass-jets.md`).** |
+| `.integrable n`, **all n** (all jets in L²) | **NO COUNTERPART** | `jets_integrable` (direct) | classical case: `smoothL2Field_of_curl_compact` (`DivCurlTensorRecovery.lean:79`) — div-curl/elliptic recovery from `v(·,t)` smooth + L² + div-free + **compact curl support**; engine is Caccioppoli + Fatou with a field-independent constant (`DivCurlRecovery.lean:53-150`, `:174`, `:291`), reassembled by `MemLp.of_eval_piLp` (`DivCurlTensorRecovery.lean:66-85`). **Derived; corroborated by `_sub-evoclass-jets.md`.** |
 | `velocity_continuous` (jetLp continuous in t, all orders) | **NO COUNTERPART** | `jets_continuous` (direct) | classical case: `jetLp_continuous_of_toLp_continuous` (`CompactVorticityTimeUpgrade.lean:83`) from strong L² continuity + uniform `tensorNorm` bounds, via the log-convexity interpolation `tensorNorm_interpolate_zero` (`OrdinaryCauchyInterpolation.lean:24`). Strong L² continuity itself is *proved* (Lipschitz from the weak ODE, `:174-178`). **Derived.** |
 | `solenoidal` (Hilbert-space membership) | `div_free` (pointwise) | `div_free` | `comparator_velocity_mem_solenoidal` (`CompactVorticityTimeUpgrade.lean:46`) via `smooth_mem_solenoidal`. **Derived.** |
 | `pressureForce` + `pressure_continuous` + `gradient` | challenge `p` only enters to *cancel*; the pressure force is **reconstructed** | ditto | `pressureField (A t) = P_sol(adv) - adv` (`OrdinaryHelmholtzField.lean:60`), `pressureField_mem_gradient` (:74), `pressureField_continuous` (:83). **Constructed, so nothing is demanded of the competitor's pressure beyond `pressure_smooth`.** |
@@ -157,10 +164,10 @@ identification supplied by `maximalVelocity_eq_of_compactCurlLocalUpgrade … co
 | `evolution_field_eq_of_local_evolution` | `ComparatorEvolutionIdentification.lean:52` | an `Evolution` from the same datum agrees with the competitor on all of `[0,S]` | the agreement set is closed (both sides continuous in `t`), contains 0, and is right-extendable: at any agreement time, `hlocal` produces a *fresh* `Evolution` for the competitor and Euler uniqueness `Q.velocity_eq_of_initial R` (`OrdinaryEulerUniqueness.lean:24`) closes the gap; `Icc_subset_of_forall_exists_gt` finishes | OK — no numeric or recursor content, clean continuity/ connectedness argument |
 | `Evolution.velocity_eq_of_initial` | `OrdinaryEulerUniqueness.lean:24` | equal initial L² data ⇒ equal `Evolution`s | H³ difference energy + `l2_stability_gradientIntegral` (worker `euler-spine-uniqueness` scope); `smoothField_eq_of_toLp_eq` upgrades a.e. equality to equality using continuity of both representatives — correct, not a junk-value trick | OK (delegated core) |
 | `CompactCurlLocalUpgrade` (the Prop) | `ComparatorEvolutionIdentification.lean:37` | *statement* of "challenge solution + compact initial curl ⇒ short `Evolution` with the same field" | a `def … : Prop`; it is **discharged** at `ComparatorLocalEvolution.lean:91`, not left as a hypothesis of the headline | OK — **this is the lemma `euler-packet` P2 asked for** |
-| `compactCurlLocalUpgrade` | `ComparatorLocalEvolution.lean:91` | proof of the above | `h.local_compact_vorticity_of_truncationFamily h.finiteEnergyTruncationFamily hc` gives `δ>0` and a ball `B` containing the curl support on `[0,δ]`; then `exists_evolution_of_commonCompactCurl` | OK modulo `_sub-evoclass-support.md` |
+| `compactCurlLocalUpgrade` | `ComparatorLocalEvolution.lean:91` | proof of the above | `h.local_compact_vorticity_of_truncationFamily h.finiteEnergyTruncationFamily hc` gives `δ>0` and a ball `B` containing the curl support on `[0,δ]`; then `exists_evolution_of_commonCompactCurl` | **OK, corroborated** by sub-worker `evoclass-support`: the truncation family is a *construction* from `h` (`ComparatorTruncationFamily.lean:69-103`), and the support propagation is the curl of `h.euler` + Grönwall + a real Picard flow, not an assumption |
 | `exists_evolution_of_commonCompactCurl` | `ComparatorLocalEvolution.lean:64` | with the curl support inside one compact `K` on `[0,T]`, the competitor **is** an `Evolution` | `recoveredVelocity` (:31) makes the slices `SmoothL2Field`; `recoveredVelocity_jetLp_uniform` (:49) gives uniform per-order bounds; `isSmoothScalarEuler_of_weak_projectedEquation` upgrades weak data to the full class; `exists_evolution_iff_scalar` converts | OK modulo the two sub-audits — **this is the crux** |
 | `recoveredVelocity` | `ComparatorLocalEvolution.lean:31` | the `SmoothL2Field` slices, *definitionally equal* to the competitor field (`recoveredVelocity_field` is `rfl`, :45) | `smoothL2Field_of_curl_compact` from `h.velocity_contDiff`, `h.velocity_memLp`, `h.div_free`, compact curl support | OK; note `rfl` means **no re-definition of the velocity** — the object refuted is literally the competitor's field |
-| `isSmoothScalarEuler_of_weak_projectedEquation` | `CompactVorticityTimeUpgrade.lean:144` | solenoidal + uniform spatial bounds + a *dense* family of weak time-derivative identities ⇒ the full smooth scalar Euler class | `WeakHilbertODE.lipschitzOnWith_of_dense_weak_equation` gives strong L² Lipschitz continuity, then `jetLp_continuous_of_toLp_continuous` (interpolation) gives all-order jet continuity, then `hasDerivAt_of_dense_weak_equation` gives the strong L² time law | OK on its face; every hypothesis is *weaker* than the conclusion (no jet continuity, no strong derivative assumed) — see `_sub-evoclass-timeupgrade.md` |
+| `isSmoothScalarEuler_of_weak_projectedEquation` | `CompactVorticityTimeUpgrade.lean:144` | solenoidal + uniform spatial bounds + a *dense* family of weak time-derivative identities ⇒ the full smooth scalar Euler class | `WeakHilbertODE.lipschitzOnWith_of_dense_weak_equation` gives strong L² Lipschitz continuity, then `jetLp_continuous_of_toLp_continuous` (interpolation) gives all-order jet continuity, then `hasDerivAt_of_dense_weak_equation` gives the strong L² time law | **OK, corroborated.** Sub-worker `evoclass-timeupgrade` re-read all 6 hypotheses and confirms each is discharged at `ComparatorLocalEvolution.lean:73-81` from `h` (with `hA` literally `rfl`), that density is used only as "dense pairings determine a vector" (`WeakHilbertODE.lean:27,40`), that `compactSolenoidalTests_dense` (`CompactSolenoidalDensity.lean:164`) is a genuine density proof (curl-curl + L² Liouville, `:21/:115`), and that no hypothesis already contains the conclusion |
 | `comparator_projected_pairing_hasDerivAt` | `CompactProjectedEulerLaw.lean:55` | the weak projected identity on the dense compact solenoidal test family | reduces to `comparator_clamped_compact_pairing_hasDerivAt` | OK |
 | `comparator_clamped_compact_pairing_hasDerivAt` | `ProjectedEulerPairing.lean:140` | tested identity survives replacing `v` by any pointwise-equal smooth L² representative and the clamped `projIcc` reparameterisation | `congr_of_eventuallyEq` on `Ioo`; a.e. rewriting through `toLp_ae` | OK |
 | `velocity_solenoidal_test_pairing_hasDerivAt` | `ProjectedEulerPairing.lean:102` | `d/dt ∫⟨φ,v⟩ = -∫⟨φ,(v·∇)v⟩` for compact smooth **solenoidal** `φ` | pressure is killed by `compact_solenoidal_pressure_pairing_zero` (integration by parts, `div φ = 0`, compact support — **no pressure decay assumed**), integrability from compact support | OK — this is the honest use of the challenge equation |
@@ -254,6 +261,12 @@ is in force for `exists_compact_smooth_euler_singularity` only (line 41 precedes
 `euler_breakdown_R3` (:33). The `Fact (0 < (1:ℝ))` instances are innocuous (they select the period-1
 `AddCircle`). No `sorry`, no `axiom`, no `native_decide` anywhere in scope.
 
+**One `decide` in the wider bridge (outside the 22 files, inside the used path).**
+`Euler/CompactSolenoidalDensity.lean:39` has `by decide : (3 : ℕ) ≠ 0` as the hypothesis of
+`tendsto_pow_atTop`. The kernel must evaluate `Nat.beq 3 0` / `Nat.decEq 3 0` — a one-step GMP-free
+reduction on single-digit literals. Reported by sub-worker `evoclass-timeupgrade`; **negligible**, but it
+is the only `decide` anywhere on this bridge.
+
 **Does the kernel actually have to compute anything hard to accept these files?** No. Every proof in my
 scope is a chain of `HasDerivAt`/`Continuous`/`MemLp` lemma applications plus `simp only`, `abel`,
 `linarith`, `filter_upwards`. The heaviest kernel work is elaborated-term type-checking of long
@@ -280,24 +293,45 @@ over-approximation.
 
 ## Escalations (ranked)
 
-**E1 — `euler-packet` P2 should be **downgraded**, with one residual sub-question.**
+**E1 — `euler-packet` P2 is ANSWERED: the class is stronger, but every extra field is proved.**
 `Euler/ComparatorEvolutionIdentification.lean:37` + `Euler/ComparatorLocalEvolution.lean:91`.
-The lemma P2 asked for exists and is discharged. The residual question for an expert:
-*is `smoothL2Field_of_curl_compact` (`Euler/DivCurlTensorRecovery.lean:79`) mathematically true as
-stated — i.e. does `v` smooth, `v ∈ L²`, `div v = 0`, `curl v` compactly supported really imply
-`iteratedFDeriv ℝ n v ∈ L²` for **every** n, with no extra decay hypothesis?* This is the single
-load-bearing "extra field" derivation. *What would settle it:* the Biot–Savart/elliptic estimate
-`‖D^{n+1} v‖_{L²} ≲ ‖D^n curl v‖_{L²}` for L² div-free fields, plus the fact that a compactly supported
-*smooth* curl has every derivative in L²; check that the repo's proof does exactly this and does not
-quietly need `v` itself compactly supported. See `_sub-evoclass-jets.md`.
+The lemma P2 said it could not find exists and is discharged; the headline should **not** be re-read as
+"no `Evolution`-class solution". Sub-worker `evoclass-jets` re-derived the load-bearing spatial step:
+`smoothL2Field_of_curl_compact` (`DivCurlTensorRecovery.lean:79`) is built from a scalar-word L² recovery
+(`DivCurlRecovery.lean:317`, an induction that re-proves `MemLp` *and* compact support of `Δ(D^w h)` at
+each step) reassembled into full tensors by finite coordinate reassembly
+(`DivCurlTensorRecovery.lean:66-85`, `MemLp.of_eval_piLp` + injective `tensorCoordinates`), with the
+estimate engine a genuine Caccioppoli + Fatou argument (`DivCurlRecovery.lean:53-150`) whose constant
+`C = M² + 1` is **field-independent** (`:174`), which is what makes the uniform-in-`t` bootstrap (`:291`)
+honest. So: `v` smooth + `v ∈ L²` + `div v = 0` + compact curl support ⇒ all-order L² jets, uniformly in
+`t`, with no extra decay assumed and without needing `v` itself compactly supported.
+*Remaining expert question (now the only one on this bridge):* the whole spatial recovery is conditional
+on `hsupport` (a **common** compact curl support on `[0,δ]`), which is exactly what E2 covers; both
+sub-audits are source-level only. *What would settle both:* one `lake build` of
+`Euler/ComparatorLocalEvolution.lean`.
 
-**E2 — the local compact-vorticity propagation.** `Euler/ComparatorLocalCompactVorticity.lean:159`
-(`local_compact_vorticity_of_truncationFamily`), consumed at `ComparatorLocalEvolution.lean:94`.
-*Question:* is `δ > 0` obtained from a genuine transport/flow bound on the competitor (which is only
-known to be smooth with bounded energy), and does the ball radius `B` really contain
-`tsupport (vectorCurl (v · t))` for **all** `t ∈ [0,δ]` — or only the initial one? *What would settle
-it:* a Lagrangian/flow argument with a sup-norm velocity bound on `[0,δ]`, uniform on the relevant
-compact set. See `_sub-evoclass-support.md`.
+**E2 — DOWNGRADED to a build-only question.** The local compact-vorticity propagation
+(`Euler/ComparatorLocalCompactVorticity.lean:159`, consumed at `ComparatorLocalEvolution.lean:94`) was
+re-read by sub-worker `evoclass-support` and is **clean**: (i) the `FiniteEnergyTruncationFamily`
+argument is a *total construction* from `h` alone (`ComparatorTruncationFamily.lean:69-103`, all four
+Prop fields closed from `velocity_smooth`, `div_free`, `integrable`, `globally_bounded_energy.choose`),
+so it is not a hypothesis; (ii) the transport is the **curl of the challenge equation itself**
+(`ComparatorLocalCompactVorticity.lean:121-138` → `ReversedVorticityTransport.lean:21` →
+`ScalarEulerVorticity.lean:30/47/83`, i.e. `pointwise_euler` + `div_free`) plus Grönwall, with a genuine
+Picard flow of a *bounded, Lipschitz truncation* (`TruncatedBackwardFlow.lean:39` →
+`SmoothBanachFlow.lean:40` → `BoundedLipschitzFlow.lean:21-63`), a first-exit MVT
+(`LocalFlowTrap.lean:38`) and a finite-action escape bound (`FlowEscapeBound.lean:171`); (iii) the only
+non-`h` hypothesis is `hc`, compact support of the curl of **their own** datum.
+The sub-worker's one caveat — "the final contradiction must survive arbitrarily small `T`" — **is
+satisfied, and I checked it directly**: the caller never needs a uniform `δ`. In
+`evolution_field_eq_of_local_evolution` the right-extension step takes
+`d := min δ (min (S - a) (b - a))` (`ComparatorEvolutionIdentification.lean:95`) and only has to produce
+*one* point of `s ∩ Ioc a b` (`:84`, `:116`); the interval is then closed by
+`IsClosed.Icc_subset_of_forall_exists_gt` (`:124-125`). So any positive `δ`, however small and however
+it depends on `a`, suffices. *Residual question for an expert (build-only):* does
+`TruncationFamilySmooth.lean:78` really get boundary smoothness from `ContDiffOn.comp` with the `t²`
+reparameterisation, as claimed, without a Whitney-extension step? *What would settle it:* elaborate that
+file against Mathlib.
 
 **E3 — the H³ point-evaluation route to the pointwise `time_law`.**
 `Euler/OrdinaryStrongTime.lean:48-60` uses `observation 3 (le_refl 3) (x, (0 : AddCircle 1))` and
@@ -308,10 +342,13 @@ representative at `x` (not at a lifted/periodised point)? *What would settle it:
 If this failed, `time_law` would be about the wrong function, and the whole `Evolution` construction
 would be vacuous-in-x.
 
-**E4 — the interpolation used for jet time-continuity.** `Euler/OrdinaryCauchyInterpolation.lean:24`
-depends on `wordMaximum_logconvex` (log-convexity of `n ↦ sup_w ‖D^w A‖_{L²}`). *Question:* is that
-log-convexity proved, or asserted for a class where it can fail? *What would settle it:*
-read `EulerNonnegativeLogConvex.between` and `wordMaximum_logconvex`'s proof.
+**E4 — RESOLVED, no escalation.** The interpolation used for jet time-continuity
+(`Euler/OrdinaryCauchyInterpolation.lean:24`) rests on `wordMaximum_logconvex`
+(`Euler/OrdinaryWordInterpolation.lean:31`), and that lemma is *proved*: for one directional derivative
+`B` and axis `v`, `field_directional_inner` gives `‖∂_v B‖² = -⟪B, ∂_v∂_v B⟫` (integration by parts on
+L²), then Cauchy–Schwarz gives `(sup_{n+1})² ≤ sup_n · sup_{n+2}`. Chained by
+`EulerNonnegativeLogConvex.between`. This is the genuine inequality, not an assumption
+(independently confirmed by sub-worker `evoclass-timeupgrade`).
 
 **E5 — (confirming `euler-packet` P1, not re-opening it)** `Euler/Solution.lean:41`'s
 `attribute [local instance] CompletePartialOrder.toSupSet` is the only metaprogramming-ish construct in
@@ -322,9 +359,12 @@ settlement as P1.
 
 * `smoothL2Field_of_curl_compact`, `component_word_energy_uniform_of_commonCompactCurl`,
   `local_compact_vorticity_of_truncationFamily`, `finiteEnergyTruncationFamily`,
-  `compactSolenoidalTests_dense`, `WeakHilbertODE.*` — delegated to three sub-workers; their notes are
-  the record. My own reading of the *statements* found no assumed field, but I did not re-derive the
-  estimates.
+  `compactSolenoidalTests_dense`, `WeakHilbertODE.*` — delegated to three sub-workers, all three of
+  which report **clean** (`_sub-evoclass-jets.md`, `_sub-evoclass-timeupgrade.md`,
+  `_sub-evoclass-support.md`). My own reading of the *statements* found no assumed field; the estimates
+  themselves I did not re-derive, and neither sub-worker could build.
+* `TruncationFamilySmooth.lean:78` — boundary smoothness through a `t²` reparameterisation
+  (`ContDiffOn.comp`), flagged by `evoclass-support` as source-plausible but build-unverified.
 * `l2_stability_gradientIntegral` (H³ difference-energy uniqueness) — worker `euler-spine-uniqueness`.
 * `FiniteLifespan` (`OrdinaryEulerLifespan.lean:29`), `vorticityIntegral_unbounded`
   (`OrdinaryEulerBKM.lean:20`), `hasScalarEulerEvolution_iff`, `canonical_vorticity_*` — workers

@@ -59,6 +59,7 @@ interpolation inequality itself, and whether the Sobolev "derivative coordinates
 
 **16 OK, 2 OK-with-remark, 0 UNCLEAR, 0 KERNEL-RISK, 0 SUSPICIOUS.**
 Out-of-scope chain rows: 24 OK, 1 **name-overclaims** (`CorrectionFamilyCompactness`, harmless — see row).
+Delegated children: **13 OK / 1 UNCLEAR (off-path)** and **33 OK / 1 low inherited KERNEL-RISK**; **0 adverse findings on the audited path.**
 
 ---
 
@@ -742,9 +743,34 @@ something outside my scope.
    Sobolev bound — and hence the boundedness of `pointEvaluation`, and hence the whole
    separating family — would be unsound. *What would settle it:* the definition of
    `liftMeasure` and its `IsOpenPosMeasure` instance.
-6. **Unverified elaboration of `convert!` at `SmoothFieldSobolevTime.lean:102-104`.**
-   Sound in principle (see the remark under row #9), but I could not see the goal states
-   without a build. *What would settle it:* one `#print axioms` /
+6. **NON-TRIVIALITY, raised by the interpolation child and passed up: is there any
+   NONZERO inhabitant of `SobolevSpace period q` for `q ≥ 1`?** The child found none —
+   `SmoothOrbit`/`translation_contDiff` is always a *hypothesis*, never discharged for a
+   concrete nonzero field, in everything it read. On the Euler route the inhabitant comes
+   from `SmoothL2Field.toLp` + `ordinarySobolev` (`MeanOrbitSobolev.lean:71`), so a
+   nonzero inhabitant exists iff a nonzero `SmoothL2Field` exists — which the predecessor's
+   chain also assumes rather than constructs at this level (its `initial_nonzero` route
+   goes through `zeroEvolution`). *Question for an expert:* is a concrete nonzero
+   `SmoothL2Field Space` (equivalently a nonzero `SobolevSpace 1 q`) ever exhibited
+   anywhere in the artifact? If not, every quantified statement over these spaces is
+   satisfiable but the *singularity* claim would need its own witness. *What would settle
+   it:* grep for a `def` producing a `SmoothL2Field` from an explicit bump/Gaussian, and
+   check the top-level `EulerSingularity.lean` existence clause supplies one.
+7. **`VolterraConvolution.lean:15-16` omits `[CompleteSpace X]`** (endpoint child's one
+   UNCLEAR), so `convolution` (`:108`) and `convolution_bound` (`:124`) are
+   junk-`0`-vacuous for an incomplete `X`. **Off the endpoint path** (which supplies
+   completeness), but the same pattern elsewhere would be a real vacuity. *What would
+   settle it:* check every caller of `convolution` instantiates a complete `X`.
+8. **Latent bignum/enumeration target (not triggered today).**
+   `Fintype.card (SobolevWord q)` is `Σ_{n≤q} 4ⁿ`: `5461` at `q = 6` and `21845` at
+   `q = 7`, appearing at `CylinderPathProductBounds.lean:49`. Symbolic in everything I and
+   the children read, but if any file closes a goal about such a cardinality by `decide`,
+   `rfl`, or a `norm_num` certificate, the kernel would do real GMP/enumeration work.
+   *What would settle it:* a repo-wide `decide`/`rfl`-on-`Fintype.card` sweep — that is the
+   `decide-bignum` worker's territory.
+9. **Unverified elaboration of `convert!` at `SmoothFieldSobolevTime.lean:102-104`.**
+   Sound in principle (see the remark under row #9 of the table), but I could not see the
+   goal states without a build. *What would settle it:* one `#print axioms` /
    `set_option pp.all true` run once a Mathlib build exists.
 
 ---
@@ -762,8 +788,12 @@ something outside my scope.
   disambiguated consumers by whether a leading `period` argument is passed, which is
   sound but is an argument-arity heuristic, not elaboration.
 * **The interpolation inequality itself** (`SobolevInterpolation.lean:17`) and the
-  **integral/FTC machinery** (`ContinuousTimeIntegral.lean`) — delegated, results pending
-  at the time of writing (Escalations 2 and 3).
+  **integral/FTC machinery** (`ContinuousTimeIntegral.lean`) — delegated and **returned
+  clean** (Escalations 2 and 3, both resolved). I did not re-derive them myself, so my
+  confidence there is one level of hearsay removed, though both children quoted
+  `file:line` and named the Mathlib lemmas. Both children also note they could not build,
+  and the endpoint child read Mathlib signatures at a **v4.33.0** checkout while the repo
+  pins **v4.34.0-rc2** — so the FTC-1 signature it verified could in principle differ.
 * **`SmoothL2Field` internals.** I took `field`, `smooth`, `toLp`, `jetLp`,
   `translation_contDiff`, `iteratedFDeriv_translation_eq`, `toLp_ae` on faith as fields
   and proved lemmas of a real structure. Also `ordinarySobolev`/`ordinarySobolev_value`/

@@ -704,3 +704,52 @@ self-similar base rather than an artifact of the correction series.
 **Dispatched:** worker `ns-stage-estimates`, told explicitly to check whether this cluster's
 stagewise estimate is proved by construction or is another never-proved `hres`-style hypothesis
 like the one `jetrate-callsites` found, and to hunt an asserted `J → ∞` / `t → 1⁻` interchange.
+
+---
+
+## W13 `euler-interpolation` — both remaining Euler limit steps are proved — no gap
+
+Report: `workers/euler-interpolation.md`. 18 in-scope declarations read line-by-line (10 in
+`SmoothFieldSobolevTime.lean`, 8 in `SobolevCauchyInterpolation.lean`): 16 OK, 2 OK-with-remark,
+**0 UNCLEAR, 0 KERNEL-RISK, 0 SUSPICIOUS**; two children added 13 + 33 OK. Both key lines are
+in-cone, and the 4 out-of-cone rows it checked are genuinely unused.
+
+- The **endpoint upgrade** (`SmoothFieldSobolevTime.lean:96` via `:86`) involves no one-sided
+  derivative gymnastics: it delegates to `SeparatingTimeDerivative.lean:49`, which (a) proves
+  `f t = f 0 + ∫₀ᵗ g` on the **closed** `Icc` by Mathlib's FTC-2
+  (`integral_eq_sub_of_hasDerivAt_of_le`, needing only an `Ioo` derivative plus closed-interval
+  continuity), (b) differentiates the integral by FTC-1 (`integral_hasDerivAt_right`, two-sided at
+  every real `t`), (c) transfers by `congr_of_mem`. Integrability and `CompleteSpace` are proved.
+  This also resolves a predecessor's escalation: the `Ico`-including-`0` derivative that the
+  Gronwall step needs **is** supplied.
+- The **interpolation** (`SobolevCauchyInterpolation.lean:78`) is **not** compactness and is not
+  used as such — no Rellich-Kondrachov anywhere. It is Landau/Kolmogorov
+  `|∂f|² ≤ |f|·|∂²f|` (`word_square_le_parent`, `SobolevInterpolation.lean:17`) by genuine
+  integration by parts plus Cauchy-Schwarz, with `n + 2 ≤ s` tight. It converts an **L²-Cauchy**
+  input into full-sequence Cauchy at every order, which is exactly what the consumer
+  (`OrdinarySmoothLimit.lean:31`) wants. Shape matches.
+- Kernel surface in scope: **zero** `decide`, `.rec`, `termination_by`, metaprogramming, or
+  4-digit numerals.
+- Burden moved again, and this is now the Euler half's last analytic frontier: the route is
+  Cauchy-based, so the weight sits on the **energy/Gronwall estimates**
+  (`Euler/OrdinaryEulerL2Stability.lean:136`, `Euler/HigherEnergy.lean:101`).
+  **Dispatched:** worker `euler-gronwall`, told specifically to hunt a constant that secretly
+  depends on the solution being estimated — which would turn an a-priori estimate into a tautology.
+
+## Coverage, stated honestly — `COVERAGE.md`
+
+New ledger. Restricting to files containing at least one in-cone theorem: **2,306 files, 27,753
+in-cone theorems**. After 13 worker threads and 40 reports, **395 files are cited by some report,
+holding 6,808 in-cone theorems = 24.5%** — and "cited" is a deliberately generous upper bound,
+since some reports name a file to say they read three lines of it.
+
+What that 24.5% contains is the part that matters most: both deliverable spines end to end, all
+14 inductives, all 12 `termination_by`, all 5 explicit recursors, all 210 `decide` sites and all
+121 large numerals. What it does **not** contain is the Navier-Stokes **estimate mass** — the
+long `nlinarith`/`calc` files. For kernel trust those are the lowest-risk declarations in the
+artifact (no inductives, no recursors, no `decide`, numerals of a few digits); for mathematical
+correctness they are exactly where an off-by-one in a constant would hide.
+**Dispatched:** worker `ns-correction-step` on the top of that queue
+(`CorrectionStep.lean`, 9,849 lines / 264 in-cone theorems; then `InitialPhysicalData.lean`, 167),
+with instructions to sample by *proof pattern* rather than by prefix and to state exactly what was
+read versus sampled.
