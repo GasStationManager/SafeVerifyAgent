@@ -544,3 +544,67 @@ manufacture an `Evolution` that need not satisfy the Euler equation, the BKM the
 - Risk moved one level down to two **unaudited** files: `SmoothFieldSobolevTime.lean:96` (the
   `Icc`-endpoint upgrade of `time_law`) and `SobolevCauchyInterpolation.lean:78` (an
   interpolation step standing in for Rellich compactness).
+
+---
+
+## A6 — SCOPE OF THE ACCEPTED NAVIER-STOKES CLAIM: `u₀ = 0`, and a compactly supported force
+
+Verified by the parent directly at `NavierStokes/ComparatorR3Theorem.lean:33-35`
+(`option_C_of_compact_candidate`):
+
+```lean
+  refine ⟨fun _ => 0, toComparator (rescaledForce ν f),
+    zero_initial_condition_decay, hFd, ?_⟩
+```
+
+So the exhibited initial velocity is **identically zero**, and the exhibited force is
+**compactly supported in space and in time** (`h.force_support`, `h.force_time_support`, :29-32),
+from which `ForceConditionDecay` is discharged by
+`CompactSpatialForceDecay.forceConditionDecay` (:30).
+
+This is not a defect: the challenge is Fefferman's alternative **(C)/(D)**, which explicitly
+permits an external force satisfying condition (5), and the previous audit already recorded that
+the two *existence* alternatives (A)/(B) were deleted from the copied statement because OpenAI
+does not claim them. But it is the single most quotable scope fact in the artifact and it belongs
+in any summary:
+
+> what is proved is **breakdown from rest under a compactly supported external force**, not
+> blowup of unforced Navier-Stokes.
+
+It also relocates the mathematical weight. Two of the three obligations I had flagged as the
+"real content" after the force-is-the-residual discovery are cheap: the force's polynomial decay
+follows from compact support, and `u₀`'s decay is `zero_initial_condition_decay`. What remains
+load-bearing is (i) smoothness of the glued force **through** `t = 1`, (ii) the construction of
+the candidate flow whose response blows up, and (iii) uniqueness. Worker `ns-force-and-blowup`
+has been redirected accordingly.
+
+## W10 `ns-uniqueness` — the non-existence is NOT a subclass claim — 224 OK, 0 kernel-risk
+
+Report: `workers/ns-uniqueness.md` (+ three children: pressure, flux, estimates). 67 files /
+13,049 lines surveyed; OK 224, UNCLEAR 2 (cosmetic), SUSPICIOUS 0, KERNEL-RISK 0.
+
+This was the other place a non-existence claim could quietly shrink, and it does not:
+
+- `candidate_global_agrees_before_one` (`NavierStokes/R3/WholeSpaceUniqueness.lean:104`) takes
+  **only** `CandidateProperties ν u p f K` plus **one** `GlobalFiniteEnergySolution ν f`, and
+  yields agreement on **all** of `[0,1)`.
+- That competitor class is the challenge's, with nothing added. **Parent-verified independently**
+  at `NavierStokes/R3/ProblemStatement.lean:125-135` and
+  `NavierStokes/R3/ComparatorBridge.lean:48-74`: `globalSolutionOfComparator` builds every field
+  of `GlobalFiniteEnergySolution` from the challenge structure's own fields — `energy_bounded`
+  from the challenge's `integrable` + `globally_bounded_energy`, the PDE from
+  `comparator_equation_Rn`, the divergence from `h.div_free` — and the structure's docstring
+  states, truthfully, "there are no support, periodicity, pressure-growth, derivative-growth, or
+  energy inequality assumptions on a competitor".
+- General `ν` reduces to `ν = 1` by a **space-only** rescale with an exact energy factor
+  (`ViscosityScaling.lean:182,141,24`, `SpatialEnergyScaling.lean:27`).
+- The comparison is a Gronwall estimate on a **closed** `[0,T]` with `T = t < 1`, never at
+  `t = 1`; dissipation is absorbed with `δ = 1/2`; the pressure flux is killed by `∇χ_R`
+  (`LocalizedTransport.lean:83-89`) rather than by assuming decay of the competitor's pressure —
+  which matters, because a competitor's pressure is only determined up to a function of `t`.
+- Kernel risk across those 67 files: **zero** `inductive`/`.rec`/`termination_by`/`WellFounded`/
+  metaprogramming, largest numeral 40, 6 trivial `decide`.
+- This worker **independently found and patched the same dot-notation gap** in my cone instrument
+  that `euler-cauchy` reported (their patch, without import scoping, gives 40,414/52,516; my
+  mark 3, with scoping, gives 38,076). Two workers finding the same instrument bug from
+  different directions is the strongest evidence in this audit that the fix was necessary.
