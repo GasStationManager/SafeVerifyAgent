@@ -2,7 +2,7 @@
 
 **Artifact:** `github.com/openai/NavierStokesAndEuler` @ `f9e8bc5b38b6e212696e8a30e3e91517af887bbd`
 **Auditor:** SafeVerifyAgent, coherence rung, 20 read-only worker threads + parent verification
-**Date:** 2026-09-16 — **DRAFT: two threads still open** (§Open)
+**Date:** 2026-09-16 — **DRAFT: one thread still open** (§Open)
 **Companion:** [`2026-09-15-openai-NavierStokesAndEuler.md`](2026-09-15-openai-NavierStokesAndEuler.md)
 audited the two challenge *statements*. This pass audits the *proofs*.
 
@@ -107,9 +107,12 @@ step, and its two unfolding lemmas are one iota step at symbolic `n`.
 Every measurement above concerns *computation*. A `rfl` proof is a different obligation — the kernel
 must decide a **defeq**, which is where structure eta lives (the previous audit's E2 reduced to
 exactly that), where `Fin`/`Matrix.cons` literal indices run through `Nat` comparison, and where an
-iota chain at a closed argument would appear. So it was measured: **529 in-cone theorems are proved
-by a bare `rfl`**, median statement 139 characters, max 629, and only **7** name a recursive construct
-in their statement. Classification of the largest sites is one of the open threads.
+iota chain at a closed argument would appear. So it was measured: **541 in-cone theorems are proved
+by a bare `rfl`** (1,358 across the whole artifact), max statement 709 characters. Classified: only 19
+touch a recursive definition and each is **≤ 1 iota step at a symbolic or base-case argument**, so the
+total iota exposure of the artifact's `rfl` proofs is **≤ 19 steps with zero chains**; no `Fin`/
+`Matrix.cons` literal index is ever resolved; exactly one site needs structure eta. This is the
+largest kernel surface in the artifact, and it is small.
 
 ---
 
@@ -208,7 +211,16 @@ information.
    empty branch gives `oscillation = 0`, so every wave estimate could hold because there are no waves.
    Sound, but it would make the wave tower decoration: the blowup is carried by the base field
    (`NavierStokes/BaseResidual.lean:104-114`). *In flight: `ns-index-nonempty` — ask for one label.*
-3. **The 529 `rfl` sites**, classified by what the kernel must actually unfold. *In flight: `rfl-defeq`.*
+3. ~~The 529 `rfl` sites.~~ **CLOSED, and the count was 541.** Of the 541 in-cone bare-`rfl`
+   theorems, only 19 mention any of the artifact's 87 recursive definitions, and each of those is a
+   base case at a closed `0`/`[]` or a `succ`/`cons` lemma at a **symbolic** argument: **≤ 1 iota step
+   each, ≤ 19 in total, zero iota chains**. Three statements contain a literal ≥ 10 (real
+   coefficients); `![…]` appears twice and both are compared structurally with **no index applied**, so
+   the `Fin`/`Matrix.cons` route into vector (2) is never taken. Zero `Acc.rec` steps, including in the
+   well-founded files. Exactly **one** site requires `Prod` structure eta
+   (`NavierStokes/LocalSignedRequest.lean:523`) — the kernel feature E-A3 reduces to, now with a named
+   witness. Everything else is projection of structure literals, delta of non-recursive definitions,
+   beta/zeta, and proof irrelevance; the long statements are long *argument lists*, not computation.
 4. ~~A quoted vs proved exponent.~~ **CLOSED.** The packet label bound's `k^80` is **chosen, not
    derived** — the ledger adds to `6q+8` (= 44 at `q = 6`), and the jump to `10(q+2) = 80` is one
    `pow_le_pow_right₀` step (`Euler/SobolevSourceExponent.lean:73`) needing only `1 ≤ k`. That

@@ -178,6 +178,9 @@ The real cost of this style is epistemic, not computational: 218 `*_apply` lemma
 structure literals mean a human reviewer cannot see *why* two sides agree without re-running the
 elaborator, which is exactly the situation in which a mis-stated field would go unnoticed.
 
+(Task A ranks 9-25 and Task C are in the delegated sections further below; the verdict counts and
+bottom line are at the end of this file.)
+
 ## Escalations
 
 Ranked. None of these is a kernel-soundness alarm; they are the places where an expert's answer
@@ -207,6 +210,13 @@ would change my confidence.
   same regex family (statements containing `:=` inside named arguments such as `(B := B)`, or
   declarations preceded by `omit … in`)? *What would settle it:* re-run the sibling censuses
   (`SITES_decide.md`, `SITES_wf_fix.md`, `BIGNUM_SITES.md`) with a bracket-depth-aware parser.
+* **E5 — `NavierStokes/LocalSignedRequest.lean:523` (`physicalBarSigma_profile`).** The only site in
+  the whole audited set whose acceptance needs **structure eta** (`x.2.1 ≡ (x.2.1.1, x.2.1.2)` for a
+  `Prod`, through `chartQ`/`qCoord`/`chartInput`, `NavierStokes/MeanRankUpdate.lean:775` and
+  `NavierStokes/PhysicalCoordinateBounds.lean:35`). *Question:* is eta-for-structures the feature the
+  earlier escalation A3 was about, and is it being relied on anywhere in a form stronger than
+  `Prod` eta? *What would settle it:* a `set_option pp.all true` `#check` of both sides plus a scan
+  of the whole in-cone set for `rfl` lemmas whose two sides differ by a projection/pair pattern.
 * **E4 — `Euler/CylinderSobolevDerivatives.lean:77` (`value_truncateOperator`).** The `rfl` holds
   because `truncateIndex (emptyWord q)` and `emptyWord (q+1)` are the same `⟨⟨0, _⟩, Fin.elim0⟩`
   literal up to a `Prop` component. *Question:* is `Fin.elim0` the *same* term on both sides, or is
@@ -357,3 +367,57 @@ equation". The same definitional blindness underlies rank 15
 coefficient value because the value function never reads that field). This is *not* junk-value abuse
 and it is the right structure for `∂_r p = gr`, but it is the clearest example in my scope of a
 `rfl` lemma whose **name claims more than its statement**.
+
+## Task A continued — ranks 18-25 (delegated read-only child `rfl-tail`; full text in `_scratch-rfl-tail.md`)
+
+All 8 verdicts **OK**; no KERNEL-RISK, UNCLEAR or SUSPICIOUS.
+
+| # | name | file:line | mechanism | class | est. | verdict |
+|---|------|-----------|-----------|-------|------|---------|
+| 18 | `parameters_raw` | `NavierStokes/ActualSignedStageControls.lean:111` | projections of the parameter literal; the only `Fin` is the **variable** column `l.2` | (i)+(ii) | ~24 | OK |
+| 19 | `fullCopy_slot` | `NavierStokes/ActualPrimaryBounds.lean:1128` | 3 delta + one `Prod.snd`; the `-` is `Nat` subtraction of **open** terms, never computed | (i)+(ii) | 4 | OK |
+| 20 | `complexCopyPressure_eq_parts` | `NavierStokes/ParticularWaveBounds.lean:1592` | 1 delta + 8 beta | (ii) | 9 | OK |
+| 21 | `physicalBarSigma_profile` | `NavierStokes/LocalSignedRequest.lean:523` | needs kernel **Prod structure eta** (`x.2.1 ≡ (x.2.1.1, x.2.1.2)` through `chartQ`→`qCoord`→`chartInput`, `MeanRankUpdate.lean:775`, `PhysicalCoordinateBounds.lean:35`) plus a CLM/`DFunLike` coercion walk; `Real.sqrt`, `*`, `/` are compared symbolically and never evaluated | (i)+(ii)+**(vi)** | ~50-90 | OK |
+| 22 | `initialized_reconstructed` | `NavierStokes/CorrectionInitialization.lean:1193` | same idempotence pattern as rank 16 | (i)+(ii) | ~40 | OK (same name/scope note) |
+| 23 | `growthCoefficient_eq` | `Euler/PacketCorrectionGrowth.lean:29` | **not** an arithmetic identity: same head `energyConstant`, 11 arguments matched pairwise after delta + zeta (`MetricBudget.growth0/growth1/multiplier`, `Euler/CorrectionEnergyData.lean:147-158`, against the `let`-bound body at `PacketCorrectionGrowth.lean:20-27`) | (i)+(ii)+zeta | ~15 | OK, but note the hypotheses `κ hκ Z G q` are **dead parameters** of the statement |
+| 24 | `afterParticular_pressure` | `NavierStokes/ActualCycleCoherence.lean:492` | projections of the stage literal | (i)+(ii) | ~27 | OK |
+| 25 | `stateDebt_eq_sourceDebt` | `NavierStokes/MeanChartCompatibility.lean:1258` | projections + a `Pi`/`SMul` instance-unfolding chain | (i)+(ii) | ~25-60 | OK |
+
+Two additions this slice makes to the global picture:
+
+* **Structure eta is genuinely load-bearing at least once** (rank 21): the kernel must accept
+  `x.2.1 ≡ (x.2.1.1, x.2.1.2)` for a `Prod`. This is exactly the kernel feature the audit's earlier
+  escalation A3 came down to. It is a standard, specified Lean 4 kernel feature (eta for structures),
+  it is used here in its simplest form on `Prod`, and it is *cheap*; but it is the one place in my
+  scope where acceptance depends on a kernel feature beyond delta/beta/proj/iota/proof-irrelevance.
+* **Dead hypotheses** (rank 23): `growthCoefficient_eq` binds `κ hκ Z G q` which do not occur in the
+  equation's two sides after unfolding (they only pick out *which* `sourceMetricBudget` is named on
+  the RHS, and every choice gives the same constant). Harmless, but it is the signature of a lemma
+  that was generalized past what it needs, and such statements are where a reader over-reads scope.
+
+## Verdict counts (declarations examined individually)
+
+| verdict | count |
+|---------|-------|
+| OK | **78** (in-cone; + 2 out-of-cone bonus sites from the wf child) |
+| UNCLEAR | 0 |
+| KERNEL-RISK | 0 |
+| SUSPICIOUS | 0 |
+| of which "OK + name-claims-more-than-statement note" | 3 (`CorrectionInitialization.lean:1193,1327`; `AxisymmetricResidualGrouping.lean:152`) |
+| of which "OK + escalation question" | 4 (E1-E4) |
+
+Breakdown of the 78: my ranks 1-8 (8) + the 7 task-B sites (6 new) + the 19 recursive-mention
+screen (14 new) + the 5 `Matrix`/`![` sites (5) + `SlowRecursion.lean:128` and `:974` (in the task-B
+and wf sets) + mid child ranks 9-17 (9) + tail child ranks 18-25 (8) + wf child's 28. The remaining
+~463 in-cone sites were covered only by the three systematic text screens.
+
+## Bottom line
+
+On this worker's slice of the threat model the artifact is **clean and, more importantly, cheap**:
+541 in-cone bare-`rfl` theorems whose combined kernel obligation is projection of structure
+literals, delta of non-recursive definitions, beta/zeta, proof irrelevance, one `Prod` eta, **≤19
+single iota steps in total**, and **no `Nat` literal arithmetic whatsoever**. There is no place where
+a kernel bug in recursor reduction, `Acc.rec` unfolding, or GMP `Nat` arithmetic could be doing work
+for the author, because that work is never requested. The residual concerns are epistemic
+(tactic-built structure literals, index-type-collapsing defeq, names that promise more than the
+statements deliver) and one inventory-quality concern (E3).

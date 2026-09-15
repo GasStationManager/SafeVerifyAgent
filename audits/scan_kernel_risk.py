@@ -111,6 +111,57 @@ FEATURES = (
 )
 
 
+
+# --- the defeq workload -----------------------------------------------------
+# A `rfl` proof is not a COMPUTATION marker, so none of the regexes above see
+# it, and it is the one obligation the kernel must discharge by deciding a
+# DEFINITIONAL EQUALITY: delta, beta, iota, projection, and structure eta.
+# On openai/NavierStokesAndEuler this turned out to be the largest kernel
+# surface in the artifact (541 in-cone theorems) while every explicit
+# computation marker was tiny -- so it gets measured.
+_OPEN, _CLOSE = "([{\u2983\u27e8", ")]}\u2984\u27e9"
+
+
+def split_decl(body):
+    """(statement, proof, kind) for one declaration body.
+
+    Splits at the first TOP-LEVEL `:=`, standalone `by`, or standalone `where`,
+    skipping bracketed regions. Both refinements were forced by measurement:
+    a naive "first `:=`" split mis-reads a named argument (`(B := B)`) as the
+    start of the proof, and it reads a structure-instance proof
+    (`theorem foo : P where\n  field _ := rfl`) as a `rfl` proof. Those two
+    bugs cost 15 false negatives and 3 false positives out of 541 -- found by
+    an auditor who counted independently and disagreed.
+    """
+    i, depth, n = 0, 0, len(body)
+
+    def standalone(tok, i):
+        if not body.startswith(tok, i):
+            return False
+        before = i == 0 or not (body[i - 1].isalnum() or body[i - 1] == "_")
+        j = i + len(tok)
+        after = j >= n or not (body[j].isalnum() or body[j] == "_")
+        return before and after
+
+    while i < n:
+        c = body[i]
+        if c in _OPEN:
+            depth += 1
+        elif c in _CLOSE:
+            depth -= 1
+        elif depth == 0:
+            if body.startswith(":=", i):
+                return body[:i], body[i:], "term"
+            if standalone("by", i):
+                return body[:i], body[i:], "tactic"
+            if standalone("where", i):
+                return body[:i], body[i:], "where"
+        i += 1
+    return body, "", "none"
+
+
+_BARE_RFL = re.compile(r":=\s*(?:by\s+)?rfl\b")
+
 def lean_files(root):
     for base, dirs, files in os.walk(root):
         dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
@@ -168,8 +219,16 @@ def main() -> int:
                 sites[name].append((rel, ln, srclines[ln - 1].strip()[:160]))
         for kind, dname, ln, body in parse_decls(text):
             kinds[kind] += 1
+            stmt, proof, pkind = split_decl(body)
+            bare_rfl = (kind in ("theorem", "lemma") and pkind == "term"
+                        and bool(_BARE_RFL.match(proof.strip())))
+            if bare_rfl:
+                counts["bare_rfl_proof"] += 1
+                sites["bare_rfl_proof"].append(
+                    (rel, ln, f"{dname}  [statement: {len(stmt.strip())} chars]"))
             row = {"file": rel, "kind": kind, "name": dname, "line": ln,
-                   "lines": body.count("\n")}
+                   "lines": body.count("\n"), "stmt_chars": len(stmt.strip()),
+                   "proof_kind": pkind, "bare_rfl": int(bare_rfl)}
             for fname, rx in feat_rx:
                 row[fname] = len(rx.findall(body))
             rows.append(row)
@@ -184,6 +243,12 @@ def main() -> int:
         where = sorted({s[0] for s in sites[name]})
         print(f"  {flag} {name:16} {n:6}  in {len(where)} file(s)"
               + (f": {where[:2]}" if where else ""))
+    print(f"\n=== DEFEQ WORKLOAD ===\n     bare_rfl_proof   "
+          f"{counts['bare_rfl_proof']:6}  theorems proved by `rfl` alone")
+    print("  The kernel must decide these by DEFINITIONAL EQUALITY, which is "
+          "where structure eta,\n  `Fin`/`Matrix.cons` literal indices, and an "
+          "iota chain at a closed argument would\n  appear. No computation "
+          "marker sees them. Sorted sites: SITES_bare_rfl_proof.md")
     print("\nA marker is a place to LOOK, never a verdict: `decide` over `Fin 4` "
           "and `decide` over a 40-digit numeral are the same marker.")
 
@@ -195,7 +260,7 @@ def main() -> int:
             w.writeheader()
             w.writerows(rows)
         print(f"\nwrote {inv}  ({len(rows):,} rows — the coverage ledger)")
-        for name, _ in MARKERS:
+        for name, _ in list(MARKERS) + [("bare_rfl_proof", "")]:
             if not sites[name]:
                 continue
             p = os.path.join(args.outdir, f"SITES_{name}.md")

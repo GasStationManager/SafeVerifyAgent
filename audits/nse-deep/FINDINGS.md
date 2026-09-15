@@ -1212,3 +1212,53 @@ Report: `workers/ns-nondegeneracy.md` (+2 children). 41 declarations line-by-lin
   one-sided Whitney theorem). Cross-closed.
 - Kernel: zero metaprogramming/`inductive`/`Acc.rec`/`termination_by`; three one-digit `decide`; the
   largest literal (100,000) is a **real**, not a `Nat` (`SignedMeanGain.lean:463`).
+
+---
+
+## W24 `rfl-defeq` — the defeq workload is benign and BOUNDED; and my census was wrong by 12
+
+Report: `workers/rfl-defeq.md` (+3 children). 78 declarations examined: **OK 78, 0 UNCLEAR,
+0 KERNEL-RISK, 0 SUSPICIOUS**. This closes open thread 3, and it is the strongest single result of the
+pass, because it bounds the one kernel surface that no computation marker can see.
+
+**The bound.** Screening all in-cone bare-`rfl` statements against the repository's **87 recursive
+definitions**: only **19 mention any of them**, and every one of those is either a base-case lemma at a
+closed `0`/`[]` or a `succ`/`cons` lemma at a **symbolic** argument. So each is **≤ 1 iota step**,
+**≤ 19 in total, and there are ZERO iota chains** anywhere in the artifact's `rfl` proofs. Further:
+
+- only **3** statements contain a literal ≥ 10, and those are real coefficients (12, 10) — no `decide`,
+  no `Nat.pow`/`div`/`mod`;
+- `![…]` appears in **2** statements and both are compared **structurally with no index applied**, so
+  there is **no `Fin`/`Nat` literal index resolution anywhere** — the `Matrix.cons` route into vector
+  (2) is simply not taken;
+- the mechanism everywhere else is projection of `where`/`{x with}` literals, delta of
+  **non-recursive** defs, beta/zeta, and **proof irrelevance**. The long statements are long
+  *argument lists*, not computation: the 657-char champion costs on the order of 10² head reductions.
+- Task C answered **no** for all 28 `rfl`s in the well-founded files:
+  `NavierStokes/SlowRecursion.lean:974` is a `rfl` *about* `WellFounded.fix`, but `n` is symbolic so
+  `Nat.lt_wfRel.wf.fix … n` stays neutral on both sides and the real obligation is one `Subtype`
+  projection. **Zero `Acc.rec` steps.**
+- Only **one** site needs `Prod` structure **eta** (`NavierStokes/LocalSignedRequest.lean:523`) — which
+  is the exact kernel feature escalation A3 reduced to, now with a single named witness instead of a
+  general worry.
+
+**And it corrected my instrument, for the sixth time this session.** My census said 529; the true count
+is **541**. My splitter took the first `:=` in the body, which mis-reads a **named argument**
+(`(B := B)`, `(h := …)`) as the start of the proof and mis-reads a **structure-instance proof**
+(`theorem zero : P where` with fields `value _ := rfl`) as a `rfl` proof — 15 false negatives
+(including the true rank 1 and 2 by statement length,
+`NavierStokes/ActualParticularPotentialCoherence.lean:106` at 709 chars and
+`ActualCurrentParticularPhysical.lean:112` at 639) and 3 false positives.
+
+Fixed: `audits/scan_kernel_risk.py` now carries a bracket-depth-aware `split_decl` that splits at the
+first **top-level** `:=` / standalone `by` / standalone `where`, and the scanner reports the defeq
+workload as a first-class measurement (`bare_rfl_proof`, with `SITES_bare_rfl_proof.md`, plus
+`stmt_chars`/`proof_kind`/`bare_rfl` columns in `INVENTORY.csv`). Re-derived independently after the
+fix: **541 in-cone — exact agreement with the worker** — and 1,358 across the whole artifact.
+`RFL_SITES.csv` regenerated; the count of recursion-touching statements rises 7 → 12 with the fix.
+
+Its remaining escalations, all low: `PrimaryTargetBounds.lean:631` (both sides tactic-built structure
+literals plus proof irrelevance), `CorrectionInitialization.lean:1012` (defeq across index types
+`Unit` vs `ℕ`), `CylinderSobolevDerivatives.lean:77`, and two name-overclaims
+(`CorrectionInitialization.lean:1193,1327` — `reconstructState` is definitionally idempotent for
+*every* state, so the lemma says less than its name).
