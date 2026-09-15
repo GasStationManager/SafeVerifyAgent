@@ -884,3 +884,42 @@ recursion-touching sites into (i) structure-literal projection, (ii) beta/delta 
 `def`s, (iii) one iota step on a symbolic constructor, (iv) an iota chain at a closed argument,
 (v) `Fin`/`Matrix.cons` literal index resolution, (vi) structure eta — and to re-derive the 529
 count independently.
+
+---
+
+## W16 `ns-stage-estimates` — the NS residual-jet predicates are discharged by a real induction
+
+Report: `workers/ns-stage-estimates.md`. ~160 declarations tabled: OK 148, UNCLEAR 5 (all
+delegated), **0 KERNEL-RISK, 0 SUSPICIOUS**.
+
+This was the last structural doubt on the NS side, and it is **not** the dangling-hypothesis pattern
+that `jetrate-callsites` found elsewhere in this repo:
+
+- `StageEstimates.finite_residual` (`MixedCandidateAssembly.lean:62`) *is* a hypothesis field, but
+  on the **live** path it is discharged by a real theorem: `GluedStageEstimates.lean:436` →
+  `ActualCycleResidualBounds.finite_residual_rates:1190` → `Invariant.residual_jetRate:1158` +
+  `native_residual:845`, fed by a genuine **`Nat` induction** (`ActualCyclePreservation.state_runInvariant:826`,
+  base `:773`, step `:817`). With `gain h j = h·j/10` (`ActualIterationLedger.lean:29`),
+  `σ 0 = 1/5`, `σ (J+1) = σ J + 1/10`, the divergence `gain → ∞` is then pure arithmetic.
+- `VanishingJointJets` (`JointResidualLimits.lean:84`) is the **strong** form — jets tend to
+  **zero**, and **jointly**, along `𝓝[openPast 1] (1,0) = 𝓝[<] 1 ×ˢ 𝓝 0`. `boundaryLimits:120` is
+  *defined* to be `0` at `x = 0`, which would be the junk-value shortcut, but `boundaryLimits_joint:130`
+  **re-proves** the limit from `hzero`, so the definition is not what carries it.
+- **No interchange of limits and no assumed summability**: `J` is chosen *after* `(m,r)`
+  (`DiagonalResidual.residual_jetRate_of_stages:196`) with an exact `abel` identity and the losses
+  are `J`-free; `potentialSum` is a `tsum` (`SolenoidalDiagonal.lean:37`) whose summability is
+  **proved** (`summable_cutStage:69`) and which is locally a **finite** sum wherever `q > 0`
+  (`eventually_zero_tail:46`). The worker's own words: "I disagree loudly in the negative here: I
+  expected a hole and found none."
+- It also corrected my brief: the consumer I cited
+  (`MixedCandidateAssembly.candidate_of_finite_stages:130`) is **out of cone / dead**; the live twin
+  is `GermCandidateAssembly.lean:164`. Both call sites `:1090/:1100` are in-cone with all hypotheses
+  available, and `hq := le_rfl` is genuine (`qbig := Q (firstBand)`, `qbig > 0`).
+- Kernel surface in its files: **zero** `decide`/`native_decide`/`termination_by`/`WellFounded`/
+  `.rec`/`inductive`/metaprogramming/`axiom`/`sorry`; 4 structural `Nat` inductions, exactly one
+  1-step recursor `whnf` (`ActualCyclePreservation.lean:153-163`); largest literal 100,000.
+
+**Dispatched:** worker `ns-analytic-step` on its top escalation — `CorrectionAnalyticStep.step`'s
+**+1/10 per cycle**, which is unread and on which the entire quantitative NS claim rests, with the
+specific instruction to check that cycle `n`'s *output* meets cycle `n+1`'s *input* field by field
+(the way an induction like this fails is by not chaining).
