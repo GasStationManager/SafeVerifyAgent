@@ -151,3 +151,237 @@ Parent-read so far: the two challenge files, both definition copies, `Euler/Solu
 recursor sites (locations verified, bodies delegated).
 **Six workers in flight** (see `workers/`): `jet-inductives`, `expr-inductives`,
 `decide-bignum`, `wf-recursion`, `euler-spine`, `ns-spine`.
+
+---
+
+## W1 `expr-inductives` — the four recursive syntax trees in the NS half — OK (0 kernel-risk)
+
+Report: `workers/expr-inductives.md` (36 KB). Scope: `ClosedIntervalJetAlgebra.lean` (293 l),
+`GenericDifferentialPolynomial.lean` (283 l), `FlatKernelBounds.lean` (442 l),
+`GenericFactorSupport.lean` (139 l) — **1,157 lines / 103 declarations, all read
+line-by-line**. Verdicts: 102 OK, 1 UNCLEAR-then-OK, **0 KERNEL-RISK, 0 SUSPICIOUS**.
+
+**The load-bearing negative: no proof by reflection.** All four trees
+(`PolynomialExpression` :244, `Expression` :185, `Expr` :76, `FieldFactor` :14) are plain,
+direct-recursive, **non-nested, non-indexed, non-mutual**; every theorem about them is
+`induction … with` yielding *propositional* (in)equalities. The kernel therefore checks a
+`rec`-shaped *term* and never has to *reduce* a recursor applied to a closed tree. The only
+`rfl`s are single-iota-step unfoldings at variable-argument nodes
+(`GenericFactorSupport.lean:42,54,58`). Zero `decide`, zero `deriving`/`DecidableEq`, zero
+`termination_by`, hence no `Acc.rec` anywhere in scope; **the largest numeral the kernel must
+evaluate in these 1,157 lines is `3`** (`Expr.pow 3` at `FlatKernelBounds.lean:111,112,334`).
+All four files are `noncomputable section`, so no compiled evaluator exists either.
+
+Parent spot-checks (independent, on the original files): `decide` = 0, ≥7-digit numerals = 0,
+`termination_by` = 0, `deriving` = 0 in all four files; `FactorSupportAt`
+(`GenericFactorSupport.lean:106-114`) is exactly as described — an indexed **`Prop`** family
+with 2 constructors (so small elimination only, and its one use at `:133` has a `Prop` goal),
+whose `mul` constructor demands the property of **both** factors, i.e. **conservative, not
+over-strong**, and non-vacuous via `factor_of_tsupport` :116. Confirmed.
+
+Architecturally this is the *right* way to use a syntax tree in a proof: the symbolic
+operations (`Expr.diff` :106, `Expr.jetOrder` :219) are **validated against real analysis**
+(`Expr.hasDerivAt_eval` :116, `jetOrder_diff_le` :306), never trusted. The worker re-derived
+the three kernel derivative formulas and the `2^k` constant chain in `Bound.mul` :58 by hand
+and they agree.
+
+### New escalations from W1
+
+- **W1-E1 — `NavierStokes/SeedHandbackJets.lean:94-108` `stocks_formulas`** *(the only
+  reflection-shaped site in the cone)*. The one consumer that builds **concrete** trees
+  (~42 constructor nodes, 34 `input` leaves, `ι = Fin 19`, `Matrix.cons` vectors of length 19
+  and 12) and closes four closed-form identities with
+  `simp […, PolynomialExpression.eval, …]` → `repeat' constructor <;> ring_nf` → a bare `simp`.
+  Magnitude is still small (tens of iota steps, `Nat` literals ≤ 19), and the worker
+  hand-derived the four formulas and says the trees encode exactly the stated ones. Open:
+  tactic robustness, and lines 110-393 (the `Fin 19` index bookkeeping) were not read.
+  **Dispatched:** worker `seedhandback`.
+- **W1-E2/E3/E5 — the consumer side.** `Expression.eval`'s `directional` node
+  (`GenericDifferentialPolynomial.lean:202`) is `fderiv`, junk-`0` off differentiability;
+  `polynomial_jetRate_of_stages` :247 concludes a rate for **every real `n`** and imports all
+  its strength from its hypothesis `hres` :261; `approximation_eval` :217 is a `def` built by
+  tactic `induction` (i.e. `Expression.rec` into `Type`) whose only current consumer applies it
+  to a *variable* tree. In-scope the smoothness side conditions are always supplied, but the
+  call sites (`GenericSupportLocalCoefficients.lean:151-214`, `GenericTupleSupport.lean`,
+  `GenericSupportLocalSummation.lean`, `GenericSummationRealization.lean`) were out of scope.
+  **Dispatched:** worker `jetrate-callsites`, also asked to check that `JetRate`'s filter never
+  escapes the open set `U` on which smoothness is assumed.
+- **W1-E4 (low)** `ClosedIntervalJetAlgebra.lean:204-209` uses `iteratedDerivWithin_succ'`
+  with no `UniqueDiffOn` argument while every neighbour passes one — a one-`#check` question,
+  and the file elaborates, so it is a formality.
+- **W1-E6 (low, docs)** `GenericFactorSupport.lean:103-105`'s docstring oversells the `mul`
+  constructor (claims support need not be shared; the constructor requires both factors to be
+  tracked). Conservative direction — cannot create unsoundness.
+
+---
+
+## The cone: a denominator for "theorem by theorem"
+
+New framework tool `audits/cone.py`. It builds a **name-level dependency graph** over the whole
+repository (declarations fully qualified through a `namespace`/`section` stack; a reference is
+any identifier token in a body that resolves to a declared name, exactly or by suffix) and
+computes what the four headline theorems reach:
+
+| | in cone | out |
+|---|---|---|
+| theorem | **22,643** | 15,860 |
+| def | 8,990 | 1,837 |
+| abbrev / structure / inductive / lemma | 864 / 623 / 14 / 28 | 35 / 44 / 0 / 0 |
+| instance | 1 | 1,577 |
+| **total** | **33,163** | 19,353 |
+
+Both error directions, because a reachability number is quotable: suffix matching
+**over**-approximates (`add` resolves to every `*.add`), which is the safe direction; and it
+**under**-approximates uses that are never written down — instance synthesis (hence the absurd
+1-of-1,578 instance count), the ambient `@[simp]` set, `gcongr`, `positivity`. 702 out-of-cone
+declarations carry an implicit-use attribute, and that number is the blind spot's size. So
+*out of cone* = *no named reference chain from the headline theorems*: strong triage, never a
+proof of dead code. Ledger: `CONE.csv`; `INVENTORY.csv` gains `fullname` + `onpath`.
+
+This is what makes "audited N theorems" meaningful: the denominator is 22,643, not 38,503.
+
+## W2 `jet-inductives` — `Euler/EulerProof.lean`, the two `Type`-valued jet families — 0 kernel-risk
+
+Report: `workers/jet-inductives.md`. 1,227 declarations in the file; **119 read line-by-line**
+(all of the jet block 3061-3480). OK 116, UNCLEAR 3, KERNEL-RISK 0, SUSPICIOUS 0.
+
+- `SpatialJet` :3064 and `CoefficientJet` :3073 are recursive and **doubly indexed** (both the
+  order `n` *and* the field/coefficient change at `succ`), with a **higher-order recursive
+  argument** (`lower : ∀ i, SpatialJet … n (derivatives i)`). Not nested, not mutual. Being
+  `Type`-valued is **forced, not gratuitous**: `sobolevNorm` :3093, `word` :3393 and
+  `levelNorm` :4697 recurse *into `ℝ`*, which a `Prop`-valued family could not support. No
+  large elimination (`Prop → Type`) anywhere.
+- The kernel *does* iota-reduce these recursors (:3212, 3265, 3374, 3403, 4722, 4880, 7943) but
+  always **one step on symbolic constructors** — there is no concrete jet literal in the file,
+  so no reduction chain of depth > 1.
+- All 7 `termination_by` measures are genuine (`word`/`levelNorm`/`boundLevel` measure the jet
+  order `s`; `n` would fail), and their bodies enter proofs only through the generated
+  **equation lemmas**, so the kernel never unfolds `Acc.rec` at closed arguments — the one
+  claim source reading cannot close (**W2-E1**, needs a build: `set_option diagnostics true`
+  and look for `WellFounded.fix`/`Acc.rec` in the unfolded-constant counters).
+- The junk convention `word = 0` past the jet order (:3397) is **fenced**: the lemmas with
+  mathematical content carry the guard (`word_hasDerivAt` :3413 needs `n < s`, `word_unique`
+  :4549 needs `n ≤ s`), and `sobolevNorm_eq_sum_words` :3458 plus `compactSmoothJet_sobolevNorm`
+  :7957 pin the jet norm to the classical Sobolev norm. Two *unguarded* conclusions
+  (`pressure_gevrey_majorant` :5120, `pressure_word_sum_majorant` :5170 conclude `∀ n` from
+  `∀ n ≤ s`) are **W2-E2**: harmless in-file, cross-file instantiation unchecked.
+- All 40 `decide` in the file are tiny (`m ≤ n ≤ 40`, `2 < 3`, `Even 6`); largest literal in
+  the file is 320,000,000. **W2-E3**: `productConstant` :3196 sums an `i`-independent term
+  inside `∑ i : Fin 4`, so the constant is silently 4× — cannot cause unsoundness (upper bound
+  only) but downstream budgets may quote a tighter constant than the definition supports.
+- Correction it made to my own summary: "0 `set_option`" is right but 25 `attribute` lines
+  exist; the two `attribute [local irreducible]` in this file hit `EulerSobolev.sobolevNorm`
+  :5472 (Schwartz), **not** the jet norm — and reducibility is elaborator-only, the kernel
+  ignores it. **W2-E4** asks the same of `attribute [local irreducible] Parent.child
+  initialParent` in 10 packet files.
+
+## W3 `decide-bignum` — vector (2) repo-wide — 210/210 classified, all OK
+
+Report: `workers/decide-bignum.md` (+ two child reports). **Vector (2) exposure is ~nil:**
+
+- The entire `decide` surface is `Nat.ble`/`beq`/`mod` on **1-4 digit** literals; the largest
+  numeral in any `decide` goal is **1000** (`Euler/ParentHistoryFrequencyGuard.lean:81`) and
+  208 of 210 are ≤ 40. No `Nat.pow`/`gcd`/`div`, no custom `Decidable` instance, no
+  `native_decide`.
+- The largest closed `Nat` the kernel evaluates **anywhere in the repo** is `5.0e17` — 61 bits,
+  **one machine word, never multi-limb GMP** — an `nlinarith` certificate at
+  `NavierStokes/PulseCone.lean:1017`. The one big power, `9^729`
+  (`Euler/ConstantCorrectionData.lean:146`), is **never normalised**: it is consumed by
+  `one_le_pow₀` with a symbolic exponent.
+- `Nat.choose`/factorial are never computed by the kernel; the only closed values are `0!`,
+  `C(0,0)` and `4! = 24` (`Euler/EulerProof.lean:12153-54`).
+- The only *load-bearing* `decide` is `sum_knownTerm` / `card_knownTerm`
+  (`Euler/PacketKnownDecomposition.lean:31,33`, `decide` at :36-41) over the 5-constructor
+  `deriving DecidableEq, Fintype` enum `KnownTerm` — hand-verified true (2+3·3+4 = 15; list
+  complete, no duplicates), so a recursor/`Finset` kernel bug **cannot** make them false.
+  *Parent addition:* my cone graph puts both of them **out of the cone with zero referencing
+  declarations**, so even that one is not load-bearing.
+- `Classical.propDecidable` as a local instance (4 files) **cannot** corrupt a `decide`:
+  `Classical.choice` is irreducible, so `decide` would fail to elaborate rather than compute.
+  The real risk in those files is a degenerate `else 0` branch on `if 0 < x.1.1`
+  (`NavierStokes/InitialPhysicalData.lean:368,376`) — a semantics question, not a kernel one.
+
+## W4 `wf-recursion` — vector (1), the non-structural half — 0 kernel-exploit
+
+Report: `workers/wf-recursion.md`. 7 files, 590 declarations, **241 read line-by-line**.
+OK 232, KERNEL-RISK 3 (all "theoretical, one iota step"), UNCLEAR 2, SUSPICIOUS 0.
+
+- Both hand-rolled well-founded sites use the **safe idiom**: `unfold; rw [WellFounded.fix_eq];
+  rfl` (`NavierStokes/SlowRecursion.lean:948-965`, `GlobalSlowProfiles.lean:907-911`). After the
+  rewrite `fix` sits in identical positions on both sides, so the `rfl` is one `Nat`-matcher
+  iota step **with `fix` opaque** — the kernel never reduces `Acc.rec`/`fixF` on a canonical
+  `Acc.intro`. `Nat.lt_wfRel` is core, not repo-defined.
+- The genuine risk in this vector was the **course-of-values junk default**, and it is
+  discharged: histories are padded with `0` (`SlowRecursion.lean:918-923`,
+  `GlobalSlowProfiles.lean:778-780`) or with the order-`n` seed (:770-776), every index the step
+  reads is `j ≤ n` (`SlowRecursion.lean:549-616`), and five prefix-congruence lemmas
+  (:946, 966, 976, 986, 993, 995) prove the padding is unread. No "future coefficient = 0" cheat.
+- `Euler/LpSmoothJetField.lean:17`'s `Nat.rec (motive := fun n => ∀ V, …)` into `Type u` is not
+  a dangerous large elimination (`Nat` is `Type`-valued); the explicit recursor is needed because
+  the space changes each step (`V ↦ Space →L V`). `jetField_zero/succ` (:32, :39) are `:= rfl`,
+  i.e. exactly one iota step at symbolic `n`, and `jetField_field` :57 anchors the construction
+  to `iteratedFDeriv`. Same shape for `List.rec` (`WeightedODEJets.lean:177,187`) and
+  `HistoryRow.rec` (`ActivationContinuation.lean:517,520`, a non-recursive 5-constructor enum).
+- Largest kernel numeral in scope: 4 digits. **W4-E1**: `GlobalSlowProfiles.lean:600-692`
+  `exists_repaired_order` — everything after `sequence` is `Classical.choose` of that one
+  existence claim, so a defect there is invisible downstream.
+
+## W5 `ns-spine` — the Navier-Stokes deliverable path — 1 SUSPICIOUS (structural), 0 kernel-risk
+
+Report: `workers/ns-spine.md` (19 files read in full, 167 declarations, plus two delegated
+children). Confirms my A2 independently ("0-hunk `difflib` diff" of the private copy) and adds:
+
+- **Scope split worth recording:** `ComparatorSolution`'s import closure is **609 modules** —
+  that is the deliverable path; `PaperResults` adds 143 more; the root sees 753. Vectors (1)
+  and (2) *are* on the deliverable path (all 4 explicit `.rec`, all 5 well-founded sites, all 3
+  `propDecidable` files, 86 of 90 `decide`, 5 of 9 NS inductives, max numeral 1,000,000 at
+  `Euler/ExponentLedger.lean:276`); the four recursive syntax trees of W1 are
+  `PaperResults`-only, i.e. **not** on the Comparator deliverable path.
+- **The structural finding (SUSPICIOUS, and I verified it myself at
+  `NavierStokes/CandidateFromLimits.lean:82-87`):** the force is *defined* as the smooth
+  extension of the candidate's own residual —
+  `def force := SpacetimeGluing.smoothExtension 1 (tracedResidual u p L) (…)`. So the PDE field
+  of the solution structure is **definitionally true**, not verified content. For a *forced*
+  blowup (Fefferman's (C)/(D) permit a force satisfying condition (5)) this is the standard and
+  legitimate shape — but it means the whole mathematical burden moves to three places:
+  `ForceConditionDecay`'s spatial decay for **every** derivative order and **every** rate
+  (challenge `:185-191`), smoothness of the glued force **through** `t = 1`
+  (`force_smooth` :86 ← `tracedResidual_boundary_jets` :57 ← the `hlim` jet-convergence
+  hypothesis), and the blowup itself. **Dispatched:** worker `ns-force-and-blowup`.
+- **All R3 non-existence reduces to one lemma:** `WholeSpaceUniqueness.candidate_global_agrees_before_one`
+  (`NavierStokes/R3/CandidateBreakdown.lean:43,49`); the rest is compactness. That is where a
+  non-existence claim could silently become non-existence-*in-a-subclass*.
+  **Dispatched:** worker `ns-uniqueness`.
+- Periodic E3 (previous audit) **pinned**: the competitor's `pressure_periodic` field is
+  consumed in the **energy balance** (`PeriodicUniqueness.lean:533,435`), so competitors with
+  non-periodic pressure genuinely escape the periodic claim.
+
+## W6 `euler-spine` — the Euler deliverable path — A3/E2 SETTLED BENIGN
+
+Report: `workers/euler-spine.md` (58 declarations; OK 54, UNCLEAR 4, KERNEL-RISK 0).
+
+- **A3/E2 settled.** `Euler/Solution.lean:41`'s forced instance affects **exactly one**
+  supremum: the `⨆ t ∈ Icc 0 T, velocityC1Norm` at `Solution.lean:51` (= challenge `:181`).
+  Mathlib's only `CompletePartialOrder ℝ≥0∞` route is `CompleteLattice.toCompletePartialOrder`
+  with `sSup := sSup`, so **both instance paths yield `ENNReal`'s own `sSup`**, equal by
+  structure eta; `limsup` uses `InfSet` and `∫⁻` needs no `SupSet`; the `⨆` inside
+  `velocityC1Norm`/`vorticityNorm` was elaborated in `SolutionDefinitions.lean`, which imports
+  only Mathlib. So the meaning cannot differ. Residual risk is now precisely *kernel structure
+  eta*, not an unknown instance diamond — a much smaller target.
+- No junk-value hole on the spine: `lifespan` is `Exists.choose` of a proved existence
+  (`OrdinaryEulerLifespan.lean:35`), `duration` is `sSup` of a set proved nonempty and bounded,
+  `SmoothL2Field` (`LpSmoothField.lean:31`) carries `ContDiff ∞` so `fderiv` is never junk,
+  `u₀ ≠ 0` is *derived* (`OrdinaryEulerNontriviality.lean:47`), and the `T = T*` exclusion is a
+  real continuation theorem (`OrdinaryEulerContinuation.lean:53`).
+- BKM sub-chain cleared by a delegated child (`workers/euler-spine-bkm.md`): the vorticity
+  integral is an honest `∫⁻` of a *bundled* `BoundedContinuousFunction` sup-norm
+  (`OrdinaryEulerVorticity.lean:30,63`) — stated as a lower Lebesgue integral so the
+  Bochner-`0` convention cannot be exploited — and the logarithmic/BKM estimate is **proved**,
+  not assumed (`OrdinaryEulerBKM.lean:22-24` ← `OrdinaryLogarithmicGradient.lean:63` ←
+  `WholeSpaceGaussianElliptic.lean:91`).
+- **New top Euler question, dispatched** (worker `euler-cauchy`): is the PDE field of the
+  *limit* evolution built by `limitEvolutionOfH3` (`Euler/OrdinaryEulerCauchy.lean:97`, used by
+  `exists_smooth_endpoint`, `OrdinaryEulerEndpoint.lean:39`) actually **proved**, or inherited?
+  It is load-bearing three times over (deliverable clauses 8 and 3, and the BKM contradiction).
+  If that construction can manufacture an `Evolution` that need not satisfy the PDE, the BKM
+  theorem is false rather than vacuous — the first candidate refutation path in this audit.
