@@ -172,6 +172,18 @@ a bad day:
 artifacts — kept in the repo because a verdict whose method is not reproducible
 is an opinion.
 
+There are two, both on the same artifact. The
+[kernel-trust pass](audits/2026-09-16-openai-NavierStokesAndEuler-kernel-trust.md) is the
+interesting one: the artifact had already passed Comparator, so the question was not "does it
+compile" but *which of its proofs could a bug in the Lean kernel turn into a fake*. Twenty
+read-only worker threads later: **no defect found**, and the exposure is enumerated rather than
+asserted — the largest closed `Nat` the kernel is ever asked to evaluate in 641k lines is 61 bits
+(one machine word, never multi-limb GMP), the recursive inductives are reduced one iota step on
+symbolic constructors, metaprogramming is *zero*, and the real defeq workload turned out to be
+529 theorems proved by a bare `rfl`. It also ships what an audit of a 38,503-theorem artifact
+needs and rarely has: a **denominator** (`audits/cone.py` — 27,725 of those theorems can actually
+reach a headline theorem) and a coverage ledger that says how little of it any one pass has read.
+
 The first is [openai/NavierStokesAndEuler](audits/2026-09-15-openai-NavierStokesAndEuler.md)
 (the Lean formalization of OpenAI's claimed Navier–Stokes and Euler blowup
 results): **no defect found, three items escalated for expert review.** The
@@ -183,8 +195,16 @@ Euler challenge was written by the claimant rather than an independent party, so
 a Comparator ACCEPT there means something weaker than it does for Navier–Stokes.
 
 ```bash
-python3 audits/scan_repo.py /path/to/lean-project   # the mechanical rung, on anything
+python3 audits/scan_repo.py /path/to/lean-project        # trust surface + holes
+python3 audits/scan_kernel_risk.py /path/to/lean-project -o out   # kernel-risk census + ledger
+python3 audits/cone.py /path/to/lean-project --seed Main.theorem  # the honest denominator
 ```
+
+`scan_kernel_risk.py` asks a different question from `scan_repo.py`, for a different adversary:
+not "does this artifact reach outside the ordinary elaboration path" but "**which of its proofs
+would a bug in the kernel be able to fake**" — so it censuses recursive inductives and their
+recursors, well-founded recursion, hand-supplied motives, and every place the kernel must
+*evaluate* a numeral or *decide* a definitional equality.
 
 ## Corpus
 
