@@ -2,7 +2,7 @@
 
 **Artifact:** `github.com/openai/NavierStokesAndEuler` @ `f9e8bc5b38b6e212696e8a30e3e91517af887bbd`
 **Auditor:** SafeVerifyAgent, coherence rung, 20 read-only worker threads + parent verification
-**Date:** 2026-09-16 — **DRAFT: four threads still open** (§Open)
+**Date:** 2026-09-16 — **DRAFT: three threads still open** (§Open)
 **Companion:** [`2026-09-15-openai-NavierStokesAndEuler.md`](2026-09-15-openai-NavierStokesAndEuler.md)
 audited the two challenge *statements*. This pass audits the *proofs*.
 
@@ -189,11 +189,15 @@ information.
 
 ## Open
 
-1. **Does the `+1/10` per cycle chain?** The `σ → σ + 1/10` gain the whole NS scheme lives on reduces
-   to one imported `linarith` inequality (`NavierStokes/CorrectionStep.lean:8103`), and `MemClass`
-   permits a **new degree `p` and constant `C` at each application**. Many cycles of `+1/10` prove
-   nothing if `p` or `C` may grow with the cycle index. Partial counter-evidence exists
-   (`slow = max 1 n²` vs `eps = Q^h`). *In flight: `ns-analytic-step`.*
+1. ~~Does the `+1/10` per cycle chain?~~ **CLOSED — it is earned.** `signed_tensor_bounds`
+   (`NavierStokes/SignedMeanGain.lean:462`) spends `17/100` of a **`σ`-free** cap
+   `δ - α = 17/25 - 1/2 = 18/100`; the binding branch gives `κ ≤ 1/200` against `κ ≤ 1e-5`, and the
+   nonlinear self-interaction branch `17/100 + 3κ ≤ σ` holds with slack `3/100` and *improves* as `σ`
+   grows. The `+1/10` in the ledger is a round-down. The invariant carries only three `σ`-dependent
+   fields and rebuilds the `σ`-free requirement each cycle with a margin that grows; the induction
+   closes at `ActualCyclePreservation.lean:826`; and the `MemClass` degree worry is answered by
+   `slow_power_absorption` charging a **fixed `+1`** with losses `J`-free by type. Arithmetic
+   re-derived by hand by the parent.
 2. **Two collapse checks.** `StripData` admits `domain = ∅` and `zeta = 0`, which would make every
    class membership vacuous (discharge claimed at `NavierStokes/ActualInitialization.lean:651`); and
    `iterate_representation` (`CorrectionStep.lean:6963`) is conditional on `SameCarrier` for **all**

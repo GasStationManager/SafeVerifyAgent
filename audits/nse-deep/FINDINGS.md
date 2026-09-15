@@ -1087,3 +1087,49 @@ Report: `workers/euler-gevrey-uniformity.md`. 44 declarations: **OK 44**, 0 UNCL
 quote a different exponent for the same quantity? A mismatch between a proved exponent and a quoted
 one is exactly the defect class that survives a mechanical checker, because both statements are
 individually true.
+
+---
+
+## W21 `ns-analytic-step` — the `+1/10` per cycle IS earned. Open question 1 closes.
+
+Report: `workers/ns-correction-analytic-step.md` (+2 children). 45 declarations read
+statement-and-proof: OK 44, UNCLEAR 1, **0 KERNEL-RISK, 0 SUSPICIOUS**.
+
+**Parent re-derived the arithmetic by hand at `NavierStokes/SignedMeanGain.lean:426,462`, and it
+checks out.** This is the inequality the entire Navier-Stokes half balances on, so it is worth
+writing out. `remainderTensor_mem` :426 requires
+`γ ≤ δ + β`, `γ ≤ α + η`, `γ ≤ 2β` (plus `β ≤ η`); `signed_tensor_bounds` :462 instantiates
+
+    α = 1/2,  δ = 17/25,  β = 1/2 + σ - κ,  η = 1 + σ - 2κ,  κ ≤ 1/100000,  σ ≥ 1/5
+
+and concludes `TensorClass s (1 + σ + 17/100 + κ)` for the remainder. Checking the three branches:
+
+| branch | requirement | reduces to | at `σ ≥ 1/5`, `κ ≤ 1e-5` |
+|---|---|---|---|
+| `δ + β` | `1+σ+17/100+κ ≤ 1+σ+18/100-κ` | **`κ ≤ 1/200`** | holds, with 4 orders of magnitude to spare |
+| `α + η` | `1+σ+17/100+κ ≤ 3/2+σ-2κ` | `17/100+3κ ≤ 1/2` | holds easily |
+| `2β` (the **nonlinear self-interaction**) | `1+σ+17/100+κ ≤ 1+2σ-2κ` | `17/100+3κ ≤ σ` | holds with slack `3/100`, and **improves as `σ` grows** |
+
+So the per-application gain in the exponent is `17/100`, the structural cap is
+`δ - α = 17/25 - 1/2 = 9/50 = 18/100`, and **the cap is `σ`-free** — it does not shrink as the
+exponent improves, which is exactly what my open question 1 asked. The ledger's `+1/10` is a
+conservative **round-down** of `17/100`. The nonlinear self-interaction branch is genuinely present
+and genuinely checked.
+
+**And it chains.** The cycle invariant (`CorrectionStep.lean:9408`) carries only three `σ`-dependent
+fields (residual `1/2+σ` :9440, mean :9443, debt :9445); the `σ`-free `17/25` `difference` requirement
+is rebuilt each cycle at `CorrectionStep.lean:8632`, needing `17/25 ≤ 1/2 + σ - κ`, i.e. margin
+`1/50` at `σ = 1/5` that **grows** with `σ`. The live induction is closed at
+`ActualCyclePreservation.lean:826` with its `StepData` built at `:730`. There is **no upper bound on
+`σ` anywhere**, which is the point.
+
+**The `MemClass` degree worry that `ns-correction-step` raised is closed:**
+`PhysicalGraphBounds.lean:806` `slow_power_absorption` charges a **fixed `+1`** for any slow power, and
+the losses are `J`-free **by type** (`ActualCycleResidualBounds.lean:1145`, degree dropped at `:926`);
+`δ` is not bounded below but is absorbed by the Gaussian `zeta`. So the class does not weaken as the
+exponent improves. Residue: no `sup_J C_J` is proved, hence no *stage-uniform* statement exists — but
+nothing in the claim needs one.
+
+Kernel surface in scope: zero `decide`/`sorry`/`axiom`/`macro`/`termination_by`/`inductive`; one
+`Nat` induction (off-cone); max numeral `1e5`. Dead code flagged: `ExponentLedger.lean:46,53` and
+`CorrectionAnalyticStep:632,657,674` are off-cone.
