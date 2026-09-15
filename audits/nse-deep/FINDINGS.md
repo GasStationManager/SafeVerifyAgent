@@ -840,3 +840,47 @@ Report: `workers/euler-stage-fields.md`. 269 declarations read line-by-line acro
 - Two declarations left unread (`forward_uniform_child_label_bounds`, `forwardGeometryFrame`).
   **Dispatched:** worker `euler-forward-frame` to close the thread, with the specific instruction
   to check they cannot admit a degenerate instance.
+
+---
+
+## A7 — the artifact's real defeq workload: 529 in-cone theorems proved by a bare `rfl`
+
+Parent-produced, mechanically, over the in-cone theorem set (`RFL_SITES.csv`). Every measurement
+so far said the same thing — the *computational* surface is tiny (`decide` on ≤4-digit literals,
+one-machine-word numerals, one-iota-step recursors). That left a question nobody had asked
+systematically: **where does the kernel have to decide a definitional equality?** A `rfl` proof is
+exactly that obligation, and unlike `decide` it is invisible to a search for computation.
+
+Measured over the 27,753 in-cone theorems/lemmas:
+
+| | |
+|---|---|
+| proved by exactly `:= rfl` / `:= by rfl` | **529** |
+| statement length: median / max | 139 / **629** characters |
+| whose statement names a recursive construct | **7** |
+| proof head containing `decide` | 4 |
+| bare `by simp` (relies on the ambient simp set) | 2 |
+
+The largest: `Euler/PacketInitializedSpatialBudget.lean:115` (629),
+`Euler/PacketForwardInitializedSpatialBudget.lean:113` (622),
+`Euler/RegularizedForcingWord.lean:29` (614),
+`NavierStokes/CorrectionInitialization.lean:1012` (591),
+`NavierStokes/PrimaryTargetBounds.lean:631` (566),
+`Euler/ParentForwardInitialSupport.lean:40,49` (541 each),
+`NavierStokes/ActualParticularStageControls.lean:813,821` (531/528).
+Files with the most: `NavierStokes/SlowRecursion.lean` (16), `PhysicalResidualTZ.lean` (14),
+`GlobalSlowProfiles.lean` (12), `Euler/EulerProof.lean` (10), `Euler/PacketStageGuards.lean` (10).
+
+Why this is the right thing to look at next, in the threat model we were given: a defeq check is
+where **structure eta** lives (escalation A3 came down to exactly that), where **`Matrix.cons`/`Fin`
+literal index resolution** runs through `Nat` literal comparison (vector 2), and where an **iota
+chain over a recursive definition at a closed argument** would appear (vector 1, the dangerous
+mode). Note the encouraging prior: the 7 sites whose statement names a recursive construct are the
+only ones where an iota chain is even possible, and two of them sit in the course-of-values
+well-founded files that `wf-recursion` already found use the safe `WellFounded.fix_eq` idiom.
+
+**Dispatched:** worker `rfl-defeq`, to classify the top 25 by statement size plus all 7
+recursion-touching sites into (i) structure-literal projection, (ii) beta/delta of non-recursive
+`def`s, (iii) one iota step on a symbolic constructor, (iv) an iota chain at a closed argument,
+(v) `Fin`/`Matrix.cons` literal index resolution, (vi) structure eta — and to re-derive the 529
+count independently.
