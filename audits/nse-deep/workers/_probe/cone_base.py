@@ -28,15 +28,8 @@ number is quotable and therefore dangerous:
   openai/NavierStokesAndEuler it removed 5,018 declarations (33,163 -> 28,145),
   including a whole cluster that only *looked* reachable because a bare `.zero`
   token matched it.
-* A dotted token is resolved by EVERY suffix of itself, not just the whole
-  token, because Lean's dot notation writes the callee against a local: `hx.foo`
-  is a use of `Something.foo`. Resolving only the whole token made the cone
-  UNDER-approximate, which is the dangerous direction — a worker caught it by
-  finding `toEvolution` in the cone while the field it calls was not. Fixed:
-  the cone grew from 28,145 to 38,076 declarations, and one declaration this
-  audit had already dismissed as unreachable came back.
-* It still UNDER-approximates in one specific and important way: uses that are
-  never written down. Instance synthesis, the ambient `@[simp]` set, `gcongr`,
+* It UNDER-approximates in one specific and important way: uses that are never
+  written down. Instance synthesis, the ambient `@[simp]` set, `gcongr`,
   `positivity`, and `aesop` extensions are all invisible here. So
   "not in the cone" means "no NAMED reference chain from the seeds" — a strong
   triage signal, never a proof of dead code. The script prints how many
@@ -158,10 +151,7 @@ def main() -> int:
             for t in set(IDENT.findall(body)):
                 r = cache.get(t)
                 if r is None:
-                    parts = t.split(".")
-                    cands = {t} if t in byfull else set()
-                    for j in range(len(parts)):
-                        cands |= suffix.get(".".join(parts[j:]), frozenset())
+                    cands = {t} if t in byfull else suffix.get(t, frozenset())
                     r = frozenset(c for c in cands if name_mods[c] & scope)
                     cache[t] = r
                 tgt |= r

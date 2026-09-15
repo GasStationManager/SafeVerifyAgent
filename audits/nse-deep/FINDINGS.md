@@ -475,3 +475,72 @@ Report: `workers/jetrate-callsites.md`. 5 files, 1,001 lines, 44 declarations, 1
   demonstrated that `FieldFactor.zero` was flagged in-cone purely by last-component matching.
   Its observation that the bias only ever marks declarations wrongly *in* — so out-of-cone
   verdicts stay trustworthy — is right, and mark 2 removes the class of error it found.
+
+---
+
+## The cone, mark 3: a worker caught it under-approximating, which is the dangerous direction
+
+Worker `euler-cauchy` reported that `CONE.csv` had **systematic false negatives for
+dot-notation callees** — `SmoothLimitData.toEvolution` was in the cone while
+`SmoothLimitData.field_integral_equation`, which its proof calls, was not. Cause: Lean's dot
+notation writes the callee against a *local*, so the source token is `hx.field_integral_equation`,
+which resolves to no declared name; mark 2 tried the whole token only. Fixed by resolving a
+dotted token against **every suffix of itself**.
+
+| | mark 1 | mark 2 | **mark 3** |
+|---|---|---|---|
+| declarations in cone | 33,163 | 28,145 | **38,076** (72.5%) |
+| theorems in cone | 22,643 | 19,214 | **27,456** of 38,503 |
+| out-of-cone decls carrying `@[simp]`-style attributes (blind spot) | 702 | 799 | **613** |
+
+**One dismissal is hereby retracted.** With the fix, `EulerPacketCylinderField.sum_knownTerm`
+and `card_knownTerm` (`Euler/PacketKnownDecomposition.lean:31,33`) are **in the cone** after all,
+so W3's "only load-bearing `decide`" *is* load-bearing. It remains fine — the worker
+hand-verified both facts (2+3·3+4 = 15; the constructor list is complete with no duplicates), so
+a recursor or `Finset` kernel bug cannot make them false — but the earlier note in this file
+that even that one was unreachable was wrong, and this is the correction.
+
+Still out of cone after the fix: `stocks_formulas`, `polynomial_jetRate_of_stages`, and the
+four recursive syntax trees (`PolynomialExpression`, `Expression`, `FieldFactor`,
+`FactorSupportAt`) — so those conclusions stand.
+
+**Kernel-computation surface, restricted to the cone:** 177 of 210 `decide` sites and 96 of 121
+≥7-digit numerals sit inside in-cone declarations. Those are the numbers that matter for
+vector (2), and W3's magnitude findings (all `decide` literals ≤ 1000, largest closed `Nat`
+61 bits) apply to them.
+
+*Lesson for the framework, recorded because it cost a retraction:* a reachability instrument
+must be biased to **over**-approximate. Mark 2's import scoping was sound, but combining it with
+whole-token-only resolution silently made the cone too small, and "too small" means an audit
+walks away from live code. Mark 3 keeps the sound scoping and restores the over-approximation.
+
+## W9 `euler-cauchy` — the limit evolution's PDE field is PROVED — no refutation
+
+Report: `workers/euler-cauchy-endpoint.md` (both files read in full; 15 in-scope declarations OK,
+0 KERNEL-RISK, 0 SUSPICIOUS; two read-only children added 26 + 27 OK).
+
+This was the audit's first candidate **refutation** path: if `limitEvolutionOfH3` could
+manufacture an `Evolution` that need not satisfy the Euler equation, the BKM theorem would be
+*false*, not merely vacuous. It does not.
+
+- The PDE field is `time_law` (`Evolution`, `Euler/OrdinaryEulerDifference.lean:21-32`, 7 fields).
+  `limitEvolutionOfH3` (`OrdinaryEulerCauchy.lean:97`) is a one-line wrapper; all 7 fields are
+  discharged in `SmoothLimitData.toEvolution` (`Euler/OrdinaryEulerLimit.lean:55-73`).
+- Mechanism, verified: each member's Duhamel equation plus convergence of the **nonlinear** term
+  (`projectedRhsPath_convergence`, `AdvectionLimit.lean:135` — Leray projection composed with a
+  product estimate, checked real) → `tendsto_nhds_unique` → the limit integral equation (:27) →
+  FTC (:43) → an `L²` derivative → pointwise via an injective-embedding integral equation and
+  bounded Sobolev evaluation (`StrongTime.lean:48`). That is a genuine passage to the limit, **not**
+  a pullback of derivatives along an embedding.
+- The pressure is **reconstructed** by Helmholtz (:58), and each member's own pressure is proved
+  determined by its velocity (`HelmholtzField.lean:110,125`).
+- `exists_smooth_endpoint` (`OrdinaryEulerEndpoint.lean:39`) OK; the rescaling
+  `u_c = c·u(ct,x)`, `P_c = c²·P(ct)` is the exact Euler symmetry, re-derived by hand.
+- **It corrected the brief I gave it:** my chain claim was wrong. `exists_smooth_endpoint` does
+  *not* feed `no_endpoint` or `initial_nonzero`; it feeds only the BKM route
+  (`maximalC1Norm_limsup`, `vorticity_integral`), which are still deliverable clauses, so the
+  target was right for the wrong reason. Recorded because a brief that misstates a chain can
+  make a worker audit the wrong file and report a clean result about it.
+- Risk moved one level down to two **unaudited** files: `SmoothFieldSobolevTime.lean:96` (the
+  `Icc`-endpoint upgrade of `time_law`) and `SobolevCauchyInterpolation.lean:78` (an
+  interpolation step standing in for Rellich compactness).
