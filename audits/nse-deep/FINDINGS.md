@@ -385,3 +385,93 @@ Report: `workers/euler-spine.md` (58 declarations; OK 54, UNCLEAR 4, KERNEL-RISK
   It is load-bearing three times over (deliverable clauses 8 and 3, and the BKM contradiction).
   If that construction can manufacture an `Evolution` that need not satisfy the PDE, the BKM
   theorem is false rather than vacuous — the first candidate refutation path in this audit.
+
+---
+
+## The cone, mark 2: cut back by the module system (sound, not heuristic)
+
+Worker `seedhandback` made a point worth building into the instrument: **a Lean file can only
+cite declarations from modules it imports**. That is not a heuristic, it is the module system,
+and it separates "nobody names it" from "it is not even in scope". `audits/cone.py` now
+resolves a token in file `F` only against names declared in `F` or in `F`'s import closure.
+
+| | mark 1 (suffix only) | **mark 2 (import-scoped)** |
+|---|---|---|
+| declarations in cone | 33,163 | **28,145** (53.6%) |
+| theorems in cone | 22,643 | **19,214** of 38,503 |
+| instances in cone | 1 | 0 (the blind spot, unchanged) |
+| inductives in cone | 14 | **10** of 14 |
+
+The 5,018 removed declarations were reachable only through last-component ambiguity. The
+worker's own counterexample reproduces: `FieldFactor.zero` and the whole `FactorSupportAt`
+cluster were in mark 1 because a bare `.zero` token matched them; in mark 2 they are out, which
+independently agrees with `ns-spine`'s import-closure finding that those four recursive syntax
+trees are **`PaperResults`-only, not on the Comparator deliverable path**. Mark 2 is a strict
+subset of mark 1 (0 declarations gained), as it must be.
+
+Also computed and now a column in `CONE.csv`: `in_import_closure` — is the declaration's module
+in the import closure of the two solution files at all? **48,900 of 52,516 are; 3,616 are not**,
+i.e. 216 files (all 11 `…NoOptions` siblings, both `…Investigation` files, both challenge
+files, and 200 more) **cannot** contribute to the headline theorems no matter what they contain.
+27 declarations are in the cone while their file is outside the closure — that is the
+name-collision artifact of collapsing two same-named declarations into one node, and it is the
+instrument's remaining known imprecision.
+
+**Which of the 14 inductives are load-bearing:** in cone — `SpatialJet` and `CoefficientJet`
+(`Euler/EulerProof.lean:3064,3073`), `KnownTerm` :21, `KnownPiece` :14, `SourceCost` :76,
+`FlatKernelBounds.Expr` :76, `NaturalAxisCoefficients.Field` :116, `ReservedPatches.Slot` :22,
+`StressActivation.HistoryRow` :539, `TorusInverse.Direction` :190. Out of cone —
+`PolynomialExpression`, `Expression`, `FieldFactor`, `FactorSupportAt`. So the four *recursive
+syntax trees* audited by W1 are exactly the ones that are **not** load-bearing, and the
+load-bearing recursive types are the two indexed jet families (W2, clean) plus
+`FlatKernelBounds.Expr` and five finite enumerations.
+
+## W7 `seedhandback` — the only concrete-tree reflection site — NOT load-bearing
+
+Report: `workers/seedhandback.md`. All 40 declarations of `NavierStokes/SeedHandbackJets.lean`
+read line-by-line, plus the 28 of `ClosedIntervalJetAlgebra.lean`.
+
+- **Decisively not load-bearing**, by the module argument rather than by my name graph:
+  `NavierStokes.SeedHandbackJets` is **not in the 609-module import closure of
+  `ComparatorSolution.lean`**; `stocks_formulas` has exactly one occurrence repo-wide (its own
+  declaration line); the only route from the root is `PaperAdditionalResults.lean:16`, a
+  zero-declaration aggregator; and the file carries no `@[simp]`, so the instance/simp blind
+  spot does not apply either.
+- The reflection is real but tiny: the expanded closed trees are **186 nodes**, `eval` is
+  structural (no `termination_by`/`WellFounded`/`Acc.rec`), so `simp` uses its 5 equation lemmas
+  and the kernel checks a propositional rewrite chain, worst case 186 single iota steps. `Nat`
+  work: 75 `Fin 19` `Matrix.cons` lookups, Σ(idx+1) = 877 steps, every literal ≤ 18. The final
+  term is **not** a large `Eq.refl`.
+- All four formulas independently re-derived (numeric transliteration, residual 4.4e-16, a
+  12-mutation battery, and a code-disjoint `sympy` child at residual 0) — they match, no index
+  or sign differs from the sibling's hand derivation. All three index alignments in lines
+  110-392 are correct and exhaustive (12/12, 19/19, 7/7).
+- Two non-kernel findings, both inside this non-load-bearing file: (a) `stocks_formulas` cannot
+  detect a 15↔16 index swap, because :76 uses those two slots only inside the product
+  `v14·v15·v16` (mutation residual exactly 0); (b) **SUSPICIOUS**: `Profile.history` :249 is
+  defined as a Lebesgue integral that **no theorem uses** (both comparison theorems consume it
+  only through hypotheses — substitute any function and the proofs are unchanged), and
+  `density 4 = E²/(2x)` :247 is integrated from 0 with no integrability hypothesis, so `Cp` may
+  be junk `0`.
+
+## W8 `jetrate-callsites` — the consumers — 44/44 OK, and an instrument correction
+
+Report: `workers/jetrate-callsites.md`. 5 files, 1,001 lines, 44 declarations, 100% read.
+
+- W1-E3 (circularity) **dissolved and generalized**: `polynomial_jetRate_of_stages` has one
+  occurrence repo-wide (its own definition). But its **live twin**
+  `TailRates.flat_of_residuals` (`GenericSupportedPolynomial.lean:130`) also takes `hres` as a
+  *leaf hypothesis*, and the worker traced 5 hops
+  (`GenericSupportLocalSummation.lean:105→:67→:21` → `GenericSupportLocalCoefficients.lean:183→:130`)
+  to find that **nobody in the repo proves `hres`**. No circularity and no `J→∞`/order
+  interchange (the loss and threshold depend on `m` only; `J` is chosen after `m` and `n`), but
+  the whole cluster is a *conditional* result with an unsupplied hypothesis — consistent with it
+  being out of the cone.
+- W1-E2 (junk `fderiv`) and the filter question **clean**: no `directional`-eval conclusion is
+  drawn without `IsOpen U` *and* `ContDiffOn ℝ ∞` (and `IsOpen` is load-bearing), and every
+  filter is `scaleApproach U q = comap q (𝓝[>] 0) ⊓ 𝓟 U` (`GenericRealization.lean:23-28`),
+  which cannot escape `U`. Zero recursors reduced on a closed tree; max numeral in scope 2.
+- **Correction to my instrument, which I have now fixed** (see mark 2 above): the worker
+  demonstrated that `FieldFactor.zero` was flagged in-cone purely by last-component matching.
+  Its observation that the bias only ever marks declarations wrongly *in* — so out-of-cone
+  verdicts stay trustworthy — is right, and mark 2 removes the class of error it found.

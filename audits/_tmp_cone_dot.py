@@ -20,14 +20,6 @@ number is quotable and therefore dangerous:
   one (which is how `open` and namespace-relative naming appear in source).
 * Suffix matching OVER-approximates: `add` resolves to every `*.add`. That is
   the safe direction for a cone, since it only makes the audited set bigger.
-* It is then CUT BACK by the one sound fact available without a build: a Lean
-  file can only cite declarations from modules it imports. So a token in file
-  `F` resolves only to names declared in `F` or in `F`'s import closure. This
-  is not a heuristic, it is the module system, and it is what separates
-  "nobody names it" from "it is not even in scope". Measured on
-  openai/NavierStokesAndEuler it removed 5,018 declarations (33,163 -> 28,145),
-  including a whole cluster that only *looked* reachable because a bare `.zero`
-  token matched it.
 * It UNDER-approximates in one specific and important way: uses that are never
   written down. Instance synthesis, the ambient `@[simp]` set, `gcongr`,
   `positivity`, and `aesop` extensions are all invisible here. So
@@ -114,45 +106,20 @@ def main() -> int:
         for j in range(len(parts)):
             suffix[".".join(parts[j:])].add(full)
 
-    # module graph, so a reference can be cut back to what is IN SCOPE
-    mod_of = {rel: rel[:-5].replace(os.sep, ".").replace("/", ".")
-              for rel in decls}
-    file_of = {m: rel for rel, m in mod_of.items()}
-    imports = {}
-    for rel in decls:
-        with open(os.path.join(args.root, rel), encoding="utf-8",
-                  errors="replace") as fh:
-            imports[mod_of[rel]] = [m for m in re.findall(
-                r"^import\s+([\w.]+)", fh.read(), re.M) if m in file_of]
-    name_mods = collections.defaultdict(set)
-    for rel, ds in decls.items():
-        for full, _k, _l, _b in ds:
-            name_mods[full].add(mod_of[rel])
-
-    def mclosure(m, _memo={}):
-        c = _memo.get(m)
-        if c is None:
-            seen, st = set(), [m]
-            while st:
-                x = st.pop()
-                if x in seen:
-                    continue
-                seen.add(x)
-                st.extend(imports.get(x, ()))
-            c = _memo[m] = seen
-        return c
-
-    edges = collections.defaultdict(set)
-    for rel, ds in decls.items():
-        scope = mclosure(mod_of[rel])
-        cache = {}
+    cache, edges = {}, collections.defaultdict(set)
+    for ds in decls.values():
         for full, _k, _l, body in ds:
             tgt = edges[full]
             for t in set(IDENT.findall(body)):
                 r = cache.get(t)
                 if r is None:
-                    cands = {t} if t in byfull else suffix.get(t, frozenset())
-                    r = frozenset(c for c in cands if name_mods[c] & scope)
+                    if t in byfull:
+                        r = {t}
+                    else:
+                        r = set(suffix.get(t, frozenset()))
+                        parts = t.split(".")
+                        for j in range(1, len(parts)):
+                            r |= suffix.get(".".join(parts[j:]), frozenset())
                     cache[t] = r
                 tgt |= r
             tgt.discard(full)
@@ -162,10 +129,6 @@ def main() -> int:
         print("SEED NOT FOUND: %s\n(a seed that does not resolve makes every "
               "number below meaningless)" % missing, file=sys.stderr)
         return 2
-    seed_scope = set()
-    for s in args.seed:
-        for m in name_mods[s]:
-            seed_scope |= mclosure(m)
     seen, stack = set(), list(args.seed)
     while stack:
         x = stack.pop()
@@ -183,8 +146,7 @@ def main() -> int:
             if not on and IMPLICIT_USE.search(body):
                 blind += 1
             rows.append({"file": rel, "line": line, "kind": kind,
-                         "name": full, "in_cone": on,
-                         "in_import_closure": mod_of[rel] in seed_scope})
+                         "name": full, "in_cone": on})
 
     tot = len(rows)
     inc = sum(1 for r in rows if r["in_cone"])
