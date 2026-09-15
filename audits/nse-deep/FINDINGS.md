@@ -1262,3 +1262,80 @@ literals plus proof irrelevance), `CorrectionInitialization.lean:1012` (defeq ac
 `Unit` vs `ℕ`), `CylinderSobolevDerivatives.lean:77`, and two name-overclaims
 (`CorrectionInitialization.lean:1193,1327` — `reconstructState` is definitionally idempotent for
 *every* state, so the lemma says less than its name).
+
+## W25 `ns-index-nonempty` — the wave tower IS inhabited; the gap is bookkeeping, not vacuity
+
+Report: `workers/ns-index-nonempty.md` (+2 children: `_sub-index-headline`, `_sub-index-force-divfree`).
+11 files / 1,246 declarations in scope, ~46 read line-by-line plus full greps; 30 declarations signed off:
+**OK 30, 0 UNCLEAR, 0 KERNEL-RISK, 0 SUSPICIOUS.** This closes E1/E2 of `ns-nondegeneracy` (W23).
+
+The question was the last live vacuity worry in the NS half: the artifact case-splits on
+`isEmpty_or_nonempty (Index B N0)` at four sites and **never proves its own wave-label set is
+inhabited** — so were the wave estimates true only because there are no waves?
+
+- **The literal claim is confirmed:** a full grep finds no `Nonempty (Index/Label/SignedLabel/
+  ActiveLabel/CellIndex …)` conclusion anywhere; the five `[Nonempty Label]` occurrences
+  (`ParticularCopyBounds.lean:453,480`, `ActualGaussianCoverage.lean:730,801,1251`) are all
+  *hypotheses*. The existence lemmas that do exist (`physicalMask_active`
+  `PrimaryRepresentatives.lean:159`, → `:542` → `PositiveRepresentatives.lean:61` →
+  `physicalMask_has_index` `PrimaryGeometryAssembly.lean:198`) are **conditional**: each needs a point
+  with `mask ≠ 0` handed in.
+- **And the worry is refuted, from the artifact's own in-cone theorems, in five lines.**
+  `partitionFactor_eq_one` (`ActualPrimaryCovariance.lean:508`, in-cone) says a `Finset.sum` over
+  `unsignedLabels B N0 n : Finset (Label B N0)` **equals 1** at every native-strip point for
+  `n ≥ (choice B N0).prepared.N + 1` (threshold from `physicalScale_tail`, `:527`; partition of unity
+  from `PartitionedCovariance.physical_mask_tail_sum_sq`, `:766`). An empty label type forces that
+  Finset to `∅` and the sum to `0`. The strip point is supplied *explicitly, with no choice and no
+  hypothesis*, by `actual_strip_nonempty` (`ActualSignedMeanBinding.lean:54-67`, witness
+  `((a+b)/2, ((1,0),(0,0)))`), and `ActualInitialization.lean:665` is a `rfl` bridging its set to the
+  one `partitionFactor_eq_one` quantifies over. So `0 = 1` — hence `Nonempty (ActualPrimary.Label B N0)`,
+  hence all four split sites' empty branches are **dead code that is nevertheless shipped in-cone**
+  (`covariance_bounds_of_curl`, `ActualInitialMean.lean:309`, is `in_cone = True`).
+  The worker checked its own argument for circularity and it is not: `partitionFactor_eq_tail`
+  (`:464-506`) goes through the *unrestricted* `finsum` over the full label type, whose emptiness is
+  not at issue, and that is where `physicalMask_has_index` is consumed (`:484-495`) — the artifact
+  already proves "nonzero mask ⇒ active label" and simply never runs it backwards.
+  **Status: HIGH-CONFIDENCE, UNBUILT** (no Mathlib on the box), and it is the audit's cheapest
+  remaining check — five lines and a `lake build`.
+- **Belt and braces, from the `index-headline` child: the headline does not need it anyway.** All 12
+  `CandidateProperties` fields are discharged without an inhabitant; `navier_stokes` is *definitional*
+  (the force **is** the traced residual, `CandidateFromLimits.lean:82` vs `:181-182`); and
+  `speed_unbounded` rests on one index-free positive constant, `W.axis.small.j_pos`
+  (`NaturalAxisData.lean:41-45`) via `FinalSlowBase.axis_tendsto:372` and
+  `BaseResidual.baseVelocity_axis_tendsto_atTop:104`. The loudest fact is the artifact's own theorem
+  that the **entire correction tower is identically zero on a neighbourhood of every axis point**
+  (`AxisZeroOn`, `GermCandidateAssembly.lean:24`; `positivePotential_axisZeroOn`,
+  `ActualCandidateAssembly.lean:680-686`; `axis_not_active`, `:642-647`) — i.e. exactly where the
+  blow-up is measured. No `Nonempty` obligation propagates up to `witness`/`selected_witness`/
+  `theorem_1_1`.
+  *I record one disagreement with that child:* it calls the tower "decoration". Accurate for the
+  **blow-up**; wrong for the **smoothness of the force**, which is what the tower's residual ladder
+  buys (W12, W16). Its own §5 says so, and the parent's E4 keeps it.
+- **The `index-force-divfree` child:** both remaining clauses are wave-independent. Force compact
+  support is *imposed* by two multiplicative cutoffs (`R3/PositiveTimeForce.lean:46`,
+  `R3CompactCandidate.lean:88`, wired at `R3/ActualCandidate.lean:88-89,109-110`) and divergence-freeness
+  is structural (`div (curl …) = 0`, `SpatialLocalization.lean:258-262`, plus a termwise
+  `Finset.sum_eq_zero`, `DirectAngularDiagonal.lean:291-313`). Its blunt summary, which the parent
+  endorses: **`f ≡ 0` satisfies both clauses verbatim**, so neither can detect an empty tower. Force
+  non-triviality is never assumed — it is *derived* from `speed_unbounded`
+  (`MaximalLifespan.lean:275-290`, `R3/CandidateBreakdown.lean:53-62`).
+- **Kernel risk in these 11 files: zero.** No `inductive`, no `.rec`/`Acc.rec`, no `termination_by`,
+  no `deriving`, no metaprogramming. The label types are `Subtype`/`Prod`/`Fin 2` chains, and
+  `Countable (Index W N)` is obtained by *delta-unfolding to `Subtype`* and `infer_instance`
+  (`PrimaryGeometryAssembly.lean:141-144`) — no recursor reduction is asked of the kernel.
+  Vector (2) is two occurrences of `zero_pow (by decide : (2:ℕ) ≠ 0)`
+  (`ActualPrimaryCovariance.lean:330`, `ActualSignedMeanBinding.lean:295`); the `^ 2` exponents are
+  `Monoid.npow` over `ℝ`, never integer arithmetic. The real non-kernel risk in scope is
+  `Classical.choice`: `(choice B N0).prepared.N` is choice-selected
+  (`CorrectionInitialization.lean:3929`), which is *why* no explicit label witness can be written —
+  the innocent explanation of the whole gap. Note the author does prove `Nonempty` when a
+  `Classical.choice` forces it (`choice_nonempty`, `:3920-3927`).
+
+**Net effect on the ledger:** W23's E1/E2 downgrade from SUSPICIOUS to **OK (unrecorded)**. New E4
+(rank 3, structural): the residual-decay ladder (`MixedCandidateAssembly.lean:29-65` →
+`ActualCandidateAssembly.lean:1090-1098,1152` → `ActualCycleResidualBounds.lean:1158-1172,1190-1206`)
+is index-*uniform* and never case-splits on emptiness, so it is the one place where an empty tower
+would have had to be checked rather than shrugged at — moot for soundness given the above.
+
+---
+
