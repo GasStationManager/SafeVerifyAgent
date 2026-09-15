@@ -1054,3 +1054,36 @@ Other findings:
 **Dispatched:** worker `ns-nondegeneracy` on the two collapse checks (`StripData` non-degeneracy at
 `ActualInitialization.lean:651`, and `SameCarrier` for all `n` at `ActualCandidateConstruction.lean:83`)
 plus the `cartesianPotential = 0` survivability question.
+
+## W20 `euler-gevrey` — the `6^m` growth is harmless: no consumer needs order-uniformity
+
+Report: `workers/euler-gevrey-uniformity.md`. 44 declarations: **OK 44**, 0 UNCLEAR, 0 KERNEL-RISK,
+0 SUSPICIOUS. Closes `euler-gronwall`'s escalation (1).
+
+- The quantifier order is `∀ q, ∃ C` **everywhere**, never `∃ C, ∀ q`, and there is no series in the
+  order: `all_order_bounds_of_h3` (`Euler/OrdinaryEulerCauchy.lean:70-78`) introduces `q` *before* the
+  witness that contains `tameEnergyConstant q`, and its interface
+  (`OrdinaryEulerLimit.lean:86`, `∀ q, ∃ M, ∀ k t, …`) is instantiated only at `hb 3` (`:88`).
+  `regularized_all_order` (`OrdinaryRegularizedEnergy.lean:153`) keeps `q` as a binder and its
+  consumer (`OrdinaryEulerLocalExistence.lean:118-122`) uses only `q = 4`. So `6^m` is a **per-order
+  amplitude**, not a constant anyone needs uniformly.
+- The **lifespan is order-free**:
+  `regularizedTime A = (2·(1 + tameEnergyConstant 3)·(1 + wordEnergy 3 A))⁻¹`
+  (`OrdinaryRegularizedEnergy.lean:125`) — order 3 only.
+- The Gevrey layer **cannot** consume it: zero grep contact (no Gevrey file mentions
+  `tameEnergyConstant`/`wordEnergy`/`EulerOrdinarySobolev`, none imports `Euler.Ordinary*`), and the
+  import DAG runs the other way. Decisively, the top-level Euler claim
+  (`Euler/EulerSingularity.lean:115,133`) has **no analyticity/Gevrey/radius conjunct at all** — only
+  `C^∞`, `C¹`-limsup `= ⊤`, and vorticity `∫ = ⊤`. So even a weak Gevrey index would not touch the
+  headline.
+- Also confirmed dead: `l2_stability_of_h3` (`OrdinaryEulerL2Stability.lean:148`, one grep hit — its
+  own declaration) and `GradientControl.lean:119,132`. Correct, non-vacuous, unused.
+- Kernel: zero `decide`, no numeral above 2 digits, zero `termination_by`/`.rec`/metaprogramming;
+  `tameEnergyConstant 3` is **never evaluated** (its embedding constants are opaque).
+
+**Dispatched:** worker `euler-label-bound` on the final Euler item —
+`Euler/ChildParticleSourceBound.lean` `source_physical_label_bound`: is the exponent `10(q+2)`
+(i.e. `k^80`) **derived** from the estimates or **chosen** with slack, and does any other packet file
+quote a different exponent for the same quantity? A mismatch between a proved exponent and a quoted
+one is exactly the defect class that survives a mechanical checker, because both statements are
+individually true.
