@@ -608,6 +608,37 @@ numerals-over-4-digits all **0**, matching my census. Three additions I am foldi
    (used `Euler/OrdinaryL2Integration.lean:36`). Add it to the list of signatures to check at
    the pinned Mathlib rev.
 
+### Result of cross-check 2: `workers/_sub-tame-energy.md` (landed) — **agrees, and sharpens the commutator chain**
+
+Counts: OK 9, UNCLEAR 0, KERNEL-RISK 0, SUSPICIOUS 0 over the 9 declarations of
+`Euler/OrdinaryTameEnergy.lean`; it explicitly tried to break `:70`, `:97`, `:123` and could
+not. It confirms independently, by unfolding, that
+`tameEnergyConstant m` (`:86`) is a closed form in `m` **only**, bottoming out in
+`h3ProductConstant` (`Euler/OrdinaryH3Products.lean:16`) whose two ingredients depend only on
+dimension 3 and exponent 2 (`Euler/EulerProof.lean:8227`, `…MeanCutoffCurlBound…:20`), with no
+field/`M`/solution dependence and `≥ 1` (so no zero-constant trick). It also confirms
+`d/dt E_m = production` is **derived** (`Euler/OrdinaryWordTime.lean:87`,
+`Euler/OrdinaryEulerHigherEnergy.lean:48-54`), not postulated.
+
+It resolves the one thing I had left at statement level (see `## Residue`): the commutator
+bound `tame_transportCommutator` (`Euler/OrdinaryTameEnergy.lean:32-60`) goes through
+`tame_outer_product` (`…TameProduct…:83`), and its ingredients are `H² ↪ L∞`
+(`Euler/OrdinaryWordBounds.lean:67`, `Euler/EulerProof.lean:8237`), an `L⁶` Sobolev inequality
+(`…MeanCutoffCurlBound…:24`), and **Landau–Kolmogorov log-convexity at base index 3**
+(`…WordInterpolation…:31,52`, `…NonnegativeLogConvex…:46`) — i.e. a genuine commutator/tame
+estimate, not a Leibniz expansion, with field-uniform constants and (re-derived) index budgets
+that close without slack abuse.
+
+Two of its three headline points I want to carry upward verbatim, because they are framing
+risks rather than errors: **(a)** the whole higher-order estimate is *conditional* — `M` at
+`Euler/OrdinaryTameEnergy.lean:124` is an **assumed** uniform H³ bound, so the theorem has zero
+regularity/blowup content on its own; **(b)** the `~6^{m+1}` constant is *exponentiated*
+downstream (`Euler/OrdinaryEulerHigherEnergy.lean:87`, `Euler/OrdinaryEulerCauchy.lean:78`), so
+nothing here is `m`-uniform and any Gevrey/analyticity claim elsewhere must not lean on it
+(this is my Escalation 1, independently reached); **(c)** the pressure is never *estimated*,
+only projected away, and `…RegularizedEnergy…:42-49` instantiates `P := 0` — legitimate there,
+but a reader could mistake it for a pressure estimate.
+
 It also confirms independently my "easily misread" note: `difference_energy_bound`
 (`Euler/OrdinaryH3Energy.lean:108`) carries `√(wordEnergy 3 W)` in its constant, so it is a
 **Riccati** inequality (no uniqueness from it) and additionally needs `H⁴` on the reference —

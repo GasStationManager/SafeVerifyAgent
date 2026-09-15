@@ -923,3 +923,80 @@ that `jetrate-callsites` found elsewhere in this repo:
 **+1/10 per cycle**, which is unread and on which the entire quantitative NS claim rests, with the
 specific instruction to check that cycle `n`'s *output* meets cycle `n+1`'s *input* field by field
 (the way an induction like this fails is by not chaining).
+
+---
+
+## W17 `euler-gronwall` — the Euler energy estimates are uniform and non-circular
+
+Report: `workers/euler-gronwall.md` (+2 sub-auditors). **55 declarations OK, 0 UNCLEAR,
+0 KERNEL-RISK, 0 SUSPICIOUS.**
+
+The specific failure mode I sent it to hunt — a constant that secretly depends on the solution being
+estimated, which would turn an a-priori estimate into a tautology — is **absent**:
+
+- `tameEnergyConstant m = 6 · h3ProductConstant · Σ_{n ≤ m} 6ⁿ` (`Euler/TameEnergy.lean:86`) is
+  closed-form **in `m` alone**, built from fixed embedding constants (`Euler/H3Products.lean:16`).
+- In the L² chain, `K` bounds only the **reference** evolution `U` (`OrdinaryEulerL2Stability.lean:18,27`),
+  and the estimate is linear in the estimated norm.
+- The nonlinear term is an exact **commutator**: the pressure contribution dies because solenoidal =
+  `gradientᗮ` (`SobolevWordConstraints.lean:49`), the transport term by integration by parts with
+  `div = 0` (`TransportCancellation.lean:42`).
+- Gronwall runs on a **closed** `Icc 0 T` of a *given* `Evolution`; the blowup time never enters
+  (`time_law` lives on `Ioo 0 T`, `OrdinaryEulerDifference.lean:28`).
+- Uniqueness (`OrdinaryEulerUniqueness.lean:24`) uses the **hypothesis-free**
+  `l2_stability_gradientIntegral` (`GradientStability.lean:54`) in the right direction on the full
+  bundled class, and `gradientNormPath` is genuinely finite through a proved H³→L^∞ bounded-continuous
+  bound with an **unconditional** `finiteField_apply` (`MeanSobolevBoundedField.lean:104,108`) — no junk
+  fallback.
+- It closed two predecessor escalations: the interpolation constants **are** `k`-uniform
+  (`Euler/OrdinaryEulerCauchy.lean:54,78`), and the endpoint derivative is **not** an MVT argument —
+  the Bochner primitive is reconstructed by separating point-evaluations plus FTC
+  (`SeparatingTimeDerivative.lean:24,49`).
+- Kernel surface in this layer: **empty**. Zero `decide`/metaprogramming/`termination_by`/
+  `WellFounded`/`.rec`/`deriving`; the only real `Nat` work is `3⁰..3³ → 40`
+  (`H3Norms.lean:31,47`).
+- Its escalation (2), "`Evolution` assumes all-jet time continuity", is **already answered** by
+  W14: the bridge *derives* that continuity from an arbitrary challenge solution
+  (`CompactVorticityTimeUpgrade.lean:83-108`). Cross-closed.
+- Its escalation (1) — the constant grows like `6^m` in the derivative order — is dispatched as
+  worker `euler-gevrey`: harmless if every consumer fixes `m` first, and it matters only if some
+  Gevrey/analyticity consumer needs order-uniformity.
+
+## W18 `euler-forward-frame` — Euler packet thread closed, with one type-level note
+
+Report: `workers/euler-forward-frame.md`. 10 files, 61 declarations, all in-cone: 16 OK,
+2 UNCLEAR (naming/depth), **1 SUSPICIOUS-benign**, 0 KERNEL-RISK.
+
+- **The note worth keeping:** `forwardGeometryFrame` (`Euler/ParentPacketPrimaryCenter.lean:73`) has
+  `hδ : 0 < δ` and `hη : η ≠ 0` but **no `0 < α`**, so the definition *alone* admits `α = 0`, whence
+  `c = α/δ = 0`, `shear = 0`, and `remainder_bound` degenerates to "strain increment ≤ error" — a
+  statement about nothing. It is **closed one layer up** by `Guards.shear_pos : 0 < P.shear`
+  (`Euler/PacketSourceGeometryData.lean:98`), which is strictly stronger than `0 < α`. Benign today;
+  the *type* does not certify it. Same shape for `hτ : 0 ≤ τ` without `τ < N.T`, so `Icc τ N.T` could
+  be empty at the definition level and is again closed by the guards.
+- The `0 < δ` field is spent exactly at `profile_deriv_zero` (`Euler/EulerProof.lean:11818`) inside
+  `forward_primary_center_term`, giving the amplification coefficient `α·δ⁻¹`. No `fderiv` junk:
+  `center_update_of_odd` uses `fderiv_fun_add` with both differentiability hypotheses supplied.
+- The `0` in `fderiv (w t) 0` is the **spatial centre**, not a time — so the estimate is consumed at
+  every time in `Icc τ N.T ⊆ Icc 0 G.T`, closing a predecessor's worry.
+- `forward_uniform_child_label_bounds` inherits all PDE content from `forward_uniform_flow_and_shear`
+  and adds only coarsening plus the label bound. "Uniform" in the name means the
+  `uniformConstant`/`uniformPower` source-cost comparison, **not** one bound for all children — it is
+  uniform in `t` and `n`, and the quantifier order matches all four consumers exactly.
+- Kernel: zero `decide`/`.rec`/`Acc.`/`WellFounded`/`termination_by`/metaprogramming; 9 tiny
+  `norm_num`; the only genuine kernel numeral is `10·(6+2) ⇒ 80` unifying `k^(10(q+2))` with `k^80`.
+  `fixedCost 6 ≈ 3.4e7` is **never evaluated** — only `eventually_ge_atTop` is used.
+- Open (recorded, not yet dispatched): `Euler/ChildParticleSourceBound.lean`
+  `source_physical_label_bound` is unread — is the exponent `10(q+2)` **derived** or **chosen**?
+
+## E3 (the previous audit's periodic-pressure item) — confirmed at source by the parent
+
+`ns-spine` reported that the competitor's `pressure_periodic` field is genuinely *used*. Verified
+directly: `NavierStokes/PeriodicUniqueness.lean:435-441` `cubeIntegral_pressure_energy_zero` takes
+`hpp : UnitPeriods (fun x => p (t, x))` as a hypothesis, and the energy identity at `:533` discharges
+it with `unitPeriods_sub hpp hpq` — i.e. the periodicity of **both** pressures. So the periodic
+argument really does need the competitor's pressure to be 1-periodic, and alternative (D) as
+formalized upstream (and therefore as proved here) excludes only periodic-pressure solutions.
+This is inherited from the independently authored upstream, not introduced by the claimant, and
+alternative (C) is a full Clay alternative by itself — so the headline does not rest on it. But it is
+a scope fact, and it is now confirmed by reading the Lean rather than by trusting a docstring.
