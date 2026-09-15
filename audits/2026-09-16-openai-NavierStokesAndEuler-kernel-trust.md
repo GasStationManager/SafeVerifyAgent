@@ -2,7 +2,7 @@
 
 **Artifact:** `github.com/openai/NavierStokesAndEuler` @ `f9e8bc5b38b6e212696e8a30e3e91517af887bbd`
 **Auditor:** SafeVerifyAgent, coherence rung, 20 read-only worker threads + parent verification
-**Date:** 2026-09-16 — **DRAFT: three threads still open** (§Open)
+**Date:** 2026-09-16 — **DRAFT: two threads still open** (§Open)
 **Companion:** [`2026-09-15-openai-NavierStokesAndEuler.md`](2026-09-15-openai-NavierStokesAndEuler.md)
 audited the two challenge *statements*. This pass audits the *proofs*.
 
@@ -203,8 +203,16 @@ information.
    `iterate_representation` (`CorrectionStep.lean:6963`) is conditional on `SameCarrier` for **all**
    `n`, else its `addBlock` is not field addition. *In flight: `ns-nondegeneracy`.*
 3. **The 529 `rfl` sites**, classified by what the kernel must actually unfold. *In flight: `rfl-defeq`.*
-4. **A quoted vs proved exponent.** Is the packet label bound's `k^80` derived or chosen, and does any
-   other file quote a different exponent for the same quantity? *In flight: `euler-label-bound`.*
+4. ~~A quoted vs proved exponent.~~ **CLOSED.** The packet label bound's `k^80` is **chosen, not
+   derived** — the ledger adds to `6q+8` (= 44 at `q = 6`), and the jump to `10(q+2) = 80` is one
+   `pow_le_pow_right₀` step (`Euler/SobolevSourceExponent.lean:73`) needing only `1 ≤ k`. That
+   *weakens* an upper bound, so the direction is safe, and there is no site quoting a different
+   exponent — `10*(6+2)` and the literal `80` reconcile by defeq, so a mismatch would be a type error.
+   Residue: `80` is hand-copied into `requiredExponent := 80*degree+1` and into the only size check in
+   the layer, `80 ≤ 320` (`Euler/NormalPacketFrequencyGuards.lean:24`), whose `320` is unaudited; with
+   36 powers of slack below it this cannot break the argument, only a future edit.
+   One documentation overclaim: `Euler/PhysicalChildSourceBound.lean:6` says "exactly `10(s+2)`" for
+   what is a rounded-up envelope.
 
 ## What this does not cover
 

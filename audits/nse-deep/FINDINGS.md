@@ -1133,3 +1133,41 @@ nothing in the claim needs one.
 Kernel surface in scope: zero `decide`/`sorry`/`axiom`/`macro`/`termination_by`/`inductive`; one
 `Nat` induction (off-cone); max numeral `1e5`. Dead code flagged: `ExponentLedger.lean:46,53` and
 `CorrectionAnalyticStep:632,657,674` are off-cone.
+
+---
+
+## W22 `euler-label-bound` — the `k^80` exponent is CHOSEN, not derived — safe direction. Euler thread closed.
+
+Report: `workers/euler-source-label-bound.md`. 21 declarations: OK 18, UNCLEAR 2, **1 SUSPICIOUS
+(documentation overclaim)**, 0 KERNEL-RISK; all in-cone.
+
+- **The exponent is chosen with large slack, and the slack is measured.** The ledger actually adds up
+  to `6q + 8`, not `10q + 20`: amplitude `≤ k^6` (degree-5 `K³·amp²` plus 1 for the constant),
+  radius `≤ k^5`, `radiusCoef ≤ k^6`, `ampCoef ≤ k^(6q+7)`, product `→ k^(6q+8)`. The jump to
+  `10(q+2)` happens in **one step**, `pow_le_pow_right₀ hk1 (by omega)`
+  (`Euler/SobolevSourceExponent.lean:73`). At `q = 6`: **derived 44 versus quoted 80 — 36 powers of
+  slack** (with `k ≥ 69`). The direction is safe: it *weakens* an upper bound and needs only `1 ≤ k`.
+  Individual constants are genuinely tight (`45 = 9 + 36`, `69 = 68 + 1`, `12 = 4·card (Fin 3)`).
+- **No mismatch anywhere.** Every site uses `^80`, and `10*(6+2)` versus the literal `k^80`
+  (`Euler/ParentUniformForwardChild.lean:72,78`) reconcile by **defeq**, so a mismatch there would be
+  a type error rather than a silent difference. This was the defect class I sent it to hunt — a proved
+  exponent and a quoted exponent differing while both statements are individually true — and it is
+  absent.
+- Uniform in `t` and `n`, quantifier order matches all consumers, `direction = EuclideanSpace.single`
+  is non-degenerate, and `k^80` is realised by `exists_firstPacketChoice`.
+- **The SUSPICIOUS item is a documentation overclaim:** `Euler/PhysicalChildSourceBound.lean:6` says
+  "exactly `10(s+2)`" when the derivation gives `6s+8` and `10(s+2)` is a rounded-up envelope. Harmless
+  for correctness; it is the sort of sentence that makes a later reader believe a bound is tight.
+- **New residue, low priority:** `80` is hand-copied into `requiredExponent := 80*degree + 1`
+  (`Euler/ParentNeighborThreshold.lean:23`) and into the test `80 ≤ 320`
+  (`Euler/NormalPacketFrequencyGuards.lean:24,75-77`), which is the **only size check in the layer**
+  and carries 4× headroom. Whether `320` is itself derived is unaudited. Given the 36 powers of slack
+  below it and the safe direction, this cannot break the argument — it could only make a future edit
+  that raises the true exponent silently invalid.
+- Kernel: benign — zero `decide`/`inductive`/well-founded recursion in the three primary files; the
+  heaviest obligation is the defeq `10*(6+2) = 80` (two-digit), plus 8 `omega` and small `linarith`
+  certificates. `fixedCost 6 = 34,138,752` is **never evaluated**.
+
+**The Euler thread is closed.** Every load-bearing declaration on the Euler deliverable path has been
+read by at least one worker, and the parent independently re-verified the challenge-to-`Evolution`
+bridge, the forced-instance question, and the finiteness spine.

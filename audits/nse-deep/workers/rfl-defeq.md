@@ -275,3 +275,42 @@ would change my confidence.
   in-cone; `stmt_len` statistics on my 541 (median 135, mean 160, max 657) are close to the
   parent's (median 139, mean 164, max 629), so the parent's *distributional* claims stand.
 
+
+## Task C — the 28 bare-`rfl` sites in the two well-founded-recursion files
+
+Delegated to a read-only child on the same taxonomy; its full table is in
+`_scratch-rfl-wf.md`. I re-derived the central facts myself (see Task B, `SlowRecursion.lean:974`)
+and I agree with its answer.
+
+**Central question — does any of these 28 `rfl`s force the kernel through `WellFounded.fix` /
+`Acc.rec` at a canonical `Acc.intro`? Answer: NO, for all 28.** Evidence:
+
+* `NavierStokes/SlowRecursion.lean` (16 in-cone sites: 89, 91, 93, 95, 97, 99, 128, 435, 437, 439,
+  441, 443, 447, 449, 451, 974) and `NavierStokes/GlobalSlowProfiles.lean` (12: 76, 78, 80, 82, 84,
+  85, 97, 213, 1201, 1203, 1205, 1207).
+* Neither file contains `termination_by` or `decreasing_by`. `WellFounded.fix` appears only at
+  `SlowRecursion.lean:946` (the definition of `hierarchy`) and inside three **tactic** proofs that
+  rewrite with `WellFounded.fix_eq` (`SlowRecursion.lean:953, 964`; `GlobalSlowProfiles.lean:910`) —
+  and those three theorems are *not* bare `rfl`, so the author deliberately discharged the wf
+  unfolding **propositionally**, never definitionally.
+* Only 1 of the 28 statements mentions a wf-recursive function at all
+  (`SlowRecursion.lean:974 sequence_profile`). Its recursion index is the **symbolic variable `n`**,
+  so `Nat.lt_wfRel.wf.apply n` is stuck, `Acc.rec` cannot fire, and the `hierarchy … n i` subterm is
+  a neutral atom appearing identically on both sides. The residual obligation is one Subtype
+  projection (`restrict`, `:120`, keeps the same underlying function; `profile`, `:278`, takes `.re`
+  of an application). ~4-6 head reductions, **zero** `Acc.rec` steps.
+* The other 27 are algebra-instance `*_apply` lemmas on the `AxisFunction`/profile subalgebra
+  (`(F + G) p = F p + G p`, `complexProfile (F * G) p = …`, `xProfile_add`, …). Mechanism:
+  projection of Subtype/Prod literals plus delta of non-recursive instance/coercion definitions
+  (Subalgebra → Pi → ℝ/ℂ instance chain, each Mathlib `coe_*` step itself a `rfl`). 4-60 steps each.
+  `complexProfile_pow` (`:443`) carries a symbolic exponent `k : ℕ` **unreduced on both sides**
+  (`npowRec` is never entered) and `GlobalSlowProfiles.lean:213` merely carries the literal `2`;
+  no `Nat`/GMP arithmetic is forced.
+* Child verdict counts for its 28 (+2, see next bullet): OK 30, UNCLEAR 0, KERNEL-RISK 0,
+  SUSPICIOUS 0; no vacuity, junk-value or over-claiming found.
+
+**One correction to the child's report.** It flagged the site list as incomplete, naming
+`SlowRecursion.lean:86` (`realConstant_apply`) and `:445` (`complexProfile_zero`) as additional
+bare-`rfl` theorems. They *are* bare `rfl`, but `CONE.csv` marks both `in_cone = False`
+(`realConstant_apply`, `complexProfile_zero`), so they are correctly outside the in-cone census of
+16 + 12 = 28. Its audit of them (both OK) is a free bonus, not a gap in the parent's inventory.
