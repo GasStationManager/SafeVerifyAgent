@@ -1171,3 +1171,44 @@ Report: `workers/euler-source-label-bound.md`. 21 declarations: OK 18, UNCLEAR 2
 **The Euler thread is closed.** Every load-bearing declaration on the Euler deliverable path has been
 read by at least one worker, and the parent independently re-verified the challenge-to-`Evolution`
 bridge, the forced-instance question, and the finiteness spine.
+
+---
+
+## W23 `ns-nondegeneracy` — both collapse checks close negative, and the worker was right to disagree with my brief
+
+Report: `workers/ns-nondegeneracy.md` (+2 children). 41 declarations line-by-line, 26 files /
+2,227 declarations scanned: OK 39, **SUSPICIOUS 2**, UNCLEAR 0, KERNEL-RISK 0.
+
+- **It refuted the premise of my own brief, correctly.** I asked it to check whether `StripData`
+  admitting `zeta = 0` makes every class membership vacuous. It does not: `zeta = 0` makes `MemClass`
+  **stronger**, because the majorant becomes `0` and forces all jets to vanish
+  (`WeightedClasses.lean:78,115`). And the settlement site I was given (`ActualInitialization.lean:651`)
+  is just `slow := slowScale` — it settles nothing. The real non-degeneracy is
+  `actual_strip_nonempty` (`NavierStokes/ActualSignedMeanBinding.lean:54`) with an **explicit witness**
+  `((a+b)/2, ((1,0),(0,0)))`, and every strip in the tower is a pullback of it
+  (`geometry_strip := rfl`, `:665`). `zeta` is strictly positive in-cone
+  (`ActualSignedStageControls.lean:764`, `NativeBandExtension.lean:372`) and used as a **lower** bound
+  (`:777`).
+- **The "everything survives if the field is 0" worry is false.** `speed_unbounded` is a **mandatory
+  field** (`NavierStokes/R3/ProblemStatement.lean:109`, `ProblemStatement.lean:94-96`), and the in-cone
+  H³ blowup of the **actual** field sits at `ActualCandidateAssembly.lean:1142` (`Witness:1121`,
+  `witness:1153`), rooted in `BaseResidual.lean:104-114`:
+  `|u(t,0)| = (1-t)^{-A·h} · d.axial 0 (0,0)` with `h₀ > 0` from `W.axis.small.j_pos`.
+- **New escalation, and the last open structural question in the NS half (E1):** `Index B N0`
+  (`NavierStokes/BaseChartJets.lean:825`, `PrimaryRepresentatives.lean:91`) — the wave tower's index
+  set — is **never proved nonempty**. The artifact case-splits on emptiness
+  (`ActualInitialMean.lean:318`, `ActualSignedUnmaskedBounds.lean:161,196`,
+  `ActualSignedStageControls.lean:1132`) and the empty branch yields `oscillation = 0`. That is *sound*
+  — but it means every wave estimate could be true because there are no waves. The worker's own
+  formulation is the right one: **ask for one label.** Note the likely outcome, which the same report
+  supports: the blowup is carried by the *base* field, so an empty index would make the wave tower
+  decoration rather than falsify anything. **Dispatched:** worker `ns-index-nonempty`, told to say
+  loudly if instead some in-cone theorem *needs* a nonempty index.
+- `SameCarrier` (my item B) is **unconditional** (`hc`), by `Nat.rec` on `j`, discharged at
+  `ActualCandidateConstruction.lean:80` → `ActualCycleParameters.lean:499,62`.
+- Item C: the `t ≥ 1` regime is dead for the potential; the only object that crosses `t = 1` is the
+  **force**, through `SpacetimeGluing.smoothExtension` (`CandidateFromLimits.lean:82-136`) — which this
+  worker flagged as unaudited but which **W12 already audited** (a real Borel series plus a genuine
+  one-sided Whitney theorem). Cross-closed.
+- Kernel: zero metaprogramming/`inductive`/`Acc.rec`/`termination_by`; three one-digit `decide`; the
+  largest literal (100,000) is a **real**, not a `Nat` (`SignedMeanGain.lean:463`).

@@ -314,3 +314,46 @@ and I agree with its answer.
 bare-`rfl` theorems. They *are* bare `rfl`, but `CONE.csv` marks both `in_cone = False`
 (`realConstant_apply`, `complexProfile_zero`), so they are correctly outside the in-cone census of
 16 + 12 = 28. Its audit of them (both OK) is a free bonus, not a gap in the parent's inventory.
+
+## Task A continued — ranks 9-17 (delegated read-only child `rfl-mid`; full text in `_scratch-rfl-mid.md`)
+
+All 9 verdicts **OK**; no KERNEL-RISK, no SUSPICIOUS. Mechanism at every site: delta of
+non-recursive `def`s plus projection of `where` / `{ x with … }` structure literals. Estimated head
+reductions in brackets.
+
+| # | name | file:line | mechanism | class | est. | verdict |
+|---|------|-----------|-----------|-------|------|---------|
+| 9 | `normalizedPacketPressure_forwardInitialized` | `Euler/ParentForwardInitialSupport.lean:49` | pressure twin of rank 8; pure argument threading | (ii) | ~3 | OK |
+| 10 | `selected_data_amplitude` | `NavierStokes/ActualParticularStageControls.lean:813` | projections of the selected-construction literal | (i)+(ii)+(pi) | ~25 | OK |
+| 11 | `selected_data_pressure` | `…:821` | same | (i)+(ii)+(pi) | ~35 | OK |
+| 12 | `PrefixFields.tailGradeField_path` | `Euler/PacketResidualTailFields.lean:51` | `.path` of a `ContinuousMap`-literal sum | (i)+(ii) | ~6 | OK |
+| 13 | `externalCommutator_apply` | `Euler/SobolevTransportCommutator.lean:34` | CLM `comp`/`sub` projections | (i)+(ii)+(pi) | ~30 | OK |
+| 14 | `childAcceleration_apply` | `Euler/ChildParticleFieldBounds.lean:243` | projections through the child-data literal | (i)+(ii) | ~35 | OK |
+| 15 | `stateMeanCoefficientValue_erase` | `NavierStokes/AxisymmetricResidualGrouping.lean:152` | the erased alias is *definitionally not read* by the value function | (i)+(ii) | ~8 | OK + scope note (see below) |
+| 16 | `GaugeInitialization.initialized_reconstructed` | `NavierStokes/CorrectionInitialization.lean:1327` | idempotence/fixed-point claim; see below | (i)+(ii), mild (vi) | ~30-60 | OK + name/scope note |
+| 17 | `baseCommutator_apply` | `Euler/SobolevBaseCommutator.lean:33` | CLM projections | (i)+(ii)+(pi) | ~40 | OK |
+
+Child's cross-checks, matching mine independently: zero iota chains at closed numerals, zero
+`Nat.rec`/`Acc.rec`, zero `decide`/`Nat.pow`, zero `Fin`/`Matrix.cons` literal index resolution
+(the `![…]` occurrences are identical on both sides and all indices are variables), and proof
+irrelevance is load-bearing at 4 of the 9 sites (duplicated `omega`/`norm_num`/`length_pos`
+arguments). Long statements are long **argument lists**, not computation.
+
+**Most interesting finding of the mid slice (worth an escalation-level note).**
+`NavierStokes/CorrectionInitialization.lean:1327` states
+`reconstructState g c (initialized …) = initialized …` by `rfl` — a **fixed-point / idempotence**
+claim. The child traced why it is definitional: `reconstructState`
+(`NavierStokes/VariableGaugeMean.lean:517-523`) is `{ u with pressure := fun n => meanPressure …
+(u.gr c n) }`, i.e. it rewrites **only** `pressure`, from `u.gr`; and `State.gr`
+(`NavierStokes/CorrectionState.lean:117-118` → `MeanIncrementBounds.lean:338-342`) reads only
+`c.operators`, `c.base`, `s.mean`, `s.covariance` — **no pressure and no error feedback**. Every
+stage constructor already ends in `reconstructState` (`VariableGaugeMean.lean:559-563, 580-583`;
+`CorrectionInitialization.lean:1264-1267, 1275-1290`), so the pressure slot already holds the value
+being reinstalled. Consequence: **`reconstructState g c` is definitionally idempotent for *every*
+state**, so the theorem carries no information about the initialization in particular, even though
+its name ("initialized_reconstructed") invites the reading "the initialization solved the gauge
+equation". The same definitional blindness underlies rank 15
+(`AxisymmetricResidualGrouping.lean:152`: erasing an axisymmetric alias does not change the mean
+coefficient value because the value function never reads that field). This is *not* junk-value abuse
+and it is the right structure for `∂_r p = gr`, but it is the clearest example in my scope of a
+`rfl` lemma whose **name claims more than its statement**.

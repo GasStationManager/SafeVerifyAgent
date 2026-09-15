@@ -198,10 +198,16 @@ information.
    closes at `ActualCyclePreservation.lean:826`; and the `MemClass` degree worry is answered by
    `slow_power_absorption` charging a **fixed `+1`** with losses `J`-free by type. Arithmetic
    re-derived by hand by the parent.
-2. **Two collapse checks.** `StripData` admits `domain = ∅` and `zeta = 0`, which would make every
-   class membership vacuous (discharge claimed at `NavierStokes/ActualInitialization.lean:651`); and
-   `iterate_representation` (`CorrectionStep.lean:6963`) is conditional on `SameCarrier` for **all**
-   `n`, else its `addBlock` is not field addition. *In flight: `ns-nondegeneracy`.*
+2. ~~Two collapse checks.~~ **CLOSED, and my premise was wrong.** `zeta = 0` makes `MemClass`
+   *stronger*, not vacuous (the majorant becomes 0 and forces all jets to vanish); the real
+   non-degeneracy is `actual_strip_nonempty` (`NavierStokes/ActualSignedMeanBinding.lean:54`) with an
+   explicit witness, and every strip in the tower is a pullback of it. `SameCarrier` is
+   unconditional, by `Nat.rec`, discharged at `NavierStokes/ActualCandidateConstruction.lean:80`.
+   **But a new one replaces them:** `Index B N0` (`NavierStokes/BaseChartJets.lean:825`) — the wave
+   tower's index set — is **never proved nonempty**; the artifact case-splits on emptiness and the
+   empty branch gives `oscillation = 0`, so every wave estimate could hold because there are no waves.
+   Sound, but it would make the wave tower decoration: the blowup is carried by the base field
+   (`NavierStokes/BaseResidual.lean:104-114`). *In flight: `ns-index-nonempty` — ask for one label.*
 3. **The 529 `rfl` sites**, classified by what the kernel must actually unfold. *In flight: `rfl-defeq`.*
 4. ~~A quoted vs proved exponent.~~ **CLOSED.** The packet label bound's `k^80` is **chosen, not
    derived** — the ledger adds to `6q+8` (= 44 at `q = 6`), and the jump to `10(q+2) = 80` is one
