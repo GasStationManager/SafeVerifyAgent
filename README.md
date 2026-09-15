@@ -166,6 +166,26 @@ a bad day:
   not a checkable proposition; certifying it would launder a gap into a
   guarantee.
 
+## Audits
+
+[`audits/`](audits/) holds reports from pointing this agent at real, published
+artifacts — kept in the repo because a verdict whose method is not reproducible
+is an opinion.
+
+The first is [openai/NavierStokesAndEuler](audits/2026-09-15-openai-NavierStokesAndEuler.md)
+(the Lean formalization of OpenAI's claimed Navier–Stokes and Euler blowup
+results): **no defect found, three items escalated for expert review.** The
+mechanical rung was clean — zero trust-surface markers across 641,332 lines, and
+the Navier–Stokes challenge is semantically identical to DeepMind's
+independently authored formal-conjectures statement at a pinned commit. The
+escalations are about *provenance*, which is the thing a checker cannot see: the
+Euler challenge was written by the claimant rather than an independent party, so
+a Comparator ACCEPT there means something weaker than it does for Navier–Stokes.
+
+```bash
+python3 audits/scan_repo.py /path/to/lean-project   # the mechanical rung, on anything
+```
+
 ## Corpus
 
 Not in this repo — see [corpus/SPEC.md](corpus/SPEC.md) for the contract
