@@ -661,3 +661,46 @@ line-by-line. OK 63, UNCLEAR 0, KERNEL-RISK 0, SUSPICIOUS 0.
   unread `forwardNext`/`joinedNext` (worker `euler-stage-fields`, also asked what the ten
   `attribute [local irreducible] Parent.child initialParent` sites are hiding from `simp`).
   Its P1 was already settled benign by `euler-spine` and I told it so.
+
+---
+
+## W12 `ns-force-and-blowup` — the gluing is honest, the blowup is closed-form, and A6 needs one correction
+
+Report: `workers/ns-force-and-blowup.md` (+3 children). Mine 41 declarations (OK 35, UNCLEAR 6),
+children 151/48/73 declarations, **0 KERNEL-RISK** throughout; in its 21 files: no `inductive`,
+no `.rec`, no `WellFounded`, no metaprogramming, one `decide` (`2 ≠ 0`), no literal above 2 digits.
+
+**Correction to A6, from this worker, verified by the parent at
+`NavierStokes/R3/ComparatorBridge.lean:85-86`.** The live route for option (C) is
+`comparator_of_breakdown`, not `option_C_of_compact_candidate`, and it passes the force
+**unrescaled** at the **same** `ν`:
+
+```lean
+  refine ⟨fun _ => 0, toComparator f, zero_initial_condition_decay,
+    forceConditionDecay_of_compact h.force_smooth h.force_support.1, ?_⟩
+```
+
+So A6's substance is unchanged and now doubly confirmed on the live path — **`u₀ ≡ 0`, force
+compactly supported, decay discharged from compact support** — but the `rescaledForce ν` route I
+quoted is dead code. The scope sentence stands: *breakdown from rest under a compactly supported
+force*.
+
+**The smoothness-through-`t = 1` plumbing is honest.** The glue is `if t ≤ 1 then residual else`
+a **real Borel series** (`SpacetimeGluing.lean:192,235`) — no assumed jet growth, and none of the
+"all jets are zero so the extension is trivial" shortcut. The one-sided Whitney theorem
+(`SpacetimeEndpoint.lean:250,277`) is genuine: an MVT lemma, `UniqueDiffOn` actually true, and the
+local uniformity hypothesis actually used. `ForceConditionDecay`'s quantifier order is right —
+`C` is fixed before `x` and `t` — and the support is `tsupport ⊆ Icc (1/16) (21/16) ×ˢ compact`
+(`PositiveTimeForce.lean:61-80`).
+
+**The blowup is closed-form and not vacuous:** `‖u(t,0)‖ = (1-t)^{-(1/2+h)} · j` with `j > 0`
+(`BaseResidual.lean:90-100`, `FinalSlowBase.lean:372-378` via `W.axis.small.j_pos`), and the
+corrections vanish near the axis (`GermCandidateAssembly.lean:109-144`), so the blowup is the bare
+self-similar base rather than an artifact of the correction series.
+
+**All remaining NS content reduces to two predicates**, `VanishingJointJets` and `AwayExtensions`
+(`JointResidualLimits.lean:84,81`), discharged from `StageEstimates.finite_residual`
+(`MixedCandidateAssembly.lean:62-65`) at `ActualCandidateAssembly.lean:1090,1100`.
+**Dispatched:** worker `ns-stage-estimates`, told explicitly to check whether this cluster's
+stagewise estimate is proved by construction or is another never-proved `hres`-style hypothesis
+like the one `jetrate-callsites` found, and to hunt an asserted `J → ∞` / `t → 1⁻` interchange.
