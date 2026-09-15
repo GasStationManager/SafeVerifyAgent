@@ -16,10 +16,11 @@ audited by three sub-workers (their notes are cited below): the all-order L² je
 
 **Verdict counts** over the 30 declarations I examined individually (table in §B, plus the 8 in the
 positive-headline table): **30 OK, 0 UNCLEAR, 0 KERNEL-RISK, 0 SUSPICIOUS**, with 3 delegated cores
-(`l2_stability_gradientIntegral`, BKM, `FiniteLifespan`) left to their owning workers and 4
-escalations, of which E1/E2/E4 are answered/downgraded by sub-audits and only E3 (H³ point evaluation)
-plus E5 (= `euler-packet` P1) remain open. All three sub-workers independently report "nothing
-smuggled".
+(`l2_stability_gradientIntegral`, BKM, `FiniteLifespan`) left to their owning workers. Of the five
+escalations below, E1/E2/E3/E4 are answered or downgraded (three by sub-audits, E3 by my own reading of
+`SobolevPointEvaluation.lean`), and only **E5 (= `euler-packet` P1, the `CompletePartialOrder.toSupSet`
+local instance) remains a live doubt** — plus the standing fact that nothing here was elaborated,
+because there is no Mathlib on this box. All three sub-workers independently report "nothing smuggled".
 
 ## Scope
 
@@ -333,14 +334,19 @@ it depends on `a`, suffices. *Residual question for an expert (build-only):* doe
 reparameterisation, as claimed, without a Whitney-extension step? *What would settle it:* elaborate that
 file against Mathlib.
 
-**E3 — the H³ point-evaluation route to the pointwise `time_law`.**
-`Euler/OrdinaryStrongTime.lean:48-60` uses `observation 3 (le_refl 3) (x, (0 : AddCircle 1))` and
-`ordinaryLift`. *Question:* is `observation` a *bounded* linear functional on the order-3 Sobolev
-realization for the ℝ³ (not periodic) problem, and does `observation_apply` really evaluate the smooth
-representative at `x` (not at a lifted/periodised point)? *What would settle it:* read
-`Euler/SobolevPointEvaluation.lean` / `MeanOrdinaryLift` and check the embedding constant statement.
-If this failed, `time_law` would be about the wrong function, and the whole `Evolution` construction
-would be vacuous-in-x.
+**E3 — DOWNGRADED after I read the point-evaluation machinery myself.**
+`Euler/OrdinaryStrongTime.lean:48-60` uses `observation 3 (le_refl 3) (x, (0 : AddCircle 1))`.
+`observation` (`Euler/SmoothFieldSobolevTime.lean:52`) is `(pointEvaluation 1 x).comp
+(restrictOperator 1 hq)`, and `pointEvaluation` (`Euler/SobolevPointEvaluation.lean:64-69`) is a genuine
+`ContinuousLinearMap` built by `LinearMap.mkContinuous (sobolevEmbeddingConstant period 3)` from
+`representative_bound` — i.e. an honest H³→C⁰ embedding bound on the 4-dimensional cylinder
+`LiftDomain period = Vector3 × AddCircle period` (`EulerProof.lean:1085`), where `3 > 4/2` makes the
+embedding true. `observation_apply` (`SmoothFieldSobolevTime.lean:55-66`) proves the value is
+`A.field x.1`, i.e. the *actual smooth field at the actual ℝ³ point*, by `pointEvaluation_eq` against a
+continuous representative plus an a.e. chain through `ordinaryLift_ae` and `A.toLp_ae`. So `time_law` is
+about the right function; it is not vacuous-in-`x`. *Residual (Residue, not escalation):* I did not read
+the proof of `value_ae_bound` / the value of `sobolevEmbeddingConstant`, only that the bound is a
+hypothesis discharged at `SobolevPointEvaluation.lean:40-45`.
 
 **E4 — RESOLVED, no escalation.** The interpolation used for jet time-continuity
 (`Euler/OrdinaryCauchyInterpolation.lean:24`) rests on `wordMaximum_logconvex`

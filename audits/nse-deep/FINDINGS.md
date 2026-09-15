@@ -753,3 +753,55 @@ correctness they are exactly where an off-by-one in a constant would hide.
 (`CorrectionStep.lean`, 9,849 lines / 264 in-cone theorems; then `InitialPhysicalData.lean`, 167),
 with instructions to sample by *proof pattern* rather than by prefix and to state exactly what was
 read versus sampled.
+
+---
+
+## W14 `euler-evolution-class` — the Euler refutation really does cover the challenge class
+
+Report: `workers/euler-evolution-class.md` (+3 sub-notes). 30 declarations OK, **0 UNCLEAR,
+0 KERNEL-RISK, 0 SUSPICIOUS**. 139 of 157 audited rows in-cone; the 18 out-of-cone rows are unused
+alternative routes.
+
+Answering `euler-packet`'s P2: **`Evolution` (`Euler/OrdinaryEulerDifference.lean:21-32`) IS
+stronger** than the challenge's Euler-solution class — it carries all-order L² jets, their time
+continuity, and a gradient-packaged pressure. That is exactly the shape in which "no solution
+exists" could quietly become "no *nice* solution exists". It does **not**, because the missing
+bridge exists and is discharged from an arbitrary challenge solution:
+
+**Parent-verified at `Euler/ComparatorLocalEvolution.lean:64-97`.**
+`exists_evolution_of_commonCompactCurl` takes `h : EulerExistenceAndSmoothnessR3 u₀ v p` — the
+challenge structure verbatim — plus a compact-vorticity support hypothesis, and returns an
+`Evolution` whose velocity **is** `v` (`recoveredVelocity_field` :45 is `rfl`). And
+`compactCurlLocalUpgrade` :91 derives that support hypothesis from `h` itself together with
+compact initial vorticity of the *constructed* datum, not of the competitor. So nothing is assumed
+on the competitor and the refuted object is literally `v`.
+
+Every extra field is earned rather than assumed:
+- the L² jets come from Caccioppoli + Fatou div-curl recovery (`DivCurlTensorRecovery.lean:79`,
+  `DivCurlRecovery.lean:53-150,174`) with a **field-independent** constant;
+- their time continuity from an L²-Lipschitz bound plus real interpolation
+  (`CompactVorticityTimeUpgrade.lean:83-108`, log-convexity by integration by parts,
+  `OrdinaryWordInterpolation.lean:31`);
+- `time_law` from the challenge's own `h.euler` through `ClassicalBridge.lean:33`
+  (`derivWithin (Ici 0) → HasDerivAt` only at `t > 0` — no junk-value trick) plus
+  `pointwise_derivative_of_l2` (`OrdinaryStrongTime.lean:48`);
+- the competitor's **pressure is discarded and rebuilt** by Helmholtz
+  (`OrdinaryHelmholtzField.lean:60`), so no pressure regularity beyond the challenge's
+  `pressure_smooth` is ever demanded.
+
+**Direction check, which is the whole point:** every bridge lemma goes *challenge ⇒ Evolution*. The
+only converse is an honest `iff` (`ComparatorSobolevEvolution.lean:151`,
+`OrdinaryEulerClassicalClass.lean:271`) and it is used **only for the positive half** of the
+headline (the singular solution that must exist), never for the refutation. The `toL2` junk branch
+never fires (`toL2_field :15` via `dite_eq_left` on `A.memLp`).
+
+Kernel surface in its 22 files: **zero** `decide`/`axiom`/`sorry`/`macro`/`elab`/`set_option`/
+`native_decide`/`unsafe`/`partial`/`termination_by`/`WellFounded`/`.rec`; all structures
+non-recursive and non-indexed (recursors used only as projections); largest numerals 3600, 39, 13,
+and the only 5+-digit numeral in scope is a URL commit hash.
+
+It also sharpened `euler-packet`'s P1: the `attribute [local instance] CompletePartialOrder.toSupSet`
+at `Euler/Solution.lean:41` is in force for lines **43-56 only**, i.e. for
+`exists_compact_smooth_euler_singularity` — **not** for `euler_breakdown_R3` at :33. Combined with
+`euler-spine`'s mechanism (Mathlib's only `CompletePartialOrder ℝ≥0∞` route yields `ENNReal`'s own
+`sSup`), A3/E2 is now closed as benign with the affected line range pinned.
