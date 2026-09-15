@@ -74,6 +74,21 @@ def strip_comments(src: str) -> str:
     return _LINE_COMMENT.sub("", _BLOCK_COMMENT.sub("", src))
 
 
+def blank_comments(src: str) -> str:
+    """Comments removed, LINE STRUCTURE kept.
+
+    `strip_comments` deletes a block comment outright, so every line number
+    after one is wrong by the height of the comment — measured on
+    `Euler/EulerProof.lean`, an `inductive` reported at 3015 actually lives at
+    3064. A count does not care; a `file:line` handed to a reader does, and a
+    citation that lands 49 lines away is worse than no citation, because it
+    looks checkable. So anything that reports a POSITION uses this, and
+    anything that reports a COUNT may use either.
+    """
+    return _LINE_COMMENT.sub(
+        "", _BLOCK_COMMENT.sub(lambda m: "\n" * m.group(0).count("\n"), src))
+
+
 def scan_trust_surface(text: str) -> List[str]:
     stripped = strip_comments(text)
     return sorted({m for m in TRUST_SURFACE if m in stripped})

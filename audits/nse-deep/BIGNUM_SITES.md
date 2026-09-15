@@ -1,0 +1,125 @@
+# numerals with >=7 digits (121)
+
+> CORRECTED 2nd generation: line numbers are against the ORIGINAL file (the first generation counted lines on comment-stripped text and drifted by the height of preceding block comments — e.g. an `inductive` reported at 3015 actually lives at 3064).
+
+- `Euler/EulerProof.lean:16892` — `(hlam : 0 ≤ lam) (hsmall : 8000000 * e * Θ ^ 21 ≤ 1)`
+- `Euler/EulerProof.lean:16925` — `|V t - Z t| + |U t + Z₁ t| ≤ 160000000 * e * Θ ^ 29 * (1 + lam) * F t := by`
+- `Euler/EulerProof.lean:17916` — `(hsmall : 1000000 * K * e * Θ ^ 40 ≤ 1)`
+- `Euler/EulerProof.lean:17925` — `4 * dJ + 16 * P₀ * dD + 16 * P₀ ^ 2 * dE ≤ 30000000 * K * e * Θ ^ 40 ∧`
+- `Euler/EulerProof.lean:17926` — `8 * dS + 640 * (dJ / P₀) + 640 * dE ≤ 30000000 * K * e * Θ ^ 40 := by`
+- `Euler/EulerProof.lean:17935` — `have hMb : 1000000 * M ≤ 1 := by dsimp [M]; nlinarith only [hsmall]`
+- `Euler/EulerProof.lean:17994` — `4 * dJ + 16 * P₀ * dD + 16 * P₀ ^ 2 * dE ≤ 30000000 * K * e * Θ ^ 40 ∧`
+- `Euler/EulerProof.lean:17995` — `8 * dS + 640 * (dJ / P₀) + 640 * dE ≤ 30000000 * K * e * Θ ^ 40`
+- `Euler/EulerProof.lean:18007` — `(htΘ : y⁻¹ / σ ≤ Θ) (hsmall : 1000000 * K * e * Θ ^ 40 ≤ 1)`
+- `Euler/EulerProof.lean:18024` — `y ^ 4 + σ ^ 2 * y ^ 2 + 8 * σ * y ^ 3 + 30000000 * K * e * Θ ^ 40 ∧`
+- `Euler/EulerProof.lean:18025` — `|(y⁻¹) ^ 2 * S / (J * sqrt E) - 1| ≤ 1500 * σ + 30000000 * K * e * Θ ^ 40 := by`
+- `Euler/EulerProof.lean:18070` — `4 * dJ + 16 * P₀ * dD + 16 * P₀ ^ 2 * dE ≤ 30000000 * K * e * Θ ^ 40 ∧`
+- `Euler/EulerProof.lean:18071` — `8 * dS + 640 * (dJ / P₀) + 640 * dE ≤ 30000000 * K * e * Θ ^ 40 at hpoly`
+- `Euler/EulerProof.lean:18479` — `noncomputable def stabilityConstant : ℝ := 320000000 * exp 6`
+- `Euler/EulerProof.lean:18481` — `theorem stabilityConstant_ge : 320000000 ≤ stabilityConstant := by`
+- `Euler/EulerProof.lean:18492` — `(hlam : 0 ≤ lam) (hsmall : 1000000 * stabilityConstant * e * Θ ^ 40 ≤ 1)`
+- `Euler/EulerProof.lean:18519` — `160000000 * e * Θ ^ 29 * (1 + lam) * F t) ∧`
+- `Euler/EulerProof.lean:18531` — `have hsmallODE : 8000000 * e * Θ ^ 21 ≤ 1 := by`
+- `Euler/EulerProof.lean:18542` — `let δ := 160000000 * e * Θ ^ 29`
+- `Euler/EulerProof.lean:18877` — `(hsmall : 1000000 * K * e * Θ ^ 40 ≤ 1) (hscale : 1 ≤ β * t ^ 2)`
+- `Euler/EulerProof.lean:18887` — `have hMb : 1000000 * M ≤ 1 := by dsimp [M]; nlinarith only [hsmall]`
+- `Euler/EulerProof.lean:19961` — `∀ᶠ n in atTop, 1000000 * K * sourceCoefficientError J C c x n * sourceTheta J C x n ^ 40 ≤ 1 := by`
+- `Euler/EulerProof.lean:19963` — `(1000000 * K)`
+- `Euler/PacketActualFrameEstimates.lean:36` — `(htΘ : y⁻¹/σ ≤ Θ) (hsmall : 1000000*K*e*Θ^40 ≤ 1)`
+- `Euler/PacketActualFrameEstimates.lean:49` — `y^4+σ^2*y^2+8*σ*y^3+30000000*K*e*Θ^40 ∧`
+- `Euler/PacketActualFrameEstimates.lean:51` — `1500*σ+30000000*K*e*Θ^40 := by`
+- `Euler/PacketBeforeTargetSize.lean:23` — `(hsmall : 1000000*K*e*Θ^40 ≤ 1) (hτ : 1 ≤ τ) (hτΘ : τ ≤ Θ)`
+- `Euler/PacketBeforeTargetSize.lean:64` — `(hsmall : 1000000*K*e*Θ^40 ≤ 1)`
+- `Euler/PacketCommonScaleChoice.lean:41` — `let δ : ℝ := min η (min (1/2) (1/(1000000*K)))`
+- `Euler/PacketCommonScaleChoice.lean:45` — `have hδK : 1000000*K*δ ≤ 1 := by`
+- `Euler/PacketCommonScaleChoice.lean:46` — `have hh : δ ≤ 1/(1000000*K) := (min_le_right _ _).trans (min_le_right _ _)`
+- `Euler/PacketCommonScaleChoice.lean:47` — `have hm := (le_div_iff₀ (show 0 < 1000000*K by positivity)).mp hh`
+- `Euler/PacketControlledPropagator.lean:21` — `(hsmall : 8000000*e*Θ^21 ≤ 1)`
+- `Euler/PacketForwardGeometryData.lean:40` — `small : 1000000*neighborStabilityConstant*`
+- `Euler/PacketGeometryAssembly.lean:35` — `|D.velocity ξ τ 1-Z τ|+|D.velocity ξ τ 0+Z₁ τ| ≤ 400000000*D.error*D.Θ^29*(1+D.lam)*F τ`
+- `Euler/PacketGeometryAssembly.lean:47` — `|D.nextCoupling/D.a-1| ≤ D.y^4+D.σ^2*D.y^2+8*D.σ*D.y^3+30000000*neighborStabilityConstant*D.error*D.Θ^40 ∧`
+- `Euler/PacketGeometryAssembly.lean:48` — `|(D.y⁻¹)^2*D.nextTilt-1| ≤ 1500*D.σ+30000000*neighborStabilityConstant*D.error*D.Θ^40`
+- `Euler/PacketGeometryAssembly.lean:70` — `(by norm_num : (1:ℝ) ≤ 1000000000).trans neighborStabilityConstant_ge`
+- `Euler/PacketGeometryAssembly.lean:126` — `D.target_from_sigma D.slope_nonneg (show 0 ≤ 400000000*D.error*D.Θ^29 by positivity [D.error_nonneg, D.Theta_pos])`
+- `Euler/PacketGeometryData.lean:57` — `small : 1000000*neighborStabilityConstant*(16*(ε*Θ*(4*G)^2+d))*Θ^40 ≤ 1`
+- `Euler/PacketGeometryGuards.lean:54` — `((by norm_num : (1:ℝ) ≤ 1000000000).trans neighborStabilityConstant_ge) D.error_nonneg`
+- `Euler/PacketGeometryGuards.lean:57` — `change 1000000*neighborStabilityConstant*D.error*D.Θ^40 ≤ 1 at hs`
+- `Euler/PacketGeometryGuards.lean:76` — `((by norm_num : (1:ℝ) ≤ 1000000000).trans neighborStabilityConstant_ge) D.error_nonneg`
+- `Euler/PacketGeometryGuards.lean:79` — `change 1000000*neighborStabilityConstant*D.error*D.Θ^40 ≤ 1 at hs`
+- `Euler/PacketGeometryGuards.lean:83` — `have hK : 0 ≤ neighborStabilityConstant := (by norm_num : (0:ℝ) ≤ 1000000000).trans neighborStabilityConstant_ge`
+- `Euler/PacketGeometryGuards.lean:87` — `change 1000000*neighborStabilityConstant*D.error*D.Θ^40 ≤ 1 at hs`
+- `Euler/PacketGeometryGuards.lean:90` — `theorem scalar_error_small : 4*exp 6*(400000000*D.error*D.Θ^29) ≤ 1 := by`
+- `Euler/PacketGeometryGuards.lean:93` — `(by norm_num : (0:ℝ) ≤ 1000000000).trans neighborStabilityConstant_ge`
+- `Euler/PacketGeometryGuards.lean:97` — `change 1000000*neighborStabilityConstant*D.error*D.Θ^40 ≤ 1 at hs`
+- `Euler/PacketGeometryGuards.lean:101` — `theorem propagator_small : 8000000*D.error*D.Θ^21 ≤ 1 := by`
+- `Euler/PacketGeometryGuards.lean:106` — `change 1000000*neighborStabilityConstant*D.error*D.Θ^40 ≤ 1 at hs`
+- `Euler/PacketHorizonSize.lean:92` — `(hsmall : 1000000*K*e*Θ^40 ≤ 1)`
+- `Euler/PacketInductionScales.lean:94` — `delta_geometry : 1000000*geometryConstant*δ ≤ 1`
+- `Euler/PacketInductionScales.lean:129` — `(min (1/(1000000*geometryConstant)) (1/(8*(1+errorConstant frameConstant)))))`
+- `Euler/PacketInductionScales.lean:136` — `have hηgeom : η ≤ 1/(1000000*geometryConstant) :=`
+- `Euler/PacketInductionScales.lean:141` — `have hδgeometry : 1000000*geometryConstant*δ ≤ 1 := by`
+- `Euler/PacketInductionScales.lean:142` — `have hg : 0 < 1000000*geometryConstant := by positivity [geometryConstant_one]`
+- `Euler/PacketNeighborControlled.lean:82` — `(hlam : 0 ≤ lam) (hsmall : 8000000*e*Θ^21 ≤ 1)`
+- `Euler/PacketNeighborControlled.lean:115` — `|V t-Z t|+|U t+Z₁ t| ≤ 400000000*e*Θ^29*(1+lam)*F t := by`
+- `Euler/PacketNeighborControlled.lean:139` — `have hcoef : 20*e*Θ^8+800*(200000*e)*Θ^29*(1+lam+e) ≤ 400000000*e*Θ^29*(1+lam) := by`
+- `Euler/PacketNeighborControlled.lean:143` — `(show 0 ≤ 160000000*e*Θ^29 by positivity)`
+- `Euler/PacketNeighborControlled.lean:154` — `def neighborStabilityConstant : ℝ := 1000000000*exp 6`
+- `Euler/PacketNeighborControlled.lean:156` — `theorem neighborStabilityConstant_ge : 1000000000 ≤ neighborStabilityConstant := by`
+- `Euler/PacketNeighborControlled.lean:165` — `(hlam : 0 ≤ lam) (hsmall : 1000000*neighborStabilityConstant*e*Θ^40 ≤ 1)`
+- `Euler/PacketNeighborControlled.lean:193` — `(∀ t ∈ Icc 0 T, |V t-Z t|+|U t+Z₁ t| ≤ 400000000*e*Θ^29*(1+lam)*F t) ∧`
+- `Euler/PacketNeighborControlled.lean:202` — `have hsmallODE : 8000000*e*Θ^21 ≤ 1 := by`
+- `Euler/PacketNeighborControlled.lean:213` — `let δ := 400000000*e*Θ^29`
+- `Euler/PacketPhysicalCompression.lean:76` — `(hsmall : 1000000*K*e*Θ^40 ≤ 1) (hscale : 1 ≤ β*τ^2)`
+- `Euler/PacketPhysicalFamily.lean:26` — `(hsmall : 1000000*neighborStabilityConstant*(16*(ε*Θ*(4*G)^2+d))*Θ^40 ≤ 1)`
+- `Euler/PacketPhysicalFamily.lean:66` — `|scaledVelocity m v (w ξ) t₀ a ε τ 0+Z₁ τ| ≤ 400000000*e*Θ^29*(1+lam)*F τ) ∧`
+- `Euler/PacketPhysicalFamily.lean:90` — `|scaledVelocity m v (w ξ) t₀ a ε τ 0+Z₁ τ| ≤ 400000000*e*Θ^29*(1+lam)*F τ) ∧`
+- `Euler/PacketPhysicalFamily.lean:118` — `have hK : 1 ≤ neighborStabilityConstant := (by norm_num : (1:ℝ) ≤ 1000000000).trans neighborStabilityConstant_ge`
+- `Euler/PacketPhysicalNeighbor.lean:25` — `(hsmall : 1000000*neighborStabilityConstant*(16*(ε*Θ*(4*G)^2+d))*Θ^40 ≤ 1)`
+- `Euler/PacketPhysicalNeighbor.lean:64` — `(∀ t ∈ Icc 0 T, |V t-Z t|+|U t+Z₁ t| ≤ 400000000*e*Θ^29*(1+lam)*F t) ∧`
+- `Euler/PacketPhysicalNeighbor.lean:79` — `have hbase : 1000000*e*Θ^40 ≤ 1 := by`
+- `Euler/PacketPhysicalNeighbor.lean:81` — `change 1000000*neighborStabilityConstant*e*Θ^40 ≤ 1 at hsmall`
+- `Euler/PacketPhysicalPropagator.lean:25` — `(hsmall : 8000000*(16*(ε*Θ*(4*G)^2+d))*Θ^21 ≤ 1)`
+- `Euler/PacketPhysicalPropagator.lean:66` — `change 8000000*e*Θ^21 ≤ 1 at hsmall`
+- `Euler/PacketPhysicalSign.lean:20` — `(hσΘ : 1 ≤ σ*Θ) (hτ : 1 ≤ τ) (hτΘ : τ ≤ Θ) (hsmall : 1000000*K*e*Θ^40 ≤ 1)`
+- `Euler/PacketPhysicalSign.lean:106` — `(hσΘ : 1 ≤ σ*Θ) (hτ : 1 ≤ τ) (hτΘ : τ ≤ Θ) (hsmall : 1000000*K*e*Θ^40 ≤ 1)`
+- `Euler/PacketPhysicalStage.lean:26` — `(hsmall : 1000000*stabilityConstant*(16*(ε*Θ*(4*G)^2+d))*Θ^40 ≤ 1)`
+- `Euler/PacketPhysicalStage.lean:59` — `(∀ t ∈ Icc 0 T, |V t-Z t|+|U t+Z₁ t| ≤ 160000000*e*Θ^29*(1+lam)*F t) ∧`
+- `Euler/PacketPhysicalStage.lean:74` — `have hbase : 1000000*e*Θ^40 ≤ 1 := by`
+- `Euler/PacketPhysicalStage.lean:76` — `change 1000000*stabilityConstant*e*Θ^40 ≤ 1 at hsmall`
+- `Euler/PacketSizeComparison.lean:52` — `(hsmall : 1000000*K*e*Θ^40 ≤ 1)`
+- `Euler/PacketSizeComparison.lean:69` — `have hA : 1000000*A ≤ 1 := by simpa only [A, mul_assoc] using hsmall`
+- `Euler/PacketSourceFrequency.lean:13` — `def theta : ℝ := 1/1000000`
+- `Euler/PacketSourceGeometryData.lean:106` — `small : 1000000*neighborStabilityConstant*`
+- `Euler/PacketSourceScaleGuards.lean:130` — `geometry_small : 1000000*K*geometryError J D C c X a n*sourceTheta J C (scaleSequence J X) n^40 ≤ 1`
+- `Euler/PacketSourceScaleGuards.lean:136` — `(hδK : 1000000*K*δ ≤ 1) (hb : ActualBounds J D C c X δ)`
+- `Euler/PacketSourceScaleGuards.lean:205` — `(show 0 ≤ 1000000*K by positivity)`
+- `Euler/PacketSourceScaleGuards.lean:223` — `let δ : ℝ := min η (min (1/2) (1/(1000000*K)))`
+- `Euler/PacketSourceScaleGuards.lean:227` — `have hδinv : δ ≤ 1/(1000000*K) := (min_le_right _ _).trans (min_le_right _ _)`
+- `Euler/PacketSourceScaleGuards.lean:228` — `have hδK : 1000000*K*δ ≤ 1 := by`
+- `Euler/PacketSourceScaleGuards.lean:229` — `have hh := (le_div_iff₀ (show 0 < 1000000*K by positivity)).mp hδinv`
+- `Euler/PacketWithinStage.lean:25` — `(hlam : 0 ≤ lam) (hsmall : 1000000 * stabilityConstant * e * Θ ^ 40 ≤ 1)`
+- `Euler/PacketWithinStage.lean:54` — `160000000 * e * Θ ^ 29 * (1 + lam) * F t) ∧`
+- `Euler/ParentForwardGeometryGuards.lean:93` — `have hN1 : 1 ≤ 1000000*neighborStabilityConstant := by`
+- `Euler/ParentForwardGeometryGuards.lean:95` — `have hN : 0 ≤ 1000000*neighborStabilityConstant := zero_le_one.trans hN1`
+- `Euler/ParentForwardGeometryGuards.lean:96` — `have hsmall : 1000000*neighborStabilityConstant*`
+- `Euler/ParentForwardGeometryGuards.lean:99` — `_ ≤ 1000000*neighborStabilityConstant*(CF^2*geometryError J D C c X a n)*`
+- `Euler/ParentForwardGeometryGuards.lean:104` — `_ = 1000000*(neighborStabilityConstant*CF^2)*geometryError J D C c X a n*`
+- `Euler/ParentForwardGeometryGuards.lean:108` — `have hh : 1 ≤ 1000000*neighborStabilityConstant*P.horizon^40 :=`
+- `Euler/ParentPacketGeometryGuards.lean:198` — `have hN1 : 1 ≤ 1000000*neighborStabilityConstant := by`
+- `Euler/ParentPacketGeometryGuards.lean:202` — `have hN : 0 ≤ 1000000*neighborStabilityConstant := zero_le_one.trans hN1`
+- `Euler/ParentPacketGeometryGuards.lean:204` — `1000000*neighborStabilityConstant*`
+- `Euler/ParentPacketGeometryGuards.lean:208` — `_ ≤ 1000000*neighborStabilityConstant*(CF^2*geometryError J D C c X a n)*`
+- `Euler/ParentPacketGeometryGuards.lean:213` — `_ = 1000000*(neighborStabilityConstant*CF^2)*geometryError J D C c X a n*`
+- `Euler/ParentPacketGeometryGuards.lean:218` — `have hh : 1 ≤ 1000000*neighborStabilityConstant*P.horizon^40 :=`
+- `Euler/ParentRenewalParameters.lean:19` — `30000000*neighborStabilityConstant*G.error*G.Θ^40`
+- `Euler/ParentRenewalParameters.lean:21` — `def tiltError : ℝ := 1500*G.σ+30000000*neighborStabilityConstant*G.error*G.Θ^40`
+- `Euler/ParentRenewalPrefix.lean:119` — `(hδK : 1000000*K*δ ≤ 1) (hb : ActualBounds J D C c X δ)`
+- `Euler/ParentRenewalScaleCosts.lean:20` — `def errorConstant (CF : ℝ) : ℝ := 30000000*neighborStabilityConstant*CF^2`
+- `Euler/ParentRenewalScaleCosts.lean:174` — `have hK : 0 ≤ 30000000*neighborStabilityConstant := by positivity [neighborStabilityConstant_ge]`
+- `Euler/ParentRenewalScaleCosts.lean:176` — `have hnorm : 30000000*neighborStabilityConstant*G.error*G.Θ^40 ≤`
+- `NavierStokes/AxisModelBounds.lean:25` — `(305719 / 1152000 : ℝ) ≤ AxisProfile.cubicLower t := by`
+- `NavierStokes/AxisModelBounds.lean:41` — `(305719 / 1152000 : ℝ) ≤ AxisSeries.bessel 1 t :=`
+- `NavierStokes/AxisModelBounds.lean:47` — `(305719 / 1152000 : ℝ) ≤ AxisSeries.profile χ Y ∧`
+- `NavierStokes/AxisModelBounds.lean:56` — `(53 / 200 : ℝ) < (305719 / 1152000 : ℝ) ∧`
+- `NavierStokes/AxisModelBounds.lean:57` — `(305719 / 1152000 : ℝ) ≤ model z ∧ model z ≤ 1 := by`
+- `NavierStokes/ExponentLedger.lean:276` — `theorem smaller_kappa_admissible {κ : ℝ} (hκ : κ < 1 / 1000000) :`

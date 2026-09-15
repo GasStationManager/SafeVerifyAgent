@@ -1,0 +1,212 @@
+# `decide` sites (210)
+
+- `NavierStokes/ActualCandidateConstruction.lean:728` — `simp only [show (0 : Fin 3) ≠ 2 by decide, ite_false, add_zero]`
+- `NavierStokes/ActualCorrectionModels.lean:838` — `simpa only [modelCoordinates, stablePoint, hzero, zero_pow (by decide : 2 ≠ 0), zero_div] using`
+- `NavierStokes/ActualInitialExcluded.lean:187` — `rw [hT, hz, zero_pow (by decide : 2 ≠ 0), zero_mul, zero_add] at hsep`
+- `NavierStokes/ActualPrimaryCoherence.lean:1886` — `zero_pow (by decide : 2 ≠ 0),zero_add,Real.sqrt_zero] using physicalAxisRadius_pos L`
+- `NavierStokes/ActualPrimaryCovariance.lean:330` — `intervalIntegral.integral_zero, zero_div, Finset.sum_const_zero, hm, zero_pow (by decide : (2 : ℕ) ≠ 0), mul_zero]`
+- `NavierStokes/ActualSignedMeanBinding.lean:295` — `PartitionedCovariance.amplitude, hm, zero_pow (by decide : (2 : ℕ) ≠ 0), zero_mul]`
+- `NavierStokes/ActualSignedPhysicalData.lean:375` — `(L, ⟨1, by decide⟩)`
+- `NavierStokes/BaseRankPatch.lean:52` — `W.heat.physical.coefficients (s := .mean) (by decide) p.2 hp`
+- `NavierStokes/EntranceAlignedBase.lean:275` — `simpa only [xProfile, mul_zero, Real.sqrt_zero, zero_pow (by decide : 2 ≠ 0), zero_div] using`
+- `NavierStokes/EntranceAlignedBase.lean:1008` — `have hz := modulated_positive_stress_zero H v (by decide : 0 < 1) hp.le`
+- `NavierStokes/ErrorHarmonics.lean:507` — `exact (hj s hs).trans (Nat.pow_le_pow_right (by decide : 1 ≤ 2) (Nat.le_of_lt hs))`
+- `NavierStokes/FirstOrderBaseEdge.lean:69` — `(exterior_mono (angularHistory_exterior s (by decide : 0 < 1)) hR)`
+- `NavierStokes/FirstOrderBaseEdge.lean:71` — `(fun _ he => (conservative_moments_at s (by decide : 0 < 1) hR he).2.1)`
+- `NavierStokes/FirstOrderBaseEdge.lean:72` — `(fun _ he => (conservative_moments_at s (by decide : 0 < 1) hR he).2.2.1)`
+- `NavierStokes/FirstOrderBaseEdge.lean:79` — `exact thetaDensity_eq s hbase (by decide : 0 < 1) ⟨mem_univ r, heta⟩`
+- `NavierStokes/FirstOrderBaseEdge.lean:98` — `· exact fun _ he => (conservative_moments_zero s (by decide : 0 < 1) he).1`
+- `NavierStokes/FirstOrderBaseEdge.lean:99` — `· exact fun _ he => (conservative_moments_zero s (by decide : 0 < 1) he).2.2.2`
+- `NavierStokes/FirstOrderBaseEdge.lean:102` — `pressureField_exterior s (by decide : 0 < 1) z hz s.B le_rfl, zero_add]`
+- `NavierStokes/FirstOrderBaseEdge.lean:112` — `(pressureField_exterior s (by decide : 0 < 1))`
+- `NavierStokes/FirstOrderBaseEdge.lean:117` — `rw [zDensity_eq s hbase (by decide : 0 < 1) ⟨mem_univ R, heta⟩]`
+- `NavierStokes/FirstOrderBaseEdge.lean:126` — `exact zDensity_eq s hbase (by decide : 0 < 1) ⟨mem_univ r, heta⟩`
+- `NavierStokes/FirstOrderBaseEdge.lean:768` — `pressureField_exterior s (by decide : 0 < 1) z hz R hR, zero_add]`
+- `NavierStokes/FirstOrderBaseEdge.lean:774` — `(fun _ he => (conservative_moments_at s (by decide : 0 < 1) hR he).1)`
+- `NavierStokes/FirstOrderBaseEdge.lean:775` — `(fun _ he => (conservative_moments_at s (by decide : 0 < 1) hR he).2.2.2) hflux heta`
+- `NavierStokes/FirstOrderBaseEdge.lean:782` — `exact zDensity_eq s hbase (by decide : 0 < 1) ⟨mem_univ r, heta⟩`
+- `NavierStokes/GaussianEnvelope.lean:70` — `simpa only [sub_self, zero_pow (by decide : 2 ≠ 0), sub_zero] using And.intro hl hu`
+- `NavierStokes/GaussianTailFlat.lean:664` — `(by exact ⟨0, by decide⟩)`
+- `NavierStokes/GenericAngularRecovery.lean:158` — `(axial_scale_horizontal_derivative Q hd 0 (by decide))`
+- `NavierStokes/GenericAngularRecovery.lean:159` — `(axial_scale_horizontal_derivative Q hd 1 (by decide))`
+- `NavierStokes/GlobalStressSupport.lean:191` — `simp only [zero_pow (by decide : 2 ≠ 0), zero_div, zero_mul]`
+- `NavierStokes/GrowingMode.lean:178` — `simpa only [hpzero, zero_pow (by decide : 2 ≠ 0), mul_zero] using hsq`
+- `NavierStokes/LeadingStressWeights.lean:689` — `simp only [ActivationContinuation.shearSize, zero_div, zero_pow (by decide : (2 : ℕ) ≠ 0),`
+- `NavierStokes/LoopVariance.lean:248` — `mul_one, zero_pow (by decide : (2 : ℕ) ≠ 0), sub_zero, one_pow, div_one] using`
+- `NavierStokes/MeanRankUpdate.lean:1420` — `exact ReservedPatches.radial_heated_fields F XR hXR c (by decide) η`
+- `NavierStokes/MovingFrameODE.lean:72` — `exact B.inner_eq_zero (by decide)`
+- `NavierStokes/MovingFrameODE.lean:74` — `exact B.inner_eq_zero (by decide)`
+- `NavierStokes/NaturalCore.lean:120` — `zero_pow (by decide : 2 ≠ 0), zero_add, zero_div] using profile_axis_mem h Λ ht`
+- `NavierStokes/NominalProfile.lean:155` — `exact (tendsto_const_mul_atTop_of_pos Xi_pos).mpr ((tendsto_pow_atTop (by decide : 10 ≠ 0)).comp hcp)`
+- `NavierStokes/OffplaneCorrectionExtensions.lean:795` — `zero_pow (by decide : 2 ≠ 0), zero_add, Real.sqrt_zero]`
+- `NavierStokes/OutgoingCone.lean:381` — `· simpa only [normalV, normalP, normalJ, hB, zero_mul, zero_div, zero_pow (by decide : (2 : ℕ) ≠ 0),`
+- `NavierStokes/OutgoingEntranceCone.lean:1660` — `simp only [zero_mul, mul_zero, sub_zero, zero_pow (by decide : (2 : ℕ) ≠ 0), zero_div, zero_add, add_zero]`
+- `NavierStokes/OutgoingEntranceCone.lean:1679` — `simp only [zero_mul, mul_zero, sub_zero, zero_pow (by decide : (2 : ℕ) ≠ 0), zero_div, zero_add, add_zero]`
+- `NavierStokes/PeriodicSobolev.lean:252` — `have h1 := averaged_line_energy_bound hf 0 1 (by decide) x (hx 1)`
+- `NavierStokes/PeriodicSobolev.lean:253` — `have h10 := averaged_line_energy_bound hd0 0 1 (by decide) x (hx 1)`
+- `NavierStokes/PeriodicSobolev.lean:254` — `have h2 := twice_averaged_line_energy_bound hf 0 1 2 (by decide) (by decide) x (hx 2)`
+- `NavierStokes/PeriodicSobolev.lean:254` — `have h2 := twice_averaged_line_energy_bound hf 0 1 2 (by decide) (by decide) x (hx 2)`
+- `NavierStokes/PeriodicSobolev.lean:255` — `have h20 := twice_averaged_line_energy_bound hd0 0 1 2 (by decide) (by decide) x (hx 2)`
+- `NavierStokes/PeriodicSobolev.lean:255` — `have h20 := twice_averaged_line_energy_bound hd0 0 1 2 (by decide) (by decide) x (hx 2)`
+- `NavierStokes/PeriodicSobolev.lean:256` — `have h21 := twice_averaged_line_energy_bound hd1 0 1 2 (by decide) (by decide) x (hx 2)`
+- `NavierStokes/PeriodicSobolev.lean:256` — `have h21 := twice_averaged_line_energy_bound hd1 0 1 2 (by decide) (by decide) x (hx 2)`
+- `NavierStokes/PeriodicSobolev.lean:257` — `have h210 := twice_averaged_line_energy_bound hd10 0 1 2 (by decide) (by decide) x (hx 2)`
+- `NavierStokes/PeriodicSobolev.lean:257` — `have h210 := twice_averaged_line_energy_bound hd10 0 1 2 (by decide) (by decide) x (hx 2)`
+- `NavierStokes/PeriodicUniqueness.lean:610` — `simp only [Pi.sub_apply, hinitial x, sub_self, norm_zero, zero_pow (by decide : 2 ≠ 0)]`
+- `NavierStokes/PositiveAxisExistence.lean:622` — `· exact xProfile_square hparity 0 (by decide) heta hr`
+- `NavierStokes/PositiveAxisExistence.lean:623` — `· exact xProfile_square hparity 1 (by decide) heta hr`
+- `NavierStokes/PositiveAxisExistence.lean:624` — `· exact xProfile_square hparity 2 (by decide) heta hr`
+- `NavierStokes/PositiveAxisExistence.lean:625` — `· exact xProfile_square hparity 3 (by decide) heta hr`
+- `NavierStokes/PositiveAxisExistence.lean:765` — `(hnew 0 (by decide)).of_le (ENat.natCast_le_of_coe_top_le_withTop le_rfl 2))`
+- `NavierStokes/PositiveAxisExistence.lean:769` — `(hnew 1 (by decide)).of_le (ENat.natCast_le_of_coe_top_le_withTop le_rfl 2))`
+- `NavierStokes/PositiveAxisExistence.lean:774` — `hphi hu ((hnew 2 (by decide)).differentiableAt (by simp))`
+- `NavierStokes/PositiveAxisExistence.lean:775` — `((hnew 3 (by decide)).differentiableAt (by simp)) hbet).mp hsUpdated`
+- `NavierStokes/PrimaryResidualClass.lean:721` — `have ha : ∀ n i, HarmonicFields.BandLimited (A n i) 1 := fun n i => (hA n i).mono (by decide)`
+- `NavierStokes/PrimaryTargetBounds.lean:45` — `simp only [basisMatrix, Matrix.det_fin_two, ite_true, show (1 : Fin 2) ≠ 0 by decide,`
+- `NavierStokes/ReferenceBounds.lean:170` — `simp only [zero_pow (by decide : (2 : ℕ) ≠ 0), sub_zero] at hsourceInt`
+- `NavierStokes/ShapeTransition.lean:830` — `· simp only [separation, hP, mul_zero, zero_pow (by decide : 10 ≠ 0), div_zero]`
+- `NavierStokes/SlowRecursion.lean:778` — `let a := stepComponent c hS hSR C n F 0 (by decide)`
+- `NavierStokes/SlowRecursion.lean:779` — `let u := stepComponent c hS hSR C n F 1 (by decide)`
+- `NavierStokes/SlowRecursion.lean:780` — `let k := stepComponent c hS hSR C n F 2 (by decide)`
+- `NavierStokes/SlowRecursion.lean:781` — `let p := stepComponent c hS hSR C n F 3 (by decide)`
+- `NavierStokes/SlowRecursion.lean:789` — `fin_cases i <;> exact stepComponent_profile c hS hSR C n F _ (by decide)`
+- `NavierStokes/SlowRecursion.lean:877` — `· exact stepComponent_axis_zero c hS hSR C n F 0 (by decide) hz`
+- `NavierStokes/SlowRecursion.lean:878` — `· exact stepComponent_axis_zero c hS hSR C n F 1 (by decide) hz`
+- `NavierStokes/SlowRecursion.lean:879` — `· exact stepComponent_axis_zero c hS hSR C n F 2 (by decide) hz`
+- `NavierStokes/SlowRecursion.lean:880` — `· exact stepComponent_axis_zero c hS hSR C n F 3 (by decide) hz`
+- `NavierStokes/SlowRecursion.lean:882` — `(fun _ hz => stepComponent_axis_zero c hS hSR C n F 1 (by decide) hz)`
+- `NavierStokes/SlowRecursion.lean:883` — `(fun _ hz => stepComponent_axis_zero c hS hSR C n F 2 (by decide) hz) hz`
+- `NavierStokes/SlowStressSupport.lean:1031` — `have hprev_le : n - 1 ≤ n := (Nat.sub_lt hn (by decide : 0 < 1)).le`
+- `NavierStokes/SmoothFourierData.lean:315` — `Real.summable_one_div_nat_pow.mpr (by decide)`
+- `NavierStokes/SupportedActualContext.lean:95` — `zero_pow (by decide : 2 ≠ 0), zero_div] using NominalConeAssembly.activeLeft_pos W₀`
+- `NavierStokes/TerminalCompensation.lean:163` — `have h01 := bumps_disjoint P 0 1 (by decide) x`
+- `NavierStokes/TerminalCompensation.lean:164` — `have h02 := bumps_disjoint P 0 2 (by decide) x`
+- `NavierStokes/TerminalCompensation.lean:165` — `have h12 := bumps_disjoint P 1 2 (by decide) x`
+- `NavierStokes/TerminalHistoryBridge.lean:1054` — `(regularClock_tendsto hq hXR).comp ((tendsto_pow_atTop (by decide : (2:ℕ) ≠ 0)).atTop_div_const (by norm_num))`
+- `NavierStokes/TerminalHistoryBridge.lean:1519` — `simp only [HeatSwitchCone.normalV,hB,zero_div,zero_pow (by decide : (2:ℕ)≠0),add_zero,mul_one]`
+- `NavierStokes/TorusCoverDegree.lean:307` — `exact Nat.pow_le_pow_right (by decide) hgap`
+- `NavierStokes/TrueConeLoop.lean:81` — `zero_pow (by decide : (2 : ℕ) ≠ 0), zero_mul]`
+- `NavierStokes/TrueConeLoop.lean:88` — `simp only [correction, correctionRoot_zero δ v hδ hv, zero_pow (by decide : (2 : ℕ) ≠ 0)]`
+- `NavierStokes/TrueConeLoop.lean:230` — `zero_mul, zero_pow (by decide : (2 : ℕ) ≠ 0), add_zero]`
+- `NavierStokes/VolterraAnalyticBounds.lean:504` — `let index : ℕ → Fin 2 × ℕ := fun k => (⟨k % 2, Nat.mod_lt _ (by decide)⟩, k / 2)`
+- `NavierStokes/WeightedQuotients.lean:722` — `· simp only [FlatZeroExtension.zeroExtension_of_nonpos _ (le_of_not_gt hδ), zero_pow (by decide : 2 ≠ 0)]`
+- `NavierStokes/WholeDomainHeatGeometry.lean:54` — `show (0 : Fin 3) ≠ 2 by decide, show (1 : Fin 3) ≠ 2 by decide,`
+- `NavierStokes/WholeDomainHeatGeometry.lean:54` — `show (0 : Fin 3) ≠ 2 by decide, show (1 : Fin 3) ≠ 2 by decide,`
+- `NavierStokes/R3/CompactComparisonBounds.lean:68` — `simp only [hzero, norm_zero, zero_pow (by decide : (3 : ℕ) ≠ 0)]`
+- `NavierStokes/R3/CompactComparisonBounds.lean:145` — `simp only [hzero, norm_zero, zero_pow (by decide : (2 : ℕ) ≠ 0)]`
+- `NavierStokes/R3/CompactForceBound.lean:39` — `simp only [hzero t x hx, norm_zero, zero_pow (by decide : 2 ≠ 0)]`
+- `NavierStokes/R3/CompactForceBound.lean:50` — `simp only [hzero t x hx, norm_zero, zero_pow (by decide : 2 ≠ 0)]`
+- `NavierStokes/R3/FourierSobolevWeights.lean:107` — `exact pow_le_pow_right₀ (le_add_of_nonneg_right (sq_nonneg ‖ξ‖)) (by decide)`
+- `Euler/BaseEulerGuards.lean:124` — `simp only [mul_zero,zero_mul,zero_pow (by decide : 3 ≠ 0),add_zero]`
+- `Euler/CompactSolenoidalDensity.lean:39` — `((tendsto_pow_atTop (by decide : (3 : ℕ) ≠ 0)).comp hrad)`
+- `Euler/CurlTransportAlgebra.lean:81` — `simp only [show (⟨2, by decide⟩ : Fin 3) = 2 from rfl] <;>`
+- `Euler/EulerProof.lean:5781` — `exact (by decide : Even 6).pow_abs (ξ i)`
+- `Euler/EulerProof.lean:10394` — `simp only [sub_zero, zero_pow (by decide : (2 : ℕ) ≠ 0), smul_eq_mul]`
+- `Euler/EulerProof.lean:15729` — `simp only [sub_self, zero_mul, mul_zero, zero_pow (by decide : 2 ≠ 0), add_zero, sub_zero] at hFP hFQ`
+- `Euler/EulerProof.lean:15930` — `simp only [zero_pow (by decide : 2 ≠ 0), mul_zero, sub_zero, add_zero] at herr`
+- `Euler/EulerProof.lean:16073` — `simp only [show (⟨2, by decide⟩ : Fin 3) = 2 from rfl] <;>`
+- `Euler/EulerProof.lean:16272` — `simp only [show (⟨2, by decide⟩ : Fin 3) = 2 from rfl] <;>`
+- `Euler/EulerProof.lean:16425` — `simp only [show (⟨2, by decide⟩ : Fin 3) = 2 from rfl] <;>`
+- `Euler/EulerProof.lean:16615` — `have h45 : Θ ^ 4 ≤ Θ ^ 5 := pow_le_pow_right₀ hΘ (by decide)`
+- `Euler/EulerProof.lean:16665` — `have h2 : Θ ^ 2 ≤ Θ ^ 12 := pow_le_pow_right₀ hΘ (by decide)`
+- `Euler/EulerProof.lean:16666` — `have h4 : Θ ^ 4 ≤ Θ ^ 12 := pow_le_pow_right₀ hΘ (by decide)`
+- `Euler/EulerProof.lean:16667` — `have h6 : Θ ^ 6 ≤ Θ ^ 12 := pow_le_pow_right₀ hΘ (by decide)`
+- `Euler/EulerProof.lean:16668` — `have h7 : Θ ^ 7 ≤ Θ ^ 12 := pow_le_pow_right₀ hΘ (by decide)`
+- `Euler/EulerProof.lean:16669` — `have h8 : Θ ^ 8 ≤ Θ ^ 12 := pow_le_pow_right₀ hΘ (by decide)`
+- `Euler/EulerProof.lean:16670` — `have h11 : Θ ^ 11 ≤ Θ ^ 12 := pow_le_pow_right₀ hΘ (by decide)`
+- `Euler/EulerProof.lean:16928` — `have hh := pow_le_pow_right₀ hΘ (show 5 ≤ 21 by decide)`
+- `Euler/EulerProof.lean:17335` — `have h24 : Θ ^ 2 ≤ Θ ^ 4 := pow_le_pow_right₀ hΘ (by decide)`
+- `Euler/EulerProof.lean:17942` — `have hh := hp 0 (by decide)`
+- `Euler/EulerProof.lean:17950` — `have hρb : ρ ≤ 1 / 2 := by have hh := hp 5 (by decide); dsimp [ρ]; nlinarith only [hh, hMb]`
+- `Euler/EulerProof.lean:17951` — `have hηb : η ≤ 1 / 2 := by have hh := hKp 29 (by decide); dsimp [η]; nlinarith only [hh, hMb]`
+- `Euler/EulerProof.lean:17952` — `have hAb : 210 * e * Θ ^ 2 ≤ 1 := by have hh := hp 2 (by decide); nlinarith only [hh, hMb]`
+- `Euler/EulerProof.lean:17953` — `have hEb : dE ≤ 1 := by have hh := hεp 4 (by decide); dsimp [dE]; nlinarith only [hh, hMb]`
+- `Euler/EulerProof.lean:17955` — `have h4 := hp 4 (by decide)`
+- `Euler/EulerProof.lean:17956` — `have h5 := hp 5 (by decide)`
+- `Euler/EulerProof.lean:17957` — `have h31 := hKp 31 (by decide)`
+- `Euler/EulerProof.lean:17970` — `have h9 := hp 9 (by decide)`
+- `Euler/EulerProof.lean:17971` — `have h6 := hεp 6 (by decide)`
+- `Euler/EulerProof.lean:17976` — `have h8 := hεp 8 (by decide)`
+- `Euler/EulerProof.lean:17980` — `have h9 := hp 9 (by decide)`
+- `Euler/EulerProof.lean:17981` — `have h33 := hKp 33 (by decide)`
+- `Euler/EulerProof.lean:17982` — `have h6 := hp 6 (by decide)`
+- `Euler/EulerProof.lean:17983` — `have h4 := hεp 4 (by decide)`
+- `Euler/EulerProof.lean:17987` — `have hh := hεp 4 (by decide)`
+- `Euler/EulerProof.lean:18344` — `· have hh : |t| ^ 3 ≤ |t| ^ 4 := pow_le_pow_right₀ (le_of_not_ge ht) (by decide)`
+- `Euler/EulerProof.lean:18529` — `have hpow21 : Θ ^ 21 ≤ Θ ^ 40 := pow_le_pow_right₀ hΘ (by decide)`
+- `Euler/EulerProof.lean:18530` — `have hpow29 : Θ ^ 29 ≤ Θ ^ 40 := pow_le_pow_right₀ hΘ (by decide)`
+- `Euler/EulerProof.lean:18890` — `have hh := hp 5 (by decide)`
+- `Euler/EulerProof.lean:18894` — `have hh := hp 6 (by decide)`
+- `Euler/EulerProof.lean:18919` — `have hm := hp 2 (by decide)`
+- `Euler/EulerProof.lean:19804` — `pow_le_pow_right₀ hp (by decide)`
+- `Euler/EulerProof.lean:20168` — `(by positivity : 0 < ((J - 1 + n : ℕ) : ℝ) ^ 5) (pow_le_pow_right₀ hp (by decide : 5 ≤ 7))`
+- `Euler/InviscidCorrectionUniqueness.lean:81` — `simpa only [E,StabilityBudget.growth,sub_self,abs_zero,zero_pow (by decide : (2 : ℕ) ≠ 0),mul_zero] using hb`
+- `Euler/LpOperatorFieldPath.lean:154` — `· simp only [hu hs,map_zero,inner_zero_left,norm_zero,zero_pow (by decide : 2 ≠ 0),mul_zero,le_refl]`
+- `Euler/MetricRootLimit.lean:25` — `simpa only [zero_pow (by decide : 2 ≠ 0), add_zero] using`
+- `Euler/OrdinaryLogarithmicGradient.lean:47` — `single_le_sum (fun _ _ => norm_nonneg _) (by decide : 3 ∈ range (3+1))`
+- `Euler/OrdinaryRegularizedCauchy.lean:46` — `hinit,sub_self,norm_zero,zero_pow (by decide : 2 ≠ 0)]`
+- `Euler/OrdinarySobolevL4.lean:119` — `simpa only [h20,h60,mul_zero,zero_pow (by decide : 3 ≠ 0),add_zero,`
+- `Euler/OrdinarySobolevL4.lean:120` — `zero_pow (by decide : 2 ≠ 0)] using square_norm_scaled h2 h6 1 zero_lt_one`
+- `Euler/PacketActualFrameEstimates.lean:54` — `have hp := scaled_power_le hΘ hK he (by decide : 5 ≤ 40)`
+- `Euler/PacketBaseGuardScales.lean:58` — `norm_num only [zero_pow (by decide : 2 ≠ 0),zero_div,mul_zero,add_zero,`
+- `Euler/PacketBaseGuardScales.lean:59` — `zero_pow (by decide : 3 ≠ 0),zero_mul] at h`
+- `Euler/PacketControlledPropagator.lean:52` — `have hh := mul_le_mul_of_nonneg_left (pow_le_pow_right₀ hΘ (by decide : 5 ≤ 21)) he`
+- `Euler/PacketForwardFactorization.lean:135` — `rw [hz,norm_zero,zero_pow (by decide : 2 ≠ 0)] at hl`
+- `Euler/PacketGeometryGuards.lean:55` — `(by decide : 0 ≤ 40)`
+- `Euler/PacketGeometryGuards.lean:77` — `(by decide : 5 ≤ 40)`
+- `Euler/PacketGeometryGuards.lean:84` — `have hp := mul_le_mul_of_nonneg_left (pow_le_pow_right₀ D.Theta_lower (by decide : 29 ≤ 40))`
+- `Euler/PacketGeometryGuards.lean:94` — `have hp := mul_le_mul_of_nonneg_left (pow_le_pow_right₀ D.Theta_lower (by decide : 29 ≤ 40))`
+- `Euler/PacketGeometryGuards.lean:102` — `have hp := mul_le_mul_of_nonneg_left (pow_le_pow_right₀ D.Theta_lower (by decide : 21 ≤ 40)) D.error_nonneg`
+- `Euler/PacketInductionStage.lean:72` — `rw [hz,zero_pow (by decide : 2 ≠ 0),zero_mul] at ht`
+- `Euler/PacketInitialScaleSummability.lean:81` — `div_le_div_of_nonneg_left hx (by positivity) (pow_le_pow_right₀ hp (by decide))`
+- `Euler/PacketKnownDecomposition.lean:16` — `have hu : (univ : Finset KnownPiece) = {.high, .mean, .corrector} := by decide`
+- `Euler/PacketKnownDecomposition.lean:31` — `theorem card_knownTerm : Fintype.card KnownTerm = 15 := by decide`
+- `Euler/PacketKnownDecomposition.lean:41` — `.fastMeanHigh, .fastMeanCorrector, .fastCorrectorHigh, .fastCorrectorCorrector} := by decide`
+- `Euler/PacketKnownTermProfiles.lean:38` — `exact KnownPiece.fast_corrector_profile_mean .high S i j p (by decide) hl.1 hr.1 hn`
+- `Euler/PacketKnownTermProfiles.lean:41` — `exact KnownPiece.fast_corrector_profile_mean .corrector S i j p (by decide) hl.1`
+- `Euler/PacketKnownTermProfiles.lean:58` — `exact KnownPiece.fast_mean_profile_high .high S i j p (by decide)`
+- `Euler/PacketKnownTermProfiles.lean:62` — `exact KnownPiece.fast_mean_profile_high .corrector S i j p (by decide)`
+- `Euler/PacketKnownTermProfiles.lean:66` — `exact KnownPiece.fast_corrector_profile_high .high S i j p (by decide) hl.1 hr.1 hn`
+- `Euler/PacketKnownTermProfiles.lean:69` — `exact KnownPiece.fast_corrector_profile_high .corrector S i j p (by decide) hl.1`
+- `Euler/PacketNeighborControlled.lean:119` — `have hh := mul_le_mul_of_nonneg_left (pow_le_pow_right₀ hΘ (by decide : 5 ≤ 21)) he`
+- `Euler/PacketNeighborControlled.lean:140` — `have h1 := mul_le_mul_of_nonneg_left (pow_le_pow_right₀ hΘ (by decide : 8 ≤ 29))`
+- `Euler/PacketNeighborControlled.lean:203` — `have hm := mul_le_mul_of_nonneg_left (pow_le_pow_right₀ hΘ (by decide : 21 ≤ 40)) he`
+- `Euler/PacketNeighborControlled.lean:216` — `have hm := mul_le_mul_of_nonneg_left (pow_le_pow_right₀ hΘ (by decide : 29 ≤ 40))`
+- `Euler/PacketParameterEnvelope.lean:60` — `have hp := monomial_le_polynomialFactor J (by omega) X hX n 0 1000 (by decide) le_rfl`
+- `Euler/PacketParameterEnvelope.lean:83` — `monomial_le_polynomialFactor J (by omega) X hX n 20 20 le_rfl (by decide)`
+- `Euler/PacketPhysicalNeighbor.lean:87` — `mul_le_mul_of_nonneg_left (pow_le_pow_right₀ hΘ (by decide : 5 ≤ 40)) he`
+- `Euler/PacketPhysicalPropagator.lean:71` — `mul_le_mul_of_nonneg_left (pow_le_pow_right₀ hΘ (by decide : 5 ≤ 21)) he`
+- `Euler/PacketPhysicalSign.lean:43` — `have hp := scaled_power_le hΘ hK he (by decide : 5 ≤ 40)`
+- `Euler/PacketPhysicalSign.lean:47` — `have hp := mul_le_mul_of_nonneg_left (pow_le_pow_right₀ hΘ (by decide : 29 ≤ 40))`
+- `Euler/PacketPhysicalSign.lean:75` — `have hp6 := scaled_power_le hΘ hK he (by decide : 6 ≤ 40)`
+- `Euler/PacketPhysicalSign.lean:76` — `have hp7 := scaled_power_le hΘ hK he (by decide : 7 ≤ 40)`
+- `Euler/PacketPhysicalSign.lean:77` — `have hp33 := mul_le_mul_of_nonneg_left (pow_le_pow_right₀ hΘ (by decide : 33 ≤ 40))`
+- `Euler/PacketPhysicalSign.lean:123` — `have hp := scaled_power_le hΘ hK he (by decide : 5 ≤ 40)`
+- `Euler/PacketPhysicalStage.lean:82` — `mul_le_mul_of_nonneg_left (pow_le_pow_right₀ hΘ (by decide : 5 ≤ 40)) he`
+- `Euler/PacketPressureScaleCosts.lean:81` — `have hp4 : p^4 ≤ p^7 := pow_le_pow_right₀ hp (by decide)`
+- `Euler/PacketPressureScaleCosts.lean:82` — `have hj5 : p^4 ≤ j^5 := (pow_le_pow_left₀ hp0 hpj 4).trans (pow_le_pow_right₀ hj (by decide))`
+- `Euler/PacketPressureScaleCosts.lean:168` — `(pow_le_pow_right₀ hp (by decide : 4 ≤ 7))`
+- `Euler/PacketPrimaryDynamics.lean:65` — `rw [hn t,norm_zero,zero_pow (by decide : 2 ≠ 0)] at h`
+- `Euler/PacketReferenceRatio.lean:37` — `simpa only [hF0, hF₁0, hZ₁0, D, zero_pow (by decide : 2 ≠ 0), mul_zero, zero_mul,`
+- `Euler/PacketSizeComparison.lean:72` — `exact mul_le_mul_of_nonneg_left (pow_le_pow_right₀ hΘ (by decide : 29 ≤ 40))`
+- `Euler/PacketSizeComparison.lean:75` — `have hρ : ρ ≤ 1/2 := by have hh := hp 5 (by decide); dsimp [ρ]; nlinarith only [hh, hA]`
+- `Euler/PacketSizeComparison.lean:78` — `have he1 : e ≤ 1 := by have hh := hp 0 (by decide); norm_num at hh; linarith only [hh, hA]`
+- `Euler/PacketSizeComparison.lean:82` — `(mul_le_mul_of_nonneg_right hε2e (pow_nonneg hΘ0 4)).trans (hp 4 (by decide))`
+- `Euler/PacketSizeComparison.lean:104` — `have hp7 := hp 7 (by decide)`
+- `Euler/PacketSourceParameterScales.lean:86` — `(mul_le_mul_of_nonneg_left (predecessor_power_le J hJ X hX n 4 (by decide)) hc)`
+- `Euler/PacketSourceParameterScales.lean:92` — `(exp_le_exp.mpr (predecessor_power_le J hJ X hX n 7 (by decide)))`
+- `Euler/PacketSourceParameterScales.lean:96` — `exp_le_exp.mpr (current_power_le J hJ X hX n 5 (by decide))`
+- `Euler/PacketSourceParameterScales.lean:121` — `_ ≤ 2*X^1000 := mul_le_mul_of_nonneg_left (pow_le_pow_right₀ hX (by decide)) (by norm_num)`
+- `Euler/PacketSourceParameterScales.lean:126` — `have hp := monomial_le_polynomialFactor J hJ X hX n 0 1000 (by decide) le_rfl`
+- `Euler/PacketSourceScaleBounds.lean:70` — `(pow_le_pow_right₀ hp (by decide : 4 ≤ 7))`
+- `Euler/PacketSourceScaleBounds.lean:164` — `(pow_le_pow_right₀ hp (by decide : 5 ≤ 7))`
+- `Euler/ParentHistoryFrequencyGuard.lean:81` — `simpa only [pow_one] using pow_le_pow_right₀ hx1 (by decide : 1 ≤ 1000))`
+- `Euler/ParentHistoryFrequencyGuard.lean:101` — `simpa only [pow_one] using pow_le_pow_right₀ hk (by decide : 1 ≤ 80))`
+- `Euler/ParentPacketBadRatioPolynomial.lean:144` — `have hθ : Θ ≤ Θ^5 := by simpa only [pow_one] using pow_le_pow_right₀ hΘ (by decide : 1 ≤ 5)`
+- `Euler/SourceCylinderPressureMean.lean:82` — `rw [he, norm_zero, zero_pow (by decide : 2 ≠ 0)] at h`
+- `Euler/SourcePotentialTime.lean:38` — `rw [hz, norm_zero, zero_pow (by decide : 2 ≠ 0)] at h`
+- `Euler/SourcePotentialTimeCoefficient.lean:127` — `rw [hz, norm_zero, zero_pow (by decide : 2 ≠ 0)] at h`
+- `Euler/SourcePotentialTimePath.lean:75` — `rw [hz, norm_zero, zero_pow (by decide : 2 ≠ 0)] at h`
+- `Euler/SourcePotentialTimePath.lean:136` — `rw [hz, norm_zero, zero_pow (by decide : 2 ≠ 0)] at h`
+- `Euler/TerminalTimePrimitive.lean:330` — `simp only [sub_zero, zero_pow (by decide : (2 : ℕ) ≠ 0), smul_eq_mul]`
+- `Euler/TransversePacketCorrectorParity.lean:33` — `rw [hz, norm_zero, zero_pow (by decide : 2 ≠ 0)] at hl`

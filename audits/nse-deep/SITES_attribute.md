@@ -1,0 +1,27 @@
+# `attribute` sites (25)
+
+- `NavierStokes/ActualParticularPhysicalData.lean:24` — `attribute [local instance] Classical.propDecidable`
+- `NavierStokes/ActualSignedPhysicalData.lean:22` — `attribute [local instance] Classical.propDecidable`
+- `NavierStokes/InitialPhysicalData.lean:28` — `attribute [local instance] Classical.propDecidable`
+- `NavierStokes/PositiveTimeSignedData.lean:24` — `attribute [local instance] Classical.propDecidable`
+- `Euler/BaseFirstPacketChoice.lean:25` — `attribute [local irreducible] Parent.child initialParent`
+- `Euler/BaseFirstPacketChoiceNoOptions.lean:61` — `attribute [local irreducible] Parent.child initialParent`
+- `Euler/BaseFirstPacketEvolution.lean:61` — `attribute [local irreducible] initialParent`
+- `Euler/BaseFirstPacketEvolutionNoOptions.lean:94` — `attribute [local irreducible] initialParent`
+- `Euler/BaseInductionStage.lean:18` — `attribute [local irreducible] initialParent`
+- `Euler/BaseInductionStageNoOptions.lean:44` — `attribute [local irreducible] initialParent`
+- `Euler/ElapsedTimePathGluing.lean:20` — `attribute [local instance] EulerPacketTimePathGluing.compactInterval`
+- `Euler/ElapsedTimePathNaturality.lean:14` — `attribute [local instance] EulerPacketTimePathGluing.compactInterval`
+- `Euler/ElapsedTimePathWeight.lean:20` — `attribute [local instance] EulerPacketTimePathGluing.compactInterval`
+- `Euler/EulerProof.lean:5916` — `attribute [local irreducible] sobolevNorm embeddingConstant`
+- `Euler/EulerProof.lean:6074` — `attribute [local irreducible] sobolevNorm embeddingConstant`
+- `Euler/PacketInitializedRadiusPolynomial.lean:19` — `attribute [local gcongr] sobolevCoefficientAmplitude_mono_all inverseBlockCost_mono_all sobolevInverseCost_mono`
+- `Euler/PacketMatchingFamily.lean:21` — `attribute [local instance] compactInterval`
+- `Euler/PacketShiftedTimeGluing.lean:15` — `attribute [local instance] compactInterval`
+- `Euler/PacketSourceRadiusPolynomial.lean:18` — `attribute [local gcongr] sobolevCoefficientAmplitude_mono_all inverseBlockCost_mono_all sobolevInverseCost_mono`
+- `Euler/PacketTimeWordGluing.lean:16` — `attribute [local instance] compactInterval`
+- `Euler/ParentGeometryForwardChoice.lean:75` — `attribute [local irreducible] Parent.child`
+- `Euler/ParentGeometryForwardChoiceNoOptions.lean:100` — `attribute [local irreducible] Parent.child`
+- `Euler/ParentGeometryJoinedChoice.lean:24` — `attribute [local irreducible] Parent.child`
+- `Euler/ParentGeometryJoinedChoiceInvestigation.lean:60` — `attribute [local irreducible] Parent.child`
+- `Euler/Solution.lean:41` — `attribute [local instance] CompletePartialOrder.toSupSet`
