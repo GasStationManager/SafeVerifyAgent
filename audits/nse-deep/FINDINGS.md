@@ -608,3 +608,56 @@ This was the other place a non-existence claim could quietly shrink, and it does
   that `euler-cauchy` reported (their patch, without import scoping, gives 40,414/52,516; my
   mark 3, with scoping, gives 38,076). Two workers finding the same instrument bug from
   different directions is the strongest evidence in this audit that the fix was necessary.
+
+---
+
+## The cone, mark 4 — and the instrument's honest history
+
+A third worker (`euler-packet`) found the **mirror** of the mark-3 bug: a **trailing** projection,
+`initialDatum_finite_lifespan.choose` (`Euler/PacketFiniteLifespan.lean:54`), which my
+suffix-only resolver also dropped. Consequence, and it is exactly the failure mode that matters:
+the **entire Euler finiteness spine** read as out-of-cone (`initialDataLimit_no_euler`,
+`false_of_evolution`, `PacketFiniteLifespan:31/46/56`, `gradient_lower`, `gradient_atTop`,
+`previousShear_ge_index`) while `lifespan` itself read as in-cone. The worker measured the two
+fixes separately (+241 for trailing alone, +9,004 for both directions) and kept its probes at
+`workers/_probe/cone_{base,tail,both}.py`.
+
+`cone.py` now resolves a token against **every contiguous run** of its components.
+
+| mark | resolution rule | decls in cone | theorems in cone |
+|---|---|---|---|
+| 1 | whole token or its suffixes, no scoping | 33,163 | 22,643 |
+| 2 | + import scoping (sound) | 28,145 | 19,214 |
+| 3 | + leading-receiver dot notation | 38,076 | 27,456 |
+| **4** | + trailing projections (every contiguous run) | **38,369** | **27,725** |
+
+Verified after the fix: the recovered spine is in-cone, and the three declarations this audit
+found genuinely dead — `stocks_formulas`, `polynomial_jetRate_of_stages`, `FactorSupportAt` and
+its cluster — are still out. **Denominator for coverage claims: 27,725 in-cone theorems.**
+
+Three workers found this class of bug independently, from three different files, and each of them
+was right. That is the strongest argument in this audit for making workers re-derive with their
+own instrument and telling them to disagree loudly: a shared instrument's blind spot is a
+common-mode failure, and the only thing that caught it was disagreement.
+
+## W11 `euler-packet` — packet finiteness is earned analysis, not a trick
+
+Report: `workers/euler-packet.md` (+ 3 scratch files). 16 files / 199 declarations, 91 read
+line-by-line. OK 63, UNCLEAR 0, KERNEL-RISK 0, SUSPICIOUS 0.
+
+- `initialDataLimit_no_euler` (`Euler/PacketStageInitialLimit.lean:106`) is a genuine
+  contradiction between a **proved divergence** (`previousShear ≥ n+1`, `gradient ≥ shear/2`) and
+  a **proved no-escape bound** (H³ stability + Sobolev embedding + compact trajectory). Not a
+  `Classical.choose` of the conclusion.
+- `constructionScales` (`Euler/PacketInfiniteConstruction.lean:68`) is a `Classical.choice` on a
+  **proved `Nonempty`** record of numbers plus 6 `SmallSeries` fields, each carrying real
+  `0 ≤ ·`, `Summable`, and `tsum ≤ d` bounds — i.e. actual convergence, not an assumed one.
+- `stages` is **structural** recursion (`rfl` unfolding, no `termination_by`, no `Acc.rec`), and
+  `Tstar ∈ [baseHorizon/12, baseHorizon] ≤ 1` comes from real `rpow` asymptotics, not from a
+  numeral computation. Kernel numerals in scope: three `decide : 2 ≠ 0`.
+- Open items it handed on, now dispatched: **P2** — is the bundled `Evolution` class *stronger*
+  than the challenge's notion of an Euler solution, and if so is every extra field *proved* from
+  challenge data (worker `euler-evolution-class`)? **P4** — 28 `Stage` fields still rest on
+  unread `forwardNext`/`joinedNext` (worker `euler-stage-fields`, also asked what the ten
+  `attribute [local irreducible] Parent.child initialParent` sites are hiding from `simp`).
+  Its P1 was already settled benign by `euler-spine` and I told it so.

@@ -33,8 +33,12 @@ number is quotable and therefore dangerous:
   is a use of `Something.foo`. Resolving only the whole token made the cone
   UNDER-approximate, which is the dangerous direction — a worker caught it by
   finding `toEvolution` in the cone while the field it calls was not. Fixed:
-  the cone grew from 28,145 to 38,076 declarations, and one declaration this
-  audit had already dismissed as unreachable came back.
+  A second worker then found the mirror case, a TRAILING projection
+  (`initialDatum_finite_lifespan.choose`), so the resolver now tries every
+  contiguous run of components. Measured on the same artifact and seeds, the two
+  fixes together grew the cone from 28,145 to 38,369 declarations and recovered
+  an entire finiteness spine that had read as dead; one declaration this audit
+  had already dismissed as unreachable came back.
 * It still UNDER-approximates in one specific and important way: uses that are
   never written down. Instance synthesis, the ambient `@[simp]` set, `gcongr`,
   `positivity`, and `aesop` extensions are all invisible here. So
@@ -160,8 +164,13 @@ def main() -> int:
                 if r is None:
                     parts = t.split(".")
                     cands = {t} if t in byfull else set()
-                    for j in range(len(parts)):
-                        cands |= suffix.get(".".join(parts[j:]), frozenset())
+                    # every CONTIGUOUS run of components: `hx.foo` is a use of
+                    # `Something.foo` (leading receiver), and `h.choose` is a use
+                    # of `h` (trailing projection). Missing either made the cone
+                    # too small, which is the direction that loses live code.
+                    for i in range(len(parts)):
+                        for j in range(i + 1, len(parts) + 1):
+                            cands |= suffix.get(".".join(parts[i:j]), frozenset())
                     r = frozenset(c for c in cands if name_mods[c] & scope)
                     cache[t] = r
                 tgt |= r
