@@ -439,6 +439,41 @@ statement found. Kernel: 0 `decide`/`native_decide`/`axiom`/`sorry`/`macro`/`ind
    literally 2× `RadialHeatProfile.profile_h_logSlope_lt` (`:708`). Zero slack: `v > 2` and every
    cone conclusion die if that convention or that lemma shifts.
 
+### `InitialPhysicalData.lean` — child `ipd-audit` verdict (report: `_sub-ns-initialphysicaldata.md`)
+
+230 decls (177 `theorem` / 48 `def` / 5 `abbrev`; **zero** `structure`/`inductive`/`instance`/
+`axiom`). Whole file displayed, ~1,400 lines re-derived; only two passages left statement-level
+(`:1790-1832`, `:1909-1975`). Verdicts: **OK 230, UNCLEAR 0, KERNEL-RISK 0, SUSPICIOUS 0**, where
+"OK" = "follows from the cited imports by the shown mechanism". Its findings:
+
+1. **The `else 0` junk branches at `:368`/`:376` are not a live bug, with a demonstrated reason.**
+   The gate `0 < x.1.1` is exactly `t < 1`. Chain: `slowFast x = ((x.1.1,…),x.2)`
+   (`PhysicalClassBounds.lean:623`) + `cylindricalMap` (ibid `:637`) make `(graph…w).2.1.1`
+   defeq to `(commonLift…w).1.1`; `graph_time_pos` (`PhysicalMeanJetBounds.lean:226`) derives the
+   gate from `w.1 < 1`; `preterminal = {w | w.1 < 1}` (`PhysicalWaveSum.lean:386`). Every
+   value-reading lemma discharges the `if` with a *proof* (`ite_eq_left` at `:1069, :1078, :1200,
+   :1212, :1517, :1526`); the support lemmas only use "amplitude ≠ 0 ⇒ info" (`:550` even
+   *extracts* `0 < t`); `sourceStrip_time` (`:1060`) makes the branch unreachable on the chart
+   domain. **Consequence to escalate:** the potential `B N0` is identically 0 for `t ≥ 1`, hence
+   discontinuous at `t = 1`, and all regularity lives on the *open* set `preterminal` only.
+2. Kernel risk nil by census, not assumption: 0 `decide`/`native_decide`/`axiom`/`macro`/
+   `set_option`/`termination_by`/`Acc.rec`/`sorry`; **largest literal in the file is 4**; every `^`
+   is `rpow` with a symbolic exponent. The `attribute [local instance] Classical.propDecidable` at
+   `:28` is needed **only** by 4 `dite`s on `L ∈ active` (a `Set.range`, at `:268, :283, :599,
+   :920`); since the file contains no `decide`, that instance can never reach the kernel as a
+   computation, and `ite_eq_left`/`dite_eq_left` (Lean core `Init/Core:1179,1204`) hold for *any*
+   instance.
+3. Pattern-A/B traps checked and clean: quantifier order preserved (`∃C` pulled out before `intro`
+   at `:125, :326, :951`); the `ℕ`-subtraction gap is discharged by `Nat.sub_sub_self` +
+   `index_le_native` (`:1834`); `SignedLabel = Fin 2 × Label`, so every `(l.2,l.1)` swap
+   (`:2377, :2406, :2533, :2772, :2808`) is sign-first *consistently*; pressure exponents cancel
+   explicitly (`-(2*A*h) + (2*A*h) = 0` at `:2086`).
+
+Its escalations: is any consumer's domain **not** contained in `preterminal`? Does
+`piece_cartesian_velocity` really turn a `Q^(-h)` potential into a `Q^(A·h)` velocity under `curl`
+(the one unverified exponent balance)? And — echoing my own residue item 4 — **nothing in that file
+proves the fields are non-zero anywhere: all 177 theorems survive if `cartesianPotential ≡ 0.`**
+
 Their verdicts are in those files; this report does not claim their coverage. For the record, my own
 scan of the two files found: `InitialPhysicalData.lean` — 13 `norm_num`, 4 `nlinarith`, 2 `calc`,
 3 `omega`, 6 `linarith`, 1 `attribute`, 1 `local instance`, 1 `if…then…else`, 1 `Classical.`,

@@ -1000,3 +1000,57 @@ formalized upstream (and therefore as proved here) excludes only periodic-pressu
 This is inherited from the independently authored upstream, not introduced by the claimant, and
 alternative (C) is a full Clay alternative by itself — so the headline does not rest on it. But it is
 a scope fact, and it is now confirmed by reading the Lean rather than by trusting a docstring.
+
+---
+
+## W19 `ns-correction-step` — the largest unread NS file, and the sharpest open question so far
+
+Report: `workers/ns-correction-step.md` (+2 sub-reports). `NavierStokes/CorrectionStep.lean`:
+9,849 lines, 559 declarations, 264 in-cone theorems — **110 declarations read line-by-line** (93 of
+them in-cone) plus all imported predicate definitions; the rest scanned. OK 104, UNCLEAR 4,
+**0 KERNEL-RISK, 0 SUSPICIOUS**.
+
+**It corrected my brief, usefully.** I called this an "estimate/assembly file with long
+`nlinarith`/`calc` chains". It has **0 `nlinarith`, 0 `calc`, 1 `norm_num`**, and **374 of 418
+proofs contain no arithmetic tactic at all**. It is a *transport* file — definitional plumbing that
+moves data between records. That is worth recording because it changes where the arithmetic risk in
+the NS half actually lives, and because a brief built on a guess sends a worker looking for the
+wrong thing.
+
+**The sharpest open question in the audit right now.** The `σ → σ + 1/10` per-cycle gain that the
+whole scheme lives on reduces to **one imported inequality** at `CorrectionStep.lean:8103` (= `:5495`),
+which hands `1 + (s + 1/10) ≤ (1 + s - 2k) + 9/10 - 2k  by linarith` to
+`MovingMomentBounds.rankStage_defectBounds`; `:8021` and `:8471` are bookkeeping around it. And:
+
+> `MemClass` permits a **new degree `p` (and constant `C`) at each application**. So "+1/10 per
+> cycle over many cycles" is **empty** if `p` or `C` may grow with the cycle index — the exponent
+> improves while the class it improves in gets weaker.
+
+Partial counter-evidence from the same worker: `slow = max 1 n²` against `eps = Q^h`, so a
+`growth^p` factor cannot eat the gain; and the `MemClass`/`UniformClass` quantifier order is sound;
+and the sign flip at `:76` is exactly right given `gr`'s negation
+(`MeanIncrementBounds.lean:338`). But it could not close the question at its own level.
+**Relayed to worker `ns-analytic-step`**, which is reading `CorrectionAnalyticStep.step` right now,
+with the instruction to determine whether `p` and `C` are fixed across cycles or re-chosen per cycle,
+and to say so loudly if they may grow unboundedly while the ledger only sums the `1/10`s.
+
+Other findings:
+- `fullResidual:396` = residual + virtualDivergence + `errors.base`, while the *controlled*
+  `fullGoodResidual:402` subtracts `errors.total` as well; `:414` is `simp [def]`, content-free.
+- `iterate_representation:6963` (the recursion invariant) is conditional on `SameCarrier` for **all**
+  `n`; otherwise `addBlock` is not field addition (`:6838`). Discharge claimed at
+  `ActualCandidateConstruction.lean:83`.
+- **A collapse check nobody had done:** `StripData` permits `domain = ∅` and `zeta = 0`, which would
+  make every class membership vacuous; the question is settled (or not) at
+  `ActualInitialization.lean:651`.
+- Sub-reports: `TerminalEdgeFactor.lean` (OK 233 / UNCLEAR 1) — its three headline in-cone theorems
+  `:1467/:1562/:1659` are **near-tautological**, holding because `Tz` is flat-zero;
+  `InitialPhysicalData.lean` (OK 230) — the `else 0` branches at `:368,376` have a provably `t < 1`
+  gate so they are not live, but the potential is identically `0` for `t ≥ 1` and **all 177 theorems
+  survive if `cartesianPotential = 0`**.
+- Kernel: nil. The only recursion is `CycleState.iterate:6952` with 3 iota steps; all 20 large
+  numerals are `1/100000`.
+
+**Dispatched:** worker `ns-nondegeneracy` on the two collapse checks (`StripData` non-degeneracy at
+`ActualInitialization.lean:651`, and `SameCarrier` for all `n` at `ActualCandidateConstruction.lean:83`)
+plus the `cartesianPotential = 0` survivability question.
