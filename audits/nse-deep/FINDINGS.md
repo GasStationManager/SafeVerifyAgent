@@ -1739,3 +1739,113 @@ inhabitance, and the reductio only bites for `n ≥ N+1`. Open item 4 is **re-pr
 still needs a `lake build` at the pinned toolchain, which this box cannot do.
 
 ---
+
+## W32 — the "hypothesis with no supplier" pass is MECHANISED, and it found the bug in itself first
+
+New instrument: `audits/nosupplier.py`. Motivation was the pattern named at the end of W30: this
+artifact contains predicate clusters whose hypothesis has no supplier, it happened twice, it fooled the
+cone twice, and finding it cost a worker each time. It is now one command. Four subagents
+(`openrouter/openai/gpt-5.6-luna`) verified the top candidates by reading; each was given a **planted
+control** (`LocalResidualGrouping.ExtractionRegular`, known supplied) and **both that answered passed it**.
+
+**The instrument was validated against known ground truth BEFORE any number was quoted, and failed
+twice on the way.** Both failures are recorded because both are the audit's signature error:
+
+1. **Bare-suffix masking.** `cone.py` resolves a token to every contiguous run of its components,
+   which over-approximates — correct for reachability. Here that direction is *fatal*: the fully
+   qualified supplier at `ActualInitialization.lean:849` also matched the bare suffix
+   `ExtractionRegular`, so the strong twin looked supplied and **the one known-real finding vanished**.
+   Resolving most-specifically (with `namespace`/`open` context to break ties) **added 23 candidates** —
+   the naive version hid 21% of its own output.
+2. **The declaration's own name was read as its own hypothesis.** `theorem SourceBounds.of_wave … :
+   SourceBounds …` tokenised its header into the binder region, so the `conclusion − binders` rule
+   discarded it. That silently hid **the single most idiomatic way a Lean structure is ever supplied**,
+   the namespaced smart constructor `P.of_foo`/`P.mk`. Caught not by me but by worker
+   `nosupplier-1`, which found `PhysicalClassBounds.SourceBounds` supplied at `:251-262` and `:264-273`
+   while my script called it unsupplied. Fixed by `strip_header`; the case is now a regression test.
+
+**Measured output, after both fixes: 104 candidates from 976 Prop-valued structure/class/def
+declarations.** A refinement the first run did not make: these are two different shapes, and only the
+first is the W30 defect.
+  * **PREDICATE** (declared `: Prop`) — a proposition nobody ever proves. **70 candidates, 48 of them
+    in-cone, 390 hypothesis sites.**
+  * **BUNDLE** (a data record: `MeanData` carries `firstBand : ℕ`, `region : Set …`) — 34 candidates,
+    26 in-cone. Stating lemmas over an abstract bundle and instantiating it once is **normal practice**,
+    so a BUNDLE hit is only interesting if the headline chain needs an instance and none exists.
+    Reporting all 104 as one number would repeat the count-for-surface error.
+
+**Verified by reading: 12 of the top in-cone candidates → 8 CONFIRMED UNSUPPLIED, 4 false positives.
+Precision 67% at the top**, and the honest reason is that 3 of the 4 misses are routes this instrument
+*cannot* see without elaboration (anonymous constructor against an expected type; a field of a parent
+structure that is itself constructed). The 4th was the header bug and is now fixed.
+
+**The 8 confirmed, carrying 185 in-cone hypothesis sites** (worker file:line detail in
+`workers/_sub-nosupplier-{1,2,3}.md`):
+
+| predicate | declared | sites | note |
+|---|---|---|---|
+| `PhysicalStageBounds.MeanData` | `:154` | 49 | BUNDLE; support/init branch looks dead against its live `MeanInput` twin (`ActualPhysicalStageBounds.lean:30-67`) |
+| `PhysicalParticularWave.ReferenceODE` | `:810` | 27 | 31 occurrences examined, all binders |
+| `CorrectionStep.PeriodizedSignedParameters.NativeDynamics` | `:6000` | 23 | twin at `:6124`; neither supplied |
+| `HarmonicResidual.ExtractionRegular` | `:1461` | 22 | **the W30 finding, reproduced mechanically** |
+| `ValidBandGluing.Compatible` | `:22` | 19 | `ValidDyadicBandCover.lean:73` is a wrapper RHS, not a proof |
+| `PeriodicIntegration.UnitPeriods` | `:40` | 17 | conditional energy chain `PeriodicUniqueness.lean:414-447` |
+| `DefectIncrementBounds.ShellTriple` | `:109` | 15 | `.updated` (`:115`) concludes `P` from **two** `P` binders — supplies nothing |
+| `PhysicalResidualNaturality.BandCoherence` | `:678` | 13 | worker found **4** using files where the nomination said 3 |
+
+**Verdict, and it is the same direction as W30, at scale.** None of this makes a theorem false — an
+unsatisfiable hypothesis yields an unreachable theorem, never a wrong one. What it does is falsify
+`in_cone = True` on a large block: W30's witness was 21 sites, and there are now **8 confirmed
+predicates totalling 185 in-cone sites**, with 48 in-cone PREDICATE candidates (390 sites) nominated
+and mostly unread. The pattern named at the end of W30 is confirmed as **systemic, not anecdotal**.
+
+**One shape this instrument cannot see, stated so its output is not mistaken for completeness.**
+W8's `hres` (`GenericSupportedPolynomial.lean:130`) is `∀ J m, JetRate l q (fs J) m (rho J - Lres m)` —
+a **supplied** predicate used at **arguments nobody establishes**. The script is correctly silent on it.
+So there are two defects of this family and only the first is mechanised; the second needs a
+per-callsite argument match, i.e. real elaboration.
+
+---
+
+## W33 — the unread remainder is NOT "all estimates": ~31% is structural, and my own triage was wrong twice
+
+`audits/nse-deep/UNREAD_TRIAGE.csv`. First, a coverage correction. `COVERAGE.md`'s 41.5% was computed
+over **65 worker reports**; at today's **78** the same definition gives **55.2%** (710 files, 15,310 of
+27,753 in-cone theorems). Counting the synthesis documents too gives 81.7%, which is too generous to
+quote. I also nearly published an 18% figure from a basename match that let `Solution.lean` match
+inside `ComparatorSolution.lean`; boundary-fixing moved it by only 7 files, so that was *not* the
+cause — the cause was the report-set definition. Both numbers are now stated with their denominators.
+
+**The sharp target: 964 files that NO audit document has ever named, holding 5,067 in-cone theorems
+(18.3%).** Mechanical classification, then hostile-tested by a worker with sampled error rates:
+
+| class | files | in-cone thms | worker's sampled error rate |
+|---|---|---|---|
+| STRUCTURAL (declares a structure/class/inductive or Prop-def) | 73 | 843 | — (read directly) |
+| ESTIMATE (estimate-signal ≥ 0.5) | 761 | 3,486 | **4 of 12 files misclassified** |
+| PLUMBING (below that) | 130 | 738 | **5 of 8 are actually proof-spine/construction** |
+
+**Answer to the question: no, it is not basically all estimate material. ~1,581 of 5,067 in-cone
+theorems (~31%) are not estimates.** But the two error rates mean opposite things and the distinction
+is the finding:
+  * My **ESTIMATE** class is right where it matters. The 4 misclassified files
+    (`ParentParticleRegularity`, `MeanPacketContract`, `PacketPhysicalCorrectionPotential`,
+    `SmoothFlowJacobian`) hold **15 in-cone theorems between them** — 0.4% of that bucket's 3,486. By
+    theorem mass the big bucket is ~99.6% correct.
+  * My **PLUMBING** label was wrong in *character*, not at the margin. Those files contain real `def`
+    constructions — parent-verified at `Euler/TransverseInitialCoordinates.lean:31-47`
+    (`initialCoordinates`, `initialCoordinateField`, `initialCoordinateDerivative`, then theorems about
+    them). Calling 738 in-cone theorems "plumbing" invited exactly the wrong triage. **Renamed
+    CONSTRUCTION in the ledger.**
+
+**Ranked read-first list** (worker's, with in-cone counts from `UNREAD_TRIAGE.csv`):
+`ActualPhysicalPrefixFields:340-343,438-475` (34) · `ModulatedExterior:333-368,489-520` (24) ·
+`ParametricModulation:304-316,577-608` (29) · `BasePrefixIdentity:217-224,278-311` (24) ·
+`PeriodicPhaseAssembly:667-680,805-831` (25) · `IntegratedMeanBalances:638-645,674-740` (53) ·
+`TransversePacketPrimaryPressure:118-151,172-200` · `SmoothFlowJacobian:25-27,37-38,82-118`.
+
+**The two passes point at the same place.** The 73 untouched STRUCTURAL files are where new predicates
+are declared, and unsupplied predicates are what W32 hunts — 5 of the 104 candidates are declared in
+files no report has ever named. Reading the list above therefore buys coverage *and* feeds W32.
+
+---

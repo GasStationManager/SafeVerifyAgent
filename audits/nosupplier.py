@@ -69,6 +69,28 @@ VARIABLE = re.compile(r"^[ \t]*variable\b(?P<rest>.*)$", re.M)
 OPENERS, CLOSERS = "([{\u2983\u27e8", ")]}\u2984\u27e9"
 
 
+HEADER = re.compile(
+    r"^(?:@\[[^\]]*\]\s*)*"
+    r"(?:private\s+|protected\s+|noncomputable\s+|nonrec\s+|partial\s+|unsafe\s+|scoped\s+|local\s+)*"
+    r"(?:theorem|lemma|def|abbrev|structure|inductive|instance|class|opaque|axiom|example)\b"
+    r"[ \t]*[^\s:({\[\u2983\u27e8]*")
+
+
+def strip_header(body: str) -> str:
+    """Drop `theorem P.of_wave` from the front of a declaration.
+
+    Without this the declaration's OWN NAME is tokenised as part of its binder
+    region, so `theorem SourceBounds.of_wave ... : SourceBounds ...` reads as a
+    theorem that ASSUMES a `SourceBounds` -- and the `conclusion - binders` rule
+    then throws away the supplier. That silently hides the single most idiomatic
+    way a Lean structure is ever supplied: the namespaced smart constructor
+    `P.of_foo` / `P.mk`. Measured: it produced 4 false positives in the first
+    6 candidates a worker checked.
+    """
+    m = HEADER.match(body)
+    return body[m.end():] if m else body
+
+
 def split_sig(body: str):
     """(binder_region, conclusion, proof) -- by bracket depth, not by regex."""
     depth, i, n = 0, 0, len(body)
@@ -125,7 +147,7 @@ def main() -> int:
         for full, kind, line, body in decls_with_ns(txt):
             if kind not in PRED_KINDS:
                 continue
-            _b, concl, _p = split_sig(body)
+            _b, concl, _p = split_sig(strip_header(body))
             is_prop = kind in ("structure", "class") or "Prop" in concl
             if is_prop:
                 preds[full] = kind
@@ -187,7 +209,7 @@ def main() -> int:
                 for P in resolve(t, ctx):
                     hyp[P].append((rel, txt[:m.start()].count("\n") + 1, "variable"))
         for full, kind, line, body in decls_with_ns(txt):
-            binders, concl, proof = split_sig(body)
+            binders, concl, proof = split_sig(strip_header(body))
             btoks, ctoks = set(IDENT.findall(binders)), set(IDENT.findall(concl))
             bres = set()
             for t in btoks:

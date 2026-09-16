@@ -70,3 +70,32 @@ are exactly where an off-by-one in a constant would hide, and they are not cover
 `ns-variable-gauge-mean` (cited-in-passing only, see above), plus two kernel-numeral threads
 (`cert-numerals`, `kernel-choose-pow`) re-testing the published report's own headline numbers for
 vector (2).
+
+## Update (W32/W33 cycle) — recomputed, with the denominator stated
+
+The 41.5% above was measured over **65** worker reports. Recomputed at **78** reports with the *same*
+definition ("a file is cited if some worker report names it", boundary-matched so `Solution.lean` does
+not match inside `ComparatorSolution.lean`):
+
+| | count |
+|---|---|
+| worker reports | 78 |
+| files with in-cone theorems, cited by a report | **710 of 2,306** |
+| in-cone theorems living in cited files | **15,310 of 27,753 (55.2%)** |
+| the same, also counting the synthesis documents (FINDINGS/kernel-trust) | 22,686 (81.7%) — too generous to quote |
+| files NO audit document has ever named | **964**, holding **5,067** in-cone theorems (18.3%) |
+
+Those 964 files are classified in `UNREAD_TRIAGE.csv`. The classification was hostile-tested by a
+worker (see `workers/_sub-unread-triage.md`) and corrected:
+
+* **STRUCTURAL** — 73 files, 843 in-cone theorems. Declares a `structure`/`class`/`inductive` or a
+  Prop-valued `def`. Highest priority: new predicates are declared here, and this is what
+  `audits/nosupplier.py` feeds on.
+* **ESTIMATE** — 761 files, 3,486 in-cone theorems. Sampled error 4 of 12 files, but those 4 hold only
+  **15** in-cone theorems, so by theorem mass this bucket is ~99.6% right. Lowest priority.
+* **CONSTRUCTION** (was called PLUMBING — the rename is the finding) — 130 files, 738 in-cone theorems.
+  A worker found **5 of 8** sampled files are proof-spine/construction, not trivial algebra:
+  they define objects and prove things about them. "Plumbing" invited the wrong triage.
+
+So **~1,581 of the 5,067 unread in-cone theorems (~31%) are not estimate material**, and the answer to
+"is the remainder all estimates?" is **no**. Ranked read-first list is in `FINDINGS.md` §W33.
