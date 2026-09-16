@@ -1,0 +1,1 @@
+1. NavierStokes.ErrorHarmonics.GaussianData: UNSUPPLIED (13 occurrences examined; declaration plus all uses are binders/fields, no constructor, instance, or conclusion). Bundle appears deliberately abstract interface (primitive data bundle consumed by block/error definitions), not an orphaned record.

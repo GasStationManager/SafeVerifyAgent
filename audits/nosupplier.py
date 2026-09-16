@@ -124,6 +124,49 @@ def split_sig(body: str):
     return sig[:last], sig[last + 1:], proof
 
 
+
+# ---------------------------------------------------------------------------
+# TWO FALSE-POSITIVE ROUTES, MECHANISED AS ANNOTATIONS (not as exclusions).
+#
+# Worker verification of the first 17 candidates produced 5 false positives, and
+# 4 of them were one of exactly two shapes:
+#
+#   route 4  P is a FIELD of structure S, and S is constructed somewhere, so
+#            constructing S supplies P. (BandCharts <- AssemblyData;
+#            MovingField <- LocalData, built at MeanStateRegularity.lean:435.)
+#   route 2  P is built inside a PROOF under a type ascription,
+#            `have h : P ... := by ... exact <...>`. (SupportedTriple at
+#            MovingMomentBounds.lean:337; PressureRecovery.Hypotheses at :436.)
+#
+# These are reported as HINTS and never remove a candidate. Reason: auto-excluding
+# on them would need a wide text window around the ascription, and a wide window
+# starts calling things supplied that are not -- which HIDES findings, the one
+# direction this instrument must not fail in. So the candidate still appears and
+# the hint tells the reader where to look.
+#
+# The hint is deliberately imprecise in a known way: an ascription can be a base
+# construction (`Hypotheses` built from ten separate binders -- a real supplier) or
+# mere CLOSURE under an operation from existing `P`s (`have hp : UnitPeriods (f*g)`
+# proved by `rw [hpf x k, hpg x k]` -- supplies nothing). Only reading separates
+# them. Measured on the known set: hints cover 4 of 4 remaining false positives,
+# and are absent on the two clearest true findings.
+# ---------------------------------------------------------------------------
+
+FIELD_LINE = re.compile(r"^[ \t]+(?!--)([A-Za-z_][\w'!?\u2080-\u2089]*)\s*:\s*(.+)$", re.M)
+ASCRIPTION = re.compile(
+    r"\b(?:have|let|show|suffices)\b[^:\n]{0,80}?:(?!=)\s*"
+    r"(?P<ty>(?:(?!:=)[\s\S]){1,250}?):=(?=(?P<rhs>[\s\S]{0,220}))")
+CONSTRUCTS = re.compile(r"\u27e8|\bconstructor\b|\brefine\b|\bmk\b")
+
+
+def struct_fields(body: str):
+    """Field (name, type) pairs of a `structure ... where` block."""
+    if "where" not in body:
+        return []
+    return [(m.group(1), m.group(2))
+            for m in FIELD_LINE.finditer(body.split("where", 1)[1])]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("root")
@@ -226,20 +269,77 @@ def main() -> int:
                     if "\u27e8" in proof:
                         anon[P] += 1
 
+    # --- annotation pass: the two known false-positive routes (see comment above)
+    field_parent = collections.defaultdict(set)
+    for rel, txt in files.items():
+        for full, kind, _line, body in decls_with_ns(txt):
+            if kind not in ("structure", "class"):
+                continue
+            parts = full.split(".")
+            ctx = tuple(".".join(parts[:j + 1]) for j in range(len(parts)))
+            for _fname, ftype in struct_fields(body):
+                for t in set(IDENT.findall(ftype)):
+                    for P in resolve(t, ctx):
+                        if P != full:
+                            field_parent[P].add(full)
+
+    asc = collections.defaultdict(list)
+    for rel, txt in files.items():
+        ctx = set()
+        for m in NSLINE.finditer(txt):
+            parts = m.group(1).split(".")
+            for j in range(len(parts)):
+                ctx.add(".".join(parts[:j + 1]))
+        for m in OPEN.finditer(txt):
+            for t in re.findall(r"[\w.\u03b1-\u03c9]+", m.group("ns")):
+                ctx.add(t)
+        ctx = tuple(ctx)
+        for full, _kind, line, body in decls_with_ns(txt):
+            _b, _c, proof = split_sig(strip_header(body))
+            if not proof:
+                continue
+            for m in ASCRIPTION.finditer(proof):
+                for t in set(IDENT.findall(m.group("ty"))):
+                    for P in resolve(t, ctx):
+                        if P != full:
+                            asc[P].append(f"{rel}:{line}")
+
+    def supplied_ancestor(P, seen=None):
+        seen = seen if seen is not None else set()
+        for S in field_parent.get(P, ()):
+            if S in seen:
+                continue
+            seen.add(S)
+            if sup.get(S):
+                return S
+            got = supplied_ancestor(S, seen)
+            if got:
+                return got
+        return None
+
     rows = []
     for P, kind in sorted(preds.items()):
         h, s = hyp.get(P, []), sup.get(P, [])
         if len(h) >= args.min_hyp and not s:
             f, l = declared_at[P]
+            anc = supplied_ancestor(P)
+            hints = asc.get(P, [])
             rows.append({"predicate": P, "kind": kind, "declared": f"{f}:{l}",
                          "hypothesis_sites": len(h), "suppliers": 0,
                          "files_using": len({x[0] for x in h}),
+                         "hint_supplied_parent": anc or "",
+                         "hint_in_proof_ascription": "; ".join(hints[:2]),
+                         "hint": "route4" if anc else ("route2?" if hints else ""),
                          "example_sites": "; ".join(f"{a}:{b}" for a, b, _ in h[:4])})
     rows.sort(key=lambda r: -r["hypothesis_sites"])
 
     print(f"{len(files):,} files, {len(preds):,} Prop-valued "
           f"structure/class/def candidates")
-    print(f"{len(rows):,} have >={args.min_hyp} hypothesis use and NO supplier\n")
+    nh = sum(1 for r in rows if r["hint"])
+    print(f"{len(rows):,} have >={args.min_hyp} hypothesis use and NO supplier")
+    print(f"{nh:,} of those carry a false-positive HINT (route4 supplied parent, or "
+          f"route2 in-proof ascription); the other {len(rows) - nh:,} carry none and "
+          f"are the higher-confidence set\n")
     for r in rows[:40]:
         print(f"  {r['hypothesis_sites']:4d} hyp sites, {r['files_using']:3d} files  "
               f"{r['predicate']}  ({r['declared']})")

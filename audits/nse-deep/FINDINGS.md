@@ -1864,3 +1864,49 @@ are declared, and unsupplied predicates are what W32 hunts — 5 of the 104 cand
 files no report has ever named. Reading the list above therefore buys coverage *and* feeds W32.
 
 ---
+
+## W34 — two false-positive routes mechanised, and the instrument overturned a worker
+
+Follow-up to W32, on the parent's own instrument. Verification of the first 17 candidates produced 5
+false positives, and 4 were one of exactly **two shapes**, both now detected by `audits/nosupplier.py`:
+
+* **route 4 — supplied parent.** `P` is a *field* of structure `S`, and `S` is constructed somewhere, so
+  building `S` builds `P`. Mechanised by parsing `structure … where` field blocks and resolving each
+  field type, then walking the field relation transitively to any supplied ancestor.
+* **route 2 — in-proof type ascription.** `P` is built inside a proof under
+  `have h : P … := by … exact ⟨…⟩`. Mechanised by scanning proof regions for
+  `have`/`let`/`show`/`suffices` ascriptions.
+
+**They are reported as HINTS and never remove a candidate.** Auto-excluding on them needs a wide text
+window around the ascription, and a wide window starts calling things supplied that are not — which
+*hides* findings, the one direction this instrument must not fail in.
+
+**Measured on the known set: hints cover 4 of 4 remaining false positives, and 9 of the 11 confirmed
+true findings carry no hint.** So of 104 candidates, **24 carry a hint and 80 do not**, and the 80 are
+the higher-confidence set to read next. The hint is imprecise in a *known* way, and the two cases are
+worth distinguishing because only reading separates them:
+  * a **base construction** — `PressureRecovery.Hypotheses` is built at `R3/PressureRecovery.lean:436`
+    by `let H : Hypotheses T u v p q := ⟨hT, hu, hv, hp, hq, hdivu, hdivv, hNS, heu, hev⟩` from ten
+    separate binders. A real supplier.
+  * mere **closure under an operation** — `have hp : UnitPeriods (fun x => f x * g x) := by … rw [hpf x k,
+    hpg x k]` (`PeriodicIntegration.lean:185`) builds a `UnitPeriods` *only from two existing ones*.
+    Supplies nothing, and the UNSUPPLIED verdict on `UnitPeriods` stands.
+
+**The instrument then overturned one of its own verifiers, which is the point of building it.**
+`nosupplier-2b` ruled `PhysicalWaveSum.RegularFamily` UNSUPPLIED, reasoning that
+`PhysicalCopyBounds.regular_of_native` "concludes the distinct twin … not this predicate". The types
+*are* distinct — and that is the trap. `PhysicalCopyBounds.lean:95-97` declares
+`structure RegularFamily … copy : ∀ k, PhysicalWaveSum.RegularFamily (f.copy k) a b h r0 Z Δ`, so the
+outer record **contains** the candidate as a field; and `regular_of_native` (`:568`, parent-read) proves
+the outer one with `refine ⟨fun k => ⟨hgap_le, hgap_native, hamp k, hF k, hG k, hint k, ?_, hmask k⟩⟩`,
+whose inner `⟨…⟩` *is* a `PhysicalWaveSum.RegularFamily`. **Reclassified SUPPLIED (route 4).**
+
+Lesson worth naming, since it is the mirror of the twin-masking trap the workers were warned about:
+**being right that two same-named predicates are distinct says nothing about whether one CONTAINS the
+other.** Identity and containment are different questions, and route 4 is exactly the second one.
+
+**Revised tally: 17 verified → 11 CONFIRMED UNSUPPLIED carrying 252 in-cone hypothesis sites, 6 false
+positives. Precision 65%.** Every one of the 6 is now covered by a mechanised hint or a fixed bug, so
+the next tranche should be read from the 80 hint-free candidates first.
+
+---
