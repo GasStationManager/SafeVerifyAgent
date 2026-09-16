@@ -1713,6 +1713,25 @@ theorem *depends* on an inhabitant; several *entail* one.
 (`FinalSlowBase.lean:372-379`, `NaturalAxisData.lean:44` `axis.j > 0`), and the correction tower is
 identically zero near every axis point (`ActualCandidateAssembly.lean:643-648`).
 
+**9. W25's E4 counter-witness DISSOLVES (W31c follow-up, parent-verified).** W25 raised the
+residual-decay ladder as "the one place where an empty tower would have had to be checked rather than
+shrugged at". It would not. `StageEstimates.finite_residual` (`MixedCandidateAssembly.lean:62-65`)
+quantifies **only** `∀ J m` — there is no index quantifier to be uniform over — and its payload
+`JetRate` is a pure **upper** bound, `∃ C, 0 ≤ C ∧ ∀ᶠ x in l, ‖iteratedFDeriv ℝ m f x‖ ≤ C * q x ^ r`
+(`DiagonalResidual.lean:33-34`), which `C = 0` satisfies outright for the zero field. The gain is
+label-free arithmetic (`ActualIterationLedger.lean:29` `gain h j = h * j / 10`). So E4 is **not** an
+index-uniform counter-witness and is **withdrawn**; consistent with
+`ActualCycleResidualBounds.lean:1158,1190`.
+
+**10. The headline, named.** `NavierStokes.Comparator.navier_stokes_breakdown_R3`
+(`ComparatorSolution.lean:16-20`), spine → `ComparatorR3Theorem:43` → `R3/Theorem:46,26` →
+`R3/ActualCandidate:143` → `ActualCandidateAssembly:1177` → witness `:1153` → estimates `:1090`. The
+statement is **closed and label-free** (`∃ u₀ f, InitialVelocityConditionDecay u₀ ∧ ForceConditionDecay f
+∧ ¬ ∃ v p, NavierStokesExistenceAndSmoothnessRn nu u₀ f v p`), so no inhabitance obligation can reach it.
+The only `Nonempty` facts on the spine concern *solution* types (`R3/ProblemStatement:125,153`) and the
+**parameter record** `Choice` (`CorrectionInitialization.lean:3923`), which *defines* the label type at
+`:3931` and never populates it.
+
 **Ledger effect.** W25's E1 is **upgraded**: from "HIGH-CONFIDENCE, UNBUILT vacuity refutation" to
 **non-emptiness is entailed by proved in-cone theorems; the four (now six) empty branches are
 unreachable code**. The residual is documentation-grade, not soundness-grade: 0 declarations assert
