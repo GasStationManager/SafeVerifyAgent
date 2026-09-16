@@ -110,3 +110,18 @@ Route 3: no instance. Route 4 BOTH WAYS: (a) target is NOT a field of any struct
   structure body among the 90 hits); (b) whatever fields the target itself has is not a supply route.
 VERDICT: UNSUPPLIED (6 occurrences examined, all binders; the same-named LocalRankDefect.RankGeometry twin is supplied but excluded).
 
+## 8. NavierStokes.JetBounds.AllJetBound (decl JetBounds.lean:35, Prop def)
+Grep `AllJetBound` -> EXACTLY 20 lines, ALL in NavierStokes/JetBounds.lean (`grep -rln` -> that one file only), so the
+full census is here. Sites: 35 decl; 62-64 `.fderiv`; 197-198 (aux lemma binders); 210-213 `.add`; 224-228 `.bilinear`;
+234-237 `.mul`; 267-274 `.mul_rpow` (274 is a `have h := AllJetBound.mul ...` inside a proof).
+Route 1 -- TRAP 1 CHECKED EXPLICITLY: every decl whose CONCLUSION is `AllJetBound ...` (64, 213, 228, 237, 272) ALSO takes
+  one or two `AllJetBound` hypotheses (`(hf : AllJetBound f s C)`, `(hA : ...) (hB : ...)`). These are closure/calculus
+  lemmas (fderiv, add, bilinear, mul, mul_rpow) and supply NOTHING. There is NO base case: no decl proves AllJetBound for
+  a concrete function (no `of_contDiff`, no const/zero lemma, no `AllJetBound.of_...` at all).
+Route 2: no `⟨⟩`/`.mk`/`refine {`/`constructor` proof of an `AllJetBound` goal that is hypothesis-free (it is a plain
+  `∀`-Prop; the only proofs of it are the 5 closure lemmas above). Route 3: no instance.
+Route 4 BOTH WAYS: (a) NOT a field of any structure -- all 20 hits are in binders/goals of theorems in JetBounds.lean,
+  none inside a `structure` body; (b) n/a as a supply route.
+Route 5: single decl named AllJetBound in the whole artifact; fully-qualified NavierStokes.JetBounds.AllJetBound; no twin.
+VERDICT: UNSUPPLIED (19 occurrences examined: 14 binders + 5 conclusions that each also consume an AllJetBound hypothesis).
+

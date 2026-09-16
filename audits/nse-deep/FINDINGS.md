@@ -2228,3 +2228,55 @@ structures/Prop-defs outside `PulseCovariance` is constructed** — `CompactCuto
 `VelocityMatches`, `CoefficientMatches`, `TangentInvariant`, `StageRealizations`, `TorusPeriodic`, plus the
 12-site `InjOn` hypothesis discharged for a concrete window. The unsupplied-hypothesis defect is **real
 but not pervasive**: it clusters, and `nosupplier.py` is what finds the clusters.
+
+## W36 — the zero-mean escalation CLOSES NEGATIVE, and front 1 reaches 24 confirmed
+
+### The `PrimitiveData` zero-mean worry is resolved: **the mean IS nonzero on the live chain**
+Worker `zero-mean`, every step re-verified by the parent. W35's ESCALATE was correctly *scoped* as an open
+question, and the answer is that there is **no defect**:
+* `(seed B N0).mean` **is** literally `⟨0, 0, 0⟩` — `bandSeed` (`CorrectionInitialization.lean:1106-1112`,
+  mean at `:1108`), independently confirmed by the `rfl` lemma
+  `ActualInitialization.sourceState_mean` (`:266`). So the W35 observation was accurate as far as it went.
+* But that zero is **only the base case of the induction**. `ranked` and `initialized` add real fields:
+  `temporalStageState` (`VariableGaugeMean.lean:559-563`) and `rankStageState` (`:580-583`) each call
+  `u.addIncrement`, and `State.addIncrement` sets `mean := updated s.mean m`
+  (`CorrectionState.lean:150-156`) with `updated` the componentwise sum (`MeanIncrementBounds.lean:31-32`).
+  The increments are genuine analytic fields built from `u.thetaResidual`/`u.axialResidual`
+  (`temporalIncrementState`, `:538-545`), not zeros.
+* **Decisive, and the artifact proves it itself:** `ActualMeanPotentialRealization.initializedBands_mean`
+  (`:589-604`) states `(initializedBands …).mean = MeanIncrementBounds.updated (temporalIncrementState …)
+  (rankIncrementState …)`, proved by `change updated (updated ⟨0,0,0⟩ temporal) rank = _` then
+  `simp only [updated, zero_add]`. Parent-read. **The initialized mean is exactly
+  `temporalIncrement + rankIncrement`.**
+* `reconstructState` (`VariableGaugeMean.lean:517-523`) is `{ u with pressure := … }`, so it preserves the
+  mean — which is why `waveStage` could preserve it without the chain being trivial.
+
+**Verdict: ESCALATE withdrawn, downgraded to a NOTE.** The zero mean is an induction base case, not a
+vacuity. Worth keeping only as a reading hazard: `MeanStateRegularity.waveStage` genuinely never changes
+the mean, so a reader who follows only the *wave* stage will conclude the mean is always zero and be wrong
+— the mean moves in the *temporal* and *rank* stages instead.
+
+### Front 1: **35 verified → 24 CONFIRMED UNSUPPLIED carrying 391 in-cone hypothesis sites, 11 false
+positives (69% precision)**
+`nosupplier-9` finished 8/8 on the hint-free queue, with the route-4 discipline finally applied in both
+directions as intended. Six new confirmations:
+* `ParticularWaveAssembly.LocalControl` (`:1422`, 10 sites) — and the reason it survives scrutiny is that
+  `AssemblyData.controls` (`:1758`), which looks like a builder, is a **`: Type` alias**.
+* `ParticularWaveBounds.ModalCopyControl` (`:1290`, 16 binders) — **route 4 positive then negative**: it *is*
+  the `modal_real`/`modal_imag` field of `LocalControl` (`:1431,1434`), but `LocalControl` is itself never
+  constructed. A chained route-4 refutation, which is the check the earlier `RegularFamily` verdict missed.
+* `VolterraParity.CoefficientParityOn` (`:37`) and `.ForcingParityOn` (`:41`) — with the near-twins
+  `CoefficientParity`/`ForcingParity` (same namespace, no `On`) correctly excluded and no bridge lemma.
+* `DefectIncrementBounds.RankGeometry` (`:726`) — the twin `LocalRankDefect.RankGeometry` (`:503`) **is**
+  supplied (`CorrectionInitialization.lean:4394`) and was correctly **not** credited.
+* `JetBounds.AllJetBound` (`:35`, 20 hits, 1 file) — the cleanest instance of the trap yet: it has **five**
+  conclusion-position declarations (`:64,213,228,237,272`) and **every one of them takes an `AllJetBound`
+  hypothesis**. There is no base case.
+
+Two new false positives, both route 1: `ParametricTerminalCompensation.FirstJetWithinBound`
+(`:124`, as a goal conjunct at L133) and `CorrectionInitialization.MovingInitialization.PrimaryMeanData`
+(`ActualInitialMean.lean:561` via `:434`). **The second is instructive: it was one of the 8 candidates
+surfaced by the multi-line `variable` fix, and it turned out SUPPLIED** — so that fix added real findings
+*and* real noise, exactly as an over-approximating change should.
+
+**27 in-cone hint-free candidates (81 sites) remain unverified.**
