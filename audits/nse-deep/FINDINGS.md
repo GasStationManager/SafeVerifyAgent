@@ -1910,3 +1910,26 @@ positives. Precision 65%.** Every one of the 6 is now covered by a mechanised hi
 the next tranche should be read from the 80 hint-free candidates first.
 
 ---
+
+### W34 addendum — first reading results, and a delegation failure worth recording
+
+**Reading, first result.** `NavierStokes/CopyAngularInvariance.lean` (37 in-cone theorems, never
+previously named by any audit document): **56 declarations read, OK 56, no NOTE/UNCLEAR/ESCALATE, zero
+kernel risk.** Its two Prop-valued defs are direct translation predicates (`Invariant` `:23-24`,
+`AffinePhase` `:26-27`), `TangentInvariant` is a five-field conjunction (`:201-206`) and — relevant to
+W32 — it **is** constructed, by `angleTangent_invariant` (`:669-680`), consumed at
+`ParticularWaveAssembly.lean:619-640`. No vacuity shortcut, no unsupplied hypothesis, no large
+arithmetic, no recursor. First untouched structural file read: clean.
+
+**One more candidate verified.** `ErrorHarmonics.GaussianData` (`:446`, 13 sites) — **UNSUPPLIED**, all
+occurrences binders or fields. It is a BUNDLE and reads as a deliberately abstract primitive-data
+interface consumed by the block/error definitions, which is the benign reading of an unsupplied bundle.
+
+**Delegation failure, recorded because it cost a cycle.** Six concurrent OpenRouter children were
+spawned; **four returned empty assistant turns and went to `needs_input` having done nothing** (32
+session records, 0 text parts, `basedOnMessageCount: 2`). The earlier batch of four concurrent children
+all succeeded. So the practical ceiling here is about **four concurrent children per provider**, and the
+failure is silent — a child reports `completed` while having produced nothing. Two mitigations now in
+use: cap concurrency at three, and spread across providers (`prime-inference/…` alongside
+`openrouter/…`). The append-after-each-item protocol again limited the damage: the two children that
+did run had their partial work on disk, which is why the two results above survive at all.
