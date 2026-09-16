@@ -2067,3 +2067,60 @@ positives (65% precision).** New confirmations: `ErrorHarmonics.GaussianData` (`
 candidates (146 sites) remain unverified.**
 
 ---
+
+### W35 addendum — three more files, one ESCALATE verified, one finding REFUTED, and a pattern reaches four instances
+
+Five untouched structural files now read (`read-A`, `read-B`), 240 in-cone theorems. Every load-bearing
+claim below was re-checked by the parent, and **one was rejected**.
+
+**`MeanStateRegularity.lean` — 67 decls: OK 63 / NOTE 3 / ESCALATE 1 / KERNEL-RISK 0.
+PARENT-VERIFIED.** The live regularity spine `PrimitiveData` (`:339`, a hypothesis in ≥10 files) is
+bootstrapped **at a zero mean velocity triple**: `seed_primitive` (`ActualInitialCoherence.lean:644-651`)
+discharges its mean field with literally `exact ⟨MovingField.zero, MovingField.zero, MovingField.zero⟩`
+(`:649`), and `initial_primitive` (`ActualInitialization.lean:669`) is exactly that theorem via
+`initialized_primitive_of_seed`. And the wave stage **provably never changes the mean**:
+`MeanStateRegularity.waveStage` (`:408-419`) proves its mean component by
+`rw [SignedMeanGain.waveStage_mean]; exact H.mean`. So every mean-field regularity fact on this spine is,
+so far as this file goes, a fact about **0**. This echoes the `InitialPhysicalData.lean` precedent where
+all 177 theorems survive `cartesianPotential = 0`.
+**Correctly scoped as an open question, not a defect:** whether `ranked`/`initialized`
+(`ActualInitialMean.lean:55,59`) or the temporal/rank bands ever make `u.mean` nonzero is the next check.
+If they do, the bootstrap is normal; if they do not, a large mean-field layer carries no information.
+
+**`ActualPhysicalPrefixFields.lean` — 43 decls: OK 39 / NOTE 3 / UNCLEAR 1 / ESCALATE 0. A clean
+POSITIVE result**, worth recording because most findings here are negative: the file is **fully live**.
+`StageRealizations` (`:342`) is constructed at `ActualCandidateAssembly.lean:1059` and
+`physicalFields_all` (`:475`) is applied at `:1085` into a real residual `JetRate`.
+
+**`ClosedNativeWaveIdentities.lean` — 44 decls: OK 38 / NOTE 5 / UNCLEAR 1 / ESCALATE 0.** All four
+structures are constructed and consumed. **But its headline NOTE is REFUTED by the parent.** The worker
+claimed no record constrains `s.epsilon n`, so `axialField d s n _ = s.epsilon n • d.axial`
+(`LinearWaveBounds.lean:109`) is the zero field at `epsilon = 0`, silently dropping the axial term of
+every Laplacian/divergence identity, with `epsilon_pos` available "only one layer up". Not so:
+**`structure StripData` carries `epsilon_pos : ∀ n, 0 < epsilon n` as a FIELD**
+(`WeightedClasses.lean:31-38`, alongside `epsilon_le_one`). The type *does* certify positivity, no
+`StripData` can have `epsilon n = 0`, and the axial term can never vanish this way. **Finding withdrawn.**
+(The separate remark that `d.radialScale n` is unconstrained is untested and left open.)
+
+**A pattern reaches four instances and is now named: STRONG HYPOTHESIS WITH A WEAKER TWIN THAT IS WHAT
+ACTUALLY GETS USED.** W30 predicted a third instance would justify naming it; there are now four.
+1. `HarmonicResidual.ExtractionRegular` (no constructor) vs `LocalResidualGrouping.ExtractionRegular`
+   (constructed, `ActualInitialization.lean:849`) — W30.
+2. `IntegratedMeanBalances`' own balance branch vs the `StateMomentBalances`/`GaugeMomentBalances`
+   same-named twins on a *different* balance operator — W35.
+3. `MeanStateRegularity.Periodic` (`:26`) demanded of mean fields where the weaker `PositivePeriodic`
+   (`:30`) suffices, and the two are provably equivalent for supported fields with `0 < a`
+   (`GaugeDebtIncrement.lean:277`) — W35.
+4. `ActualPhysicalPrefixFields` `:362` demands `ContDiffOn ℝ ∞` where the weaker `DifferentiableOn` is
+   what is actually used (`:214`, `:370`) — W35.
+**Every instance is safe in direction** (a stronger hypothesis makes a weaker theorem), and every
+instance mis-teaches the cone about what is reachable. That is now a characteristic of this artifact
+rather than an accident.
+
+**Front-1 tally: 27 verified → 18 CONFIRMED UNSUPPLIED carrying 347 in-cone hypothesis sites, 9
+false positives (67% precision).** `nosupplier-8` finished 8/8; its best work was
+`ParticularWaveBounds.CopyGeometryMatch` (`:1764`), where it **found a route-4 parent and then refuted
+it**: `CopyGeometryMatch` *is* the `geometry` field of `ParticularWaveAssembly.LocalControl`
+(`:1422,1455`), but all 16 `LocalControl` occurrences are binders or aliases — no `.mk`, no
+`{geometry := …}` — and `def controls` (`:1758`) is only a **type alias**. Doing route 4 in both
+directions is exactly the check that the earlier `RegularFamily` verdict got wrong.
