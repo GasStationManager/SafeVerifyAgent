@@ -80,7 +80,14 @@ MARKERS = (
     ("nat_prim", r"\bNat\.(?:pow|div|mod|sub|gcd|log2|shiftLeft|shiftRight|land|lor|xor|testBit|binaryRec|beq|ble|decEq|decLt|decLe)\b"),
     ("bignum7", r"(?<![\w.\d])\d{7,}(?![\w])"),
     ("bigpow", r"\b\d+\s*\^\s*\d{3,}\b"),
-    ("choose_fact", r"\bNat\.(?:choose|factorial|ascFactorial|descFactorial)\b"),
+    # Dot notation is half of this surface and the first generation of this
+    # regex could not see it: `j.factorial` is `Nat.factorial j`, and an
+    # auditor measured 892 factorial terms where this marker reported 6.
+    # `.choose` is deliberately NOT here: it is dominated by `Classical.choose`
+    # / `Exists.choose`, so it lives in the ambiguous `dot_choose` FEATURE
+    # column instead of a marker that looks like a verdict.
+    ("choose_fact", r"\bNat\.(?:choose|factorial|ascFactorial|descFactorial)\b"
+                    r"|\.(?:factorial|ascFactorial|descFactorial)\b"),
 )
 
 # --- declaration-level features --------------------------------------------
@@ -105,7 +112,17 @@ FEATURES = (
     ("wf", r"\bWellFounded\b|\bAcc\.rec\b"),
     ("bignum", r"(?<![\w.\d])\d{7,}(?![\w])"),
     ("pow", r"\^"),
-    ("choose_fact", r"\bNat\.(?:choose|factorial)\b|\bchoose\b"),
+    # `choose_fact` was ONE polluted column and an auditor broke it in both
+    # directions at once: the regex `Nat\.(choose|factorial)|\bchoose\b` is
+    # BLIND to dot notation (`n.factorial`, 892 terms, of which it saw 6) while
+    # also counting `Classical.choose`, `h.choose_spec` and the `choose`
+    # TACTIC. One number cannot answer "does the kernel compute a binomial".
+    # So it is now three columns, and the ambiguous one is named ambiguous:
+    # `dot_choose` is `n.choose k` (Nat) AND `h.choose` (Classical) and only a
+    # reader can tell them apart -- which is the honest state of affairs.
+    ("nat_choose", r"\bNat\.choose\b"),
+    ("factorial", r"\bNat\.factorial\b|\.factorial\b"),
+    ("dot_choose", r"\.choose\b|(?<![\w.])choose\b"),
     ("finset", r"Finset\.|Fintype\.|\u2211|\u220f"),
     ("nat_prim", r"\bNat\.(?:pow|div|mod|sub|gcd|beq|ble|decEq)\b"),
 )
@@ -161,6 +178,19 @@ def split_decl(body):
 
 
 _BARE_RFL = re.compile(r":=\s*(?:by\s+)?rfl\b")
+
+# A `rfl` that CLOSES a tactic block is a defeq obligation too, and it is the
+# harder one to bound: `_BARE_RFL` measures theorems whose whole proof is
+# `rfl`, so the STATEMENT displays exactly what the kernel must decide. When
+# `rfl` closes a block after `simp`/`unfold`/`rw`, the goal it faces is one no
+# longer visible in the source, so no statement-level screen can bound its
+# iota/delta depth. Measured separately, and reported separately, because a
+# bound proved for the first class is NOT a bound for the second.
+# Found by the `ns-transition-ramp` auditor, who noticed the census saw 1 of
+# its file's 19 proof-closing `rfl`s.
+_CLOSING_RFL = re.compile(
+    r"(?:^[ \t]*rfl[ \t]*$)|(?:;[ \t]*rfl[ \t]*$)|(?:<;>[ \t]*rfl\b)"
+    r"|(?:\bexact[ \t]+rfl\b)", re.M)
 
 def lean_files(root):
     for base, dirs, files in os.walk(root):
@@ -226,9 +256,18 @@ def main() -> int:
                 counts["bare_rfl_proof"] += 1
                 sites["bare_rfl_proof"].append(
                     (rel, ln, f"{dname}  [statement: {len(stmt.strip())} chars]"))
+            closing_rfl = 0
+            if kind in ("theorem", "lemma") and not bare_rfl:
+                closing_rfl = len(_CLOSING_RFL.findall(proof))
+                if closing_rfl:
+                    counts["closing_rfl"] += 1
+                    sites["closing_rfl"].append(
+                        (rel, ln, f"{dname}  [{closing_rfl} closing rfl, "
+                                  f"statement: {len(stmt.strip())} chars]"))
             row = {"file": rel, "kind": kind, "name": dname, "line": ln,
                    "lines": body.count("\n"), "stmt_chars": len(stmt.strip()),
-                   "proof_kind": pkind, "bare_rfl": int(bare_rfl)}
+                   "proof_kind": pkind, "bare_rfl": int(bare_rfl),
+                   "closing_rfl": closing_rfl}
             for fname, rx in feat_rx:
                 row[fname] = len(rx.findall(body))
             rows.append(row)
@@ -245,10 +284,16 @@ def main() -> int:
               + (f": {where[:2]}" if where else ""))
     print(f"\n=== DEFEQ WORKLOAD ===\n     bare_rfl_proof   "
           f"{counts['bare_rfl_proof']:6}  theorems proved by `rfl` alone")
+    print(f"     closing_rfl      {counts['closing_rfl']:6}  further theorems "
+          "whose TACTIC block is closed by `rfl`")
     print("  The kernel must decide these by DEFINITIONAL EQUALITY, which is "
           "where structure eta,\n  `Fin`/`Matrix.cons` literal indices, and an "
           "iota chain at a closed argument would\n  appear. No computation "
-          "marker sees them. Sorted sites: SITES_bare_rfl_proof.md")
+          "marker sees them. Sorted sites: SITES_bare_rfl_proof.md,\n"
+          "  SITES_closing_rfl.md -- and the two are NOT interchangeable: a "
+          "bare `rfl`'s statement\n  displays exactly what the kernel must "
+          "decide, while a `rfl` closing a block faces a goal\n  `simp`/`rw` "
+          "already rewrote, so no statement-level screen bounds its depth.")
     print("\nA marker is a place to LOOK, never a verdict: `decide` over `Fin 4` "
           "and `decide` over a 40-digit numeral are the same marker.")
 
@@ -260,7 +305,8 @@ def main() -> int:
             w.writeheader()
             w.writerows(rows)
         print(f"\nwrote {inv}  ({len(rows):,} rows — the coverage ledger)")
-        for name, _ in list(MARKERS) + [("bare_rfl_proof", "")]:
+        for name, _ in list(MARKERS) + [("bare_rfl_proof", ""),
+                                         ("closing_rfl", "")]:
             if not sites[name]:
                 continue
             p = os.path.join(args.outdir, f"SITES_{name}.md")

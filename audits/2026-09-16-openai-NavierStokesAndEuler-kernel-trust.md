@@ -32,11 +32,11 @@ delegated to GMP, (3) custom metaprogramming.
 | `axiom` / `opaque` / `unsafe` / `@[extern]` / `implemented_by` / `partial def` / `native_decide` | **0** |
 | `sorry` | 4 — both challenge files' intentional placeholders |
 | **vector (2)** `decide` sites | 210 (177 in-cone), **every literal ≤ 1000**, 208 of 210 ≤ 40 |
-| largest closed `Nat` the kernel evaluates **anywhere** | **≈5.0×10¹⁷ — 61 bits, one machine word, never multi-limb GMP** |
+| largest closed `Nat` the kernel evaluates **anywhere** | **2.0×10¹⁸ — 61 bits, one machine word, never multi-limb GMP**; MEASURED in the emitted proof term, and contingent on the certificate's *degree* (see below) |
 | **vector (1)** recursive inductives, well-founded defs, explicit recursors | 14 (10 in-cone) / 12 `termination_by`, 0 `decreasing_by` / 5 |
-| defeq workload: in-cone theorems proved by a bare `rfl` | **529** (median statement 139 chars, max 629; only 7 name a recursive construct) |
-| worker threads / reports | 20 / 40+ |
-| in-cone theorems in files some report has read or cited | 6,808 of 27,753 (**24.5%**, a generous upper bound) |
+| defeq workload: in-cone theorems whose proof involves a `rfl` | **1,717** — **541** proved by `rfl` *alone* (bounded: ≤ 19 iota steps, zero chains) + **1,176** whose tactic block is *closed* by `rfl` (not bounded — the goal is not in the source) |
+| worker threads / reports | 25 / 69 |
+| in-cone theorems in files some report has read or cited | 11,511 of 27,753 (**41.5%**, a generous upper bound) |
 
 ---
 
@@ -64,11 +64,46 @@ literals; the largest numeral in any `decide` goal is **1000**
 appears explicitly anywhere, no custom `Decidable` instance exists, and `native_decide` is absent.
 
 The largest closed `Nat` the kernel is ever asked to evaluate in the whole artifact is
-**≈5.0×10¹⁷** — an `nlinarith` certificate at `NavierStokes/PulseCone.lean:1017`. That is 61 bits:
-**one machine word**, which does not reach multi-limb GMP arithmetic at all. The one large power,
-`9^729` (`Euler/ConstantCorrectionData.lean:146`), is **never normalised** — it is consumed by
-`one_le_pow₀` with a symbolic exponent. `Nat.choose`/factorial are never computed by the kernel; the
-only closed values are `0!`, `C(0,0)`, and `4! = 24`.
+**2,000,979,990,000,000,000 = 2.0×10¹⁸** — the `nlinarith` certificate of
+`NavierStokes/PulseCone.lean:1017`. That is 61 bits: **one machine word**, inside Lean's tagged-scalar
+`Nat` path (`< 2⁶³ = 9.223×10¹⁸`), and it does not reach multi-limb GMP arithmetic. The margin is a
+factor of **4.6**.
+
+This number is **measured, not estimated**: the artifact's heavy sites were re-elaborated against a
+built Mathlib (Lean 4.33.0) and the `Nat` literals in the proof terms `linarith`/`nlinarith`/`norm_num`
+actually emitted were counted with an `Expr`-walking `#litcensus` command
+(`audits/nse-deep/workers/cert-numerals.md`; reproduced independently by a second reader). An earlier
+generation of this report said ≈5.0×10¹⁷ here — that value *is* in the term (it is the product
+`200097999 × 2499900001`) but it is 59 bits and it is not the maximum, so the sentence paired a 59-bit
+number with a 61-bit label.
+
+**The reason matters more than the number, and it is weaker than "the constants are small."** Width is
+set by the **degree** of the certificate Mathlib's oracle happens to find, not by the size of the
+source literals — the largest integer literal anywhere in 641,332 lines is only 10⁹. `cancelDenoms` is
+the *last* preprocessor (`Mathlib/Tactic/Linarith/Preprocessing.lean:384-386`) and `nlinarithExtras`
+runs *after* it (`:326-333`), so degree-2 products multiply **already-denominator-cleared integers**:
+degree-1 costs `lcm × numerators`, degree-2 costs that **squared**. A control run on this artifact's
+own literals — a degree-2 route through `sq_nonneg (x² − (49999/100000)²)` — emits **10²⁰ (67 bits) and
+541 literals above 2⁶⁴**. So "never multi-limb" is a true statement about *these* certificates under
+*this* Mathlib, not a property of the artifact's numbers, and it is one certificate-degree away from
+being false.
+
+The one large power, `9^729` (`Euler/ConstantCorrectionData.lean:146`, verbatim
+`def pressureBound : ℝ := 9^729`), is **never normalised** — it is consumed at `:149` by
+`one_le_pow₀ (by norm_num : (1 : ℝ) ≤ 9)`, whose `norm_num` goal is `1 ≤ 9`. Confirmed by elaboration:
+the `positivity`, `one_le_pow₀` and `norm_num` routes all emit `729` as their widest literal, and
+`norm_num` asked for `(2:ℝ)^40 ≤ 9^729` *fails* rather than expanding the 2,311-bit numeral. Of 711
+sites with an exponent literal ≥ 8, only 3 have closed bases and one of those is a parse artifact;
+`Θ^40`, `k^80` and `6^m` all have symbolic bases, and a `Monoid.npow` over `ℝ` with a `ℕ` literal
+exponent is not integer arithmetic at all.
+
+`Nat.choose`/factorial are essentially never computed: of **368** `Nat.choose` applications, **zero**
+have a closed numeral in either slot, and the sole kernel-forced factorial is `4! = 24`
+(`Euler/EulerProof.lean:12153-12154`, `norm_num only [Nat.factorial, …]`). An earlier generation of
+this report also listed `0!` and `C(0,0)` here; **`C(0,0)` does not occur anywhere in the artifact**.
+The largest closed factorial *expression* is `fixedCost 6 = 2⁶·Σ_{j≤6}(j!)² = 34,138,752`
+(`Euler/SobolevSourceExponent.lean:14`), a `Finset.sum` over `ℝ` that is filtered on by
+`eventually_ge_atTop` and never normalised.
 
 `Classical.propDecidable` as a local instance (4 files) **cannot** corrupt a `decide`:
 `Classical.choice` is irreducible, so such a `decide` fails to *elaborate* rather than computing
@@ -110,9 +145,19 @@ exactly that), where `Fin`/`Matrix.cons` literal indices run through `Nat` compa
 iota chain at a closed argument would appear. So it was measured: **541 in-cone theorems are proved
 by a bare `rfl`** (1,358 across the whole artifact), max statement 709 characters. Classified: only 19
 touch a recursive definition and each is **≤ 1 iota step at a symbolic or base-case argument**, so the
-total iota exposure of the artifact's `rfl` proofs is **≤ 19 steps with zero chains**; no `Fin`/
-`Matrix.cons` literal index is ever resolved; exactly one site needs structure eta. This is the
-largest kernel surface in the artifact, and it is small.
+total iota exposure of those proofs is **≤ 19 steps with zero chains**; no `Fin`/`Matrix.cons` literal
+index is ever resolved; exactly one site needs structure eta (a second, needing `Prop` proof
+irrelevance, was later found at `NavierStokes/VariableGaugeMean.lean:624`).
+
+**That bound covers 541 of 1,717, and the report previously implied it covered the surface.** A later
+worker noticed the census saw 1 of 19 proof-closing `rfl`s in the file it was reading, and the
+distinction it exposed is sharper than the miscount: a *bare* `rfl`'s statement displays exactly what
+the kernel must decide, so a statement-level screen can bound its iota depth — whereas a `rfl` that
+**closes a tactic block** faces a goal `simp`/`rw`/`unfold` already rewrote, which is **not in the
+source**, so no statement-level screen bounds it at all. There are **1,176 further in-cone theorems**
+of that second kind (1,523 repo-wide; `SITES_closing_rfl.md`). They remain the largest *unbounded*
+kernel surface in the artifact, and bounding them needs elaboration rather than reading — which
+`cert-numerals` has since shown is possible on this box.
 
 ---
 
@@ -210,7 +255,17 @@ information.
    tower's index set — is **never proved nonempty**; the artifact case-splits on emptiness and the
    empty branch gives `oscillation = 0`, so every wave estimate could hold because there are no waves.
    Sound, but it would make the wave tower decoration: the blowup is carried by the base field
-   (`NavierStokes/BaseResidual.lean:104-114`). *In flight: `ns-index-nonempty` — ask for one label.*
+   (`NavierStokes/BaseResidual.lean:104-114`).
+   **CLOSED too — the tower IS inhabited.** The artifact never *records* it, but emptiness contradicts
+   its own in-cone `partitionFactor_eq_one` (`NavierStokes/ActualPrimaryCovariance.lean:508`), which
+   makes a `Finset.sum` over the label set equal `1` at every native-strip point above a threshold; an
+   empty type forces that `Finset` to `∅` and the sum to `0`, and the strip point is supplied
+   explicitly by `actual_strip_nonempty`. So the four `isEmpty` branches are **dead code that is
+   nevertheless shipped in-cone**, and the gap is bookkeeping rather than vacuity. Separately, the
+   headline does not need inhabitedness at all: all 12 `CandidateProperties` fields are discharged
+   without a label, and the artifact *proves* the whole correction tower is identically zero on a
+   neighbourhood of every axis point — exactly where the blow-up is measured. HIGH-CONFIDENCE, and the
+   five-line derivation is still UNBUILT.
 3. ~~The 529 `rfl` sites.~~ **CLOSED, and the count was 541.** Of the 541 in-cone bare-`rfl`
    theorems, only 19 mention any of the artifact's 87 recursive definitions, and each of those is a
    base case at a closed `0`/`[]` or a `succ`/`cons` lemma at a **symbolic** argument: **≤ 1 iota step
@@ -231,6 +286,22 @@ information.
    36 powers of slack below it this cannot break the argument, only a future edit.
    One documentation overclaim: `Euler/PhysicalChildSourceBound.lean:6` says "exactly `10(s+2)`" for
    what is a rounded-up envelope.
+5. **The other 1,176 `rfl`s.** Item 3's ≤19-iota bound holds for the 541 in-cone theorems proved by
+   `rfl` *alone*, where the statement displays the obligation. A further **1,176 in-cone theorems close
+   a tactic block with `rfl`**, and the goal that `rfl` faces has already been rewritten by
+   `simp`/`rw`/`unfold`, so it is not in the source and no statement-level screen bounds it. This is
+   now the largest **unbounded** kernel surface in the artifact. Bounding it needs elaboration, not
+   reading — and item 6 shows that is available.
+6. **"Never multi-limb" is a claim about certificate *degree*, not about constants.** The 61-bit
+   maximum is measured in emitted proof terms, but `nlinarith` forms its degree-2 products *after*
+   `cancelDenoms`, so a degree-2 certificate over the artifact's **own** literals reaches 10²⁰ and 541
+   literals above 2⁶⁴ (demonstrated). The artifact sits 4.6× below Lean's `2⁶³` single-word threshold
+   because Mathlib's oracle found degree-1 certificates for these goals. Question for an expert: is
+   that a property worth relying on across Mathlib versions, and should an artifact this size pin the
+   Mathlib revision for that reason as well as the usual ones?
+7. **The five-line `index_nonempty` build.** The cheapest open check in the pass: add the derivation
+   of item 2 to the artifact and build it. A built Mathlib (Lean 4.33.0) exists on the audit box, so
+   the only obstacle was never looking for one.
 
 ## What this does not cover
 

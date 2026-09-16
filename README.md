@@ -175,12 +175,17 @@ is an opinion.
 There are two, both on the same artifact. The
 [kernel-trust pass](audits/2026-09-16-openai-NavierStokesAndEuler-kernel-trust.md) is the
 interesting one: the artifact had already passed Comparator, so the question was not "does it
-compile" but *which of its proofs could a bug in the Lean kernel turn into a fake*. Twenty
+compile" but *which of its proofs could a bug in the Lean kernel turn into a fake*. Twenty-five
 read-only worker threads later: **no defect found**, and the exposure is enumerated rather than
-asserted — the largest closed `Nat` the kernel is ever asked to evaluate in 641k lines is 61 bits
-(one machine word, never multi-limb GMP), the recursive inductives are reduced one iota step on
-symbolic constructors, metaprogramming is *zero*, and the real defeq workload turned out to be
-529 theorems proved by a bare `rfl`. It also ships what an audit of a 38,503-theorem artifact
+asserted — the widest closed `Nat` the kernel is asked to evaluate in 641k lines is 61 bits
+(2.0×10¹⁸, one machine word, never multi-limb GMP), the recursive inductives are reduced one iota
+step on symbolic constructors, metaprogramming is *zero*, and the real defeq workload turned out to
+be 1,717 theorems whose proof involves a `rfl`. Two of those numbers were **measured by elaborating
+the artifact's heavy sites against a built Mathlib and counting the literals in the proof terms the
+tactics emitted** — which is also how the pass learned that "never multi-limb" is a fact about the
+*degree* of the certificates Mathlib's oracle found, not about the size of the artifact's constants:
+a degree-2 route through the same literals reaches 10²⁰. The audit corrected its own published
+numbers three times in this cycle alone. It also ships what an audit of a 38,503-theorem artifact
 needs and rarely has: a **denominator** (`audits/cone.py` — 27,725 of those theorems can actually
 reach a headline theorem) and a coverage ledger that says how little of it any one pass has read.
 

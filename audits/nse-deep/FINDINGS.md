@@ -1339,3 +1339,260 @@ would have had to be checked rather than shrugged at — moot for soundness give
 
 ---
 
+## P1 — three more corrections to our own instrument (found by workers, verified by the parent)
+
+The census has now been wrong six times, and the pattern is always the same: a regex that reports a
+*count* gets read as if it reported a *surface*.
+
+- **`choose_fact` was blind and polluted at once.** `ns-variable-gauge-mean` noticed
+  `SITES_choose_fact.md` says **6** sites while `INVENTORY.csv`'s `choose_fact` column says **534**;
+  `kernel-choose-pow` diagnosed both halves. The marker regex
+  `\bNat\.(?:choose|factorial|ascFactorial|descFactorial)\b` cannot see **dot notation**, and
+  `j.factorial` is how the artifact actually writes it — 892 factorial terms, of which the marker saw
+  6. The *feature* column's extra alternative `\bchoose\b` then counted `Classical.choose`,
+  `h.choose_spec` and the `choose` **tactic**. So one number was simultaneously 150× too low and
+  polluted by three unrelated things.
+  **Fixed:** the marker now matches dot notation (**6 → 881 sites in 194 files**), and the feature
+  column is split into three — `nat_choose`, `factorial`, and `dot_choose`, the last named ambiguous
+  on purpose because `n.choose k` (Nat) and `h.choose` (Classical) are the same token and only a
+  reader can separate them. Worker's manual split of the old 534: 368 `X.choose` applications,
+  100 `choose` *tactic*, 56 `Classical.choose`, 6 `Nat.factorial`, 4 other.
+- **`bare_rfl_proof` measured the easy half of the defeq surface.** `ns-transition-ramp` reported
+  that the census sees **1 of 19** proof-closing `rfl`s in `TransitionRamp.lean`. That is not a bug in
+  `_BARE_RFL` — it correctly matches "the whole proof is `rfl`" — it is a **scope** error in how W24's
+  bound was then read. The distinction matters more than the count:
+  *a bare `rfl`'s statement displays exactly what the kernel must decide, so a statement-level screen
+  can bound its iota depth. A `rfl` closing a tactic block faces a goal `simp`/`rw`/`unfold` already
+  rewrote, which is **not in the source**, so no statement-level screen bounds it at all.*
+  **Fixed:** new `closing_rfl` measurement and `SITES_closing_rfl.md`. Repo-wide it is
+  **1,523 further theorems** (parent-measured **1,176 of them in-cone**) on top of the 1,358 bare ones
+  (541 in-cone). So the in-cone defeq surface is **1,717 theorems, not 541**, and W24's bound —
+  ≤ 19 iota steps, zero chains — is proved for **541 of them**. That is still the strongest bound in
+  the pass, and it now has an honest denominator. Reopened as open thread 5.
+- **`in_cone` counts in my briefs were theorem-only.** `ns-variable-gauge-mean` and
+  `ns-transition-ramp` both flagged it: my "138 in-cone declarations" for `VariableGaugeMean.lean` is
+  138 in-cone *theorems* (169 in-cone declarations: 138 theorem + 30 def + 1 structure); same for
+  `TransitionRamp` 127/168 and `OutgoingHistories` 114/209. Harmless but it made two workers
+  reconcile a number that never disagreed.
+
+---
+
+## W26 `cert-numerals` — the published 61-bit sentence is right in its label, wrong in its number, and too strong in its reason
+
+Report: `workers/cert-numerals.md` (+3 children). **OK 13, NOTE 2, REFUTED 2, ESCALATE 3,
+KERNEL-RISK 0.** This is the first thread in the pass that is **not** source-level: the worker found a
+**built Mathlib** on the box (`lean-eval-house-with-two-rooms/.lake/packages/mathlib`, Lean 4.33.0),
+re-elaborated faithful ports of 14 artifact sites plus 2 adversarial controls, and **counted the `Nat`
+literals in the proof terms `linarith`/`nlinarith`/`norm_num` actually emitted**
+(`#litcensus`, an `Expr`-walking `elab`; `/tmp/certprobe/Probe{2,4,5,6}.lean`).
+
+**The parent re-ran Probe2 and Probe6 independently and reproduces every number below.**
+
+- The published report says the largest closed `Nat` the kernel evaluates anywhere is
+  **≈5.0×10¹⁷ — 61 bits**, at an `nlinarith` certificate in `NavierStokes/PulseCone.lean:1017`.
+  The **site is right**; the **number is not**. The emitted term's widest literal is
+  **2,000,979,990,000,000,000 = 2.0×10¹⁸ = 61 bits** (`= 200097999 × 10¹⁰`).
+  `500,224,987,900,197,999` *is* in the term — it is the product `200097999 × 2499900001` a previous
+  worker computed by hand — but it is **59** bits and it is not the maximum. So the published sentence
+  pairs a 59-bit number with a 61-bit label. Measured census (parent-reproduced):
+  `max=2000979990000000000 bits=61 over64=0`.
+- **My own rank-1 lead was wrong, and the worker refuted it with a measurement.** I had put
+  `NavierStokes/MatchingConeBounds.lean:31` `shape_axis_lower` above the PulseCone site on a
+  lcm-of-denominators proxy (37.9 vs 33.2 proxy bits) and warned that a degree-2 `nlinarith` product
+  there would reach 87 bits. Measured: **4,501,000 — 23 bits** (parent-reproduced:
+  `max=4501000 bits=23`), because the step that carries `4501/500000` is proved by `linarith` at
+  `:53` and then used **linearly**, and the final step at `:80` is **degree-1 `linarith`** whose own
+  census is 1,000,000 (20 bits). *My proxy ranked the source; the kernel checks the certificate, and
+  the certificate's degree is what sets the width.* Lesson for the instrument, not the artifact.
+- **The mechanism, named from Mathlib source, is the real result.** `defaultPreprocessors` ends with
+  `cancelDenoms` (`Mathlib/Tactic/Linarith/Preprocessing.lean:384-386`), and `nlinarithExtras` runs
+  **after** it (`:326-333`), forming all pairwise products via `mapDiagM` (`:303-317`) on comparisons
+  whose denominators are **already cleared**. So a degree-2 product's coefficients are products of the
+  *cleared integers* — the width-doubling step. The oracle returns natural-number multipliers
+  (`Verification.lean:216`) and the leaf is closed by the default discharger `ring1`
+  (`Frontend.lean:159`, used at `Verification.lean:246`). Hence the rule:
+  **degree-1 ⇒ lcm × numerators; degree-2 ⇒ that squared.** Also: `linarith`'s default
+  `transparency := .reducible` (`Frontend.lean:168`) means a plain `def` such as `decay`
+  (`PulseLag.lean:165`) is *not* unfolded, so `decay d.core ^ 2` is one monomial — which is why the
+  atom count stays small.
+- **And therefore the published *reason* is too strong.** "Never multi-limb" is not a property of the
+  artifact's numerals; it is a property of the certificate the simplex happened to pick. The worker
+  proved this with a control on the artifact's **own** literals: `ADV_pulse_deg2`, a degree-2
+  `nlinarith` route through `sq_nonneg (x^2 - (49999/100000)^2)`, emits **10²⁰ = 67 bits and 541
+  literals above 2⁶⁴**. So the correct claim is a **degree-1-certificate fact**, not a
+  small-literal fact — and it is contingent on Mathlib's oracle continuing to find degree-1
+  certificates for these goals.
+- **Headroom, which nobody had stated.** Lean's `Nat` is a tagged scalar below **2⁶³ = 9.223×10¹⁸**
+  and an mpz above it. The artifact's measured maximum is 2.0×10¹⁸, so the margin to the multi-limb
+  path is a factor of **4.6** — one degree-2 certificate away, not orders of magnitude away.
+- Runners-up, all measured: `Euler/PacketNeighborControlled.lean:221` and
+  `PacketGeometryGuards.lean:99` at 10¹⁵ (50 bits); `AxisProfile.lean:92` and `AxisModelBounds.lean:24`
+  at 1,327,104,000,000 = 1152000² (41 bits); `PulseCone.lean:1031` at 20,010,000,000,000 (45 bits).
+  Only **13 declarations in the whole artifact** combine an lcm of denominators ≥ 10⁵ with any
+  square or `nlinarith`, and 9 of them are in `PulseCone.lean`.
+
+**Replacement sentence for the published report** (mine, from the worker's measurement):
+*The widest closed `Nat` the kernel is asked to evaluate is `2.0×10¹⁸` (61 bits) — the `nlinarith`
+certificate of `NavierStokes/PulseCone.lean:1017`, measured in the emitted proof term, not estimated
+from source. That is inside Lean's single-word `Nat` path (< 2⁶³) with a factor-4.6 margin, and the
+artifact reaches multi-limb GMP nowhere. But that is a fact about the **degree** of the certificates
+Mathlib's oracle found, not about the size of the artifact's constants: a degree-2 route through the
+same literals emits 10²⁰ and 541 literals above 2⁶⁴.*
+
+---
+
+## W27 `kernel-choose-pow` — `9^729` is inert (parent-reproduced), and the published `C(0,0)` does not exist
+
+Report: `workers/kernel-choose-pow.md`. **OK 6, NOTE 1, REFUTED 4, ESCALATE 3, KERNEL-RISK 0.**
+
+- **`9^729` confirmed inert, and by a stronger mechanism than we claimed.**
+  `Euler/ConstantCorrectionData.lean:146` is verbatim `def pressureBound : ℝ := 9^729`
+  (parent-verified), consumed at `:149` by `one_le_pow₀ (by norm_num : (1 : ℝ) ≤ 9)` — the `norm_num`
+  goal is `1 ≤ 9`, not the power. Its only other unfold is `:165`
+  `simpa only [mul_one, pressureBound]`, a syntactic match against `(9*L)^729` at `L := 1`.
+  **Parent-reproduced by elaboration** (Probe6): `positivity`, `one_le_pow₀` and `norm_num` routes all
+  census at `max=729 bits=10 over64=0` — the exponent literal itself is the widest thing in the term.
+  Better still, `norm_num` *refuses*: asked for `(2:ℝ)^40 ≤ 9^729` it expands `2^40 = 1099511627776`
+  and reports `unsolved goals` rather than expanding `9^729`. So the 2,311-bit numeral is unreachable
+  by the tactics the artifact uses **and** by the obvious one it does not.
+- **REFUTED, a published claim:** the report says "the only closed values are `0!`, `C(0,0)`, and
+  `4! = 24`". There is **no `C(0,0)` anywhere** — parent-verified, `grep -E 'choose 0 0|Nat\.choose
+  [0-9]+ [0-9]+'` over all 2,659 files returns **nothing**. Of **368** `Nat.choose` applications,
+  **zero** have a closed numeral in either slot.
+- **`4! = 24` confirmed as the sole kernel-forced factorial**, and the mechanism is visible:
+  `Euler/EulerProof.lean:12153-12154` does `have h := factorial_decay 4 z hz0.le` then
+  `norm_num only [Nat.factorial, Nat.cast_ofNat] at h` — that `norm_num only [Nat.factorial]` is
+  exactly the instruction to unfold it. 5 bits.
+- **A value we had missed:** `fixedCost 6` = `2^6 * Σ_{j ≤ 6} (j!)²` = **34,138,752** (26 bits),
+  defined at `Euler/SobolevSourceExponent.lean:14` (parent-verified verbatim:
+  `def fixedCost (q : ℕ) : ℝ := (2 : ℝ)^q*∑ j ∈ range (q+1), (j.factorial : ℝ)^2`) and used at
+  `Euler/PacketUniversalFrequency.lean:24` as the structure field `derivative_bound : fixedCost 6 ≤ k`.
+  It is a `Finset.sum` over **ℝ** and is never normalised — it is filtered on by
+  `eventually_ge_atTop`, so `k` is chosen above it rather than it being computed. OK, but it is a
+  closed factorial expression the census did not report, which is why the `choose_fact` fix above
+  matters.
+- Of **711** sites with an exponent literal ≥ 8, only **3** have closed bases, and
+  `Euler/PacketSourceScaleActual.lean:33`'s `0^60` is a **parse artifact**. `Θ^40`, `k^80`, `6^m`
+  all have symbolic bases — a `Monoid.npow` over ℝ with a ℕ literal exponent is not integer
+  arithmetic and the kernel never computes it. Widest closed integer the kernel reduces in this
+  thread's scope: **1,146,880** (21 bits), from `ring` on `1120*(2*Cθ)^10`.
+  Jet/Taylor files (`AxisWeightEstimates`, `JetBounds`, `EdgeWeightJets`, `FiveProfileMoments`):
+  **zero** closed orders, so no `m!` is ever at a literal `m`.
+
+---
+
+## W28 `ns-transition-ramp` — the ramp is honestly glued, and it is NOT the file I said it was
+
+Report: `workers/ns-transition-ramp.md`. **OK 46, NOTE 2, REFUTED 1, ESCALATE 3, KERNEL-RISK 0.**
+All 2,253 + 1,278 lines read. Queue ranks 1 and 2 of `COVERAGE.md` — first reader in the pass.
+
+- **REFUTED, my brief:** I called `OutgoingHistories.lean` "the ramp's likely consumer side". It is
+  not related to `TransitionRamp.lean` at all — **zero** cross-references either way
+  (parent-verified: `grep -c` gives 0 and 0), disjoint imports (parent-verified:
+  `TransitionRamp` imports `ActivationStocks` + `ReferenceJetBounds`; `OutgoingHistories` imports
+  `CorrectedPulseAmplitude` + `SchedulePressure` + `ProfileHistories`), and the only shared ancestor
+  is `OutgoingSchedule`. A brief that invents a dependency makes a worker audit a relationship that
+  is not there; recorded for the same reason as the `euler-cauchy` correction.
+- **The piecewise definition is real but the junction is interior, so no one-sided matching is
+  needed.** `TransitionRamp.lean:702` is `if p.1 ≤ R.radius0`, and `:959` `physicalF_eq_log` proves
+  **both branches agree on all `0 < p.1`** — so `:999` `physicalF_smooth` is two
+  `congr_of_eventuallyEq` applications on two **open** sets that cover the domain. That is the
+  honest construction, not an assertion that one-sided derivatives match. Same shape at `:1024`.
+- **`C^∞` is earned by the standard flat-cutoff route, uniformly in `k`.**
+  `σ = edge/(edge+edge)` (`OutgoingSchedule.lean:26-27`) with
+  `edge = if x ≤ 0 then 0 else exp(-c/x^2)` (`FlatCutoff.lean:26-27`), smooth by **induction on the
+  inverse-polynomial family** (`FlatCutoff.lean:118-128`), and the smoothness statement is uniform
+  (`OutgoingSchedule.lean:37`) — **no per-`k` constant**, which is the failure mode I asked it to hunt.
+  The side condition `δ ≤ bigTime` is **proved** (`ActivationContinuation.lean:1699-1704`), not assumed.
+- **The narrow-interval worry is real and the artifact does not widen it.** `:1281` `log_value` holds
+  only on `Icc 0 (bigTime+w1+w2)` while its siblings `:1277`/`:1279` hold on `Icc 0 finalTime`
+  (strictly larger, `:1276`). The consumer never uses it outside its interval: `:1852` switches to a
+  one-sided `normalizedLog ≤ B+1` via `hold` (`:1826`) and `sub_le_self` (`:1883`), and the consumer
+  at `:1784` needs only the upper side. **OK.**
+- Kernel risk: largest numeral **1000** (`:747`); recursion is **one structural `Nat` def**
+  (`parameterJet`, `:327`); no `inductive`/`.rec`/`termination_by`/`decide`. UNBUILT.
+
+---
+
+## W29 `ns-variable-gauge-mean` — clean, and it refuted two premises of its own brief
+
+Report: `workers/ns-variable-gauge-mean.md`. **OK 17, NOTE 4, REFUTED 2, ESCALATE 4, KERNEL-RISK 0.**
+110 of 190 declarations read line-by-line, 25 partial, 55 grep-only (2,088 of 3,004 lines); 41 cited
+`file:line`s re-verified by the worker.
+
+- **REFUTED: this is not "estimate mass".** I dispatched it as a long-`nlinarith` estimate file. It
+  contains **17 `nlinarith` lines total**, each a one-line `lt_div_iff₀` juggle (e.g. `:1320`), and
+  10 `calc` blocks of at most 4 steps. The mass is **fiber localisation and germ rewriting**. My
+  classification of the NS remainder as uniformly estimate-shaped is wrong for at least this file,
+  which matters because it is how the work queue is prioritised.
+- **REFUTED: the limit-interchange hunt was vacuous here** — **zero** occurrences of
+  `Tendsto`/`atTop`/`iSup`/`limUnder` in 3,004 lines. There is no limit to interchange.
+- **The quantifier order is right, and it is the good pattern.** `:1288` `let K := leftK+rightK+midK`,
+  `:1297` `refine ⟨K, hKK, ?_⟩`, `:1298` `intro U hU ell … A B … z … j` — `K` is fixed **before**
+  `ell`, `M`, `v`, `f`, `A`, `B`, `z`, `j`. And the ambient class is honestly `m`-only:
+  `WeightedClasses.lean:111` `bounds : ∀ m, ∃ C, 0 ≤ C ∧ ∃ p, ∀ n x`.
+- **The leaf hypothesis HAS a supplier here** — the shape `jetrate-callsites` found unsupplied
+  elsewhere does not recur: `hell` is discharged by `CorrectionInitialization.lean:3960`
+  `gauge.length n = VariableGaugeMean.qLength (2*h) := rfl`, and the coordinate `2h` is forced by
+  `ActualSignedGeometry.lean:31` `SlowRegion (2*h)` with `h < 1/2`.
+- Largest closed numeral in scope: **5** (`:2471` `hclass.bounds (m+5)`, matching
+  `UniformFourierAlias.lean:614` `j ≤ m+5`). No `inductive`/`.rec`/`termination_by`/`decide`/`Nat.pow`.
+  The only exotic defeq in the file: `:624` `subst; rfl` needs **`Prop` proof irrelevance** — the
+  fourth witness for A3's kernel feature after `rfl-defeq`'s single `Prod` eta site.
+
+---
+
+## Open threads after this cycle
+
+1. ~~The defeq workload~~ — **reopened as thread 5**: W24's ≤19-iota bound covers 541 of the
+   **1,717** in-cone theorems whose proof involves a `rfl`; the other 1,176 close a tactic block and
+   their goals are not in the source.
+2. **The degree of the certificates.** W26 makes "never multi-limb" contingent on Mathlib's oracle
+   finding degree-1 certificates, with 4.6× headroom. An expert question: is that a property anyone
+   should rely on across Mathlib versions?
+3. **Coverage.** 11,511 of 27,753 in-cone theorems live in a file some report has read or cited
+   (41.5%, a generous upper bound). Queue in `COVERAGE.md`, ranks 1-2 now closed by W28.
+4. **The five-line `index_nonempty` build** (W25 E1) — still the cheapest open check in the pass, and
+   now clearly buildable: W26 demonstrated that a Mathlib is available on this box.
+
+## W30 `ns-harmonic-residual` — the `hres` shape recurs: a strong `ExtractionRegular` nobody constructs
+
+Report: `workers/ns-harmonic-residual.md` (child of `ns-variable-gauge-mean`, whose parent then
+re-verified and *enlarged* the finding). **OK 54, NOTE 4, UNCLEAR 1, ESCALATE 2, KERNEL-RISK 0**,
+173 of 173 declarations.
+
+`jetrate-callsites` (W8) found one cluster resting on a hypothesis `hres` that **nobody in the
+repository proves**. This is the second instance of exactly that shape, and it is bigger:
+
+- `NavierStokes/HarmonicResidual.lean:1461` `structure ExtractionRegular` demands **global**
+  separation — `:1472-1473` `Disjoint (tsupport ((blockFamily l).oscillation n)) (tsupport …)`, with
+  no localising set. **Parent-verified by exhaustive grep: every single occurrence of
+  `HarmonicResidual.ExtractionRegular` is a hypothesis binder.** The one conclusion-position use,
+  `AxisymmetricResidualGrouping.lean:142`, already assumes one at `:140`. There is **no constructor
+  anywhere in 2,659 files.**
+- Its **weaker same-named twin** `LocalResidualGrouping.lean:210` asks only
+  `Disjoint (liftDomain U ∩ tsupport …) (…)` (`:220-222`) — and **is** produced:
+  `ActualInitialization.lean:849` `initial_extraction_regular` (parent-verified), consumed at
+  `ActualCycleResidualBounds.lean:269,311,702`. So the **live** chain runs on the local version.
+- The child said the strong one had 3 in-file consumers; the parent found **21 hypothesis sites in 5
+  other files**: `AxisymmetricResidualGrouping.lean:140,167,196,218,238,266`;
+  `CorrectionStep.lean:1410,1424,1520,1533,3122,9250,9258`;
+  `PhysicalResidualJetBounds.lean:129,694`; `HarmonicWaveInteraction.lean:1123,1124`;
+  `HarmonicMeanInteraction.lean:619,620`.
+- **Verdict: SAFE, and a cone false positive.** A weaker hypothesis makes a *stronger* theorem, so
+  nothing is overclaimed; `CorrectionStep.lean:9250,9258` sit directly beside `:9268,9276`, which is
+  what an **incomplete migration** from the global predicate to the local one looks like. But
+  `in_cone = True` on that whole cluster is **wrong**: those theorems cannot be reached, because their
+  hypothesis cannot be supplied. That is 21+ declarations the cone counts as live and are not — the
+  same over-approximation direction the cone was designed to have, now with a named 21-site witness.
+- Kernel risk nil; largest numeral **3** (`Fin 3`); the only integer arithmetic in 1,620 lines is
+  `:1567` `2^stage + 2^stage = 2^(stage+1) := by omega`.
+
+**Pattern worth naming, since it is now 2 for 2 in the files we look at closely:** this artifact
+contains predicate clusters whose hypothesis has no supplier, sitting next to a weaker twin that
+does. Both times the direction was safe. Both times the *cone* was fooled. A third instance would
+make "count the declarations whose hypotheses have no constructor" a cheap and worthwhile pass in its
+own right — and it is mechanisable: for every `structure`/`def` used only in hypothesis position,
+check whether any declaration has it in conclusion position without also assuming it.
+
+---

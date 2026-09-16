@@ -1,8 +1,883 @@
-# `choose_fact` sites (6)
+# `choose_fact` sites (881)
 
+- `NavierStokes/ActiveAnnulusWeight.lean:592` — `let C := (n.factorial : ℝ) * A * D^n`
+- `NavierStokes/ActiveAnnulusWeight.lean:626` — `(n.factorial : ℝ) * (A * weight c a b (Real.log X) /`
+- `NavierStokes/ActualBaseVelocityBounds.lean:165` — `refine ⟨(m.factorial : ℝ) * A * (C + 1) ^ m, by positivity, ?_⟩`
+- `NavierStokes/ActualBaseVelocityBounds.lean:180` — `(m.factorial : ℝ) * A * ((C + 1) * q z ^ (-L)) ^ m :=`
+- `NavierStokes/ActualBaseVelocityBounds.lean:183` — `_ = ((m.factorial : ℝ) * A * (C + 1) ^ m) * q z ^ (-(L * m)) := by`
+- `NavierStokes/ActualCurrentParticularBounds.lean:287` — `(m.factorial : ℝ) * M ^ m * B ^ m := by`
+- `NavierStokes/ActualCurrentParticularBounds.lean:311` — `(2 : ℝ) ^ m * A * ((m.factorial : ℝ) * M ^ m * B ^ m) := by`
+- `NavierStokes/ActualCurrentParticularBounds.lean:339` — `(2 : ℝ) ^ m * A * ((m.factorial : ℝ) * M ^ m * B ^ m) := by`
+- `NavierStokes/ActualCurrentParticularBounds.lean:354` — `let D := (m.factorial : ℝ) * M ^ m * B ^ m`
+- `NavierStokes/ActualCurrentParticularBounds.lean:398` — `((m.factorial : ℝ) * (1 + H) ^ m * (B * Q ^ (-ρ) * S ^ q) ^ m)) =`
+- `NavierStokes/ActualCurrentParticularBounds.lean:399` — `((2 : ℝ) ^ m * A * (m.factorial : ℝ) * (1 + H) ^ m * B ^ m) *`
+- `NavierStokes/ActualCurrentParticularBounds.lean:407` — `_ = ((2 : ℝ) ^ m * A * (m.factorial : ℝ) * (1 + H) ^ m * B ^ m) *`
+- `NavierStokes/ActualCurrentParticularBounds.lean:463` — `let C := (2 : ℝ) ^ m * A * (m.factorial : ℝ) * (1 + |(j : ℝ)|) ^ m * D ^ m`
+- `NavierStokes/ActualCurrentParticularBounds.lean:816` — `let A' : ℝ := (2 : ℝ) ^ m * A * (m.factorial : ℝ) * (1 + H) ^ m * B ^ m`
+- `NavierStokes/ActualPhaseJetBounds.lean:571` — `refine ⟨(m.factorial : ℝ) * C^m, ?_, p*m, ?_⟩`
+- `NavierStokes/ActualPhaseJetBounds.lean:592` — `_ = ((m.factorial : ℝ) * C^m) *`
+- `NavierStokes/ActualPhaseJetBounds.lean:596` — `_ ≤ ((m.factorial : ℝ) * C^m) *`
+- `NavierStokes/ActualPhaseJetBounds.lean:603` — `change _ = ((m.factorial : ℝ) * C^m) *`
+- `NavierStokes/ActualSlowAxis.lean:490` — `((k.factorial : ℝ) / ((2 * k).factorial : ℝ)) •`
+- `NavierStokes/ActualSlowAxis.lean:490` — `((k.factorial : ℝ) / ((2 * k).factorial : ℝ)) •`
+- `NavierStokes/AnalyticCoefficientBounds.lean:70` — `‖iteratedDeriv m f c‖ ≤ (m.factorial : ℝ) * (ρ⁻¹) ^ m := by`
+- `NavierStokes/AnalyticCoefficientBounds.lean:75` — `m.factorial • cauchyPowerSeries f c ρ m (fun _ => 1) := by`
+- `NavierStokes/AnalyticCoefficientBounds.lean:110` — `|realJet f m x| ≤ (m.factorial : ℝ) * (ρ⁻¹) ^ m := by`
+- `NavierStokes/AnalyticCoefficientBounds.lean:122` — `(m.factorial : ℝ) * (ρ⁻¹) ^ m := by`
+- `NavierStokes/AnalyticCoefficientBounds.lean:149` — `(m.factorial : ℝ) * (ρ⁻¹) ^ m ≤`
+- `NavierStokes/AnalyticCoefficientBounds.lean:160` — `AxisWeightEstimates.weight ε 0 m = (m.factorial : ℝ) * (ρ⁻¹) ^ m := by`
+- `NavierStokes/AnalyticCoefficientBounds.lean:165` — `((ε⁻¹) ^ m * (m.factorial : ℝ) / ((m : ℝ) + 1) ^ 2) =`
+- `NavierStokes/AnalyticCoefficientBounds.lean:166` — `((ε / ρ) ^ m * (ε⁻¹) ^ m) * (m.factorial : ℝ) := by`
+- `NavierStokes/AnalyticCoefficientBounds.lean:168` — `_ = (m.factorial : ℝ) * (ρ⁻¹) ^ m := by rw [hpow, mul_comm]`
+- `NavierStokes/AxisAnalyticCoefficients.lean:16` — `jet I (weight ε) A.1 n m x / (m.factorial : ℝ)`
+- `NavierStokes/AxisAnalyticCoefficients.lean:22` — `have hd := (hasDerivAt_jet_interior I (weight ε) A n m hx).div_const (m.factorial : ℝ)`
+- `NavierStokes/AxisAnalyticCoefficients.lean:26` — `have hm : (m.factorial : ℝ) ≠ 0 := by positivity`
+- `NavierStokes/AxisAnalyticCoefficients.lean:40` — `apply (div_le_iff₀ (by positivity : (0 : ℝ) < m.factorial)).mpr`
+- `NavierStokes/AxisEvaluation.lean:30` — `(n.descFactorial k : ℝ) * Y ^ (n - k)`
+- `NavierStokes/AxisEvaluation.lean:34` — `have hd := (hasDerivAt_pow (n - k) Y).const_mul (n.descFactorial k : ℝ)`
+- `NavierStokes/AxisEvaluation.lean:35` — `change HasDerivAt (fun x : ℝ => (n.descFactorial k : ℝ) * x ^ (n - k)) _ Y`
+- `NavierStokes/AxisEvaluation.lean:58` — `(C * (ε⁻¹) ^ m * (m.factorial : ℝ) * ((m : ℝ) + 1) ^ m) *`
+- `NavierStokes/AxisEvaluation.lean:62` — `weight ε n m ≤ (1 / 20 : ℝ) ^ n * (ε⁻¹) ^ m * (m.factorial : ℝ) *`
+- `NavierStokes/AxisEvaluation.lean:80` — `_ ≤ (1 / 20 : ℝ) ^ n * (ε⁻¹) ^ m * (m.factorial : ℝ) * ((n + m).choose m : ℝ) := by`
+- `NavierStokes/AxisEvaluation.lean:82` — `have hn : 0 ≤ (1 / 20 : ℝ) ^ n * (ε⁻¹) ^ m * (m.factorial : ℝ) *`
+- `NavierStokes/AxisEvaluation.lean:89` — `have hd : (n.descFactorial k : ℝ) ≤ ((n : ℝ) + 1) ^ k := by`
+- `NavierStokes/AxisEvaluation.lean:90` — `have hdn : (n.descFactorial k : ℝ) ≤ (n : ℝ) ^ k := by`
+- `NavierStokes/AxisEvaluation.lean:98` — `abs_of_nonneg (show (0 : ℝ) ≤ n.descFactorial k by positivity), abs_pow]`
+- `NavierStokes/AxisEvaluation.lean:112` — `(((1 / 20 : ℝ) ^ n * (ε⁻¹) ^ m * (m.factorial : ℝ) *`
+- `NavierStokes/AxisEvaluation.lean:321` — `∑' n : ℕ, (n.descFactorial k : ℝ) * Y ^ (n - k) *`
+- `NavierStokes/AxisEvaluation.lean:463` — `∑' n : ℕ, (n.descFactorial k : ℝ) * Y ^ (n - k) *`
+- `NavierStokes/AxisHolomorphic.lean:61` — `(‖A‖ / (1 - s) * (m.factorial : ℝ) * ((ε * (1 - s))⁻¹) ^ m) *`
+- `NavierStokes/AxisHolomorphic.lean:82` — `_ = (‖A‖ * (ε⁻¹) ^ m * (m.factorial : ℝ) * ((n : ℝ) + 1) ^ k) *`
+- `NavierStokes/AxisHolomorphic.lean:86` — `_ ≤ (‖A‖ * (ε⁻¹) ^ m * (m.factorial : ℝ) * ((n : ℝ) + 1) ^ k) *`
+- `NavierStokes/AxisHolomorphic.lean:100` — `(m.factorial : ℝ) * ((ε * (1 - s))⁻¹) ^ m := by`
+- `NavierStokes/AxisHolomorphic.lean:106` — `(‖A‖ / (1 - s) * (m.factorial : ℝ) * ((ε * (1 - s))⁻¹) ^ m)`
+- `NavierStokes/AxisHolomorphic.lean:108` — `_ ≤ ∑' n : ℕ, (‖A‖ / (1 - s) * (m.factorial : ℝ) * ((ε * (1 - s))⁻¹) ^ m) *`
+- `NavierStokes/AxisHolomorphic.lean:342` — `(m : ℕ) (x : ℝ) : ℝ := mixedSeries I ε A k m (Y, x) / (m.factorial : ℝ)`
+- `NavierStokes/AxisHolomorphic.lean:358` — `apply (div_le_iff₀ (by positivity : (0 : ℝ) < m.factorial)).mpr`
+- `NavierStokes/AxisHolomorphic.lean:361` — `(m.factorial : ℝ) * ((ε * (1 - s))⁻¹) ^ m :=`
+- `NavierStokes/AxisHolomorphic.lean:371` — `(m.factorial : ℝ)`
+- `NavierStokes/AxisHolomorphic.lean:375` — `have hm : (m.factorial : ℝ) ≠ 0 := by positivity`
+- `NavierStokes/AxisHolomorphic.lean:384` — `(mixedSeries_hasDerivAt_Y I hε A k m (abs_lt.mp hY) hx).div_const (m.factorial : ℝ)`
+- `NavierStokes/AxisModelBounds.lean:20` — `(-z / 2) ^ n / ((n.factorial : ℝ) * ((n + 1).factorial : ℝ)) := by`
+- `NavierStokes/AxisModelBounds.lean:20` — `(-z / 2) ^ n / ((n.factorial : ℝ) * ((n + 1).factorial : ℝ)) := by`
+- `NavierStokes/AxisProfile.lean:49` — `(-χ / 2) ^ n / ((n.factorial : ℝ) * ((n + 1).factorial : ℝ))`
+- `NavierStokes/AxisProfile.lean:49` — `(-χ / 2) ^ n / ((n.factorial : ℝ) * ((n + 1).factorial : ℝ))`
+- `NavierStokes/AxisProfile.lean:58` — `have hf : (n.factorial : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero n)`
+- `NavierStokes/AxisProfile.lean:76` — `(-χ / 2) ^ n / (n.factorial : ℝ) ^ 2 := by`
+- `NavierStokes/AxisProfile.lean:77` — `have hf : (n.factorial : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero n)`
+- `NavierStokes/AxisReference.lean:95` — `((n.factorial : ℝ) * ((n + 1).factorial : ℝ)) := by`
+- `NavierStokes/AxisReference.lean:95` — `((n.factorial : ℝ) * ((n + 1).factorial : ℝ)) := by`
+- `NavierStokes/AxisReference.lean:100` — `have hf : (n.factorial : ℝ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero n`
+- `NavierStokes/AxisResolvent.lean:30` — `K ^ k / ((k.factorial : ℝ) * ((k + 1).factorial : ℝ))`
+- `NavierStokes/AxisResolvent.lean:30` — `K ^ k / ((k.factorial : ℝ) * ((k + 1).factorial : ℝ))`
+- `NavierStokes/AxisResolvent.lean:38` — `factorialMajorant K k ≤ K ^ k / (k.factorial : ℝ) := by`
+- `NavierStokes/AxisResolvent.lean:39` — `have hk : (0 : ℝ) < (k.factorial : ℝ) := by exact_mod_cast Nat.factorial_pos k`
+- `NavierStokes/AxisResolvent.lean:40` — `have hk1 : (1 : ℝ) ≤ ((k + 1).factorial : ℝ) := by`
+- `NavierStokes/AxisResolvent.lean:59` — `have hf : (k.factorial : ℝ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero k`
+- `NavierStokes/AxisSeries.lean:23` — `(-t) ^ n / ((n.factorial : ℝ) * ((n + k).factorial : ℝ))`
+- `NavierStokes/AxisSeries.lean:23` — `(-t) ^ n / ((n.factorial : ℝ) * ((n + k).factorial : ℝ))`
+- `NavierStokes/AxisSeries.lean:29` — `‖term k n t‖ ≤ R ^ n / (n.factorial : ℝ) := by`
+- `NavierStokes/AxisSeries.lean:30` — `have hf : (1 : ℝ) ≤ ((n + k).factorial : ℝ) := by`
+- `NavierStokes/AxisSeries.lean:32` — `have hn : (0 : ℝ) < (n.factorial : ℝ) := Nat.cast_pos.mpr (Nat.factorial_pos n)`
+- `NavierStokes/AxisSeries.lean:35` — `((n.factorial : ℝ) * ((n + k).factorial : ℝ)) := by`
+- `NavierStokes/AxisSeries.lean:35` — `((n.factorial : ℝ) * ((n + k).factorial : ℝ)) := by`
+- `NavierStokes/AxisSeries.lean:37` — `_ ≤ R ^ n / ((n.factorial : ℝ) * ((n + k).factorial : ℝ)) := by`
+- `NavierStokes/AxisSeries.lean:37` — `_ ≤ R ^ n / ((n.factorial : ℝ) * ((n + k).factorial : ℝ)) := by`
+- `NavierStokes/AxisSeries.lean:39` — `_ ≤ R ^ n / (n.factorial : ℝ) := by`
+- `NavierStokes/AxisSeries.lean:64` — `have hf : (n.factorial : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero n)`
+- `NavierStokes/AxisSeries.lean:65` — `have hk : ((n + (k + 1)).factorial : ℝ) ≠ 0 :=`
 - `NavierStokes/AxisSeries.lean:68` — `((Nat.factorial (n + 1) : ℝ) * (Nat.factorial (n + 1 + k) : ℝ))) using 1`
 - `NavierStokes/AxisSeries.lean:68` — `((Nat.factorial (n + 1) : ℝ) * (Nat.factorial (n + 1 + k) : ℝ))) using 1`
+- `NavierStokes/AxisSeries.lean:75` — `bessel k t = 1 / (k.factorial : ℝ) + ∑' n : ℕ, term k (n + 1) t := by`
+- `NavierStokes/AxisSeries.lean:91` — `(u := fun n : ℕ => R ^ n / (n.factorial : ℝ))`
+- `NavierStokes/AxisSeries.lean:106` — `1 / (k.factorial : ℝ) + ∑' n : ℕ, term k (n + 1) x := by`
+- `NavierStokes/AxisSeries.lean:110` — `simpa only [tsum_neg, bessel] using htail.const_add (1 / (k.factorial : ℝ))`
+- `NavierStokes/AxisSeries.lean:124` — `have hfn : (n.factorial : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero n)`
+- `NavierStokes/AxisSeries.lean:125` — `have hfk : ((n + k).factorial : ℝ) ≠ 0 :=`
+- `NavierStokes/AxisSeries.lean:134` — `1 / (k.factorial : ℝ) = ((k : ℝ) + 1) * (1 / ((k + 1).factorial : ℝ)) := by`
+- `NavierStokes/AxisSeries.lean:134` — `1 / (k.factorial : ℝ) = ((k : ℝ) + 1) * (1 / ((k + 1).factorial : ℝ)) := by`
+- `NavierStokes/AxisSeries.lean:136` — `have hf : (k.factorial : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero k)`
+- `NavierStokes/AxisSeries.lean:169` — `theorem bessel_zero (k : ℕ) : bessel k 0 = 1 / (k.factorial : ℝ) := by`
+- `NavierStokes/AxisSeries.lean:178` — `((n.factorial : ℝ) * ((n + 1).factorial : ℝ)) := by`
+- `NavierStokes/AxisSeries.lean:178` — `((n.factorial : ℝ) * ((n + 1).factorial : ℝ)) := by`
+- `NavierStokes/AxisSeries.lean:225` — `have hfn : (n.factorial : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero n)`
+- `NavierStokes/AxisSeries.lean:226` — `have hfk : ((n + k).factorial : ℝ) ≠ 0 :=`
+- `NavierStokes/AxisWeightEstimates.lean:29` — `(1 / 20 : ℝ) ^ n * (ε⁻¹) ^ m * (m.factorial : ℝ) * ((n + m).choose m : ℝ) /`
+- `NavierStokes/AxisWeightEstimates.lean:34` — `(1 / 20 : ℝ) ^ n * (ε⁻¹) ^ m * (m.factorial : ℝ) * ((n + m).choose m : ℝ)`
+- `NavierStokes/AxisWeightEstimates.lean:160` — `((k + l).choose k : ℝ) * (k.factorial : ℝ) * (l.factorial : ℝ) =`
+- `NavierStokes/AxisWeightEstimates.lean:160` — `((k + l).choose k : ℝ) * (k.factorial : ℝ) * (l.factorial : ℝ) =`
+- `NavierStokes/AxisWeightEstimates.lean:161` — `((k + l).factorial : ℝ) := by`
+- `NavierStokes/AxisWeightEstimates.lean:175` — `((k + l).factorial : ℝ) := by positivity`
+- `NavierStokes/AxisWeightEstimates.lean:177` — `_ = ((1 / 20 : ℝ) ^ (i + j) * (ε⁻¹) ^ (k + l) * ((k + l).factorial : ℝ)) *`
+- `NavierStokes/AxisWeightEstimates.lean:188` — `(1 / 20 : ℝ) ^ n * (ε⁻¹) ^ m * ((n + m).factorial : ℝ) / (n.factorial : ℝ) := by`
+- `NavierStokes/AxisWeightEstimates.lean:188` — `(1 / 20 : ℝ) ^ n * (ε⁻¹) ^ m * ((n + m).factorial : ℝ) / (n.factorial : ℝ) := by`
+- `NavierStokes/AxisWeightEstimates.lean:189` — `have hn : (n.factorial : ℝ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero n`
+- `NavierStokes/AxisWeightEstimates.lean:190` — `have hf : (m.factorial : ℝ) * ((n + m).choose m : ℝ) * (n.factorial : ℝ) =`
+- `NavierStokes/AxisWeightEstimates.lean:190` — `have hf : (m.factorial : ℝ) * ((n + m).choose m : ℝ) * (n.factorial : ℝ) =`
+- `NavierStokes/AxisWeightEstimates.lean:191` — `((n + m).factorial : ℝ) := by`
+- `NavierStokes/AxisWeightEstimates.lean:198` — `((m.factorial : ℝ) * ((n + m).choose m : ℝ) * (n.factorial : ℝ)) := by ring`
+- `NavierStokes/AxisWeightEstimates.lean:198` — `((m.factorial : ℝ) * ((n + m).choose m : ℝ) * (n.factorial : ℝ)) := by ring`
+- `NavierStokes/AxisWeightEstimates.lean:208` — `have hn : (n.factorial : ℝ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero n`
+- `NavierStokes/AxisWeightEstimates.lean:234` — `have hi : (i.factorial : ℝ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero i`
+- `NavierStokes/BaseChartJets.lean:320` — `refine ⟨(N.factorial : ℝ) * A * B ^ N, by positivity, ?_⟩`
+- `NavierStokes/BaseResidual.lean:262` — `refine ⟨(m.factorial : ℝ) * A * D ^ m, by positivity, ?_⟩`
+- `NavierStokes/BaseResidual.lean:384` — `refine ⟨δ, (m.factorial : ℝ) * C * D ^ m, hδ, by positivity, ?_⟩`
+- `NavierStokes/BaseResidual.lean:878` — `refine ⟨δ, (m.factorial : ℝ) * B * D ^ m, hδ, by positivity, ?_⟩`
+- `NavierStokes/BaseStressClasses.lean:76` — `refine ⟨(m.factorial : ℝ) * C * (B+1)^m, by positivity, p+q*m, ?_⟩`
+- `NavierStokes/BaseStressClasses.lean:96` — `_ ≤ (j.factorial : ℝ) * majorant s w α C p n x * ((B+1)*s.growth n x^q)^j := hcomp`
+- `NavierStokes/BaseStressClasses.lean:97` — `_ ≤ (m.factorial : ℝ) * majorant s w α C p n x * ((B+1)*s.growth n x^q)^m := by`
+- `NavierStokes/BorelExtension.lean:26` — `def monomial (j : ℕ) (v : E) (s : ℝ) : E := (s ^ j / (j.factorial : ℝ)) • v`
+- `NavierStokes/BorelExtension.lean:35` — `((j + 1).factorial : ℝ)).smul_const v).deriv`
+- `NavierStokes/BorelExtension.lean:36` — `change deriv (fun x : ℝ => (x ^ (j + 1) / ((j + 1).factorial : ℝ)) • v) s = _`
+- `NavierStokes/BorelExtension.lean:257` — `(SmoothCutoffs.cutoff ((scale a j : ℝ) * s) * (s ^ j / (j.factorial : ℝ))) • a j := by`
+- `NavierStokes/BoundaryAxisJets.lean:96` — `axisJet F k (0, z) = ((k.factorial : ℝ) / ((2 * k).factorial : ℝ)) •`
+- `NavierStokes/BoundaryAxisJets.lean:96` — `axisJet F k (0, z) = ((k.factorial : ℝ) / ((2 * k).factorial : ℝ)) •`
+- `NavierStokes/BoundaryAxisJets.lean:830` — `axisJet F k (0, z) = ((k.factorial : ℝ) / ((2 * k).factorial : ℝ)) •`
+- `NavierStokes/BoundaryAxisJets.lean:830` — `axisJet F k (0, z) = ((k.factorial : ℝ) / ((2 * k).factorial : ℝ)) •`
+- `NavierStokes/CartesianCopySource.lean:72` — `refine ⟨(m.factorial : ℝ) * C * B ^ m, by positivity, p, ?_⟩`
+- `NavierStokes/CartesianCopySource.lean:79` — `exact hb.trans_eq (by change _ = (m.factorial : ℝ) * C * B ^ m * s.epsilon n ^ α * s.growth n (cylindricalMap x) ^ p * w l n (cylindricalMap x); unfold majorant`
+- `NavierStokes/ClosedIntervalJetAlgebra.lean:88` — `let C := (k.factorial : ℝ) * WeightedQuotients.coeffBound (-1) k * R^(2*k+1)`
+- `NavierStokes/ClosedIntervalJetAlgebra.lean:113` — `(n.factorial : ℝ) * (WeightedQuotients.coeffBound (-1) k * R^(k+1)) * R^n`
+- `NavierStokes/ClosedIntervalJetAlgebra.lean:114` — `= n.factorial * WeightedQuotients.coeffBound (-1) k * R^(k+1+n) := by rw [pow_add]; ring`
+- `NavierStokes/ClosedIntervalJetAlgebra.lean:115` — `_ ≤ k.factorial * WeightedQuotients.coeffBound (-1) k * R^(2*k+1) := by`
+- `NavierStokes/CurrentPhysicalChartJets.lean:132` — `(m.factorial : ℝ) * A * B ^ m := by`
+- `NavierStokes/CurrentPhysicalChartJets.lean:147` — `refine ⟨max 1 ((m.factorial : ℝ) * B ^ m), le_max_left _ _, ?_⟩`
+- `NavierStokes/CurrentPhysicalChartJets.lean:151` — `_ ≤ (m.factorial : ℝ) * A * B ^ m := he`
+- `NavierStokes/CurrentPhysicalChartJets.lean:152` — `_ = ((m.factorial : ℝ) * B ^ m) * A := by ring`
+- `NavierStokes/CutStageEstimates.lean:84` — `‖iteratedFDeriv ℝ m (g ∘ f) x‖ ≤ m.factorial * C * D ^ m := by`
+- `NavierStokes/CutStageEstimates.lean:107` — `refine ⟨m.factorial * A * D ^ m, by positivity, ?_⟩`
+- `NavierStokes/CutStageEstimates.lean:147` — `_ ≤ m.factorial * A * (D / q x) ^ m := hb`
+- `NavierStokes/CutStageEstimates.lean:148` — `_ = (m.factorial * A * D ^ m) * q x ^ (-(m : ℝ)) := by`
+- `NavierStokes/EvenSmoothDescent.lean:292` — `((n.factorial : ℝ) / ((2 * n).factorial : ℝ)) • iteratedDeriv (2 * n) f 0 := by`
+- `NavierStokes/EvenSmoothDescent.lean:292` — `((n.factorial : ℝ) / ((2 * n).factorial : ℝ)) • iteratedDeriv (2 * n) f 0 := by`
+- `NavierStokes/EvenSmoothDescent.lean:310` — `((n.factorial : ℝ) / ((2 * n).factorial : ℝ)) • iteratedDeriv (2 * n) f 0 := by`
+- `NavierStokes/EvenSmoothDescent.lean:310` — `((n.factorial : ℝ) / ((2 * n).factorial : ℝ)) • iteratedDeriv (2 * n) f 0 := by`
+- `NavierStokes/EvenSmoothDescent.lean:430` — `((n.factorial : ℝ) / ((2 * n).factorial : ℝ)) • iteratedDeriv (2 * n) f 0 := by`
+- `NavierStokes/EvenSmoothDescent.lean:430` — `((n.factorial : ℝ) / ((2 * n).factorial : ℝ)) • iteratedDeriv (2 * n) f 0 := by`
+- `NavierStokes/ExtendedHeatDebts.lean:658` — `(n.factorial : ℝ) * (∑ i ∈ Finset.range (n + 1), nuConstant d 3 square q i) * 3 ^ n`
+- `NavierStokes/ExtendedHeatDebts.lean:970` — `let C := (n.factorial : ℝ) * (tailSize d square * S) * (2 * (L + 1)) ^ n`
+- `NavierStokes/FiveProfileMoments.lean:924` — `let K : ℝ := C + (N.factorial : ℝ) * B`
+- `NavierStokes/FiveProfileMoments.lean:951` — `have hfac : (k.factorial : ℝ) * B ≤ (N.factorial : ℝ) * B :=`
+- `NavierStokes/FiveProfileMoments.lean:951` — `have hfac : (k.factorial : ℝ) * B ≤ (N.factorial : ℝ) * B :=`
+- `NavierStokes/GaussianTailFlat.lean:205` — `((p.factorial : ℝ) / c ^ p) * Real.exp c := by`
+- `NavierStokes/GaussianTailFlat.lean:206` — `have hfac : (0 : ℝ) < p.factorial := by exact_mod_cast Nat.factorial_pos p`
+- `NavierStokes/GaussianTailFlat.lean:214` — `_ ≤ ((Real.exp (c * (1 + x)) * p.factorial) / c ^ p) * Real.exp (-c * x) :=`
+- `NavierStokes/GaussianTailFlat.lean:216` — `_ = ((p.factorial : ℝ) / c ^ p) *`
+- `NavierStokes/GaussianTailFlat.lean:236` — `let B : ℝ := ((p.factorial : ℝ) / (c / 2) ^ p) * Real.exp (c / 2)`
+- `NavierStokes/InitialHarmonicContinuation.lean:308` — `refine ⟨(m.factorial : ℝ) * A * D ^ m, by positivity, ?_⟩`
+- `NavierStokes/LocalPhysicalCopyBounds.lean:564` — `∀ j ≤ m, ‖iteratedFDeriv ℝ j (g ∘ φ) x‖ ≤ (m.factorial : ℝ) * A * B ^ m := by`
+- `NavierStokes/LocalPhysicalCopyBounds.lean:611` — `refine ⟨(m.factorial : ℝ) * A * B ^ m, by positivity, p + q * m, ?_⟩`
+- `NavierStokes/LocalPhysicalCopyBounds.lean:640` — `_ ≤ ChartScales.Q I.1.val.1 ^ σ * ((m.factorial : ℝ) *`
+- `NavierStokes/LocalSignedRequest.lean:70` — `refine ⟨(m.factorial : ℝ) * C * B ^ m, by positivity, p, ?_⟩`
+- `NavierStokes/LocalSignedRequest.lean:87` — `(j.factorial : ℝ) * majorant s w α C p n (Φ x) * B ^ j := hbound`
+- `NavierStokes/LocalSignedRequest.lean:88` — `_ ≤ (m.factorial : ℝ) * majorant s w α C p n (Φ x) * B ^ m := by`
+- `NavierStokes/LocalSignedRequest.lean:94` — `_ = majorant t (fun n x => w n (Φ x)) α ((m.factorial : ℝ) * C * B ^ m) p n x := by`
+- `NavierStokes/LocalizedWaveBounds.lean:401` — `refine ⟨(m.factorial : ℝ) * C * B ^ m, by positivity, p * m, fun n i x hx hi j hj => ?_⟩`
+- `NavierStokes/LocalizedWaveBounds.lean:421` — `_ ≤ (j.factorial : ℝ) * C * (B * s.growth n x ^ p) ^ j := hb`
+- `NavierStokes/LocalizedWaveBounds.lean:422` — `_ ≤ (m.factorial : ℝ) * C * (B * s.growth n x ^ p) ^ m := by`
+- `NavierStokes/LoopVariance.lean:282` — `(fun n : ℕ => iteratedDeriv n baseVariance 0 / (n.factorial : ℝ))).fslope.coeff 1 = 1 / 2`
+- `NavierStokes/ModulatedHistories.lean:494` — `refine ⟨(q.factorial : ℝ) * (C + D), by positivity, ?_⟩`
+- `NavierStokes/ModulatedHistories.lean:563` — `_ = (j.factorial : ℝ) * (C + D) * delta := by ring`
+- `NavierStokes/ModulatedHistories.lean:564` — `_ ≤ (q.factorial : ℝ) * (C + D) * delta :=`
+- `NavierStokes/NaturalExitParameterJets.lean:90` — `obtain ⟨M, hM, hm⟩ := TransitionRamp.finite_majorant (fun n => n.factorial * B * D ^ n) N`
+- `NavierStokes/ParametricEvenDescent.lean:372` — `((n.factorial : ℝ) / ((2 * n).factorial : ℝ)) •`
+- `NavierStokes/ParametricEvenDescent.lean:372` — `((n.factorial : ℝ) / ((2 * n).factorial : ℝ)) •`
+- `NavierStokes/ParametricHeatTail.lean:671` — `(n.factorial : ℝ) * (∑ i ∈ Finset.range (n + 1), nuConstant d square q i) * 2 ^ n`
+- `NavierStokes/ParametricKernelBounds.lean:263` — `refine ⟨(n.factorial : ℝ) * B * (1 + A) ^ n, M * n, by positivity, ?_⟩`
+- `NavierStokes/ParametricKernelBounds.lean:275` — `(n.factorial : ℝ) * B * ((1 + A) * (1 + t) ^ M) ^ n := hcomp`
+- `NavierStokes/ParametricKernelBounds.lean:276` — `_ = ((n.factorial : ℝ) * B * (1 + A) ^ n) * (1 + t) ^ (M * n) := by`
+- `NavierStokes/ParametricRadialExtension.lean:311` — `((2 : ℝ) ^ n * ((n.factorial : ℝ) / ((2 * n).factorial : ℝ))) •`
+- `NavierStokes/ParametricRadialExtension.lean:311` — `((2 : ℝ) ^ n * ((n.factorial : ℝ) / ((2 * n).factorial : ℝ))) •`
+- `NavierStokes/PhaseJetBounds.lean:295` — `refine ⟨(N.factorial : ℝ) * C * A ^ N, ?_, m * N, ?_⟩`
+- `NavierStokes/PhaseJetBounds.lean:296` — `· have hfac : (1 : ℝ) ≤ N.factorial := by exact_mod_cast Nat.factorial_pos N`
+- `NavierStokes/PhaseJetBounds.lean:307` — `_ ≤ (n.factorial : ℝ) * C * (A * D.scale i ^ m) ^ n := h`
+- `NavierStokes/PhaseJetBounds.lean:308` — `_ ≤ (N.factorial : ℝ) * C * (A * D.scale i ^ m) ^ N := by`
+- `NavierStokes/PhysicalClassBounds.lean:300` — `∀ j ≤ m, ‖iteratedFDeriv ℝ j (g ∘ φ) x‖ ≤ (m.factorial : ℝ) * A * B ^ m := by`
+- `NavierStokes/PhysicalClassBounds.lean:347` — `refine ⟨(m.factorial : ℝ) * A * B ^ m, by positivity, p + q * m, ?_⟩`
+- `NavierStokes/PhysicalClassBounds.lean:370` — `_ ≤ ChartScales.Q I.1.val.1 ^ σ * ((m.factorial : ℝ) *`
+- `NavierStokes/PhysicalCopyBounds.lean:365` — `refine ⟨(m.factorial : ℝ) * A * B ^ m, by positivity, p + q * m, ?_⟩`
+- `NavierStokes/PhysicalCopyBounds.lean:389` — `_ ≤ ChartScales.Q I.1.val.1 ^ σ * ((m.factorial : ℝ) *`
+- `NavierStokes/PhysicalGraphBounds.lean:526` — `refine ⟨(m.factorial : ℝ) * C ^ m, mul_pos (by positivity) (pow_pos (by linarith) _), ?_⟩`
+- `NavierStokes/PhysicalGraphBounds.lean:718` — `(m.factorial : ℝ) * M ^ m * B ^ m := by`
+- `NavierStokes/PhysicalGraphBounds.lean:729` — `have hfac : (k.factorial : ℝ) ≤ m.factorial := by`
+- `NavierStokes/PhysicalGraphBounds.lean:729` — `have hfac : (k.factorial : ℝ) ≤ m.factorial := by`
+- `NavierStokes/PhysicalGraphBounds.lean:751` — `refine ⟨C * (2 : ℝ) ^ m * m.factorial, by positivity, ?_⟩`
+- `NavierStokes/PhysicalGraphBounds.lean:768` — `have hb : 0 ≤ (2 : ℝ) ^ m * P * ((m.factorial : ℝ) * M ^ m * B ^ m) := by positivity`
+- `NavierStokes/PhysicalGraphBounds.lean:783` — `_ = C * 2 ^ m * (m.factorial : ℝ) * P * B ^ m * (1 + 2 * H) ^ m *`
+- `NavierStokes/PhysicalGraphBounds.lean:1000` — `∀ k ≤ m, ‖iteratedFDeriv ℝ k (g ∘ f) x‖ ≤ (m.factorial : ℝ) * B * D ^ m := by`
+- `NavierStokes/PhysicalGraphBounds.lean:1006` — `have hfac : (k.factorial : ℝ) ≤ m.factorial := by exact_mod_cast Nat.factorial_le hk`
+- `NavierStokes/PhysicalGraphBounds.lean:1006` — `have hfac : (k.factorial : ℝ) ≤ m.factorial := by exact_mod_cast Nat.factorial_le hk`
+- `NavierStokes/PhysicalGraphBounds.lean:1173` — `(m.factorial : ℝ) *`
+- `NavierStokes/PhysicalGraphBounds.lean:1227` — `let C0 := (m.factorial : ℝ) * (3 + (2 : ℝ) ^ (m + 1)) * P * M0 * B * D0 ^ m`
+- `NavierStokes/PhysicalGraphBounds.lean:1295` — `(m.factorial : ℝ) *`
+- `NavierStokes/PhysicalGraphBounds.lean:1310` — `_ ≤ (m.factorial : ℝ) *`
+- `NavierStokes/PhysicalGraphBounds.lean:1317` — `_ = ((m.factorial : ℝ) * (3 + (2 : ℝ) ^ (m + 1)) * P * M0 * B * D0 ^ m) *`
+- `NavierStokes/PhysicalMeanJetBounds.lean:149` — `let A' : ℝ := (m.factorial : ℝ) * A * B ^ m`
+- `NavierStokes/PhysicalMeanJetBounds.lean:192` — `_ ≤ ChartScales.Q n ^ (-degree) * ((m.factorial : ℝ) *`
+- `NavierStokes/PhysicalMeanJetBounds.lean:626` — `let A' : ℝ := (2 : ℝ) ^ m * ((m.factorial : ℝ) * A * B ^ m) * V`
+- `NavierStokes/PhysicalMeanJetBounds.lean:679` — `(by positivity : 0 ≤ (m.factorial : ℝ) *`
+- `NavierStokes/PhysicalMeanJetBounds.lean:683` — `_ ≤ ChartScales.Q n ^ (-degree) * ((2 : ℝ) ^ m * ((m.factorial : ℝ) *`
+- `NavierStokes/PhysicalResidualJetBounds.lean:41` — `(m.factorial : ℝ) * M ^ m * B ^ m := by`
+- `NavierStokes/PhysicalResidualJetBounds.lean:60` — `have hfac : (k.factorial : ℝ) ≤ m.factorial := by exact_mod_cast Nat.factorial_le hk`
+- `NavierStokes/PhysicalResidualJetBounds.lean:60` — `have hfac : (k.factorial : ℝ) ≤ m.factorial := by exact_mod_cast Nat.factorial_le hk`
+- `NavierStokes/PhysicalResidualJetBounds.lean:91` — `(2 : ℝ) ^ m * A * ((m.factorial : ℝ) * M ^ m * B ^ m) := by`
+- `NavierStokes/PhysicalResidualJetBounds.lean:287` — `let A' : ℝ := (2 : ℝ) ^ m * V * ((m.factorial : ℝ) * A * B ^ m)`
+- `NavierStokes/PhysicalResidualJetBounds.lean:338` — `(by positivity : 0 ≤ (m.factorial : ℝ) *`
+- `NavierStokes/PhysicalResidualJetBounds.lean:342` — `_ ≤ ChartScales.Q n ^ (-degree) * ((2 : ℝ) ^ m * V * ((m.factorial : ℝ) *`
+- `NavierStokes/PhysicalResidualJetBounds.lean:566` — `refine ⟨(2 : ℝ) ^ m * A * ((m.factorial : ℝ) * B ^ m), by positivity, p + q * m, ?_⟩`
+- `NavierStokes/PositiveAxisExistence.lean:486` — `((n.factorial : ℝ) / ((2 * n).factorial : ℝ)) •`
+- `NavierStokes/PositiveAxisExistence.lean:486` — `((n.factorial : ℝ) / ((2 * n).factorial : ℝ)) •`
+- `NavierStokes/PositiveAxisExistence.lean:855` — `((k.factorial : ℝ) / ((2 * k).factorial : ℝ)) •`
+- `NavierStokes/PositiveAxisExistence.lean:855` — `((k.factorial : ℝ) / ((2 * k).factorial : ℝ)) •`
+- `NavierStokes/PrimaryCopyBounds.lean:230` — `have hjA : (j.factorial : ℝ) * WeightedQuotients.coeffBound (1 / 2) j ≤ A :=`
+- `NavierStokes/PrimaryCopyBounds.lean:233` — `_ ≤ Real.sqrt (w i x) * ((j.factorial : ℝ) * WeightedQuotients.coeffBound (1 / 2) j) * B ^ (2 * j + 1) := h`
+- `NavierStokes/PrimaryCopyBounds.lean:957` — `refine ⟨(m.factorial : ℝ) * A * B ^ m, ?_, p + q * m, ?_⟩`
+- `NavierStokes/PrimaryCopyBounds.lean:958` — `· have hfac : (1 : ℝ) ≤ m.factorial := by exact_mod_cast Nat.factorial_pos m`
+- `NavierStokes/PrimaryCopyBounds.lean:974` — `_ ≤ (j.factorial : ℝ) * (A * V.growth i x ^ p * v i (χ i x)) *`
+- `NavierStokes/PrimaryCopyBounds.lean:976` — `_ ≤ (m.factorial : ℝ) * (A * V.growth i x ^ p * v i (χ i x)) *`
+- `NavierStokes/PrimaryMaterialDefect.lean:241` — `refine ⟨(N.factorial : ℝ) * A * (B + 1) ^ N, by positivity, m + k * N, ?_⟩`
+- `NavierStokes/PrimaryMaterialDefect.lean:267` — `_ ≤ (j.factorial : ℝ) * (A * s.growth n x ^ m) * ((B + 1) * s.growth n x ^ k) ^ j := hchain`
+- `NavierStokes/PrimaryMaterialDefect.lean:268` — `_ ≤ (N.factorial : ℝ) * (A * s.growth n x ^ m) * ((B + 1) * s.growth n x ^ k) ^ N := by`
+- `NavierStokes/PrimaryPulseBounds.lean:302` — `refine ⟨(N.factorial : ℝ) * A * B ^ N, ?_, m + k * N, ?_⟩`
+- `NavierStokes/PrimaryPulseBounds.lean:303` — `· have hfac : (1 : ℝ) ≤ N.factorial := by exact_mod_cast Nat.factorial_pos N`
+- `NavierStokes/PrimaryPulseBounds.lean:320` — `_ ≤ (j.factorial : ℝ) * (A * D'.scale i ^ m * w i (g i x)) *`
+- `NavierStokes/PrimaryPulseBounds.lean:322` — `_ ≤ (N.factorial : ℝ) * (A * D'.scale i ^ m * w i (g i x)) *`
+- `NavierStokes/RadialPullback.lean:655` — `refine ⟨(m.factorial : ℝ) * B ^ m, mul_nonneg (Nat.cast_nonneg _) (pow_nonneg (zero_le_one.trans hB) _), ?_⟩`
+- `NavierStokes/RadialPullback.lean:664` — `_ ≤ (j.factorial : ℝ) * C * B ^ j := h`
+- `NavierStokes/RadialPullback.lean:665` — `_ ≤ (m.factorial : ℝ) * C * B ^ m :=`
+- `NavierStokes/RadialPullback.lean:669` — `_ = ((m.factorial : ℝ) * B ^ m) * C := by ring`
+- `NavierStokes/ReferenceUniformJets.lean:370` — `obtain ⟨K, hK, hk⟩ := finite_majorant (fun n => n.factorial * Real.exp B * B ^ n) N`
+- `NavierStokes/ShapeTransition.lean:273` — `n.factorial * Real.exp (T / 10 + B) * B ^ n := by`
+- `NavierStokes/ShapeTransition.lean:317` — `(n.factorial * Real.exp (T / 10 + B) * B ^ n) / C := by`
+- `NavierStokes/ShapeTransition.lean:507` — `(K + (n.factorial * Real.exp (T / 10 + B) * B ^ n) / Real.sqrt (2 * Xi)) / C := by`
+- `NavierStokes/ShapeTransition.lean:535` — `((n.factorial * Real.exp (T / 10 + B) * B ^ n) / C) :=`
+- `NavierStokes/ShapeTransition.lean:1357` — `K + (n.factorial * Real.exp (T / 10 + B) * B ^ n) / Real.sqrt (2 * Xi)`
+- `NavierStokes/ShapeTransition.lean:1383` — `have hfact : (k.factorial : ℝ) ≤ n.factorial := by exact_mod_cast Nat.factorial_le hk`
+- `NavierStokes/ShapeTransition.lean:1383` — `have hfact : (k.factorial : ℝ) ≤ n.factorial := by exact_mod_cast Nat.factorial_le hk`
+- `NavierStokes/SharpCommonGraphJets.lean:20` — `let C := (m.factorial : ℝ)*G^m*coverBound Δ^m`
+- `NavierStokes/SharpCommonGraphJets.lean:54` — `_ ≤ (m.factorial : ℝ)*(A*coverBound Δ^m)*(G^m*ChartScales.Q n^(-(1+h)*(k:ℝ))) := by`
+- `NavierStokes/SharpCurrentModeJets.lean:37` — `let C := (2:ℝ)^m*(m.factorial:ℝ)*M^m*D^m*K*A`
+- `NavierStokes/SharpGeometricModeJets.lean:51` — `((2:ℝ)^m*(m.factorial:ℝ)*M^m*B^m)*A*D^m := by`
+- `NavierStokes/SharpGeometricModeJets.lean:76` — `(PhysicalGraphBounds.character c ∘ Φ') x‖ ≤ ((m.factorial:ℝ)*M^m*B^m)*D^i := by`
+- `NavierStokes/SharpGeometricModeJets.lean:81` — `_ ≤ (m.factorial:ℝ)*M^m*(B^m*D^i) := by gcongr`
+- `NavierStokes/SharpGraphBounds.lean:159` — `refine ⟨(m.factorial : ℝ) * C ^ m, mul_pos (by positivity) (pow_pos (by linarith) _), ?_⟩`
+- `NavierStokes/SharpMeanJetBounds.lean:91` — `let A' : ℝ := (m.factorial : ℝ) * A * B ^ m`
+- `NavierStokes/SharpMeanJetBounds.lean:134` — `_ ≤ ChartScales.Q n ^ (-degree) * ((m.factorial : ℝ) *`
+- `NavierStokes/SharpMeanJetBounds.lean:156` — `let A' : ℝ := (2 : ℝ) ^ m * ((m.factorial : ℝ) * A * B ^ m) * V`
+- `NavierStokes/SharpMeanJetBounds.lean:209` — `(by positivity : 0 ≤ (m.factorial : ℝ) *`
+- `NavierStokes/SharpMeanJetBounds.lean:213` — `_ ≤ ChartScales.Q n ^ (-degree) * ((2 : ℝ) ^ m * ((m.factorial : ℝ) *`
+- `NavierStokes/SharpPhaseJetAlgebra.lean:61` — `∀ k ≤ m, ‖iteratedFDeriv ℝ k (g ∘ f) x‖ ≤ (m.factorial : ℝ) * B * D ^ k := by`
+- `NavierStokes/SharpPhaseJetAlgebra.lean:67` — `have hfac : (k.factorial : ℝ) ≤ m.factorial := by exact_mod_cast Nat.factorial_le hkm`
+- `NavierStokes/SharpPhaseJetAlgebra.lean:67` — `have hfac : (k.factorial : ℝ) ≤ m.factorial := by exact_mod_cast Nat.factorial_le hkm`
+- `NavierStokes/SharpPhaseJetAlgebra.lean:78` — `∀ k ≤ m, ‖iteratedFDeriv ℝ k (g ∘ f) x‖ ≤ (m.factorial : ℝ) * B * D ^ k := by`
+- `NavierStokes/SharpPhaseJetAlgebra.lean:89` — `have hfac : (k.factorial : ℝ) ≤ m.factorial := by exact_mod_cast Nat.factorial_le hkm`
+- `NavierStokes/SharpPhaseJetAlgebra.lean:89` — `have hfac : (k.factorial : ℝ) ≤ m.factorial := by exact_mod_cast Nat.factorial_le hkm`
+- `NavierStokes/SharpPhysicalCarrier.lean:37` — `let C := (2:ℝ)^m*(m.factorial:ℝ)^2*A*(1+2*H)^m*(K+B)^m`
+- `NavierStokes/SharpPhysicalCarrier.lean:98` — `(show 0 ≤ (m.factorial:ℝ)*(A*ChartScales.Q n^g*ChartScales.S n^d) by positivity)`
+- `NavierStokes/SharpPhysicalCarrier.lean:99` — `(show 0 ≤ (m.factorial:ℝ)*M^m by positivity) hU hampj hcharj`
+- `NavierStokes/SharpPhysicalCarrier.lean:113` — `_ = (2:ℝ)^m*(m.factorial:ℝ)^2*A*(1+2*H)^m*(K+B)^m *`
+- `NavierStokes/SharpPhysicalPhase.lean:212` — `((|p|+|x0|)*K + |pz| + (2:ℝ)^m * V * ((|p|+|pz|)*(m.factorial:ℝ)*B)) *`
+- `NavierStokes/SharpPhysicalPhase.lean:228` — `((|p|+|pz|)*(m.factorial:ℝ)*B) * U ^ k := by`
+- `NavierStokes/SharpPhysicalPhase.lean:233` — `_ ≤ |p| * ((m.factorial:ℝ)*B*U^k) + |pz| * ((m.factorial:ℝ)*B*U^k) :=`
+- `NavierStokes/SharpPhysicalPhase.lean:233` — `_ ≤ |p| * ((m.factorial:ℝ)*B*U^k) + |pz| * ((m.factorial:ℝ)*B*U^k) :=`
+- `NavierStokes/SharpPhysicalPhase.lean:285` — `(show 0 ≤ V by linarith) (show 0 ≤ (|p|+|pz|)*(m.factorial:ℝ)*B by positivity) hUs`
+- `NavierStokes/SharpPhysicalPhase.lean:291` — `(show 0 ≤ (|p|+|pz|)*(m.factorial:ℝ)*B by positivity)) (pow_nonneg hUs _))`
+- `NavierStokes/SharpPhysicalPhase.lean:333` — `let C0 := 2*P*K+P+(2:ℝ)^m*V*(2*P*(m.factorial:ℝ)*B)+1`
+- `NavierStokes/SharpPhysicalPhase.lean:335` — `have ht : 0 ≤ 2*P*K+P+(2:ℝ)^m*V*(2*P*(m.factorial:ℝ)*B) := by positivity`
+- `NavierStokes/SharpPhysicalPhase.lean:352` — `((|p|+|pz|)*(m.factorial:ℝ)*(B*ChartScales.S n^d)) ≤ C0*ChartScales.S n^(d+1) := by`
+- `NavierStokes/SharpPhysicalPhase.lean:358` — `_ ≤ (2*P)*K+P+(2:ℝ)^m*(V*ChartScales.S n)*(2*P*(m.factorial:ℝ)*(B*ChartScales.S n^d)) := by`
+- `NavierStokes/SharpPhysicalPhase.lean:360` — `_ = (2*P*K+P)+((2:ℝ)^m*V*(2*P*(m.factorial:ℝ)*B))*ChartScales.S n^(d+1) := by`
+- `NavierStokes/SharpPhysicalPhase.lean:364` — `((2:ℝ)^m*V*(2*P*(m.factorial:ℝ)*B))*ChartScales.S n^(d+1) :=`
+- `NavierStokes/SignedCopyBounds.lean:36` — `‖iteratedFDeriv ℝ n (g ∘ f) x‖ ≤ n.factorial * C * B ^ n := by`
+- `NavierStokes/SignedCopyBounds.lean:141` — `refine ⟨m.factorial * B * (A + 1) ^ m, by positivity, p * m, ?_⟩`
+- `NavierStokes/SignedCopyBounds.lean:157` — `_ ≤ j.factorial * B * ((A + 1) * s.growth n x ^ p) ^ j := hh`
+- `NavierStokes/SignedCopyBounds.lean:158` — `_ ≤ m.factorial * B * ((A + 1) * s.growth n x ^ p) ^ m := by`
+- `NavierStokes/SignedCopyBounds.lean:201` — `have he : (j.factorial : ℝ) * (coeffBound p j * B ^ (j + 1)) * B ^ j =`
+- `NavierStokes/SignedCopyBounds.lean:202` — `(j.factorial * coeffBound p j) * B ^ (2 * j + 1) := by`
+- `NavierStokes/SignedStressPrimitive.lean:1122` — `let D : ℝ := (m.factorial : ℝ) * L ^ m`
+- `NavierStokes/SignedStressPrimitive.lean:1133` — `have hfac : (i.factorial : ℝ) ≤ m.factorial := by exact_mod_cast Nat.factorial_le hi`
+- `NavierStokes/SignedStressPrimitive.lean:1133` — `have hfac : (i.factorial : ℝ) ≤ m.factorial := by exact_mod_cast Nat.factorial_le hi`
+- `NavierStokes/SignedStressPrimitive.lean:1135` — `_ ≤ (m.factorial : ℝ) * B * L ^ m := by`
+- `NavierStokes/SlowBorelBase.lean:724` — `‖iteratedFDeriv ℝ n (F ∘ physicalChart h) p‖ ≤ n.factorial * C * D ^ n := by`
+- `NavierStokes/SlowBorelBase.lean:751` — `let C := (m.factorial : ℝ) * (1 / 2 : ℝ) ^ J * D ^ m`
+- `NavierStokes/SlowBorelBase.lean:926` — `((m - i).factorial : ℝ) * E * D ^ (m - i)`
+- `NavierStokes/SlowBorelBase.lean:987` — `_ = ((m.choose i : ℝ) * A i * ((m - i).factorial : ℝ) *`
+- `NavierStokes/SlowBorelBase.lean:1439` — `let B := (m.factorial : ℝ) * C * D ^ m`
+- `NavierStokes/SlowFirstOrderEdge.lean:304` — `refine ⟨(n.factorial : ℝ) * A * D ^ n, by positivity, N, ?_⟩`
+- `NavierStokes/SlowRecursion.lean:1198` — `((k.factorial : ℝ) / ((2 * k).factorial : ℝ)) •`
+- `NavierStokes/SlowRecursion.lean:1198` — `((k.factorial : ℝ) / ((2 * k).factorial : ℝ)) •`
+- `NavierStokes/SpatialBorelExtension.lean:437` — `(z.1 ^ j / (j.factorial : ℝ))) • a j z.2 := by`
+- `NavierStokes/TransitionRamp.lean:1610` — `|iteratedDeriv n (g ∘ f) x| ≤ n.factorial * B * D ^ n := by`
+- `NavierStokes/TransitionRamp.lean:1672` — `obtain ⟨M, hM, hm⟩ := finite_majorant (fun n => n.factorial * B * D ^ n) N`
+- `NavierStokes/TransitionRamp.lean:1774` — `|iteratedDeriv n (fun ξ => Real.exp (g ξ)) η| ≤ n.factorial * Real.exp B * B ^ n := by`
+- `NavierStokes/TransitionRamp.lean:1788` — `|iteratedDeriv n (fun ξ => Real.exp (g ξ)) η| ≤ n.factorial * Real.exp B * B ^ n := by`
+- `NavierStokes/TransitionRamp.lean:1983` — `(n.factorial * Real.exp (B + 1) * (B + 1) ^ n) / C := by`
+- `NavierStokes/TransitionRamp.lean:2084` — `(n.factorial * Real.exp (B + 1) * (B + 1) ^ n) / C := by`
+- `NavierStokes/TransitionRamp.lean:2197` — `obtain ⟨K, hK, hk⟩ := finite_majorant (fun n => n.factorial * Real.exp (L + 1) * (L + 1) ^ n) N`
+- `NavierStokes/VolterraAnalyticBounds.lean:189` — `‖F r z i‖ ≤ B * r ^ k / (k.factorial : ℝ)`
+- `NavierStokes/VolterraAnalyticBounds.lean:216` — `_ ≤ ∑ j, ‖A r z i j‖ * (B * r ^ k / (k.factorial : ℝ)) := by`
+- `NavierStokes/VolterraAnalyticBounds.lean:221` — `_ = (∑ j, ‖A r z i j‖) * (B * r ^ k / (k.factorial : ℝ)) := by`
+- `NavierStokes/VolterraAnalyticBounds.lean:223` — `_ ≤ M * (B * r ^ k / (k.factorial : ℝ)) :=`
+- `NavierStokes/VolterraAnalyticBounds.lean:234` — `let C : ℝ := B * r ^ k / (k.factorial : ℝ)`
+- `NavierStokes/VolterraAnalyticBounds.lean:245` — `_ ≤ B * (t * r) ^ k / (k.factorial : ℝ) := by`
+- `NavierStokes/VolterraAnalyticBounds.lean:263` — `_ = B * r ^ (k + 1) / ((k + 1).factorial : ℝ) := by`
+- `NavierStokes/VolterraAnalyticBounds.lean:377` — `a ^ k * (b * (max 1 (halfLength k) : ℕ)) ^ halfLength k / (k.factorial : ℝ)`
+- `NavierStokes/VolterraAnalyticBounds.lean:430` — `(w.length.factorial : ℝ) := hwbound`
+- `NavierStokes/VolterraAnalyticBounds.lean:432` — `(w.length.factorial : ℝ) := by gcongr`
+- `NavierStokes/VolterraAnalyticBounds.lean:441` — `(max 1 (halfLength k)) ^ halfLength k * (k / 2).factorial ≤ k.factorial := by`
+- `NavierStokes/VolterraAnalyticBounds.lean:441` — `(max 1 (halfLength k)) ^ halfLength k * (k / 2).factorial ≤ k.factorial := by`
+- `NavierStokes/VolterraAnalyticBounds.lean:447` — `_ = (k / 2).factorial * (max 1 (halfLength k)) ^ halfLength k := by ac_rfl`
+- `NavierStokes/VolterraAnalyticBounds.lean:448` — `_ ≤ (k / 2).factorial * (k / 2 + 1).ascFactorial (halfLength k) :=`
+- `NavierStokes/VolterraAnalyticBounds.lean:448` — `_ ≤ (k / 2).factorial * (k / 2 + 1).ascFactorial (halfLength k) :=`
+- `NavierStokes/VolterraAnalyticBounds.lean:454` — `((max 1 (halfLength k) : ℕ) : ℝ) ^ halfLength k / (k.factorial : ℝ) ≤`
+- `NavierStokes/VolterraAnalyticBounds.lean:455` — `1 / ((k / 2).factorial : ℝ) := by`
+- `NavierStokes/VolterraAnalyticBounds.lean:459` — `((k / 2).factorial : ℝ) ≤ (k.factorial : ℝ) by`
+- `NavierStokes/VolterraAnalyticBounds.lean:459` — `((k / 2).factorial : ℝ) ≤ (k.factorial : ℝ) by`
+- `NavierStokes/VolterraAnalyticBounds.lean:464` — `(a * b) * ((a ^ 2 * b) ^ (k / 2) / ((k / 2).factorial : ℝ)) := by`
+- `NavierStokes/VolterraAnalyticBounds.lean:479` — `(k.factorial : ℝ) =`
+- `NavierStokes/VolterraAnalyticBounds.lean:481` — `(((max 1 (halfLength k) : ℕ) : ℝ) ^ halfLength k / (k.factorial : ℝ)) := by ring`
+- `NavierStokes/VolterraAnalyticBounds.lean:483` — `(1 / ((k / 2).factorial : ℝ)) :=`
+- `NavierStokes/VolterraAnalyticBounds.lean:496` — `Summable (fun k : ℕ => C * (x ^ (k / 2) / ((k / 2).factorial : ℝ))) := by`
+- `NavierStokes/VolterraAnalyticBounds.lean:498` — `have hprod : Summable (fun q : Fin 2 × ℕ => C * (x ^ q.2 / (q.2.factorial : ℝ))) := by`
+- `NavierStokes/VolterraAnalyticBounds.lean:499` — `have hn : Summable (fun q : Fin 2 × ℕ => ‖C * (x ^ q.2 / (q.2.factorial : ℝ))‖) := by`
+- `NavierStokes/VolterraAnalyticBounds.lean:501` — `‖C * (x ^ q.2 / (q.2.factorial : ℝ))‖) (fun _ => norm_nonneg _)).mpr`
+- `NavierStokes/WeightedQuotients.lean:107` — `‖iteratedFDeriv ℝ n (g ∘ f) x‖ ≤ n.factorial * C * D ^ n := by`
+- `NavierStokes/WeightedQuotients.lean:126` — `n.factorial * coeffBound p n * B ^ (2 * n + 1) := by`
+- `NavierStokes/WeightedQuotients.lean:206` — `w ^ p * (n.factorial * coeffBound p n) * B ^ (2 * n + 1) := by`
+- `NavierStokes/WeightedQuotients.lean:222` — `Real.sqrt w * (n.factorial * coeffBound (1 / 2) n) * B ^ (2 * n + 1) := by`
+- `NavierStokes/WeightedQuotients.lean:232` — `∑ k ∈ Finset.range (n + 1), k.factorial * coeffBound p k`
+- `NavierStokes/WeightedQuotients.lean:240` — `i.factorial * coeffBound p i ≤ orderBound p n := by`
+- `NavierStokes/WeightedQuotients.lean:241` — `exact Finset.single_le_sum (f := fun k => (k.factorial : ℝ) * coeffBound p k)`
+- `NavierStokes/WeightedQuotients.lean:503` — `have hc : 0 ≤ (n.factorial : ℝ) * coeffBound (1 / 2) n :=`
+- `Euler/AllOrderDriftPointwiseBounds.lean:31` — `(sobolevEmbeddingConstant P 3*B.correctionSize P)*(B.reducedRadius P)⁻¹^n*(n.factorial : ℝ)^2 := by`
+- `Euler/AllOrderDriftPointwiseBounds.lean:40` — `(B.reducedRadius P)⁻¹^n*(n.factorial : ℝ)^2 := by`
+- `Euler/AllOrderDriftPointwiseBounds.lean:49` — `(B.reducedRadius P)⁻¹^n*(n.factorial : ℝ)^2 := by`
+- `Euler/BaseEulerFlowL2.lean:106` — `I.T*L.C*L.velocityRadius^n*(n.factorial : ℝ)^2 := by`
+- `Euler/BaseEulerFlowL2.lean:115` — `L.C*L.velocityRadius^n*(n.factorial : ℝ)^2 := by`
+- `Euler/BaseEulerFlowL2.lean:125` — `volume f hc.aestronglyMeasurable (L.C*L.velocityRadius^n*(n.factorial : ℝ)^2)`
+- `Euler/BaseEulerFlowL2.lean:136` — `(sq_nonneg (n.factorial : ℝ)))`
+- `Euler/BaseEulerParent.lean:34` — `bound : ∀ n, ‖field.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2`
+- `Euler/BaseEulerParent.lean:164` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2) : Input where`
+- `Euler/BaseEulerUniform.lean:74` — `(sobolevCoefficientRadius (Fin 3) 1024)^n*(n.factorial : ℝ)^2 :=`
+- `Euler/BoundedFieldGramGevrey.lean:109` — `(3*C^2)*(Rc^(j+1)*((j+1).factorial : ℝ)^2) := by`
+- `Euler/BoundedInverseGevrey.lean:33` — `C*(Rc^(j+1)*((j+1).factorial : ℝ)^2))`
+- `Euler/BoundedInverseGevrey.lean:42` — `((j+1).factorial : ℝ)^2*‖iteratedFDeriv ℝ (k-(j+1)) u x‖`
+- `Euler/ChildParticleFieldBounds.lean:86` — `‖iteratedFDeriv ℝ n G.inner x‖ ≤ (1+G.amp)*(1+G.rad)^n*(n.factorial : ℝ)^2 :=`
+- `Euler/ChildParticleSourceBound.lean:71` — `(k^(10*(q+2)))^(n+1)*(n.factorial : ℝ)^2 :=`
+- `Euler/CoefficientCostMonotone.lean:33` — `(2 : Polynomial ℝ)^q*C*∑ k ∈ range (q+1), (16*R)^k*Polynomial.C ((k.factorial : ℝ)^2)`
+- `Euler/CoefficientPathWeightedBounds.lean:53` — `R^n*(n.factorial : ℝ)^2 := by`
+- `Euler/CompactSmoothL2Bounds.lean:25` — `(A.integrable n).aestronglyMeasurable K hK (C*R^n*(n.factorial : ℝ)^2)`
+- `Euler/ContinuousGramGevrey.lean:110` — `(3*C^2)*(Rc^(j+1)*((j+1).factorial : ℝ)^2) := by`
+- `Euler/ContinuousGramGevrey.lean:139` — `(3*C^2)*(Rc^(j+1)*((j+1).factorial : ℝ)^2) := by`
+- `Euler/CorrectionEnergyBound.lean:43` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period (D.metric.jet τ) 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/CorrectionEnergyBound.lean:91` — `(hcoeff : ∀ t l, 1 ≤ l → l ≤ N → coefficientBlock period (D.metric.jet t) 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/CorrectionEnergyData.lean:64` — `metric_derivatives : ∀ t l, 1 ≤ l → l ≤ N → coefficientBlock period (D.metric.jet t) 6 l ≤ Rc^l*(l.factorial : ℝ)^2`
+- `Euler/CorrectionSmoothTimeField.lean:46` — `(n.factorial : ℝ)^2 :=`
+- `Euler/CorrectionSmoothTimeField.lean:59` — `(n.factorial : ℝ)^2 :=`
+- `Euler/CylinderGraphGevrey.lean:43` — `(hb : ∀ n z, ‖iteratedFDeriv ℝ n f z‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/CylinderGraphGevrey.lean:46` — `B*(R*graphFactor k m)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/CylinderGraphGevrey.lean:60` — `C*R^n*(n.factorial : ℝ)^2) (n : ℕ) :`
+- `Euler/CylinderGraphGevrey.lean:63` — `(Real.sqrt (2/P+2*P)*C*(1+R))*(4*R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/CylinderGraphGevrey.lean:68` — `θ hθ (C*R^n*(n.factorial : ℝ)^2) (C*R^(n+1)*((n+1).factorial : ℝ)^2)`
+- `Euler/CylinderGraphGevrey.lean:68` — `θ hθ (C*R^n*(n.factorial : ℝ)^2) (C*R^(n+1)*((n+1).factorial : ℝ)^2)`
+- `Euler/CylinderGraphGevrey.lean:75` — `have hfirst : C*R^n*(n.factorial : ℝ)^2 ≤ C*majorant (4*R) 0 n := by`
+- `Euler/CylinderGraphGevrey.lean:78` — `have hsecond : C*R^(n+1)*((n+1).factorial : ℝ)^2 ≤ C*R*majorant (4*R) 0 n := by`
+- `Euler/CylinderGraphGevrey.lean:89` — `C*R^n*(n.factorial : ℝ)^2) (n : ℕ) :`
+- `Euler/CylinderGraphGevrey.lean:92` — `(Real.sqrt (2/P+2*P)*C*(1+R))*(4*R*graphFactor k m)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/DriftCorrectionForcing.lean:29` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N+1 → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/DriftCorrectionForcing.lean:35` — `have hcN : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2 :=`
+- `Euler/DriftCorrectionForcing.lean:49` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/DriftCorrectionForcing.lean:98` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/DriftCorrectionForcing.lean:130` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/DriftMetricForcing.lean:28` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period KG 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/DriftNonlinearEstimate.lean:54` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period KG 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/DriftPreservingTransport.lean:59` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/EulerProof.lean:173` — `(n.choose k : ℝ) * ((k + d₁).factorial : ℝ) ^ 2 *`
+- `Euler/EulerProof.lean:174` — `((n - k + d₂).factorial : ℝ) ^ 2`
+- `Euler/EulerProof.lean:175` — `≤ ((n + d₁ + d₂).factorial : ℝ) ^ 2 / (n.choose k : ℝ) := by`
+- `Euler/EulerProof.lean:179` — `((k + d₁).factorial : ℝ) * ((n - k + d₂).factorial : ℝ) =`
+- `Euler/EulerProof.lean:179` — `((k + d₁).factorial : ℝ) * ((n - k + d₂).factorial : ℝ) =`
+- `Euler/EulerProof.lean:180` — `((n + d₁ + d₂).factorial : ℝ) := by`
+- `Euler/EulerProof.lean:187` — `_ = ((n + d₁ + d₂).factorial : ℝ) ^ 2 *`
+- `Euler/EulerProof.lean:191` — `_ ≤ ((n + d₁ + d₂).factorial : ℝ) ^ 2 * (1 / (n.choose k : ℝ)) :=`
+- `Euler/EulerProof.lean:197` — `R ^ (n + d) * ((n + d).factorial : ℝ) ^ 2`
+- `Euler/EulerProof.lean:218` — `((n.choose k : ℝ) * ((k + d₁).factorial : ℝ) ^ 2 *`
+- `Euler/EulerProof.lean:219` — `((n - k + d₂).factorial : ℝ) ^ 2) := by ring`
+- `Euler/EulerProof.lean:221` — `((n.choose k : ℝ) * ((k + d₁).factorial : ℝ) ^ 2 *`
+- `Euler/EulerProof.lean:222` — `((n - k + d₂).factorial : ℝ) ^ 2) := by rw [hpow]`
+- `Euler/EulerProof.lean:257` — `have hf : (((n + d).factorial : ℕ) : ℝ) ≤ ((n + (d + 1)).factorial : ℝ) := by`
+- `Euler/EulerProof.lean:257` — `have hf : (((n + d).factorial : ℕ) : ℝ) ≤ ((n + (d + 1)).factorial : ℝ) := by`
+- `Euler/EulerProof.lean:259` — `have hs : ((n + d).factorial : ℝ) ^ 2 ≤ ((n + (d + 1)).factorial : ℝ) ^ 2 := by`
+- `Euler/EulerProof.lean:259` — `have hs : ((n + d).factorial : ℝ) ^ 2 ≤ ((n + (d + 1)).factorial : ℝ) ^ 2 := by`
+- `Euler/EulerProof.lean:260` — `nlinarith [show (0 : ℝ) ≤ (n + d).factorial by positivity]`
+- `Euler/EulerProof.lean:263` — `_ = R ^ (n + (d + 1)) * ((n + d).factorial : ℝ) ^ 2 := by`
+- `Euler/EulerProof.lean:288` — `(n.choose k : ℝ) * Rc ^ k * (k.factorial : ℝ) ^ 2 * majorant R d (n - k)`
+- `Euler/EulerProof.lean:295` — `_ ≤ (n.choose k : ℝ) * (q * R) ^ k * (k.factorial : ℝ) ^ 2 *`
+- `Euler/EulerProof.lean:314` — `(n.choose (k + 1) : ℝ) * Rc ^ (k + 1) * ((k + 1).factorial : ℝ) ^ 2 *`
+- `Euler/EulerProof.lean:337` — `(n.choose (k + 1) : ℝ) * Rc ^ (k + 1) * ((k + 1).factorial : ℝ) ^ 2 *`
+- `Euler/EulerProof.lean:347` — `((k + 1).factorial : ℝ) ^ 2 := by positivity`
+- `Euler/EulerProof.lean:357` — `(n.choose (k + 1) : ℝ) * Rc ^ (k + 1) * ((k + 1).factorial : ℝ) ^ 2 *`
+- `Euler/EulerProof.lean:370` — `(n.choose (k + 1) : ℝ) * (P ^ c) ^ (k + 1) * ((k + 1).factorial : ℝ) ^ 2 *`
+- `Euler/EulerProof.lean:497` — `ρ ^ n / (n.factorial : ℝ) ^ 2`
+- `Euler/EulerProof.lean:503` — `theorem factorial_cast_ne_zero (n : ℕ) : (n.factorial : ℝ) ≠ 0 := by`
+- `Euler/EulerProof.lean:5144` — `(j.choose (l + 1) : ℝ) * Rc ^ (l + 1) * ((l + 1).factorial : ℝ) ^ 2 *`
+- `Euler/EulerProof.lean:5155` — `(j.choose (l + 1) : ℝ) * Rc ^ (l + 1) * ((l + 1).factorial : ℝ) ^ 2 *`
+- `Euler/EulerProof.lean:11095` — `t ^ n * Real.exp (-t) ≤ n.factorial := by`
+- `Euler/EulerProof.lean:11096` — `have hf : 0 < (n.factorial : ℝ) := by positivity`
+- `Euler/EulerProof.lean:11099` — `t ^ n * Real.exp (-t) ≤ (Real.exp t * n.factorial) * Real.exp (-t) :=`
+- `Euler/EulerProof.lean:11101` — `_ = n.factorial := by rw [Real.exp_neg]; field_simp`
+- `Euler/EulerProof.lean:11104` — `‖iteratedDeriv n complexFlat (x : ℂ)‖ ≤ (16 : ℝ) ^ n * (n.factorial : ℝ) ^ 2 := by`
+- `Euler/EulerProof.lean:11122` — `have he : (n.factorial : ℝ) * Real.exp (-t) / (x / 2) ^ n =`
+- `Euler/EulerProof.lean:11123` — `(16 : ℝ) ^ n * n.factorial * (t ^ n * Real.exp (-t)) := by`
+- `Euler/EulerProof.lean:11129` — `n.factorial * Real.exp (-t) / (x / 2) ^ n := hc`
+- `Euler/EulerProof.lean:11130` — `_ = (16 : ℝ) ^ n * n.factorial * (t ^ n * Real.exp (-t)) := he`
+- `Euler/EulerProof.lean:11131` — `_ ≤ (16 : ℝ) ^ n * n.factorial * n.factorial :=`
+- `Euler/EulerProof.lean:11131` — `_ ≤ (16 : ℝ) ^ n * n.factorial * n.factorial :=`
+- `Euler/EulerProof.lean:11133` — `_ = (16 : ℝ) ^ n * (n.factorial : ℝ) ^ 2 := by ring`
+- `Euler/EulerProof.lean:11169` — `|iteratedDeriv n expNegInvGlue x| ≤ (16 : ℝ) ^ n * (n.factorial : ℝ) ^ 2 := by`
+- `Euler/EulerProof.lean:11219` — `|iteratedDeriv n rawBump x| ≤ 3 * (16 : ℝ) ^ n * (n.factorial : ℝ) ^ 2 := by`
+- `Euler/EulerProof.lean:11310` — `(1 + 3 / bumpMass) * (16 : ℝ) ^ n * (n.factorial : ℝ) ^ 2 := by`
+- `Euler/EulerProof.lean:11327` — `have hf : (n.factorial : ℝ) ^ 2 ≤ ((n + 1).factorial : ℝ) ^ 2 := by`
+- `Euler/EulerProof.lean:11327` — `have hf : (n.factorial : ℝ) ^ 2 ≤ ((n + 1).factorial : ℝ) ^ 2 := by`
+- `Euler/EulerProof.lean:11332` — `_ ≤ (3 * 16 ^ n * (n.factorial : ℝ) ^ 2) * bumpMass⁻¹ := hb`
+- `Euler/EulerProof.lean:11333` — `_ = (3 * bumpMass⁻¹) * 16 ^ n * (n.factorial : ℝ) ^ 2 := by ring`
+- `Euler/EulerProof.lean:11334` — `_ ≤ (1 + 3 / bumpMass) * 16 ^ (n + 1) * ((n + 1).factorial : ℝ) ^ 2 := by`
+- `Euler/EulerProof.lean:11502` — `(mul_nonneg (pow_nonneg hR n) (mul_nonneg hR (sq_nonneg (n.factorial : ℝ))))`
+- `Euler/EulerProof.lean:11864` — `have hf : (1 : ℝ) ≤ ((n + 1).factorial : ℝ) ^ 2 := by`
+- `Euler/EulerProof.lean:11865` — `have hh : (1 : ℝ) ≤ (n + 1).factorial := by exact_mod_cast Nat.factorial_pos (n + 1)`
+- `Euler/EulerProof.lean:11936` — `have hf : (1 : ℝ) ≤ (k.factorial : ℝ) ^ 2 := by`
+- `Euler/EulerProof.lean:11937` — `have hh : (1 : ℝ) ≤ k.factorial := by exact_mod_cast Nat.factorial_pos k`
 - `Euler/EulerProof.lean:12154` — `norm_num only [Nat.factorial, Nat.cast_ofNat] at h`
+- `Euler/EulerProof.lean:12398` — `have he : ((n : ℝ) * (ρ t) ^ (n - 1) * ρ') / (n.factorial : ℝ) ^ 2 =`
+- `Euler/EulerProof.lean:12405` — `exact ((hρ.pow n).div_const ((n.factorial : ℝ) ^ 2)).congr_deriv he`
+- `Euler/EulerProof.lean:12902` — `(Rc ^ l * (l.factorial : ℝ) ^ 2) * Z ≤`
+- `Euler/EulerProof.lean:12904` — `have h := shifted_source_term ρ hρ j l (Rc ^ l * (l.factorial : ℝ) ^ 2) Z`
+- `Euler/EulerProof.lean:12906` — `have hw : weight ρ l * (Rc ^ l * (l.factorial : ℝ) ^ 2) = (ρ * Rc) ^ l := by`
+- `Euler/EulerProof.lean:12917` — `(hA : ∀ l, 1 ≤ l → l ≤ N → A l ≤ Rc ^ l * (l.factorial : ℝ) ^ 2)`
+- `Euler/FieldTowerGraphGevrey.lean:72` — `(‖coordinateEquiv.symm.toContinuousLinearMap‖*ρ⁻¹)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/FieldTowerJetLp.lean:58` — `C * (‖coordinateEquiv.symm.toContinuousLinearMap‖*ρ⁻¹)^n * (n.factorial : ℝ)^2 := by`
+- `Euler/FieldTowerPointwiseGevrey.lean:86` — `(sobolevEmbeddingConstant P 3*C)*(ρ⁻¹)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/FieldTowerPointwiseGevrey.lean:100` — `(sobolevEmbeddingConstant P 3*C)*(ρ⁻¹)^n*(n.factorial : ℝ)^2 :=`
+- `Euler/FieldTowerSmoothTimeField.lean:139` — `(‖coordinateEquiv.symm.toContinuousLinearMap‖*ρ⁻¹)^n * (n.factorial : ℝ)^2 := by`
+- `Euler/FieldTowerSmoothTimeField.lean:149` — `((sobolevEmbeddingConstant P 3*C)*(ρ⁻¹)^n*(n.factorial : ℝ)^2) :=`
+- `Euler/FieldTowerVolumeSobolev.lean:25` — `((n.factorial : ℝ)*D^n)*∑ i : Fin (n+1), ‖u i.val t‖ := by`
+- `Euler/FieldTowerVolumeSobolev.lean:37` — `‖V‖ ≤ ((n.factorial : ℝ)*D^n)*∑ i : Fin (n+1),`
+- `Euler/FieldTowerVolumeSobolev.lean:84` — `((n.factorial : ℝ)*D^n)*∑ i : Fin (n+1),`
+- `Euler/GevreyCompactProduct.lean:29` — `have hf : (1 : ℝ) ≤ n.factorial := by exact_mod_cast Nat.succ_le_of_lt (Nat.factorial_pos n)`
+- `Euler/GevreyCompactProduct.lean:31` — `one_le_mul_of_one_le_of_one_le (one_le_pow₀ hR) (by nlinarith : (1 : ℝ) ≤ (n.factorial : ℝ)^2)`
+- `Euler/GevreyComposition.lean:26` — `(A * S^c.length * (c.length.factorial : ℝ)^2) *`
+- `Euler/GevreyComposition.lean:27` — `(∏ i, B * R^(c.partSize i) * ((c.partSize i).factorial : ℝ)^2) =`
+- `Euler/GevreyComposition.lean:40` — `(hq : ∀ j ≤ n, ‖q j‖ ≤ A * S^j * (j.factorial : ℝ)^2)`
+- `Euler/GevreyComposition.lean:41` — `(hp : ∀ j, 0 < j → j ≤ n → ‖p j‖ ≤ B * R^j * (j.factorial : ℝ)^2) :`
+- `Euler/GevreyComposition.lean:42` — `‖q.taylorComp p n‖ ≤ A * (R*(B*S+2))^n * (n.factorial : ℝ)^2 := by`
+- `Euler/GevreyComposition.lean:48` — `_ ≤ (A * S^c.length * (c.length.factorial : ℝ)^2) *`
+- `Euler/GevreyComposition.lean:49` — `(∏ i, B * R^(c.partSize i) * ((c.partSize i).factorial : ℝ)^2) := by`
+- `Euler/GevreyComposition.lean:66` — `_ ≤ A * R^n * ((B*S+2)^n * (n.factorial : ℝ)^2) := by`
+- `Euler/GevreyComposition.lean:78` — `‖iteratedFDeriv ℝ j g (f x)‖ ≤ A * S^j * (j.factorial : ℝ)^2)`
+- `Euler/GevreyComposition.lean:80` — `‖iteratedFDeriv ℝ j f x‖ ≤ B * R^j * (j.factorial : ℝ)^2) :`
+- `Euler/GevreyComposition.lean:82` — `A * (R*(B*S+2))^n * (n.factorial : ℝ)^2 := by`
+- `Euler/GevreyComposition.lean:92` — `(hgjet : ∀ j y, ‖iteratedFDeriv ℝ j g y‖ ≤ A * S^j * (j.factorial : ℝ)^2)`
+- `Euler/GevreyComposition.lean:94` — `‖iteratedFDeriv ℝ j f x‖ ≤ B * R^j * (j.factorial : ℝ)^2)`
+- `Euler/GevreyComposition.lean:97` — `A * (R*(B*S+2))^n * (n.factorial : ℝ)^2 := by`
+- `Euler/GevreyCompositionLp.lean:23` — `∏ i, B*R^(c.partSize i)*((c.partSize i).factorial : ℝ)^2`
+- `Euler/GevreyCompositionLp.lean:34` — `‖iteratedFDeriv ℝ j f x‖ ≤ B*R^j*(j.factorial : ℝ)^2) :`
+- `Euler/GevreyCompositionLp.lean:65` — `(eLpNorm (iteratedFDeriv ℝ j g) 2 μ).toReal ≤ A*S^j*(j.factorial : ℝ)^2)`
+- `Euler/GevreyCompositionLp.lean:67` — `‖iteratedFDeriv ℝ j f x‖ ≤ B*R^j*(j.factorial : ℝ)^2) :`
+- `Euler/GevreyCompositionLp.lean:70` — `A*(R*(B*S+2))^n*(n.factorial : ℝ)^2 := by`
+- `Euler/GevreyCompositionLp.lean:117` — `(A*S^c.length*(c.length.factorial : ℝ)^2) := by`
+- `Euler/GevreyCompositionLp.lean:126` — `_ ≤ A*R^n*((B*S+2)^n*(n.factorial : ℝ)^2) :=`
+- `Euler/GevreyCompositionPartitions.lean:45` — `∏ i, ((c.partSize i).factorial : ℝ)`
+- `Euler/GevreyCompositionPartitions.lean:48` — `x^c.length * ((c.length.factorial : ℝ) * factorialProduct c)^2`
 - `Euler/GevreyCompositionPartitions.lean:61` — `(Nat.factorial (Fin.cons (α := fun _ => ℕ) 1 c.partSize i) : ℝ)) =`
+- `Euler/GevreyCompositionPartitions.lean:62` — `∏ i : Fin c.length, ((c.partSize i).factorial : ℝ)`
+- `Euler/GevreyCompositionPartitions.lean:70` — `((Function.update c.partSize i (c.partSize i+1) j).factorial : ℝ)) =`
+- `Euler/GevreyCompositionPartitions.lean:71` — `((c.partSize i : ℝ) + 1) * ∏ j : Fin c.length, ((c.partSize j).factorial : ℝ)`
+- `Euler/GevreyCompositionPartitions.lean:73` — `((Function.update c.partSize i (c.partSize i+1) j).factorial : ℝ)) =`
+- `Euler/GevreyCompositionPartitions.lean:75` — `((c.partSize j).factorial : ℝ) := by`
+- `Euler/GevreyCompositionPartitions.lean:129` — `partitionSum n x ≤ (x+2)^n * (n.factorial : ℝ)^2 := by`
+- `Euler/GevreyCompositionPartitions.lean:138` — `_ ≤ ((n : ℝ) + 1)^2 * (x+2) * ((x+2)^n * (n.factorial : ℝ)^2) := by`
+- `Euler/GevreyContinuationNorm.lean:17` — `have hf : (n.factorial : ℝ) ≤ (N.factorial : ℝ) := by exact_mod_cast Nat.factorial_le hn`
+- `Euler/GevreyContinuationNorm.lean:17` — `have hf : (n.factorial : ℝ) ≤ (N.factorial : ℝ) := by exact_mod_cast Nat.factorial_le hn`
+- `Euler/GevreyContinuationNorm.lean:18` — `have hsq : (n.factorial : ℝ)^2 ≤ (N.factorial : ℝ)^2 := by`
+- `Euler/GevreyContinuationNorm.lean:18` — `have hsq : (n.factorial : ℝ)^2 ≤ (N.factorial : ℝ)^2 := by`
+- `Euler/GevreyContinuationNorm.lean:19` — `nlinarith [show (0 : ℝ) ≤ (n.factorial : ℝ) from Nat.cast_nonneg _]`
+- `Euler/GevreyCorrectionBound.lean:52` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyCorrectionForcing.lean:84` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyCorrectionSplit.lean:92` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period KG 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyFixedShift.lean:30` — `majorant R 1 n = (R*(R^n*(n.factorial : ℝ)^2))*((n : ℝ)+1)^2 := by`
+- `Euler/GevreyFixedShift.lean:33` — `_ ≤ (R*(R^n*(n.factorial : ℝ)^2))*(4 : ℝ)^n :=`
+- `Euler/GevreyFlowFinite.lean:36` — `‖iteratedFDeriv ℝ n f x‖/(n.factorial : ℝ)^2*z^n ≤ derivativeSum f N z x := by`
+- `Euler/GevreyFlowFinite.lean:40` — `(div_nonneg (norm_nonneg (iteratedFDeriv ℝ j f x)) (sq_nonneg (j.factorial : ℝ)))`
+- `Euler/GevreyFlowFinite.lean:73` — `‖iteratedFDeriv ℝ n (b t) y‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/GevreyFlowFinite.lean:124` — `‖iteratedFDeriv ℝ n f x‖ ≤ A*(4*R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/GevreyFlowFinite.lean:130` — `exact (div_le_iff₀ (by positivity : 0 < (n.factorial : ℝ)^2)).mp hm`
+- `Euler/GevreyFlowFinite.lean:159` — `‖iteratedFDeriv ℝ n (b t) y‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/GevreyFlowFinite.lean:182` — `‖iteratedFDeriv ℝ n (b t) y‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/GevreyFlowFinite.lean:189` — `‖iteratedFDeriv ℝ n (ψ t) x‖ ≤ B*t*(4*R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/GevreyFlowLpIntegration.lean:33` — `(eLpNorm (fun x => Q t x j) 2 μ).toReal ≤ A*S^j*(j.factorial : ℝ)^2)`
+- `Euler/GevreyFlowLpIntegration.lean:35` — `‖P t x j‖ ≤ B*R^j*(j.factorial : ℝ)^2) :`
+- `Euler/GevreyFlowLpIntegration.lean:38` — `T*A*(R*(B*S+2))^n*(n.factorial : ℝ)^2 := by`
+- `Euler/GevreyFlowLpIntegration.lean:39` — `let C := A*(R*(B*S+2))^n*(n.factorial : ℝ)^2`
+- `Euler/GevreyGeneratingAlgebra.lean:29` — `(c.length.factorial : ℝ) * factorialProduct c ≤ n.factorial := by`
+- `Euler/GevreyGeneratingAlgebra.lean:29` — `(c.length.factorial : ℝ) * factorialProduct c ≤ n.factorial := by`
+- `Euler/GevreyGeneratingAlgebra.lean:45` — `_ = ((d.length : ℝ)+1) * ((d.length.factorial : ℝ)*factorialProduct d) := by`
+- `Euler/GevreyGeneratingAlgebra.lean:48` — `_ ≤ ((n : ℝ)+1) * (n.factorial : ℝ) :=`
+- `Euler/GevreyGeneratingAlgebra.lean:60` — `((d.length.factorial : ℝ)*factorialProduct d) := by ring`
+- `Euler/GevreyGeneratingAlgebra.lean:61` — `_ ≤ ((n : ℝ)+1) * (n.factorial : ℝ) :=`
+- `Euler/GevreyGeneratingAlgebra.lean:78` — `iteratedDeriv n (fun y => p.eval y) 0 = (n.factorial : ℝ)*p.coeff n := by`
+- `Euler/GevreyGeneratingAlgebra.lean:93` — `(n.factorial : ℝ)*(q.comp p).coeff n =`
+- `Euler/GevreyGeneratingAlgebra.lean:95` — `((c.length.factorial : ℝ)*q.coeff c.length) *`
+- `Euler/GevreyGeneratingAlgebra.lean:96` — `∏ i, ((c.partSize i).factorial : ℝ)*p.coeff (c.partSize i) := by`
+- `Euler/GevreyGeneratingComposition.lean:27` — `(hP : ∀ j, 0 < j → j ≤ n → ‖P j‖ ≤ (j.factorial : ℝ)^2*p.coeff j)`
+- `Euler/GevreyGeneratingComposition.lean:28` — `(hQ : ∀ j, 0 < j → j ≤ n → ‖Q j‖ ≤ (j.factorial : ℝ)^2*q.coeff j) :`
+- `Euler/GevreyGeneratingComposition.lean:29` — `‖Q.taylorComp P n‖ ≤ (n.factorial : ℝ)^2*(q.comp p).coeff n := by`
+- `Euler/GevreyGeneratingComposition.lean:31` — `‖Q.compAlongOrderedFinpartition P c‖ ≤ (n.factorial : ℝ)*`
+- `Euler/GevreyGeneratingComposition.lean:32` — `(((c.length.factorial : ℝ)*q.coeff c.length)*`
+- `Euler/GevreyGeneratingComposition.lean:33` — `∏ i, ((c.partSize i).factorial : ℝ)*p.coeff (c.partSize i)) := by`
+- `Euler/GevreyGeneratingComposition.lean:37` — `_ ≤ ((c.length.factorial : ℝ)^2*q.coeff c.length)*`
+- `Euler/GevreyGeneratingComposition.lean:38` — `∏ i, ((c.partSize i).factorial : ℝ)^2*p.coeff (c.partSize i) := by`
+- `Euler/GevreyGeneratingComposition.lean:44` — `_ = ((c.length.factorial : ℝ)*factorialProduct c)*`
+- `Euler/GevreyGeneratingComposition.lean:45` — `(((c.length.factorial : ℝ)*q.coeff c.length)*`
+- `Euler/GevreyGeneratingComposition.lean:46` — `∏ i, ((c.partSize i).factorial : ℝ)*p.coeff (c.partSize i)) := by`
+- `Euler/GevreyGeneratingComposition.lean:54` — `_ ≤ ∑ c : OrderedFinpartition n, (n.factorial : ℝ)*`
+- `Euler/GevreyGeneratingComposition.lean:55` — `(((c.length.factorial : ℝ)*q.coeff c.length)*`
+- `Euler/GevreyGeneratingComposition.lean:56` — `∏ i, ((c.partSize i).factorial : ℝ)*p.coeff (c.partSize i)) :=`
+- `Euler/GevreyGeneratingComposition.lean:58` — `_ = (n.factorial : ℝ)*((n.factorial : ℝ)*(q.comp p).coeff n) := by`
+- `Euler/GevreyGeneratingComposition.lean:58` — `_ = (n.factorial : ℝ)*((n.factorial : ℝ)*(q.comp p).coeff n) := by`
+- `Euler/GevreyGeneratingComposition.lean:69` — `(hP : ∀ j ∈ Finset.Icc 1 N, ‖P j‖ ≤ (j.factorial : ℝ)^2*a j)`
+- `Euler/GevreyGeneratingComposition.lean:70` — `(hQ : ∀ j ∈ Finset.Icc 1 N, ‖Q j‖ ≤ (j.factorial : ℝ)^2*b j)`
+- `Euler/GevreyGeneratingComposition.lean:72` — `(∑ n ∈ Finset.Icc 1 N, ‖Q.taylorComp P n‖/(n.factorial : ℝ)^2*z^n) ≤`
+- `Euler/GevreyGeneratingComposition.lean:84` — `apply (div_le_iff₀ (by positivity : 0 < (n.factorial : ℝ)^2)).2`
+- `Euler/GevreyGeneratingComposition.lean:99` — `‖P n‖/(n.factorial : ℝ)^2`
+- `Euler/GevreyGeneratingComposition.lean:113` — `(hQ : ∀ j ∈ Finset.Icc 1 N, ‖Q j‖ ≤ B*R^j*(j.factorial : ℝ)^2)`
+- `Euler/GevreyGeneratingComposition.lean:117` — `have hP (j : ℕ) : ‖P j‖ = (j.factorial : ℝ)^2*normalizedJet P j := by`
+- `Euler/GevreyGeneratingDerivatives.lean:38` — `_ ≤ ((‖iteratedFDeriv ℝ n f x‖+‖iteratedFDeriv ℝ n g x‖)/(n.factorial : ℝ)^2)*z^n := by`
+- `Euler/GevreyGeneratingDerivatives.lean:66` — `change ‖iteratedFDeriv ℝ n (id : E → E) x‖/(n.factorial : ℝ)^2*z^n ≤ _`
+- `Euler/GevreyGeneratingDerivatives.lean:92` — `‖iteratedFDeriv ℝ j g (f x)‖ ≤ B*R^j*(j.factorial : ℝ)^2)`
+- `Euler/GevreyGeneratingDerivatives.lean:120` — `‖iteratedFDeriv ℝ j g (x+f x)‖ ≤ B*R^j*(j.factorial : ℝ)^2)`
+- `Euler/GevreyGeneratingDerivativesNoOptions.lean:59` — `_ ≤ ((‖iteratedFDeriv ℝ n f x‖+‖iteratedFDeriv ℝ n g x‖)/(n.factorial : ℝ)^2)*z^n := by`
+- `Euler/GevreyGeneratingDerivativesNoOptions.lean:87` — `change ‖iteratedFDeriv ℝ n (id : E → E) x‖/(n.factorial : ℝ)^2*z^n ≤ _`
+- `Euler/GevreyGeneratingDerivativesNoOptions.lean:113` — `‖iteratedFDeriv ℝ j g (f x)‖ ≤ B*R^j*(j.factorial : ℝ)^2)`
+- `Euler/GevreyGeneratingDerivativesNoOptions.lean:141` — `‖iteratedFDeriv ℝ j g (x+f x)‖ ≤ B*R^j*(j.factorial : ℝ)^2)`
+- `Euler/GevreyInverseMap.lean:26` — `(A * S^c.length * (c.length.factorial : ℝ)^2) *`
+- `Euler/GevreyInverseMap.lean:27` — `(∏ i, B * R^(c.partSize i) * ((c.partSize i - 1).factorial : ℝ)^2) =`
+- `Euler/GevreyInverseMap.lean:39` — `(hq : ∀ j ≤ n, ‖q j‖ ≤ A * S^j * (j.factorial : ℝ)^2)`
+- `Euler/GevreyInverseMap.lean:41` — `‖p j‖ ≤ B * R^j * ((j-1).factorial : ℝ)^2) :`
+- `Euler/GevreyInverseMap.lean:42` — `‖q.taylorComp p n‖ ≤ A * R^n * (B*S) * (n.factorial : ℝ)^2 := by`
+- `Euler/GevreyInverseMap.lean:49` — `_ ≤ (A * S^c.length * (c.length.factorial : ℝ)^2) *`
+- `Euler/GevreyInverseMap.lean:50` — `(∏ i, B * R^(c.partSize i) * ((c.partSize i-1).factorial : ℝ)^2) := by`
+- `Euler/GevreyInverseMap.lean:67` — `_ ≤ A * R^n * ((B*S) * (n.factorial : ℝ)^2) :=`
+- `Euler/GevreyInverseMap.lean:78` — `‖iteratedFDeriv ℝ j g (f x)‖ ≤ A * S^j * (j.factorial : ℝ)^2)`
+- `Euler/GevreyInverseMap.lean:80` — `‖iteratedFDeriv ℝ j f x‖ ≤ B * R^j * ((j-1).factorial : ℝ)^2) :`
+- `Euler/GevreyInverseMap.lean:81` — `‖iteratedFDeriv ℝ n (g ∘ f) x‖ ≤ A * R^n * (B*S) * (n.factorial : ℝ)^2 := by`
+- `Euler/GevreyInverseMap.lean:103` — `(hAjet : ∀ j y, ‖iteratedFDeriv ℝ j A y‖ ≤ C * R^j * (j.factorial : ℝ)^2)`
+- `Euler/GevreyInverseMap.lean:106` — `C * (inverseMapRadius C R)^n * (n.factorial : ℝ)^2 := by`
+- `Euler/GevreyInverseMap.lean:114` — `change ‖iteratedFDeriv ℝ (n+1) Y x‖ ≤ C * L^n * (n.factorial : ℝ)^2`
 - `Euler/GevreyInverseMap.lean:119` — `change ‖iteratedFDeriv ℝ 1 Y x‖ ≤ C * L^0 * (Nat.factorial 0 : ℝ)^2`
+- `Euler/GevreyInverseMap.lean:125` — `‖iteratedFDeriv ℝ j Y x‖ ≤ (C/L) * L^j * ((j-1).factorial : ℝ)^2 := by`
+- `Euler/GevreyInverseMap.lean:141` — `_ ≤ C * L^n * ((C/L)*R) * (n.factorial : ℝ)^2 := hc`
+- `Euler/GevreyInverseMap.lean:142` — `_ ≤ C * L^n * 1 * (n.factorial : ℝ)^2 := by`
+- `Euler/GevreyInverseMap.lean:154` — `(hAjet : ∀ j y, ‖iteratedFDeriv ℝ j A y‖ ≤ C * R^j * (j.factorial : ℝ)^2)`
+- `Euler/GevreyInverseMap.lean:157` — `C * (inverseMapRadius C R)^n * (n.factorial : ℝ)^2 := by`
+- `Euler/GevreyInverseMap.lean:163` — `have hf : ((n-1).factorial : ℝ) ≤ (n.factorial : ℝ) := by`
+- `Euler/GevreyInverseMap.lean:163` — `have hf : ((n-1).factorial : ℝ) ≤ (n.factorial : ℝ) := by`
+- `Euler/GevreyInverseMap.lean:211` — `(hAjet : ∀ j y, ‖iteratedFDeriv ℝ j A y‖ ≤ C * R^j * (j.factorial : ℝ)^2)`
+- `Euler/GevreyInverseMap.lean:214` — `C * (inverseMapRadius C R)^n * (n.factorial : ℝ)^2 := by`
+- `Euler/GevreyInverseMap.lean:227` — `(hAjet : ∀ j y, ‖iteratedFDeriv ℝ j A y‖ ≤ C * R^j * (j.factorial : ℝ)^2)`
+- `Euler/GevreyInverseMap.lean:228` — `(hgjet : ∀ j y, ‖iteratedFDeriv ℝ j g y‖ ≤ D * S^j * (j.factorial : ℝ)^2)`
+- `Euler/GevreyInverseMap.lean:231` — `D * (inverseMapRadius C R * (C*S+2))^n * (n.factorial : ℝ)^2 := by`
+- `Euler/GevreyInversePartitions.lean:47` — `∏ i, ((c.partSize i - 1).factorial : ℝ)`
+- `Euler/GevreyInversePartitions.lean:50` — `x^c.length * ((c.length.factorial : ℝ) * predecessorFactorialProduct c)^2`
 - `Euler/GevreyInversePartitions.lean:63` — `(Nat.factorial (Fin.cons (α := fun _ => ℕ) 1 c.partSize i - 1) : ℝ)) =`
+- `Euler/GevreyInversePartitions.lean:64` — `∏ i : Fin c.length, ((c.partSize i - 1).factorial : ℝ)`
+- `Euler/GevreyInversePartitions.lean:73` — `((Function.update c.partSize i (c.partSize i+1) j - 1).factorial : ℝ)) =`
+- `Euler/GevreyInversePartitions.lean:74` — `(c.partSize i : ℝ) * ∏ j : Fin c.length, ((c.partSize j - 1).factorial : ℝ)`
+- `Euler/GevreyInversePartitions.lean:76` — `((Function.update c.partSize i (c.partSize i+1) j - 1).factorial : ℝ)) =`
+- `Euler/GevreyInversePartitions.lean:78` — `((c.partSize j - 1).factorial : ℝ) := by`
+- `Euler/GevreyInversePartitions.lean:140` — `predecessorPartitionSum n x ≤ x * (n.factorial : ℝ)^2 := by`
+- `Euler/GevreyInversePartitions.lean:150` — `_ ≤ ((m+1 : ℕ) + 1 : ℝ)^2 * (x * ((m+1).factorial : ℝ)^2) := by`
+- `Euler/GevreyInversePartitions.lean:153` — `change ((m+1 : ℕ) + 1 : ℝ)^2 * (x * ((m+1).factorial : ℝ)^2) =`
+- `Euler/GevreyInversePartitions.lean:154` — `x * (((m+1)+1).factorial : ℝ)^2`
+- `Euler/GevreyJetCompositionLp.lean:24` — `(hP : ∀ j, 0 < j → j ≤ n → ‖P j‖ ≤ B*R^j*(j.factorial : ℝ)^2) :`
+- `Euler/GevreyJetCompositionLp.lean:46` — `(hQ : ∀ j ≤ n, (eLpNorm (fun x => Q x j) 2 μ).toReal ≤ A*S^j*(j.factorial : ℝ)^2)`
+- `Euler/GevreyJetCompositionLp.lean:47` — `(hP : ∀ j, 0 < j → j ≤ n → ∀ x, ‖P x j‖ ≤ B*R^j*(j.factorial : ℝ)^2) :`
+- `Euler/GevreyJetCompositionLp.lean:50` — `A*(R*(B*S+2))^n*(n.factorial : ℝ)^2 := by`
+- `Euler/GevreyJetCompositionLp.lean:94` — `(A*S^c.length*(c.length.factorial : ℝ)^2) := by`
+- `Euler/GevreyJetCompositionLp.lean:103` — `_ ≤ A*R^n*((B*S+2)^n*(n.factorial : ℝ)^2) :=`
+- `Euler/GevreyMetricForcing.lean:27` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period KG 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyNonlinearEstimate.lean:73` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period KG 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyPressureComplete.lean:35` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyPressureComplete.lean:53` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyPressureComplete.lean:59` — `have hc5 : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 5 l ≤ Rc^l*(l.factorial : ℝ)^2 :=`
+- `Euler/GevreyPressureComplete.lean:74` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyPressureEnergy.lean:50` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N+1 → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyPressureEnergy.lean:79` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N+1 → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyPressureEnergy.lean:85` — `have hcN : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2 :=`
+- `Euler/GevreyPressureShifted.lean:40` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyPressureShifted.lean:83` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyPressureTransport.lean:71` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 5 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyPressureTransport.lean:115` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 5 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/GevreyRadiusReduction.lean:95` — `have hf : (0 : ℝ) < (n.factorial : ℝ) := by positivity`
+- `Euler/GevreyRadiusReduction.lean:99` — `have he : (4/R)*(R^n*R/(((n+1 : ℕ) : ℝ)*(n.factorial : ℝ))^2) =`
+- `Euler/GevreyRadiusReduction.lean:100` — `4*R^n/(((n+1 : ℕ) : ℝ)^2*(n.factorial : ℝ)^2) := by`
+- `Euler/GevreyRadiusReduction.lean:104` — `have hm := mul_le_mul_of_nonneg_left hn (mul_nonneg (pow_nonneg hR.le n) (sq_nonneg (n.factorial : ℝ)))`
+- `Euler/GevreyUniformConstants.lean:33` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2) :`
+- `Euler/GevreyUniformConstants.lean:51` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2) :`
+- `Euler/H6NonlinearPressure.lean:42` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc ^ l * (l.factorial : ℝ) ^ 2)`
+- `Euler/H6PressureConstants.lean:181` — `coefficientBlock period K q l ≤ Rc ^ l * (l.factorial : ℝ) ^ 2) :`
+- `Euler/H6PressureInverse.lean:115` — `coefficientBlock period K q l ≤ Rc ^ l * (l.factorial : ℝ) ^ 2) :`
+- `Euler/HilbertCoerciveGevrey.lean:105` — `Rc^(j+1) * ((j+1).factorial : ℝ)^2)`
+- `Euler/HilbertCoerciveGevrey.lean:121` — `((j+1).factorial : ℝ)^2 * ‖iteratedFDeriv ℝ (k-(j+1)) u x‖ := by`
+- `Euler/HilbertCoerciveGevrey.lean:144` — `C * (Rc^(j+1) * ((j+1).factorial : ℝ)^2))`
+- `Euler/HilbertCoerciveGevrey.lean:156` — `((j+1).factorial : ℝ)^2 * ‖iteratedFDeriv ℝ (k-(j+1)) u x‖`
+- `Euler/LiftedSmoothTimeFieldBounds.lean:44` — `(hA : ∀ n, ‖A.jet n‖ ≤ C0*R^n*(n.factorial : ℝ)^2)`
+- `Euler/LiftedSmoothTimeFieldBounds.lean:45` — `(hN : ∀ n, ‖(A.map (normalComponentMap m)).jet n‖ ≤ Cn*R^n*(n.factorial : ℝ)^2)`
+- `Euler/LiftedSmoothTimeFieldBounds.lean:46` — `(hE : ∀ n, ‖B.jet n‖ ≤ Ce*R^n*(n.factorial : ℝ)^2) (n : ℕ) :`
+- `Euler/LiftedSmoothTimeFieldBounds.lean:48` — `(|κ| * C0+Cn+(|κ| + ‖m‖)*Ce)*R^n*(n.factorial : ℝ)^2 := by`
+- `Euler/LiftedSmoothTimeFieldBounds.lean:51` — `_ ≤ |κ| * (C0*R^n*(n.factorial : ℝ)^2) + Cn*R^n*(n.factorial : ℝ)^2 +`
+- `Euler/LiftedSmoothTimeFieldBounds.lean:51` — `_ ≤ |κ| * (C0*R^n*(n.factorial : ℝ)^2) + Cn*R^n*(n.factorial : ℝ)^2 +`
+- `Euler/LiftedSmoothTimeFieldBounds.lean:52` — `(|κ| + ‖m‖)*(Ce*R^n*(n.factorial : ℝ)^2) :=`
+- `Euler/LiftedSmoothTimeFieldBounds.lean:60` — `(hA : ∀ n, ‖A.jet n‖ ≤ C0*R^n*(n.factorial : ℝ)^2)`
+- `Euler/LiftedSmoothTimeFieldBounds.lean:61` — `(hN : ∀ n, ‖(A.map (normalComponentMap m)).jet n‖ ≤ (Cn/k)*R^n*(n.factorial : ℝ)^2)`
+- `Euler/LiftedSmoothTimeFieldBounds.lean:62` — `(hE : ∀ n, ‖B.jet n‖ ≤ Ce*R^n*(n.factorial : ℝ)^2) (n : ℕ) :`
+- `Euler/LiftedSmoothTimeFieldBounds.lean:64` — `((C0+Cn)/k+2*Ce)*R^n*(n.factorial : ℝ)^2 := by`
+- `Euler/LiftedSmoothTimeFieldBounds.lean:78` — `(sq_nonneg (n.factorial : ℝ)))`
+- `Euler/LinearDuhamelGevrey.lean:93` — `(hcoeff : ∀ j x, ‖iteratedFDeriv ℝ (j+1) B x‖ ≤ CB*(Rc^(j+1)*((j+1).factorial : ℝ)^2))`
+- `Euler/LinearDuhamelGevrey.lean:117` — `((j+1).factorial : ℝ)^2 * ‖iteratedFDeriv ℝ (k-(j+1)) u x‖`
+- `Euler/LinearDuhamelGevrey.lean:122` — `CB*(Rc^(j+1)*((j+1).factorial : ℝ)^2) := by`
+- `Euler/LinearDuhamelSobolevGevrey.lean:94` — `CF*(sobolevCoefficientRadius ι Rc^(j+1)*((j+1).factorial : ℝ)^2) := by`
+- `Euler/MeanBoundaryGevrey.lean:29` — `(mul_nonneg (mul_nonneg hR (pow_nonneg hR n)) (sq_nonneg (n.factorial : ℝ)))`
+- `Euler/MeanTranslatedGevrey.lean:96` — `operatorAmplitude T CF CF₁ CH CM CA L*(Rc^(j+1)*((j+1).factorial : ℝ)^2) := by`
+- `Euler/NonlinearPressureLower.lean:26` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 5 l ≤ Rc ^ l * (l.factorial : ℝ) ^ 2)`
+- `Euler/PacketCoarseMajorant.lean:24` — `(hd : d ≤ 110*(p+1)) : (d.factorial : ℝ) ≤ (550*(N : ℝ))^d := by`
+- `Euler/PacketCoarseMajorant.lean:38` — `have hfac2 := pow_le_pow_left₀ (show (0 : ℝ) ≤ (d.factorial : ℝ) by positivity) hfac 2`
+- `Euler/PacketCoarseMajorant.lean:39` — `have hfactor : (4*R)^d*(d.factorial : ℝ)^2 ≤ (gradeBase R N)^(p+1) := by`
+- `Euler/PacketCoefficientTowerBounds.lean:32` — `EulerH6Pressure.coefficientBlock P ((A.toCoefficientTower P).jet s t) q n ≤ R^n*(n.factorial : ℝ)^2 :=`
+- `Euler/PacketCorrectionCoefficientBudget.lean:43` — `EulerH6Pressure.coefficientBlock P ((metricTower D P).jet s t) 6 l ≤ Rc^l*(l.factorial : ℝ)^2`
+- `Euler/PacketFieldJetLp.lean:23` — `A * (‖coordinateEquiv.symm.toContinuousLinearMap‖*R)^n * (n.factorial : ℝ)^2 := by`
+- `Euler/PacketFieldPhysicalSobolev.lean:23` — `∑ n ∈ range (m+1), R^n*(n.factorial : ℝ)^2`
+- `Euler/PacketFieldSmoothTimeField.lean:49` — `(‖coordinateEquiv.symm.toContinuousLinearMap‖*R)^n * (n.factorial : ℝ)^2 := by`
+- `Euler/PacketFiniteCoarseBounds.lean:13` — `(3*H^(2*n))*((4*R)^(highShift n)*((highShift n).factorial : ℝ)^2)`
+- `Euler/PacketFiniteCoarseBounds.lean:27` — `G.WordBound q (4*R) (A*((4*R)^d*(d.factorial : ℝ)^2)) 0 := by`
+- `Euler/PacketFiveCostPolynomial.lean:51` — `Polynomial.C ((highShift n).factorial : ℝ)^2)`
+- `Euler/PacketForwardInitializedChildShear.lean:84` — `(k^(10*(q+2)))^(n+1)*(n.factorial : ℝ)^2) := by`
+- `Euler/PacketForwardUniformChild.lean:99` — `(k^(10*(q+2)))^(n+1)*(n.factorial : ℝ)^2) ∧`
+- `Euler/PacketInitialCostPolynomial.lean:17` — `∑ n ∈ range (s+1), R^n*Polynomial.C ((n.factorial : ℝ)^2)`
+- `Euler/PacketInitializedChildBounds.lean:86` — `(k^(10*(q+2)))^(n+1)*(n.factorial : ℝ)^2) := by`
+- `Euler/PacketInitializedPointwiseChoice.lean:46` — `C*delta (expansion k)*(4/ρ0)^n*(n.factorial : ℝ)^2 ∧`
+- `Euler/PacketInitializedPointwiseChoice.lean:48` — `C*delta (expansion k)*(4/ρ0)^n*(n.factorial : ℝ)^2 ∧`
+- `Euler/PacketInitializedPointwiseChoice.lean:50` — `C*delta (expansion k)*(4/ρ0)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PacketInitializedPointwiseChoice.lean:66` — `Cpt*delta (expansion k)*(4/ρ0)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PacketInitializedPointwiseChoice.lean:73` — `have hf := mul_le_mul_of_nonneg_right hp (sq_nonneg (n.factorial : ℝ))`
+- `Euler/PacketInitializedPointwiseChoice.lean:96` — `k^(-p)*(4/ρ0)^n*(n.factorial : ℝ)^2 ∧`
+- `Euler/PacketInitializedPointwiseChoice.lean:99` — `k^(-p)*(4/ρ0)^n*(n.factorial : ℝ)^2 ∧`
+- `Euler/PacketInitializedPointwiseChoice.lean:102` — `k^(-p)*(4/ρ0)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PacketInitializedPointwiseChoice.lean:112` — `have hword : 0 < (4/ρ0)^n*(n.factorial : ℝ)^2 := by positivity`
+- `Euler/PacketInitializedPointwiseChoice.lean:114` — `have hbound (X : ℝ) (hX : X ≤ C*delta (expansion k)*(4/ρ0)^n*(n.factorial : ℝ)^2) :`
+- `Euler/PacketInitializedPointwiseChoice.lean:115` — `physicalCost*k^loss*X < k^(-p)*(4/ρ0)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PacketInitializedUniformChild.lean:101` — `(k^(10*(q+2)))^(n+1)*(n.factorial : ℝ)^2) ∧`
+- `Euler/PacketInverseFlowGevrey.lean:62` — `(9*C^2) * (sourceInverseRadius C R)^n * (n.factorial : ℝ)^2 := by`
+- `Euler/PacketInverseFlowGevrey.lean:77` — `(hgjet : ∀ n t x, ‖iteratedFDeriv ℝ n (g t) x‖ ≤ A*S^n*(n.factorial : ℝ)^2)`
+- `Euler/PacketInverseFlowGevrey.lean:80` — `A * (sourceInverseRadius C R * (9*C^2*S+2))^n * (n.factorial : ℝ)^2 := by`
+- `Euler/PacketInverseFlowSobolevBound.lean:14` — `1+9*C^2*(sourceInverseRadius C R)^n*(n.factorial : ℝ)^2`
+- `Euler/PacketInverseFlowSobolevBound.lean:26` — `have h : 0 ≤ 9*C^2*(sourceInverseRadius C R)^n*(n.factorial : ℝ)^2 := by positivity`
+- `Euler/PacketInverseFlowSobolevBound.lean:48` — `have hfac : (j.factorial : ℝ) ≤ (n.factorial : ℝ) := by`
+- `Euler/PacketInverseFlowSobolevBound.lean:48` — `have hfac : (j.factorial : ℝ) ≤ (n.factorial : ℝ) := by`
+- `Euler/PacketInverseFlowSobolevBound.lean:50` — `have hbound : 9*C^2*(sourceInverseRadius C R)^j*(j.factorial : ℝ)^2 ≤`
+- `Euler/PacketInverseFlowSobolevBound.lean:51` — `9*C^2*(sourceInverseRadius C R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PacketInverseFlowSobolevBound.lean:54` — `_ ≤ 9*C^2*(sourceInverseRadius C R)^j*(j.factorial : ℝ)^2 :=`
+- `Euler/PacketLiftedCoefficientBounds.lean:55` — `C*R^n*(n.factorial : ℝ)^2 ≤ D*S^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PacketLiftedCoefficientBounds.lean:55` — `C*R^n*(n.factorial : ℝ)^2 ≤ D*S^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PacketLiftedCoefficientBounds.lean:115` — `(liftedInputConstant P*((C0+Cn)/k+2*Ce)) * (liftedInputRadius R ρ)^n * (n.factorial : ℝ)^2 := by`
+- `Euler/PacketLiftedCoefficientBounds.lean:119` — `(liftedInputConstant P*C0)*(liftedInputRadius R ρ)^j*(j.factorial : ℝ)^2 :=`
+- `Euler/PacketLiftedCoefficientBounds.lean:126` — `((liftedInputConstant P*Cn)/k)*(liftedInputRadius R ρ)^j*(j.factorial : ℝ)^2 := by`
+- `Euler/PacketLiftedCoefficientBounds.lean:135` — `(liftedInputConstant P*Ce)*(liftedInputRadius R ρ)^j*(j.factorial : ℝ)^2 :=`
+- `Euler/PacketLiftedCoefficientBounds.lean:161` — `(liftedInputConstant P*((C0+Cn)/k+2*Ce)) * (liftedInputRadius R ρ)^n * (n.factorial : ℝ)^2 := by`
+- `Euler/PacketLiftedCoefficientBounds.lean:198` — `(liftedInputRadius R ρ)^n*(n.factorial : ℝ)^2 := by ring`
+- `Euler/PacketLiftedFlowData.lean:25` — `C*R^n*(n.factorial : ℝ)^2 ≤ C*S^n*(n.factorial : ℝ)^2 :=`
+- `Euler/PacketLiftedFlowData.lean:25` — `C*R^n*(n.factorial : ℝ)^2 ≤ C*S^n*(n.factorial : ℝ)^2 :=`
+- `Euler/PacketLiftedTimeBounds.lean:36` — `C*R^n*(n.factorial : ℝ)^2 ≤ D*S^n*(n.factorial : ℝ)^2 :=`
+- `Euler/PacketLiftedTimeBounds.lean:36` — `C*R^n*(n.factorial : ℝ)^2 ≤ D*S^n*(n.factorial : ℝ)^2 :=`
+- `Euler/PacketLiftedTimeBounds.lean:94` — `(2*liftedInputConstant P*(Ch+Ce)) * (liftedInputRadius R ρ)^n * (n.factorial : ℝ)^2 := by`
+- `Euler/PacketLiftedTimeBounds.lean:101` — `(liftedInputConstant P*Ce)*(liftedInputRadius R ρ)^n*(n.factorial : ℝ)^2 :=`
+- `Euler/PacketLiftedTimeBounds.lean:115` — `_ ≤ 2*((liftedInputConstant P*Ch)*(liftedInputRadius R ρ)^n*(n.factorial : ℝ)^2 +`
+- `Euler/PacketLiftedTimeBounds.lean:116` — `(liftedInputConstant P*Ce)*(liftedInputRadius R ρ)^n*(n.factorial : ℝ)^2) :=`
+- `Euler/PacketLiftedTimeBounds.lean:130` — `(2*liftedInputConstant P*(Ch+Ce)) * (liftedInputRadius R ρ)^n * (n.factorial : ℝ)^2 := by`
+- `Euler/PacketLiftedTimeBounds.lean:150` — `_ ≤ 2*(Ch*(liftedInputRadius R ρ)^n*(n.factorial : ℝ)^2 +`
+- `Euler/PacketLiftedTimeBounds.lean:151` — `Ce*(liftedInputRadius R ρ)^n*(n.factorial : ℝ)^2) :=`
+- `Euler/PacketLiftedTimeBounds.lean:153` — `_ = (2*(Ch+Ce))*(liftedInputRadius R ρ)^n*(n.factorial : ℝ)^2 := by ring`
+- `Euler/PacketMajorantShift.lean:16` — `have hf : ((n+d).factorial : ℝ) ≤ ((n+D).factorial : ℝ) := by`
+- `Euler/PacketMajorantShift.lean:16` — `have hf : ((n+d).factorial : ℝ) ≤ ((n+D).factorial : ℝ) := by`
+- `Euler/PacketMajorantShift.lean:18` — `have hs : ((n+d).factorial : ℝ)^2 ≤ ((n+D).factorial : ℝ)^2 :=`
+- `Euler/PacketMajorantShift.lean:18` — `have hs : ((n+d).factorial : ℝ)^2 ≤ ((n+D).factorial : ℝ)^2 :=`
+- `Euler/PacketMajorantShift.lean:43` — `(n+d).factorial ≤ 2^(n+d)*n.factorial*d.factorial := by`
+- `Euler/PacketMajorantShift.lean:43` — `(n+d).factorial ≤ 2^(n+d)*n.factorial*d.factorial := by`
+- `Euler/PacketMajorantShift.lean:43` — `(n+d).factorial ≤ 2^(n+d)*n.factorial*d.factorial := by`
+- `Euler/PacketMajorantShift.lean:45` — `(n+d).factorial=(n+d).choose n*n.factorial*d.factorial := by`
+- `Euler/PacketMajorantShift.lean:45` — `(n+d).factorial=(n+d).choose n*n.factorial*d.factorial := by`
+- `Euler/PacketMajorantShift.lean:45` — `(n+d).factorial=(n+d).choose n*n.factorial*d.factorial := by`
+- `Euler/PacketMajorantShift.lean:52` — `majorant R d n ≤ ((4*R)^d*(d.factorial : ℝ)^2)*majorant (4*R) 0 n := by`
+- `Euler/PacketMajorantShift.lean:53` — `have hf : ((n+d).factorial : ℝ) ≤ (2 : ℝ)^(n+d)*(n.factorial : ℝ)*(d.factorial : ℝ) := by`
+- `Euler/PacketMajorantShift.lean:53` — `have hf : ((n+d).factorial : ℝ) ≤ (2 : ℝ)^(n+d)*(n.factorial : ℝ)*(d.factorial : ℝ) := by`
+- `Euler/PacketMajorantShift.lean:53` — `have hf : ((n+d).factorial : ℝ) ≤ (2 : ℝ)^(n+d)*(n.factorial : ℝ)*(d.factorial : ℝ) := by`
+- `Euler/PacketMajorantShift.lean:55` — `have hs := pow_le_pow_left₀ (show (0 : ℝ) ≤ ((n+d).factorial : ℝ) by positivity) hf 2`
+- `Euler/PacketMajorantShift.lean:60` — `majorant R d n ≤ R^(n+d)*((2 : ℝ)^(n+d)*(n.factorial : ℝ)*(d.factorial : ℝ))^2 :=`
+- `Euler/PacketMajorantShift.lean:60` — `majorant R d n ≤ R^(n+d)*((2 : ℝ)^(n+d)*(n.factorial : ℝ)*(d.factorial : ℝ))^2 :=`
+- `Euler/PacketMajorantShift.lean:62` — `_ = (4*R)^(n+d)*(n.factorial : ℝ)^2*(d.factorial : ℝ)^2 := by`
+- `Euler/PacketMajorantShift.lean:62` — `_ = (4*R)^(n+d)*(n.factorial : ℝ)^2*(d.factorial : ℝ)^2 := by`
+- `Euler/PacketParentLabelBudgets.lean:22` — `K^(n+1)*(n.factorial : ℝ)^2`
+- `Euler/PacketParentLabelCoefficients.lean:36` — `(hb : ∀ n, classicalBlockSize direction 6 u hu n ≤ K^(n+1)*(n.factorial : ℝ)^2)`
+- `Euler/PacketParentLabelCoefficients.lean:49` — `(hb : ∀ n, classicalBlockSize direction 6 u hu n ≤ K^(n+1)*(n.factorial : ℝ)^2)`
+- `Euler/PacketParentLabelCoefficients.lean:65` — `(hb : ∀ n, classicalBlockSize direction 6 u hu n ≤ K^(n+1)*(n.factorial : ℝ)^2)`
+- `Euler/PacketPhysicalFrequencyBounds.lean:50` — `3*C*(physicalRadiusCost D R C S)^n*(n.factorial : ℝ)^2`
+- `Euler/PacketPhysicalFrequencyBounds.lean:65` — `A*S^n*(n.factorial : ℝ)^2)`
+- `Euler/PacketPhysicalFrequencyBounds.lean:90` — `exact h.trans ((mul_le_mul_of_nonneg_right hbnd (sq_nonneg (n.factorial : ℝ))).trans_eq`
+- `Euler/PacketPhysicalGevrey.lean:18` — `A*S^n*(n.factorial : ℝ)^2) (n : ℕ) (x : Vector3) :`
+- `Euler/PacketPhysicalGevrey.lean:51` — `A*S^n*(n.factorial : ℝ)^2)`
+- `Euler/PacketPhysicalGevrey.lean:91` — `(|κ| *3*C*A)*(physicalRadius D k R C S)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PacketPhysicalPressureGevrey.lean:35` — `A*S^n*(n.factorial : ℝ)^2)`
+- `Euler/PacketPhysicalPressureGevrey.lean:81` — `(|κ| *27*C^2*A)*(physicalRadius D k R C S)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PacketPhysicalPressureGevrey.lean:108` — `exact h.trans ((mul_le_mul_of_nonneg_right hbnd (sq_nonneg (n.factorial : ℝ))).trans_eq`
+- `Euler/PacketPressureFastBounds.lean:86` — `(sobolevEmbeddingConstant P 3*(A/k^2))*R^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PacketSourceRadiusPolynomial.lean:52` — `have hs : (1 : ℝ) ≤ ∑ k ∈ Finset.range 7, sobolevCoefficientRadius (Fin 4) W^k*(k.factorial : ℝ)^2 := by`
+- `Euler/PacketSourceRadiusPolynomial.lean:53` — `have hh := Finset.single_le_sum (f := fun k : ℕ => sobolevCoefficientRadius (Fin 4) W^k*(k.factorial : ℝ)^2)`
+- `Euler/PacketSourceRadiusPolynomial.lean:57` — `change W ≤ (2 : ℝ)^6*W*(∑ k ∈ Finset.range (6+1), sobolevCoefficientRadius (Fin 4) W^k*(k.factorial : ℝ)^2)`
+- `Euler/PacketSourceVolumeSobolev.lean:63` — `((n.factorial : ℝ)*(finiteOrderConstant C R n)^n)*∑ i : Fin (n+1),`
+- `Euler/PacketWeightedPhysicalErrors.lean:62` — `(Cpt*d)*(ρ⁻¹)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PacketWeightedPhysicalErrors.lean:68` — `(Cpt*d)*(ρ⁻¹)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PacketWeightedPhysicalErrors.lean:72` — `(Cpt*d)*(ρ⁻¹)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/ParameterSobolevCoefficient.lean:44` — `(2 : ℝ)^q*C*∑ k ∈ range (q+1), sobolevCoefficientRadius ι Rc^k*(k.factorial : ℝ)^2`
+- `Euler/ParameterSobolevCoefficient.lean:68` — `C*(sobolevCoefficientRadius ι Rc^k*(k.factorial : ℝ)^2)*`
+- `Euler/ParameterSobolevCoefficient.lean:75` — `change C*((4*r₀)^k*(k.factorial : ℝ)^2*majorant (4*r₀) 0 n) =`
+- `Euler/ParameterSobolevCoefficient.lean:76` — `C*((4*r₀)^k*(k.factorial : ℝ)^2)*majorant (4*r₀) 0 n`
+- `Euler/ParameterSobolevCoefficient.lean:82` — `C*(sobolevCoefficientRadius ι Rc^k*(k.factorial : ℝ)^2)*`
+- `Euler/ParameterSobolevGevrey.lean:89` — `(hcoeff : ∀ j x, coefficientBlock directions q A (j+1) x ≤ C*(Rc^(j+1)*((j+1).factorial : ℝ)^2))`
+- `Euler/ParameterSobolevGevrey.lean:100` — `((j+1).factorial : ℝ)^2*block directions q u (k-(j+1)) x`
+- `Euler/ParameterSobolevGevreyAt.lean:31` — `(hcoeff : ∀ j, coefficientBlock directions q A (j+1) x ≤ C*(Rc^(j+1)*((j+1).factorial : ℝ)^2))`
+- `Euler/ParameterSobolevGevreyAt.lean:42` — `((j+1).factorial : ℝ)^2*block directions q u (k-(j+1)) x`
+- `Euler/ParameterWordInverse.lean:66` — `(hcoeff : ∀ j x, wordSum directions A (j+1) x ≤ C*(Rc^(j+1)*((j+1).factorial : ℝ)^2))`
+- `Euler/ParameterWordInverse.lean:74` — `((j+1).factorial : ℝ)^2*wordSum directions u (k-(j+1)) x`
+- `Euler/ParentPacketLabelData.lean:86` — `K^(n+1)*(n.factorial : ℝ)^2) :`
+- `Euler/PhysicalChildSourceBound.lean:70` — `(k^(10*(q+2)))^(n+1)*(n.factorial : ℝ)^2) := by`
+- `Euler/PhysicalGraphFlowBounds.lean:45` — `sup_bound : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2`
+- `Euler/PhysicalGraphFlowBounds.lean:50` — `C*S^n*(n.factorial : ℝ)^2`
+- `Euler/PhysicalGraphFlowBounds.lean:55` — `C₁*S₁^n*(n.factorial : ℝ)^2`
+- `Euler/PhysicalGraphFlowBounds.lean:93` — `2 (liftMeasure P)).toReal ≤ (T*G.C)*G.velocityRadius^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PhysicalGraphFlowBounds.lean:118` — `2 (liftMeasure P)).toReal ≤ G.C*G.velocityRadius^n*(n.factorial : ℝ)^2 :=`
+- `Euler/PhysicalGraphFlowBounds.lean:141` — `2 (liftMeasure P)).toReal ≤ G.accelerationAmplitude*G.accelerationRadius^n*(n.factorial : ℝ)^2 :=`
+- `Euler/PhysicalGraphFlowSupBounds.lean:54` — `(1+G.B*T)*(1+ell⁻¹*(4*G.R*graphFactor k m))^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PhysicalGraphGevrey.lean:59` — `(hb : ∀ n x, ‖iteratedFDeriv ℝ n f x‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/PhysicalGraphGevrey.lean:61` — `‖iteratedFDeriv ℝ n (scale ell f) x‖ ≤ B*(ell⁻¹*R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PhysicalGraphGevrey.lean:69` — `_ ≤ (ell⁻¹)^n*(B*R^n*(n.factorial : ℝ)^2) :=`
+- `Euler/PhysicalGraphGevrey.lean:88` — `C*R^n*(n.factorial : ℝ)^2)`
+- `Euler/PhysicalGraphGevrey.lean:118` — `(hb : ∀ n z, ‖iteratedFDeriv ℝ n f z‖ ≤ B*S^n*(n.factorial : ℝ)^2)`
+- `Euler/PhysicalGraphGevrey.lean:121` — `B*(ell⁻¹*(S*graphFactor k m))^n*(n.factorial : ℝ)^2 := by`
+- `Euler/PressureCommutatorWeights.lean:23` — `(hA : ∀ l, 1 ≤ l → l ≤ N → A l ≤ Rc^l * (l.factorial : ℝ)^2) :`
+- `Euler/PressureCommutatorWeights.lean:32` — `have he : weight ρ (l+1) * (Rc^(l+1)*((l+1).factorial : ℝ)^2) = (ρ*Rc)^(l+1) := by`
+- `Euler/PressureCommutatorWeights.lean:50` — `(hA : ∀ l, 1 ≤ l → l ≤ N → A l ≤ Rc^l * (l.factorial : ℝ)^2) :`
+- `Euler/PressureCommutatorWeights.lean:90` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K q l ≤ Rc^l*(l.factorial : ℝ)^2) :`
+- `Euler/SmallCorrectionBudget.lean:47` — `(jet P (ContinuousLinearMap.id ℝ Space) ((q+1)+1)) 6 l ≤ 0^l*(l.factorial : ℝ)^2`
+- `Euler/SmoothCylinderAccelerationComposition.lean:44` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothCylinderAccelerationComposition.lean:49` — `2 (liftMeasure P)).toReal ≤ C*S^j*(j.factorial : ℝ)^2)`
+- `Euler/SmoothCylinderAccelerationComposition.lean:54` — `2 (liftMeasure P)).toReal ≤ C₁*S₁^j*(j.factorial : ℝ)^2)`
+- `Euler/SmoothCylinderAccelerationComposition.lean:59` — `(C₁+3*B*R*C)*(flowRadius B R T (accelerationLpRadius R S S₁))^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothCylinderAccelerationLp.lean:34` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothCylinderAccelerationLp.lean:39` — `2 (liftMeasure P)).toReal ≤ C*S^j*(j.factorial : ℝ)^2)`
+- `Euler/SmoothCylinderAccelerationLp.lean:44` — `2 (liftMeasure P)).toReal ≤ C₁*S₁^j*(j.factorial : ℝ)^2)`
+- `Euler/SmoothCylinderAccelerationLp.lean:49` — `(C₁+3*B*R*C)*(accelerationLpRadius R S S₁)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothCylinderAccelerationLp.lean:75` — `_ ≤ C*S^j*(j.factorial : ℝ)^2 := hNorm t j`
+- `Euler/SmoothCylinderComposition.lean:37` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothCylinderComposition.lean:41` — `(eLpNorm (fun q => jetSeries P f q j) 2 (liftMeasure P)).toReal ≤ C*S^j*(j.factorial : ℝ)^2)`
+- `Euler/SmoothCylinderComposition.lean:45` — `2 (liftMeasure P)).toReal ≤ C*(flowRadius B R T S)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothCylinderGevrey.lean:37` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothCylinderGevrey.lean:39` — `‖displacementJet P T hT A t q n‖ ≤ B*(t : ℝ)*(4*R)^n*(n.factorial : ℝ)^2 :=`
+- `Euler/SmoothCylinderGevrey.lean:50` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothCylinderGevrey.lean:56` — `2 (liftMeasure P)).toReal ≤ C*S^j*(j.factorial : ℝ)^2)`
+- `Euler/SmoothCylinderGevrey.lean:60` — `C*(flowRadius B R T S)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothCylinderGevrey.lean:77` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothCylinderGevrey.lean:83` — `2 (liftMeasure P)).toReal ≤ C*S^j*(j.factorial : ℝ)^2)`
+- `Euler/SmoothCylinderGevrey.lean:87` — `(t : ℝ)*C*(flowRadius B R T S)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothCylinderGevrey.lean:105` — `2 (liftMeasure P)).toReal ≤ (t : ℝ)*C*(flowRadius B R T S)^n*(n.factorial : ℝ)^2 at hi`
+- `Euler/SmoothFlowCoefficientPaths.lean:27` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowCoefficientPaths.lean:38` — `B*T*(4*R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothFlowCoefficientPaths.lean:51` — `B*(flowRadius B R T R)^n*(n.factorial : ℝ)^2 :=`
+- `Euler/SmoothFlowCoefficientPaths.lean:59` — `(fun n => B*T*(4*R)^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowCoefficientPaths.lean:60` — `(fun n => B*(flowRadius B R T R)^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowCoefficientPaths.lean:70` — `B*T*(4*R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothFlowCoefficientPaths.lean:76` — `(hb₁ : ∀ n, ‖A₁.jet n‖ ≤ B₁*R₁^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowCoefficientPaths.lean:81` — `(B₁+3*B^2*R)*(flowRadius B R T (4*R+R₁))^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothFlowCoefficientPaths.lean:92` — `(fun n => B*(flowRadius B R T R)^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowCoefficientPaths.lean:93` — `(fun n => (B₁+3*B^2*R)*(flowRadius B R T (4*R+R₁))^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowCoefficientPaths.lean:103` — `B*(flowRadius B R T R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothFlowDeformation.lean:36` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowDeformation.lean:82` — `(hb₁ : ∀ n, ‖A₁.jet n‖ ≤ B₁*R₁^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowGevrey.lean:40` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowGevrey.lean:42` — `‖iteratedFDeriv ℝ n (velocityExtension T hT A t) x‖ ≤ B*R^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothFlowGevrey.lean:80` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowGevrey.lean:94` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowGevrey.lean:97` — `B*t*(4*R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothFlowGevrey.lean:104` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowGevrey.lean:132` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowGevrey.lean:135` — `B*t*(4*R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothFlowTimeGevrey.lean:32` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowTimeGevrey.lean:34` — `‖iteratedFDeriv ℝ n (A.field t : E → E) x‖ ≤ B*R^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothFlowTimeGevrey.lean:41` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowTimeGevrey.lean:44` — `(1+B*T)*(4*R+1)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothFlowTimeGevrey.lean:55` — `let W := (4*R+1)^n*(n.factorial : ℝ)^2`
+- `Euler/SmoothFlowTimeGevrey.lean:56` — `have hfact : (1 : ℝ) ≤ n.factorial := by exact_mod_cast Nat.succ_le_of_lt (Nat.factorial_pos n)`
+- `Euler/SmoothFlowTimeGevrey.lean:59` — `have hf : (1 : ℝ) ≤ (n.factorial : ℝ)^2 := by nlinarith`
+- `Euler/SmoothFlowTimeGevrey.lean:67` — `have hs := mul_le_mul_of_nonneg_right hm (sq_nonneg (n.factorial : ℝ))`
+- `Euler/SmoothFlowTimeGevrey.lean:82` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowTimeGevrey.lean:85` — `B*(flowRadius B R T R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothFlowTimeGevrey.lean:107` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowTimeGevrey.lean:108` — `(hb₁ : ∀ n, ‖A₁.jet n‖ ≤ B₁*R₁^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowTimeGevrey.lean:157` — `(hb : ∀ n, ‖A.jet n‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowTimeGevrey.lean:158` — `(hb₁ : ∀ n, ‖A₁.jet n‖ ≤ B₁*R₁^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothFlowTimeGevrey.lean:161` — `(B₁+3*B^2*R)*(flowRadius B R T (4*R+R₁))^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothL2ClassicalBounds.lean:53` — `‖iteratedFDeriv ℝ n A.field x‖ ≤ (embeddingCost*K)*K^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothL2Gevrey.lean:20` — `∀ n, ‖A.jetLp n‖ ≤ C*R^n*(n.factorial : ℝ)^2`
+- `Euler/SmoothL2Gevrey.lean:29` — `C*R^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothL2Gevrey.lean:53` — `(sobolevCoefficientRadius ι R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothL2Gevrey.lean:80` — `mul_le_mul_of_nonneg_right hm (sq_nonneg (n.factorial : ℝ))`
+- `Euler/SmoothL2GevreyCalculus.lean:21` — `∀ n x, ‖iteratedFDeriv ℝ n f x‖ ≤ C*R^n*(n.factorial : ℝ)^2`
+- `Euler/SmoothL2GevreyCalculus.lean:42` — `(hfb : ∀ n, 0 < n → ∀ x, ‖iteratedFDeriv ℝ n f x‖ ≤ B*R^n*(n.factorial : ℝ)^2) :`
+- `Euler/SmoothL2GevreyCalculus.lean:60` — `‖iteratedFDeriv ℝ n (fun y => y+f y) x‖ ≤ (1+B)*(1+R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothL2GevreyCalculus.lean:66` — `have hfact : (1 : ℝ) ≤ n.factorial := by exact_mod_cast Nat.succ_le_of_lt (Nat.factorial_pos n)`
+- `Euler/SmoothL2GevreyCalculus.lean:67` — `have hweight : (1 : ℝ) ≤ (1+R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/SmoothL2GevreyCalculus.lean:69` — `have hdisp : ‖iteratedFDeriv ℝ n f x‖ ≤ B*(1+R)^n*(n.factorial : ℝ)^2 :=`
+- `Euler/SmoothL2GevreyCalculus.lean:85` — `(hfb : ∀ n, 0 < n → ∀ x, ‖iteratedFDeriv ℝ n f x‖ ≤ B*R^n*(n.factorial : ℝ)^2)`
+- `Euler/SmoothL2GevreyCalculus.lean:92` — `C*(R*(B*S+2))^n*(n.factorial : ℝ)^2 :=`
+- `Euler/SobolevDriftTransport.lean:59` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K 6 l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/SobolevEnergyPaths.lean:37` — `⟨fun t => weight (ρ t) n, (ρ.continuous.pow n).div_const ((n.factorial : ℝ)^2)⟩`
+- `Euler/SobolevGevreyOperators.lean:116` — `(hcoeff : ∀ l, 1 ≤ l → l ≤ N → coefficientBlock period K q l ≤ Rc^l*(l.factorial : ℝ)^2)`
+- `Euler/SobolevSourceExponent.lean:14` — `def fixedCost (q : ℕ) : ℝ := (2 : ℝ)^q*∑ j ∈ range (q+1), (j.factorial : ℝ)^2`
+- `Euler/SobolevSourceExponent.lean:43` — `have hsum : (∑ j ∈ range (q+1), sobolevCoefficientRadius (Fin 3) R^j*(j.factorial : ℝ)^2) ≤`
+- `Euler/SobolevSourceExponent.lean:44` — `k^(6*q)*(∑ j ∈ range (q+1), (j.factorial : ℝ)^2) := by`
+- `Euler/SobolevSourceExponent.lean:48` — `_ ≤ (2 : ℝ)^q*k^6*(k^(6*q)*∑ j ∈ range (q+1), (j.factorial : ℝ)^2) := by`
+- `Euler/SobolevSourceExponent.lean:82` — `classicalBlockSize direction q C.toLp C.translation_contDiff n ≤ J^(n+1)*(n.factorial : ℝ)^2 := by`
+- `Euler/SobolevSourceExponent.lean:91` — `sobolevCoefficientRadius (Fin 3) R^n*(n.factorial : ℝ)^2 :=`
+- `Euler/SobolevSourceExponent.lean:93` — `_ ≤ J*J^n*(n.factorial : ℝ)^2 :=`
+- `Euler/SobolevSourceExponent.lean:105` — `(k^(10*(q+2)))^(n+1)*(n.factorial : ℝ)^2 := by`
+- `Euler/StaticEulerGevrey.lean:81` — `a*r^n*(n.factorial : ℝ)^2 ≤ b*s^n*(n.factorial : ℝ)^2 :=`
+- `Euler/StaticEulerGevrey.lean:81` — `a*r^n*(n.factorial : ℝ)^2 ≤ b*s^n*(n.factorial : ℝ)^2 :=`
+- `Euler/StaticEulerGevrey.lean:123` — `outputVelocitySize P C R*(outputRadius R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/StaticEulerGevrey.lean:139` — `(coverRadius R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/StaticEulerGevrey.lean:144` — `(‖coordinateEquiv.symm.toContinuousLinearMap‖*(retainedRadius R)⁻¹)^n*(n.factorial : ℝ)^2) := by ring`
+- `Euler/StaticEulerGevrey.lean:152` — `outputDerivativeSize P C R hC hR*(outputRadius R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/StaticEulerGevrey.lean:167` — `(coverRadius R)^n*(n.factorial : ℝ)^2 := by`
+- `Euler/StaticEulerGevrey.lean:172` — `(‖coordinateEquiv.symm.toContinuousLinearMap‖*(retainedRadius R)⁻¹)^n*(n.factorial : ℝ)^2) := by ring`
+- `Euler/TimeLpGramGevrey.lean:65` — `(3*C^2)*(Rc^(j+1)*((j+1).factorial : ℝ)^2) := by`
+- `Euler/TransverseGevreyInverse.lean:126` — `formCost T C₀ C₁ CH * (Rc^(j+1) * ((j+1).factorial : ℝ)^2) := by`
+- `Euler/UnshiftedPressure.lean:14` — `weight ρ (j+l) * ((j+l).choose l : ℝ) * (Rc^l * (l.factorial : ℝ)^2) * Z ≤`
+- `Euler/UnshiftedPressure.lean:16` — `have he : weight ρ (j+l) * ((j+l).choose l : ℝ) * (Rc^l * (l.factorial : ℝ)^2) * Z =`
+- `Euler/UnshiftedPressure.lean:33` — `(hA : ∀ l, 1 ≤ l → l ≤ N → A l ≤ Rc ^ l * (l.factorial : ℝ) ^ 2)`
+- `Euler/UnshiftedPressure.lean:104` — `coefficientBlock period K q l ≤ Rc ^ l * (l.factorial : ℝ) ^ 2) :`
+- `Euler/VolumeSobolevComposition.lean:21` — `((n.factorial : ℝ)*D^n) * ∑ i : Fin (n+1), ‖iteratedFDeriv ℝ i.val g (f x)‖ := by`
+- `Euler/VolumeSobolevComposition.lean:46` — `apply (hs.const_mul ((n.factorial : ℝ)*D^n)).of_le hc.aestronglyMeasurable`
+- `Euler/VolumeSobolevComposition.lean:58` — `((n.factorial : ℝ)*D^n) * ∑ i : Fin (n+1),`
+- `Euler/VolumeSobolevComposition.lean:60` — `let β : ℝ≥0 := ⟨(n.factorial : ℝ)*D^n,by positivity⟩`
+- `Euler/VolumeSobolevComposition.lean:66` — `change ‖iteratedFDeriv ℝ n (g ∘ f) x‖ ≤ ((n.factorial : ℝ)*D^n)*`
+- `Euler/VolumeSobolevComposition.lean:93` — `have hβ : (β : ℝ) = (n.factorial : ℝ)*D^n := rfl`
+- `Euler/WeightedCylinderEnergy.lean:124` — `· exact (hρc.pow (order i)).div_const (((order i).factorial : ℝ) ^ 2)`
+- `Euler/WeightedSobolevEnergy.lean:95` — `· exact (hρc.pow (order i)).div_const (((order i).factorial : ℝ) ^ 2)`
+- `Euler/WeightedSobolevMajorant.lean:99` — `· exact (hρc.pow (order i)).div_const (((order i).factorial : ℝ) ^ 2)`
