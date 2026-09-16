@@ -2302,3 +2302,42 @@ surfaced by the multi-line `variable` fix, and it turned out SUPPLIED** — so t
 *and* real noise, exactly as an over-approximating change should.
 
 **27 in-cone hint-free candidates (81 sites) remain unverified.**
+
+## W37 — the junk-value pattern is MECHANISED: `audits/junkvalue.py`, and it is how the estimate mass gets audited
+
+W35 named a Lean-specific vacuity shape: Mathlib defines `x / 0 = 0` and `(0 : R)⁻¹ = 0`, so a theorem
+stated about a quantity whose denominator is never constrained nonzero **silently degenerates to `0 = 0`**.
+Never false — it just stops saying anything, and no type records that. Two instances were found by hand.
+It is now one command, and it is the answer to a question this audit has been dodging: **how do you audit
+3,486 in-cone theorems of estimate material without reading them?** Not by reading — by asking a
+mechanical question that estimates are especially exposed to, because estimates are full of division.
+
+**Validated against both known clusters before any number is quoted, and the first version failed.**
+A statement-level scan caught only **5 of the 8** `transportPhase` theorems and **none** of the
+`BasePrefixIdentity` swirl ones — because `:492`'s conclusion is merely
+`ContDiff ℝ ∞ (transportPhase Φ φ gap K Kr)`, with the `Kr / K` hidden **inside the definition**. Same
+blind-spot class as `nosupplier.py`'s W8 case: a syntactic instrument cannot see through a definition. So
+the tool now runs two passes — statements, then **definitions that divide by their own scalar parameter,
+followed by their users**. After that fix: **8 of 8** `transportPhase` theorems and
+`BasePrefixIdentity:111` (`prefixSwirl_radial`, flagged as `C (via slowSwirl)`). Both clusters detected.
+
+**Measured output: 245 definitions divide by one of their own scalar parameters, and 871 theorem
+statements are exposed — 609 of them IN-CONE, across 220 files.** Deliberately narrow scope, so it
+under-reports: only a denominator that is a **single identifier bound as a bare scalar in the same
+signature** counts. Numeric literals are skipped, and so are **projections** — `s.epsilon n`, `A.ell` —
+because those are typically certified by the *structure* (`StripData` carries
+`epsilon_pos : ∀ n, 0 < epsilon n`, `WeightedClasses.lean:35`; `ParentPacketFrames` carries `ell_pos`).
+Flagging projections would reproduce a **known false positive**: a worker's claim that an `epsilon`
+division was unguarded was refuted in exactly that way.
+
+**Why this is the right instrument for the estimate bucket.** The top in-cone files are estimate material,
+not structural: `SlowResidualMatching` (18), `PhaseEstimates` (17), `ActiveAnnulusWeight` (15),
+`HeatSwitchCone` (12), `ExtendedHeatDebts` (10), `ExtendedHeatedOutgoing` (10), `TerminalHistoryBridge`
+(10), `ParametricHeatTail` (9), `ShapeTransition` (9) — plus `Euler/EulerProof.lean` (10). And **143 of
+the in-cone hits sit in 74 files no audit document has ever named**, which converts a slice of the unread
+estimate mass from "unread" into "asked a specific question and got an answer".
+
+**A hit is not a defect.** In both known instances the degenerate value is excluded one layer up by the
+caller, so this is **statement hygiene, not soundness** — which is precisely why it needs a machine:
+reading the theorem cannot reveal it, and reading the caller is a different file. Ledger:
+`audits/nse-deep/JUNKVALUE.csv`.
