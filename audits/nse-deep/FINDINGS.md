@@ -2124,3 +2124,51 @@ it**: `CopyGeometryMatch` *is* the `geometry` field of `ParticularWaveAssembly.L
 (`:1422,1455`), but all 16 `LocalControl` occurrences are binders or aliases — no `.mk`, no
 `{geometry := …}` — and `def controls` (`:1758`) is only a **type alias**. Doing route 4 in both
 directions is exactly the check that the earlier `RegularFamily` verdict got wrong.
+
+### W35 addendum 3 — `read-C`'s two files, and the artifact's Lean-division junk value
+
+`ParametricModulation.lean` — 49 decls: **OK 44 / NOTE 5 / ESCALATE 0 / KERNEL-RISK 0.** A clean live
+file, and the worker did something none of the earlier readers did: **it constructed an explicit
+non-vacuity witness** instead of asserting satisfiability. For the capstone
+`exists_modulated_trueCone_profiles` (`:580`) it exhibits `a=3, m=0, p₁=10, p₂=0`, giving
+`nominalSpeed = 3` (`TrueConeLoop.lean:196`), `coneBound 10 0 = 10` (`ConeAlgebra.lean:17`), so all four
+side conditions `0 < a`, `2 < p₁ + p₂m`, `nominalSpeed < coneBound`, `2 < nominalSpeed` hold
+simultaneously, with `boundary_inactive` satisfiable for `δ ≤ 1`. **The hypothesis set is jointly
+satisfiable — the theorem is not vacuous.** That technique should be the standard for shape-2 checks.
+Both structures are constructed: `CompactCutoff` (`:110`) by `exists_compactCutoff` (`:122`), and
+`TrueConeRealization` (`:300`) twice over (`:304`, `ModulatedProfileAssembly.lean:355`).
+* **NOTE, presentation rather than soundness:** `exists_modulated_trueCone_profiles` (`:580`),
+  advertised as "End-to-end existence", is **referenced by nothing** in the repo, and its conclusion
+  carries cone membership, smoothness, O(1/n) jets and boundary match but **not** the shear identities of
+  `:542`. "Reading only this capstone would overstate what has been packaged."
+
+`PeriodicPhaseAssembly.lean` — 95 decls: **OK 90 / NOTE 5 / ESCALATE 0 / KERNEL-RISK 0.** Its one
+load-bearing hypothesis, `hinj : InjOn quotientPoint …`, is repeated verbatim in **12 theorems** and
+carries everything with real content. Shape-1 test **PASSES**, and it took cross-file work to show it:
+`transportGeometry_injective` (`:705`) only *transports* such an `InjOn`; the generic producer is
+`TorusAverages.quotientPoint_injOn_small_chart` (`TorusAverages.lean:171`); and it **is** discharged for
+a concrete window by `ActualGaussianCoverage.actual_outer_injective` (`:974`) =
+`ActualSignedGeometry.clockWindow_injective` (`:424`), consumed at `ActualCarrierTransportBase.lean:253,263`
+and `ActualCycleAssembly.lean:652,663`. Two coordinate identities were also re-derived by hand and are
+**correct** (`profilePhase_eq_literal` `:423`, `carrier_angularLift_eq_character` `:380`).
+* **NOTE — a genuine shape-4 junk value, from Lean's division convention.** `transportPhase` (`:481`)
+  carries the factor `Kr / K`. At `K = 0` Lean gives `Kr/0 = 0`, so `transportPhase ≡ 0` and the theorems
+  stated **without** `K ≠ 0` (`:492,499,508,520,535,567,722,734`) degenerate to `0 = 0` — including
+  `transportPhase_path` (`:734`), whose "exact values on the entire sampling interval" RHS
+  `(Kr/K)*(A − t*B)` also collapses. Not false, and users do exclude it (`hK : ∀ n, b.frequency n ≠ 0`
+  at `:625,678,865`), but a reader taking `:734` alone gets nothing at `K = 0`.
+* NOTE: `periodizeScalar_periodic/_refine/_transport` (`:151,159,164`) are stated for arbitrary `f` with
+  no summability or compact support; for non-summable copies both sides are the junk `tsum = 0`. True as
+  reindexing identities, empty in that case.
+* NOTE: `ClockWindow` (`:55`) does not require `lower ≤ upper`; with `upper < lower` the `Icc`
+  hypotheses of `:242,734` are **empty**. Non-degeneracy supplied one layer up (`:153`). Shape 3.
+* NOTE: `physicalBlock` (`:602`) **overwrites** `b.angularFrequency` with a constant via `{ b with … }`,
+  so downstream facts about the original do not survive the substitution.
+
+**The stronger/weaker-twin pattern gains a fifth instance:** `physicalBlock_weighted` (`:621`) assumes
+`hK : ∀ n, b.frequency n ≠ 0` and uses exactly two instances, while the adjacent
+`physicalBlock_reference` (`:612`) correctly assumes only `b.frequency reference ≠ 0`.
+
+**Kernel risk across all four of `read-C`'s files: zero a priori** — a single grep for `sorry`, `axiom`,
+`native_decide`, `decide`, `termination_by`, `deriving`, `.rec`, `partial def`, `unsafe`, `macro`, `elab`,
+`inductive`, `class` over 2,428 lines returns **nothing**; largest numerals are single digits.

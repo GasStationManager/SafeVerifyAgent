@@ -126,3 +126,57 @@ NOTEs:
   `plateau` and the `Icc` hypotheses of :242/:734 are EMPTY, so those theorems say nothing;
   non-degeneracy is supplied one layer up (`referenceWindow` :153 uses `lower = (-r,0)`,
   `upper = (r,L)` with `0 < r`, `0 < L`). Shape 3, benign but uncertified by the type.
+
+## 3. NavierStokes/BasePrefixIdentity.lean (396 lines, 29 decls, 2 Prop-structures)
+
+Verdict: OK (both Prop-structures are CONSTRUCTED downstream; the pressure hypothesis is
+discharged too). 25 OK / 4 NOTE / 0 UNCLEAR / 0 ESCALATE / 0 KERNEL-RISK.
+
+Content: real FTC/curl computations, not repackaging. `average_radial_identity` (:23)
+`U_avg + X ∂_X U_avg = U` is proved from `primitive_eq_mul_average` + `partialX_primitive`;
+`radialFlux_eq_neg_X_Z_average` (:41) rewrites the flux with it; :85/:111/:132 then discharge
+the three component identities and :157 `prefixVelocity_eq_profiles` assembles the curl
+componentwise (`fin_cases i`, `velocity_zero/one/two`). Comment at :40 "No divergence equation
+is assumed" is accurate: the flux is DEFINED from the axial history at :79/:83.
+
+Structure census (defect shape 1 test):
+- `VelocityMatches h d f` (:218, Prop: phi/axial/flux `EqOn` on `profileWindow`). CONSTRUCTED
+  in-file by `velocityMatches_of_beta` (:271) from the single scalar premise
+  `X * beta n w = radialFlux ...`, and downstream by
+  `ConstructedSlowBase.repaired_coefficientMatches` (`ConstructedSlowBase.lean:67`).
+- `CoefficientMatches h C d f` (:281, `Prop extends VelocityMatches`, adds pressure +
+  thetaStress + zStress `EqOn`). No constructor in this file -- checked cross-file: CONSTRUCTED at
+  `ConstructedSlowBase.lean:67` (`refine ⟨⟨_,_,_⟩,_,_,_⟩`) and reused at
+  `ConstructedSlowBase.lean:219,:346`, `EntranceAlignedBase.lean:364`. NOT an unsupplied hypothesis.
+- The capstone `finiteIdentities_of_coefficients` (:375) produces `BaseResidual.FiniteIdentities`,
+  which is consumed as a hypothesis in ~8 places (`BaseResidual.lean:1530,:1623,:2480,:2518,:2612`,
+  `ConstructedSlowBase.lean:148,:169`, `FinalSlowBase.lean:108`) -- and its own extra hypothesis
+  `hp : ∀ n, ∀ w ∈ profileWindow, pressureCoefficient h C f n w = 0` (:379) IS discharged:
+  `ConstructedSlowBase.lean:95` relays it and `ConstructedSlowBase.lean:227` supplies it from
+  `GlobalSlowProfiles.lean:1781` (`nominal_pressureCoefficient`). So the whole chain closes.
+
+Non-vacuity: `profileWindow` (:203) `= Ioi 0 ×ˢ Ioo (-1) 1` is a NONEMPTY open half-strip, and
+`inner_mem_profileWindow` (:207) proves the physical similarity point actually lands in it under
+`0 < h < 1/2`, `t < 1`, `0 < s`. So the `EqOn ... profileWindow` obligations are not empty
+conditions. Also note `X > 0` on the window is what makes `X * beta = radialFlux` (:272) an
+informative determination of `beta` rather than the degenerate `0 = flux` on the axis.
+
+NOTEs:
+- NOTE (shape 3/4) every theorem here takes an UNRESTRICTED `C : ℝ`, and the swirl branch runs
+  through `C⁻¹` (:118-121 `partialX_swirl_primitive` gives `-C⁻¹ * d.phi n w`, and :256 rewrites
+  `slowSwirl` as `C⁻¹ * (...)`). At C = 0 Lean's `0⁻¹ = 0` makes the whole swirl channel
+  identically zero and :111/:236/:261 collapse to `0 = 0` for that component. Nothing in this file
+  excludes C = 0; it is excluded one layer up (`W.axis.normalization_pos`, used e.g.
+  `AssembledSlowBase.lean:1004`, `AlignedProfileSpectralCone.lean:48`). Same shape as the artifact's
+  other "non-degeneracy ruled out one layer up" cases.
+- NOTE (shape 6, mild) :23 `average_radial_identity` assumes global `ContDiff ℝ ∞ U` for a
+  pointwise FTC identity at a single `w`; only differentiability of the average at `w` is used
+  (through `average_smooth` / `partialX_primitive`, which themselves want the ∞ form). Same
+  over-strength appears at :59/:68 where `hf : ∀ n ≤ J, DifferentiableAt ...` is the WEAKER twin
+  actually used, while callers (:85, :111, :132) feed it from the global
+  `SmoothCoefficients`. Cosmetic only.
+- NOTE :375 has three separate side inputs (`hTheta`, `hZ` smoothness of the stress densities on
+  `Ioo (-1) 1`, and `hp`); none is proved here. All three are supplied at
+  `ConstructedSlowBase.lean:100-107`, so the theorem is live, but read alone it is a pure bridge.
+- NOTE :314 `radialDivergence_congr_germ` and :287 `coefficient_germ` are germ-transport helpers;
+  they hold for arbitrary `k` and arbitrary functions and carry no analytic content (fine).
