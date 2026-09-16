@@ -1553,7 +1553,22 @@ Report: `workers/ns-variable-gauge-mean.md`. **OK 17, NOTE 4, REFUTED 2, ESCALAT
 3. **Coverage.** 11,511 of 27,753 in-cone theorems live in a file some report has read or cited
    (41.5%, a generous upper bound). Queue in `COVERAGE.md`, ranks 1-2 now closed by W28.
 4. **The five-line `index_nonempty` build** (W25 E1) — still the cheapest open check in the pass, and
-   now clearly buildable: W26 demonstrated that a Mathlib is available on this box.
+   **still NOT runnable here. I overclaimed this and am correcting it in the same cycle.** On seeing
+   W26 elaborate Lean successfully I wrote that the check was "now clearly buildable". It is not, for
+   two measured reasons:
+   * The artifact has **0 built `.olean` files** (`find NSE/.lake -name '*.olean'` → 0). `index_nonempty`
+     cites the artifact's *own* declarations (`ActualPrimaryCovariance.partitionFactor_eq_one`,
+     `ActualSignedMeanBinding.actual_strip_nonempty`), so it needs NSE's 641,332 lines compiled first.
+   * The toolchains differ. NSE pins `leanprover/lean4:v4.34.0-rc2` with mathlib `85e3a25e006c`
+     (`lean-toolchain`, `lake-manifest.json`); the built Mathlib on this box is **v4.33.0**.
+   **The distinction this exposes is worth more than the correction.** W26 could measure real Lean
+   behaviour without the artifact because its probes were **faithful ports** — self-contained
+   restatements over Mathlib alone. Measuring what a *tactic* emits is portable across a minor Lean
+   version. Checking a *theorem about the artifact's own definitions* is not. So the elaboration
+   instrument W26 built generalises to every tactic-behaviour question in this audit (including open
+   thread 5, the 1,176 unbounded `rfl`s, if their goals can be reconstructed as ports) and to **none**
+   of the artifact-specific ones. What would settle item 4 is unchanged from W25: a full
+   `lake build` of NSE at its pinned toolchain.
 
 ## W30 `ns-harmonic-residual` — the `hres` shape recurs: a strong `ExtractionRegular` nobody constructs
 

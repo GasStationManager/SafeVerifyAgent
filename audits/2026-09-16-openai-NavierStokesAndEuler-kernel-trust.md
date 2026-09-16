@@ -300,8 +300,13 @@ information.
    that a property worth relying on across Mathlib versions, and should an artifact this size pin the
    Mathlib revision for that reason as well as the usual ones?
 7. **The five-line `index_nonempty` build.** The cheapest open check in the pass: add the derivation
-   of item 2 to the artifact and build it. A built Mathlib (Lean 4.33.0) exists on the audit box, so
-   the only obstacle was never looking for one.
+   of item 2 to the artifact and build it. It has **not** been run, and an earlier draft of this
+   section wrongly said it was now easy because a built Mathlib exists on the audit box. It is not:
+   the artifact has **zero** built `.olean` files, the check cites the artifact's *own* declarations,
+   and the artifact pins `lean4:v4.34.0-rc2` + mathlib `85e3a25e006c` against the box's v4.33.0. The
+   elaboration measurements above were possible only because they are **faithful ports** — restatements
+   over Mathlib alone. That generalises to every question about what a *tactic* emits, and to no
+   question about what the *artifact* proves.
 
 ## What this does not cover
 
