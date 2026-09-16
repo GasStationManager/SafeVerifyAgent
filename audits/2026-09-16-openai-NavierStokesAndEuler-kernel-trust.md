@@ -307,6 +307,18 @@ information.
    elaboration measurements above were possible only because they are **faithful ports** — restatements
    over Mathlib alone. That generalises to every question about what a *tactic* emits, and to no
    question about what the *artifact* proves.
+   **W31 re-audit, two corrections and a downgrade.** (a) "Five-line" is wrong as a single price: ~5
+   lines proves `Nonempty` as a standalone theorem inside `ActualSignedMeanBinding.lean`, but ~20 lines
+   + 1 import are needed to *delete the empty branches*, because the strip witness at
+   `ActualSignedMeanBinding.lean:54` is import-unreachable from the split sites and must be re-derived
+   low in the DAG in `ActualPrimaryCovariance`. (b) There are **six** split sites, not four — our census
+   grepped `isEmpty_or_nonempty` and missed the two `by_cases Nonempty (ActivePair B N0)` at
+   `ActualParticularStageControls.lean:941,1214`. (c) **The item is downgraded from soundness to
+   documentation**: emptiness would falsify *non-split in-cone* theorems
+   (`ActualPrimaryCovariance.lean:508` becomes `0 = 1`; `ActualSignedMeanBinding.lean:463-472` would
+   equate `0` with an arbitrary `requestedStress` for every `u`), so non-emptiness is **entailed** by
+   theorems the artifact already proves in-cone. Nothing in-cone *depends* on an inhabitant; several
+   *entail* one. Details and the rejected 2-line shortcut: `nse-deep/FINDINGS.md` §W31.
 
 ## What this does not cover
 

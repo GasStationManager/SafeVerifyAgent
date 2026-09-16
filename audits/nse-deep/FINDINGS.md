@@ -1569,6 +1569,19 @@ Report: `workers/ns-variable-gauge-mean.md`. **OK 17, NOTE 4, REFUTED 2, ESCALAT
    thread 5, the 1,176 unbounded `rfl`s, if their goals can be reconstructed as ports) and to **none**
    of the artifact-specific ones. What would settle item 4 is unchanged from W25: a full
    `lake build` of NSE at its pinned toolchain.
+   **RE-PRICED by W31 (and the name "five-line" retired).** The figure conflated two jobs:
+   proving `Nonempty (ActualPrimary.Label B N0)` as a *standalone* theorem is indeed ~5 lines inside
+   `ActualSignedMeanBinding.lean` (all citations in scope there, as the file already does at `:463-472`),
+   but *deleting the empty branches* needs the lemma re-homed low in the import DAG in
+   `ActualPrimaryCovariance` with its own strip witness — **~20 lines + 1 import** — because
+   `actual_strip_nonempty` (`ActualSignedMeanBinding.lean:54`) is import-unreachable from the split sites
+   and `ActualSignedStageControls` does not import `ActualPrimaryCovariance` at all.
+   **And there are SIX split sites, not four** (`ActualParticularStageControls.lean:941,1214` use
+   `by_cases Nonempty (ActivePair B N0)`, which our `isEmpty_or_nonempty` grep could not see).
+   **Priority drops.** W31 established that emptiness would make *non-split in-cone* theorems FALSE
+   (`ActualPrimaryCovariance.lean:508` → `0 = 1`; `ActualSignedMeanBinding.lean:463-472`), so
+   non-emptiness is already *entailed* by proved in-cone theorems. This item is now **documentation-grade
+   tidying, not a soundness risk**.
 
 ## W30 `ns-harmonic-residual` — the `hres` shape recurs: a strong `ExtractionRegular` nobody constructs
 
@@ -1609,5 +1622,101 @@ does. Both times the direction was safe. Both times the *cone* was fooled. A thi
 make "count the declarations whose hypotheses have no constructor" a cheap and worthwhile pass in its
 own right — and it is mechanisable: for every `structure`/`def` used only in hypothesis position,
 check whether any declaration has it in conclusion position without also assuming it.
+
+---
+
+## W31 `ns-index-nonempty` (re-audit) — non-emptiness is **entailed in-cone**; the ledger's cost and site count were both wrong
+
+Three read-only workers (`_sub-index-rederive`, `_sub-index-vacuity`, `_sub-index-incone`) re-ran W25's
+argument against the artifact @ `f9e8bc5` with instructions to disagree. Every claim below is
+**parent-verified at file:line**. The check does **not** close as buildable — the artifact still has
+**0 `.olean` files** and pins `leanprover/lean4:v4.34.0-rc2` (box Mathlib is `v4.33.0`) — but its
+*status* changes, and two of our own numbers were wrong.
+
+**1. The whole question is one type, and the derivation closes all sites.** My suspected type-mismatch
+hole (`partitionFactor` sums over `Label`, the headline splits on `Index`) is **not** a hole. All the
+split types are reducible abbrevs of a single type:
+`CorrectionInitialization.lean:3931` `ActualPrimary.Label B N0 := PrimaryGeometryAssembly.Index nominal
+(choice B N0).prepared.N`; `ActualInitialMean.lean:25` `Index B N0 := ActualPrimary.Label B N0 × Fin 2`;
+`ActualSignedStageControls.lean:35` `SignedLabel B N0 := ActualPrimary.Label B N0 × Fin 2`;
+`ActualSignedUnmaskedBounds.lean:23` `Label B N0 := ActualSignedStageControls.SignedLabel B N0`.
+`Fin 2` is inhabited, so transfer is `⟨(L, 0)⟩` and **one** `Nonempty (ActualPrimary.Label B N0)`
+discharges every site.
+
+**2. `0 = 1` is sound.** `partitionFactor` is a bare `Finset.sum` of `spatialMask ^ 2` over
+`unsignedLabels` with **no division or normalisation** (`ActualPrimaryCovariance.lean:381-382`), so an
+empty label type forces it to `0`. The `= 1` side (`:508-513`) takes only `hx` and `hq` — no hidden
+`Nonempty` instance argument (the file's only `variable` is `{B N0}` at `:92`) — and its engine
+(`PartitionedCovariance.lean:766`) is unconditional over `UnsignedLabel = ℕ × Grid`, so the `1` is not
+itself vacuous. `n` is free: `physicalScale_tail` (`:527`) with `n := N+1` by `le_rfl`.
+The strip bridge is **exact, nothing missing**: `ActualInitialization.lean:383-384` defines
+`strip := BaseContextAssembly.nativeStrip ActualPrimary.nominal ActualPrimary.standardRegion`, literally
+the `hx` of `:509`.
+
+**3. NEW (W31a) — the "five-line" cost conflated two different jobs.** `actual_strip_nonempty` lives in
+`ActualSignedMeanBinding.lean:54`, which **imports** `ActualSignedStageControls` *and*
+`ActualPrimaryCovariance` (`:1-6`), so it is **import-unreachable from the split sites**; and
+`ActualSignedStageControls.lean:1-8` does not import `ActualPrimaryCovariance` at all, so
+`partitionFactor_eq_one` is not even in scope there. Therefore:
+  * **Proving `Nonempty` as a standalone theorem: 5 lines**, inside `ActualSignedMeanBinding.lean`,
+    where all three citations are already in scope — exactly as the file itself does at `:463-472`.
+    **W25's figure is correct for this job.**
+  * **Making the split branches deletable: ~20 lines + 1 import**, with the lemma re-homed low in the
+    DAG in `ActualPrimaryCovariance` (imports only `CorrectionInitialization` + `BaseStressClasses`,
+    `:1-2`) and carrying **its own** strip witness. `ActualInitialMean` already imports that file
+    (`:1-5`), so site 1 comes free.
+  The ledger charged one price for two jobs. Corrected in open item 4.
+
+**4. NEW (W31c) — there are SIX split sites, not four.** Our census grepped `isEmpty_or_nonempty` and
+missed `by_cases`: `ActualParticularStageControls.lean:941` and `:1214` both do
+`by_cases hne : Nonempty (ActivePair B N0)`. Both empty branches are proven (`:983-994`, `:1245-1248`).
+In the non-empty branch inhabitance is used only to build a surjection `e : ℕ → ActivePair` via
+`Classical.choose (exists_surjective_nat …)` — i.e. **inhabitance buys enumeration, never an estimate**.
+That is census miss #7, same shape as the six in P1: a marker regex read as a surface.
+
+**5. What is actually vacuous if the tower is empty.** Sharpen W25's "dead code":
+  * `covariance_bounds_of_curl` (`ActualInitialMean.lean:309`, split `:318`) — **still true but empty**:
+    the empty branch proves `activeLabels = ∅`, `(seed B N0).oscillation = 0`, then discharges both
+    `MeanClass` goals for the zero field (`:319-338`). Its `errors.baseError` content survives.
+  * `ActualSignedUnmaskedBounds.lean:161,196` and `ActualSignedStageControls.lean:1132` — **fully
+    vacuous**: `UniformLocalJets` is a bare `∀ l`, closed by `isEmptyElim` with `C = 0, p = 0`.
+  * **No split branch is FALSE.**
+
+**6. The real conclusion: emptiness is REFUTED in-cone, not tolerated.** The load-bearing point, which
+W25 understated. Emptiness would make **non-split, in-cone theorems false**:
+`partitionFactor_eq_one` (`ActualPrimaryCovariance.lean:508`) becomes `0 = 1`, and
+`requested_cross_tail` (`ActualSignedMeanBinding.lean:463-472`) would equate `0` with an arbitrary
+`requestedStress` **for every `u`** — parent-read: its proof rewrites with `partitionFactor_eq_one` and
+`physicalScale_tail`, and its `hx` is satisfiable from `:54`. So **non-emptiness is an implicit
+consequence of theorems the artifact already proves in-cone.** It is not an open assumption. No in-cone
+theorem *depends* on an inhabitant; several *entail* one.
+
+**7. Census confirmations (and one worker overreach rejected).**
+  * **CONFIRMED, exhaustive grep:** no declaration anywhere states
+    `Nonempty (Label/Index/SignedLabel/ActiveLabel/CellIndex)`. The only inhabitance conclusion in the
+    repo is `ActualParticularPhysicalData.lean:615` `Nonempty (SourceIndex N)` — a different,
+    activity-free type, `in_cone = False`.
+  * The record's **"five `[Nonempty Label]` occurrences" is exact** (`ParticularCopyBounds.lean:453,480`;
+    `ActualGaussianCoverage.lean:730,801,1251`). W31c's "37, not 5" counts *all* `[Nonempty _]` binders
+    across all type variables (13 on `ι`, 5 on `Label`, 6 on `Λ`, 1 on `ActivePair`, …). Both numbers are
+    right about different questions; **the ledger was not wrong here.** All 37 are hypotheses.
+  * In-cone `[Nonempty …]` hypotheses are discharged **only from a case hypothesis**
+    (`ASUB:167,204`; `ASSC:1138`; `APSC:942,1215`) — never by proof.
+  * **REJECTED — W31b's 2-line shortcut.** It claimed `physicalMask_has_index`
+    (`PrimaryGeometryAssembly.lean:198-209`) already gives `∃ i : Index W N` outright. Parent-read: it
+    carries **eight** hypotheses, including `hm : PartitionedCovariance.mask … ≠ 0`. The conclusion is
+    real but **conditional**, and supplying a nonzero-mask point is the entire difficulty — which is
+    precisely what the partition-of-unity reductio buys for free. **W25's "conditional" reading stands.**
+
+**8. Headline independence re-confirmed.** No inhabitance obligation reaches the top:
+`ActualCandidateAssembly.lean:1123-1158,1177` names no label type, the blow-up is label-free
+(`FinalSlowBase.lean:372-379`, `NaturalAxisData.lean:44` `axis.j > 0`), and the correction tower is
+identically zero near every axis point (`ActualCandidateAssembly.lean:643-648`).
+
+**Ledger effect.** W25's E1 is **upgraded**: from "HIGH-CONFIDENCE, UNBUILT vacuity refutation" to
+**non-emptiness is entailed by proved in-cone theorems; the four (now six) empty branches are
+unreachable code**. The residual is documentation-grade, not soundness-grade: 0 declarations assert
+inhabitance, and the reductio only bites for `n ≥ N+1`. Open item 4 is **re-priced, not closed** — it
+still needs a `lake build` at the pinned toolchain, which this box cannot do.
 
 ---
