@@ -1925,11 +1925,23 @@ arithmetic, no recursor. First untouched structural file read: clean.
 occurrences binders or fields. It is a BUNDLE and reads as a deliberately abstract primitive-data
 interface consumed by the block/error definitions, which is the benign reading of an unsupplied bundle.
 
-**Delegation failure, recorded because it cost a cycle.** Six concurrent OpenRouter children were
-spawned; **four returned empty assistant turns and went to `needs_input` having done nothing** (32
-session records, 0 text parts, `basedOnMessageCount: 2`). The earlier batch of four concurrent children
-all succeeded. So the practical ceiling here is about **four concurrent children per provider**, and the
-failure is silent — a child reports `completed` while having produced nothing. Two mitigations now in
-use: cap concurrency at three, and spread across providers (`prime-inference/…` alongside
-`openrouter/…`). The append-after-each-item protocol again limited the damage: the two children that
-did run had their partial work on disk, which is why the two results above survive at all.
+**Delegation failure — and my first diagnosis of it was WRONG, which is worth more than the fix.**
+Six concurrent OpenRouter children were spawned and four produced nothing (empty assistant turns,
+`needs_input`, 0 text parts). I attributed that to a **concurrency ceiling of ~4 children per provider**
+and wrote it into this file. Then I re-ran three tasks on a *different* provider with concurrency 3 and
+**all three failed identically** — which falsified my own explanation. Reading the transcripts' error
+fields instead of inferring from the pattern gave the real causes, and there are two:
+
+* `openrouter/openai/gpt-5.6-luna` — **upstream rate-limiting**: `"temporarily rate-limited upstream"`.
+  Crucially the two children I called "successful" hit the same error **15 and 23 times** and merely
+  retried through it. So this was never a clean 4-worked/2-failed split; it was one flaky resource.
+* `prime-inference/openai/gpt-5.6-luna` — **`402 Insufficient balance`**, on every request. No funds.
+
+So **GPT-5.6 Luna is not reliably available in this environment**, and the concurrency story was an
+artifact of me reading a *pattern* instead of an *error message* — the same count-for-surface mistake
+this audit keeps catching in its own instruments, this time in its delegation layer rather than a regex.
+Cheap-model delegation cannot control cost here if it does not run; the remaining work goes to the
+inherited model with tight scopes. **The failure is silent at the status level** — a child reports
+`completed` while having produced nothing — so worker status must never be read as evidence of work.
+The append-after-each-item protocol again limited the damage: the two children that did partially run
+had their work on disk, which is why the results above survive at all.
