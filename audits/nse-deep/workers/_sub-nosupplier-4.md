@@ -119,3 +119,99 @@ structure (every site is a parenthesised/braced binder, never `field : NativeCon
 body); `NativeDynamics (C l) request` only CONSUMES it as a parameter. Route 5: twin is
 NavierStokes.CorrectionStep.ParticularParameters.NativeControl (:5693, item 4), a DISTINCT structure with
 different arity, also unsupplied; no cross-credit.
+
+## 6. NavierStokes.CorrectionStep.SignedParameters.Dynamics (CorrectionStep.lean:3982)
+VERDICT: UNSUPPLIED. Every hit is in CorrectionStep.lean; 19 lines mention it, all BINDERS.
+Decl :3982 `structure SignedParameters.Dynamics (p : SignedParameters D) (s : StripData D)
+(request : ℕ → D × ℝ → SignedWaveUpdate.Vec2) where` -- 17 fields, first one the DATA field
+`slope : ℕ → ℝ`, then angular/angular_direction/angular_frequency/angular_nonzero/geometry/
+matrix_frozen/target_frozen/request_frozen/mask_frozen/frequency_nonzero/ode/action_eq/cutoff_smooth...
+(so not a Prop; no `constructor`/`refine ⟨..⟩` proof of it can exist).
+Census of the 9 consumer decls, each with a `(h : p.Dynamics s request)` BINDER and a NON-Dynamics
+conclusion: :4010 `Dynamics.phase_eq`, :4020 `Dynamics.good_represents`, :4042
+`Dynamics.exact_represents`, :4053 `Dynamics.linear_identity` (also takes `(hc : p.Control ...)`),
+:4105 `Dynamics.gaussian_represents`, :4115 `Dynamics.context_linear_identity`, :4159
+`Dynamics.linearGood_bounds`, :4267 `Dynamics.full_divergence_zero`, :4308 `Dynamics.modeSolenoidal`
+(binder lines :4011,:4021,:4043,:4056,:4106,:4119,:4163,:4271,:4312). ZERO conclusions are `Dynamics ..`.
+Route 1: none -- all 9 are exactly the trap shape (Dynamics binder in, equation/bound out).
+Route 2: no `⟨..⟩`/`.mk`/record literal / `let H : p.Dynamics := ..` anywhere; the whole tree grep for
+`Dynamics` shows this name only at these 19 CorrectionStep lines (the other `*Dynamics` hits are the
+unrelated identifiers ActualPrimaryDynamics / ActualParticularDynamics / ActualSignedCommonDynamics /
+NativeDynamics).
+Route 3: no instance. Route 4: NOT a field of any structure. I checked the natural containment candidate
+explicitly: `structure NativeDynamics` at :6000 (PeriodizedSignedParameters) and `structure NativeDynamics
+: Prop` at :6124 (ParticularParameters) do NOT have a `Dynamics` field -- :6000's fields are
+slope/angular/open_patch/radius_nonzero/radial_radius/matrix_frozen/target_frozen/request_frozen/
+mask_frozen/frequency_nonzero/ode/action_eq (a PARALLEL re-statement over `h.phasePatch`, not a wrapper),
+and no `structure ... where` line anywhere contains `: p.Dynamics`/`: SignedParameters.Dynamics`.
+Route 5: no twin -- `Dynamics` as a bare last component exists only at :3982; `NativeDynamics` is a
+DIFFERENT name (and is itself never constructed either: :6029..:7429 are all `(d : NativeDynamics h ..)`
+binders and :6572/:7179/:7376/:8154/:8187/:8334 are `(dyn : ∀ .., NativeDynamics (C ..))` binders).
+
+## 7. NavierStokes.GlobalSlowProfiles.PatchSupport (GlobalSlowProfiles.lean:400)
+VERDICT: SUPPLIED (route 2: unnamed construction by delta-unfolding), witness
+NavierStokes/GlobalSlowProfiles.lean:639-643; ultimate producer
+NavierStokes/PositiveOrderMoments.lean:916 (`exists_parameterized_exact_repair`).
+Decl :400 `noncomputable def PatchSupport (a b : ℝ) (f : Field) : Prop :=
+  ∀ eta, tsupport (fun R => f (R, eta)) ⊆ Ioo a b` -- a plain (non-irreducible) Prop def, so any term of
+the unfolded ∀-statement inhabits it.
+Name-hit census (9 sites, 1 file): :400 decl; :403 `theorem patch_zero .. (hs : PatchSupport a b f)`
+BINDER (concludes `f (R, eta) = 0`); :416 `noncomputable def phiCorrection .. (hs : PatchSupport a b f)
+(C : ℝ) : EvenProfile S` BINDER; :440,:447,:460,:470,:562,:571 all `(hs : PatchSupport a b f)` BINDERS
+(:571 `theorem exterior_phiCorrection .. (hs : PatchSupport a b f) (C : ℝ) : Exterior B S (phiCorrection
+hS ha hf hs C)`). ZERO hits have `PatchSupport` as the conclusion, so route 1 is empty -- BUT route 2
+fires:
+ THE SUPPLIER: PositiveOrderMoments.lean:916 `theorem exists_parameterized_exact_repair (lam a b : ℝ) ..
+ : ∃ du de : JointProfile, ContDiffOn ℝ ∞ du (univ ×ˢ S) ∧ ContDiffOn ℝ ∞ de (univ ×ˢ S) ∧
+ (∀ eta, tsupport (fun R => du (R, eta)) ⊆ Ioo a b) ∧
+ (∀ eta, tsupport (fun R => de (R, eta)) ⊆ Ioo a b) ∧ ...` -- the 3rd and 4th conjuncts are LITERALLY the
+ body of `PatchSupport a b du` / `PatchSupport a b de`, and this theorem takes NO PatchSupport hypothesis
+ (its hypotheses are 0<lam, 0<a, a<b, IsOpen S, 0<n, ContDiffOn A, A≠0, two initial-row equations,
+ jointRowDensity smoothness, 0≤B, exterior vanishing).
+ THE CONSTRUCTION SITE: GlobalSlowProfiles.lean:639 `obtain ⟨du, de', hdu, hde, hduS, hdeS, hm⟩ :=
+ PositiveOrderMoments.exists_parameterized_exact_repair lam a b hlam ha hab hS hn uraw eraw oraw A hA hAn
+ hu0 he0 hd hB.le hs`, then :643 `let phin : EvenProfile S := phi n + phiCorrection hS ha hde hdeS C`
+ -- `hdeS` is accepted in the `(hs : PatchSupport a b f)` slot of `phiCorrection` (:416), i.e. the
+ PatchSupport hypothesis IS discharged here; the same `hdeS` is re-used at :650, :656, :682, :685, :686
+ (e.g. `exterior_phiCorrection hS ha hab hbB hde hdeS C`), and the sibling `hduS` likewise feeds the
+ evenCorrection lemmas.
+Route 3: no instance (it is a Prop def, not a class). Route 4: not a field of any structure (all 9 sites
+are `(hs : ..)` binders). Route 5: single declaration of the name in the tree; no twin, so no
+mis-attribution risk.
+
+## 8. NavierStokes.ParticularWaveBounds.CopyGeometryMatch (ParticularWaveBounds.lean:1764)
+VERDICT: UNSUPPLIED (route 4 candidate found and REFUTED: the containing structure is itself never
+constructed).
+Decl :1764 `structure CopyGeometryMatch (s : StripData (P × Plane)) (dirs : GraphDirections (P × Plane))
+(base : WaveCoefficients (P × Plane)) (t : ℕ → TangentData P ProblemStatement.Space) (g : ℕ → Geometry)
+(copy : ℕ → Frequency) : Prop where` -- fields normal / damping / fast / action ...
+Name-hit census (10 lines, 2 files): ParticularWaveBounds.lean :1857,:1882,:1910,:1952,:2013,:2059,
+:2119,:2183 -- ALL `(hgeometry : CopyGeometryMatch s dirs base t g copy)` BINDERS (e.g. :1857 sits in a
+theorem concluding `... .principal s dirs n x = -source n x`), and ParticularWaveAssembly.lean:1455.
+ZERO conclusions => route 1 empty. No `⟨..⟩`/`.mk`/record literal / `constructor` site => route 2 empty.
+No instance => route 3 empty. No twin: the name is declared exactly once in the tree => route 5 empty.
+ROUTE 4 CHECKED EXPLICITLY (this is the interesting part):
+ CopyGeometryMatch IS a field of another structure. ParticularWaveAssembly.lean:1455 reads
+ `  geometry : CopyGeometryMatch s dirs (actualCarrier base b j) (tangentFamily r charts j)
+      (bandGeometry r charts) copy`
+ and the enclosing declaration is S = `NavierStokes.ParticularWaveAssembly.LocalControl`, declared at
+ ParticularWaveAssembly.lean:1422 `structure LocalControl (r : Reference P) (charts : BandCharts P) ...`
+ (the nearest preceding top-level `structure`; the next one after it is at :1477 `namespace LocalControl`).
+ So constructing LocalControl WOULD supply CopyGeometryMatch. But LocalControl is ITSELF never
+ constructed: grep "LocalControl" over the tree gives 16 lines and every single use is a BINDER or an
+ alias --
+   ParticularWaveAssembly.lean:1422 decl; :1477/:1718 `namespace`/`end`; :1484
+   `(C : LocalControl r charts c u b G A j base copy s dirs α κ)` (a `variable` for the whole
+   LocalControl namespace of consumer theorems); :1758 inside
+   `noncomputable def controls (N : ℕ) (α κ : ℝ) : Type := ∀ j ∈ modes N, LocalControl D.reference
+   D.charts D.context D.state D.carrierBlock D.gaussianInput D.aliasInput j D.background D.copy D.strip
+   D.directions α κ` -- a TYPE ALIAS, not an inhabitant;
+   PhysicalParticularWave.lean:40,:627,:895,:1289 `(C : LocalControl D.reference ...)` binders;
+   ActualParticularPhysicalData.lean:192, ActualParticularRealization.lean:727,:810,:899,:916 same
+   binder shape; ActualPrimaryBounds.lean:914/:1079 are an unrelated `section LocalControl` marker pair.
+ The alias `D.controls N α κ` is likewise only ever a BINDER type (`(C : D.controls N α κ)` at
+ PhysicalParticularWave.lean:1137,:1235,:1341,:1351,:1359,:1369) -- never a value, no
+ `⟨..⟩`/`fun j hj => ..` inhabitant anywhere. Hence route 4 does NOT fire: no `LocalControl.mk` /
+ `{ geometry := .. }` / anonymous-constructor site exists, so the field is never filled and
+ CopyGeometryMatch is never produced.
+

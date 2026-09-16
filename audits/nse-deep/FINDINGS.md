@@ -1984,3 +1984,86 @@ report against the instrument**.
 the earlier verdict) and `PhysicalResidualNaturality.PositiveSupport` (`:713`, 20 sites in 4 files). The
 latter includes the trap case explicitly: its only `PositiveSupport.*` declaration,
 `source_zero` (`:727`), concludes an *equation* from a `PositiveSupport` binder, so it supplies nothing.
+
+## W35 — reading the untouched structural files: the W8 shape recurs, and one whole branch is dead
+
+First three of the 73 untouched STRUCTURAL files read line-by-line (134 in-cone theorems). Two are
+substantive, and the instrument of W32/W34 was independently validated against both.
+
+### `IntegratedMeanBalances.lean` — 106 decls: **OK 101 / NOTE 5 / ESCALATE 0 / KERNEL-RISK 0**
+The integration-by-parts core is correct and genuinely load-bearing. Spot-checks all pass:
+`moment_deriv_succ` (`:66`), `moment_angular_viscosity` (`:196`, `2∫f − ∫f − ∫f = 0`),
+`moment_axial_viscosity` (`:211`), `pressure_moment` (`:146`). The `r ≠ 0` a.e. set (`:55`) is used
+legitimately for the Bochner integral.
+* **NOTE — the W8 `hres` shape recurs, and this is its third instance.** `structure SmoothShell` (`:582`)
+  has exactly **three producers in 641,332 lines** — `averagedRadialSource_shell` (`:899`),
+  `reconstructedMeanPressure_shell` (`:904`), `normalizedMeanDensity_shell` (`:912`) — and **none is a
+  velocity or flux field**. Its `.partial` (`:586`) and `.add` (`:590`) are closure lemmas (assume it to
+  conclude it), so they supply nothing. Every consumer needing `SmoothShell a b v`/`γ`/`radialFlux`/
+  `axialFlux`/`virtualFlux` — `:639`, `:674`, `:735`, `:833`, `:843`, `:931`, and downstream
+  `SignedStressPrimitive.lean:991,1014,1030,1047,1066` — can only be instantiated by a caller supplying
+  the shells by hand. **This is exactly the shape `nosupplier.py` documents that it cannot see**: the
+  predicate *is* supplied, just never at the arguments that matter.
+* **NOTE — dead parallel branch, with a twin.** The file's physically meaningful endpoints (`:833`,
+  `:931`) have **no consumer anywhere**; `:843` is used only internally at `:944`. The live chain to
+  `SignedMeanGain.lean:794-797` runs through **same-named twins**
+  `StateMomentBalances.state_*_bump_improvedClass` (`:1081,1096`) and
+  `GaugeMomentBalances.*` (`:816,869`), built on a *different* balance operator
+  (`StateMomentBalances.lean:630,666`). So this file's `angularBalance`/`axialBalance` branch is an
+  unused parallel copy — and there are **two** `state_angular_bump_improvedClass`, so credit is easy to
+  misattribute.
+* **NOTE — full-line vs half-line.** `moment` (`:22`) integrates over all of ℝ. The three main identities
+  (`:639,674,735`) assume neither `0 < a` nor `a < b`; with `b < a`, `RadiallySupported a b F` forces
+  `F ≡ 0`, so they have a degenerate all-vanishing instance. Non-vacuous overall since `a b` are
+  universally quantified, and `:826` does require `0 < a`. NOTE, not ESCALATE.
+* Kernel risk nil; largest numeral **2**.
+
+### `PulseCovariance.lean` — 91 decls: **OK 84 / NOTE 4 / UNCLEAR 1 / ESCALATE 2 / KERNEL-RISK 0**
+* **ESCALATE — `structure TangentPulse` (`:637`) is never constructed anywhere in the artifact.**
+  Repo-wide grep gives only argument/hypothesis positions (`:678,681,685,689,696,702,707,716,756,809`;
+  `PartitionedCovariance.lean:345,350,354,359,369,379,393,407,418,981,1004`). Decisive detail: the field
+  `tangent_model` occurs at **exactly two lines** in 2,659 files — its declaration (`:643`) and one
+  projection (`:711`). No `.mk`, no `… : TangentPulse … where`, no `tangent_model := …`.
+  Dead as a result: `:696`, `:701`, `:706`, `:715`, `:747`, `:801`, plus
+  `PartitionedCovariance.lean:979` (`PairData.ofSignedPulses`) and `:995`
+  (`compact_actual_pair_strictCone`). **So the file's advertised payload — "the actual pulse pair has a
+  nonsingular covariance with positive inverse weights" — is never instantiated for any actual object.**
+  Direction safe (unreachable, not false).
+* **ESCALATE — dead leaves.** `compact_actual_positive_inverse` (`:747`) → `:801` → only
+  `PartitionedCovariance.lean:1008`, and `compact_actual_pair_strictCone` / `PairData.ofSignedPulses`
+  have **zero** further uses. `normalizedColumn_error_of_outer_scale` (`:618`) has zero uses. The branch
+  reaches no main theorem.
+* What makes it sharp is the contrast in the *same file*: `PulseBounds` (`:130`) **is** constructed
+  (`PrimaryCovarianceBounds.lean:573` via `pulseBounds_of_envelope` `:153`) and `CutoffBounds` (`:145`)
+  is discharged (`PrimaryCovarianceBounds.lean:143`). The mass/moment half is live; precisely the three
+  extra `TangentPulse` ODE-tangent fields (`:640,642,643`) are what nobody certifies.
+* NOTE: `TangentPulse` carries `E` with **no sign hypothesis**; `E < 0` makes `:643` unsatisfiable, and
+  consumers repair it with a separate `hE : 0 ≤ E` (`:603,707,753,807`) — the type does not certify it.
+* NOTE: `SignedPulsePair` (`:677-678`) forces the affine drift slope **equal** to the base slope
+  `s0 = ±u`; nothing justifies that identification, and if the real ODE drift differs, no pulse can ever
+  be built — which reinforces the ESCALATE.
+* NOTE (positive): `mass psi x` is never divided by without proof (`mass_pos` `:310` from
+  `core_weight_lower` `:264` + `mass_lower` `:292`), so `averagedDirection` (`:361`) is **not** a 0/0
+  junk value. Kernel risk nil.
+
+### `CopyAngularInvariance.lean` — 56 decls: **OK 56**, clean, zero kernel risk.
+`TangentInvariant` (`:201-206`) **is** constructed by `angleTangent_invariant` (`:669-680`).
+
+### Instrument validation, unprompted and independent: **5 of 5**
+This reader knew nothing of `NOSUPPLIER.csv`, yet on the five predicates of `PulseCovariance.lean` and
+`IntegratedMeanBalances.lean` its verdicts match the script exactly — including **two non-trivial
+negatives**: flagged `TangentPulse` (7 sites, no hint), and stayed silent on `PulseBounds`,
+`CutoffBounds`, `SmoothShell` and `TorusPeriodic`, all four of which the reader confirmed *are*
+constructed. That is the strongest evidence so far that the pass's *negatives* are trustworthy.
+
+### Front-1 tally after this cycle
+**26 candidates verified → 17 CONFIRMED UNSUPPLIED carrying 339 in-cone hypothesis sites, 9 false
+positives (65% precision).** New confirmations: `ErrorHarmonics.GaussianData` (`:446`),
+`PhysicalResidualNaturality.PositiveSupport` (`:713`, 20 sites/4 files), **both** `CorrectionStep`
+`NativeControl` twins (`:5693`, `:5543`), `CorrectionStep.SignedParameters.Dynamics` (`:3982`), and
+`PulseCovariance.TangentPulse` (`:637`). Two more false positives, both **route 2 in-proof**:
+`ActualParticularDynamics.SourceClasses` (`:1335`, abbrev-body construction) and
+`GlobalSlowProfiles.PatchSupport` (`:400`, construction by delta-unfolding). **36 in-cone hint-free
+candidates (146 sites) remain unverified.**
+
+---
