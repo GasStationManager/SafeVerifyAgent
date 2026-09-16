@@ -65,7 +65,16 @@ from safeverifyagent.extract import blank_comments          # noqa: E402
 from cone import decls_with_ns, IDENT, SKIP_DIRS            # noqa: E402
 
 PRED_KINDS = ("structure", "class", "inductive", "def", "abbrev")
-VARIABLE = re.compile(r"^[ \t]*variable\b(?P<rest>.*)$", re.M)
+# A `variable` block CONTINUES across indented lines:
+#     variable (D : AssemblyData Parameter) (s : StripData Associated)
+#       (hn : PhysicalResidualNaturality.PositiveSupport ...)
+# Matching only the first line missed `hn` entirely. That undercounts hypothesis
+# sites, and worse, a predicate used ONLY inside such a block scores zero sites and
+# is DROPPED from the candidate list -- i.e. the bug can hide a finding, which is
+# the one direction this instrument must not fail in. Measured: it lost all uses in
+# ActualParticularRealization.lean for two different predicates, and a worker caught
+# it by reporting 4 using files where this script reported 3.
+VARIABLE = re.compile(r"^[ \t]*variable\b(?P<rest>[^\n]*(?:\n[ \t]+[^\n]*)*)", re.M)
 OPENERS, CLOSERS = "([{\u2983\u27e8", ")]}\u2984\u27e9"
 
 

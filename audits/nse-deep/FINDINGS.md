@@ -1945,3 +1945,42 @@ inherited model with tight scopes. **The failure is silent at the status level**
 `completed` while having produced nothing — so worker status must never be read as evidence of work.
 The append-after-each-item protocol again limited the damage: the two children that did partially run
 had their work on disk, which is why the results above survive at all.
+
+### W34 addendum 2 — a THIRD self-bug, and this one was hiding findings
+
+`nosupplier-8` reported `PhysicalResidualNaturality.PositiveSupport` used in **4** files where the
+script said **3**. That is the second time a worker has out-counted the instrument, so I chased it
+instead of shrugging: the missing file was `ActualParticularRealization.lean`, where the uses sit in a
+**multi-line `variable` block**
+
+    variable (D : AssemblyData Parameter) (s : StripData Associated)
+      (hn : PhysicalResidualNaturality.PositiveSupport D.carrierBlock D.gaussianInput D.aliasInput n)
+
+and the `variable` regex matched only the **first line**. Unlike the previous two bugs this one fails in
+the **dangerous** direction: a predicate used *only* inside such a block scores zero hypothesis sites and
+is dropped by the `>= min_hyp` filter, so **the bug could hide a finding outright**.
+
+Fixed to consume indented continuation lines. The effect is **purely additive — 104 → 112 candidates, 8
+surfaced, 0 lost** — and `PositiveSupport` now reports 20 sites in **4** files, matching the worker
+exactly. The eight that had been hidden:
+
+| predicate | sites | in-cone | hint |
+|---|---|---|---|
+| `CorrectionInitialization.MovingInitialization.PrimaryMeanData` | 6 | yes | none |
+| `CorrectionInitializationNoOptions.MovingInitialization.PrimaryMeanData` | 6 | no | none |
+| `EulerParentPacketFrames.NoOptions.GeometryForwardInput` | 2 | no | none |
+| `EulerChildParticleTime.Representation` | 1 | yes | route2? |
+| `ActualWaveRegularity.ModeData` | 1 | yes | none |
+| `GluedStageEstimates.Representations` | 1 | yes | none |
+| `WaveStageContinuation.CurlPrimitives` / `.ParticularPrimitives` | 1 each | no | none |
+
+**Three self-bugs in one instrument in one cycle, all found the same way:** by a worker's number
+disagreeing with the script's and the parent chasing the disagreement rather than averaging it. The
+pattern to keep is not "validate once" but **treat every parent/worker numeric disagreement as a defect
+report against the instrument**.
+
+**Two more candidates confirmed by `nosupplier-8`, both UNSUPPLIED with full 5-route censuses:**
+`ErrorHarmonics.GaussianData` (`:446`, 14 hits in 1 file, zero conclusions — independently corroborating
+the earlier verdict) and `PhysicalResidualNaturality.PositiveSupport` (`:713`, 20 sites in 4 files). The
+latter includes the trap case explicitly: its only `PositiveSupport.*` declaration,
+`source_zero` (`:727`), concludes an *equation* from a `PositiveSupport` binder, so it supplies nothing.
