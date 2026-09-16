@@ -2341,3 +2341,67 @@ estimate mass from "unread" into "asked a specific question and got an answer".
 caller, so this is **statement hygiene, not soundness** — which is precisely why it needs a machine:
 reading the theorem cannot reveal it, and reading the caller is a different file. Ledger:
 `audits/nse-deep/JUNKVALUE.csv`.
+
+## W38 — front 1 reaches 32 confirmed, the Euler thread holds, and three instruments get calibrated against readers
+
+### `nosupplier-10`: **8 of 8 UNSUPPLIED**, with the twin analysis finally done to depth
+* `WaveStateRegularity.CoefficientSupport` (`:197`) — **independently confirmed twice** (also by `read-D`).
+* `PhysicalCopyBounds.CommonChart` (`:336`) — the deepest twin analysis yet: **every** `where`-build in the
+  repo (`ActualSignedPhysicalData:1812`, `WaveDataReindex:106`, `DependentSignedPhysicalFamily:406,440`,
+  `ActualParticularPhysicalData:320`, `InitialPhysicalData:1092`, `PositiveTimeSignedData:319`) is the
+  *qualified* `LocalPhysicalCopyBounds.CommonChart` with an extra `r0` argument; `PhysicalClassBounds:727`
+  builds a **third** twin; a grep of the audited qualified name returns **0** hits; and `:356` concludes an
+  `∃` from a `CommonChart` binder. Three same-named predicates kept straight.
+* `ActualWaveRegularity.NativeData` (`:47`) — **route 4 positive then refuted across two levels**: it is
+  the `native` field of `ModeData` (`:390`), whose own parents (`ParticularData:606`, `SignedData:773`) are
+  binder-only and never built. Its twin `SignedMeanGain.NativeData` is *proved `IsEmpty`*.
+* Plus `PhysicalStageSupport.NativeOuterBounds` (`:234`), `SmoothParameterIntegral.LocallyDominatedOn`
+  (`:127`, whose siblings `LocallyDominated`/`Deriv` **are** built with no bridge to the `On` version),
+  `CorrectionStep.PhysicalFields` (`:912`), `ParticularWaveBounds.CopyControl` (`:563`),
+  `PhysicalSignedWave.ReferencePhase` (`:142`).
+
+### A sub-pattern worth naming: **CLOSURE WITHOUT A BASE CASE** — 6 instances
+A predicate carrying a full algebra of closure lemmas (`.add`, `.mul`, `.partial`, `.updated`, `.mono`)
+and **no way to make the first one**: `JetBounds.AllJetBound` (5 conclusions, every one takes an
+`AllJetBound`), `CorrectionStep.PhysicalFields` (sole build is `add (u v : PF) : PF`),
+`DefectIncrementBounds.ShellTriple` (`.updated` takes **two**), `MeanResidual.AngularPeriodic`,
+`HarmonicResidual.ExtractionRegular`, `IntegratedMeanBalances.SmoothShell`. This is *why* the
+"concludes P from a P binder" trap keeps firing: the artifact systematically develops the algebra of a
+predicate before (or instead of) constructing an instance.
+
+### `read-D`: one candidate RETIRED, one capstone killed
+* **`VolterraRegularity.SmoothCoefficientData` (`:660`) IS CONSTRUCTED — retired from the candidate list.**
+  `PositiveAxisExistence.lean:348-356` builds `smooth := {forcing, zeroth, first}` inside
+  `LowerInputRegularity.system` (`:341-345`), consumed at `:55,59`. Only its `symmetricRaw*` wrapper uses
+  (`:830,848`) are dead. **Instrument validation:** `nosupplier.py` had tagged this `route4` with parent
+  `PositiveAxisExistence.SmoothHolomorphicSystem` — i.e. **the hint named the exact file the reader found
+  the supplier in.** That is the hint screen working as designed.
+* **`WaveStateRegularity.lean` — 28 decls: OK 21 / ESCALATE 6.** `CoefficientSupport` (`:197`) is never
+  constructed, killing `:209,248,258,269,278` **and the file capstone `:288 waveStage_covariance_regular`**.
+  **Twin trap:** the `waveStage_covariance_regular` actually used by `CorrectionStep.lean:7549` is
+  `GaugeDebtIncrement.lean:360`, a *different theorem*. And a shape-6 instance: the strong unconstructed
+  coefficient-level predicate sits beside the weaker oscillation-level `fieldSum_support` (`:226`), which
+  **is** constructed (`ActualWaveRegularity.lean:445,483`) and carries all live traffic to
+  `CorrectionStep:8749,8761`.
+
+### `read-E`: **the Euler thread stays CLOSED** — 4 files, 77 decls, 0 ESCALATE, 0 KERNEL-RISK
+`OddData` is built at `BaseStaticEuler:151` on a genuinely nonzero field; `WordBound` is division-free and
+`R = 0` makes it **stronger**; `Forcing` is constructed at `MeanPacketForcingAlgebra:28-56`. Its key
+observation is the **positive** control for W37: all three inverse-valued defs in that block are
+nondegenerate **by type** — denominators `1 + ‖FInv.field‖`, `1 + ‖F.field‖` (`:49-50`), or `ell_pos`
+(`ParentPacketFrames:26`) — the exact opposite of the `Kr/K` and `C⁻¹` defects.
+
+### `junkvalue.py` calibrated against two readers, and its scope limit measured
+* **Zero false positives** where guards exist: `read-E`'s 4 Euler files → **0 hits** (compound `1 + ‖·‖`
+  denominators, skipped by design), and `AxisCoefficientSpace`'s five properly-guarded divisions
+  (`:224,233,245,276,450`, each carrying `hw > 0` or `hε > 0` in its **own** signature) → **0 hits**.
+* **But it missed a real one a reader found:** `AxisCoefficientSpace` `:434,437` are content-free at
+  `ε = 0` (`AxisSpace I ε` at `:430` does not certify `ε > 0`, and `ε⁻¹ = 0` forces the coefficients
+  constant). Cause: there `ε` arrives as an argument of a **structure**, not as a bare `(ε : ℝ)` binder, so
+  the scalar-binder test cannot see it. **Recorded scope limit:** the pass covers bare scalar binders and
+  definitions parameterised by them, **not parameters arriving through a structure argument.** Under-reports,
+  as declared.
+
+**Front-1 tally: 44 verified → 32 CONFIRMED UNSUPPLIED carrying 428 in-cone hypothesis sites,
+12 false positives (73% precision). 19 in-cone hint-free candidates
+(44 sites) remain.**

@@ -139,3 +139,77 @@ the neighbouring `VariableGaugeMean.density` (VariableGaugeMean.lean:64) does in
 FILE 2 TALLY: 28 decls read — OK 21 / NOTE 1 (:97/:111 constructed-but-unconsumed) / UNCLEAR 0 /
 ESCALATE 6 (:209, :248, :258, :269, :278, :288 — all dead behind the never-constructed `CoefficientSupport`
 :197) / KERNEL-RISK 0.
+
+## FILE 3: NavierStokes/AxisCoefficientSpace.lean (460 lines, 52 decls)
+
+Content: the Banach space of the manuscript's weighted axis coefficients — normalized bounded-continuous
+jets `((ℕ×ℕ) × I.interval) →ᵇ ℝ` (:49) cut down by the closed linear FTC identity `Compatible` (:92-95),
+so that a point really does determine smooth functions whose stored higher coordinates ARE their
+derivatives (:142 `hasDerivWithinAt_jet`, :164 `iteratedDerivWithin_jet`, :180 `contDiffOn_jet`).
+
+VERDICT: CLEAN, and it is the positive control for two of the rubric's defect shapes.
+
+### It is LIVE, and both directions are constructed (no unsupplied hypothesis here)
+- `Window` (:28) is constructed: `ActivationHolomorphic.parameterWindow` (ActivationHolomorphic.lean:699-702,
+  `nondegenerate := by norm_num`).
+- Elements of the space are constructed: `ofJetFamily` (:330) is used at AnalyticCoefficientBounds.lean:222,
+  AxisOperators.lean:138 and :213, AxisInverseFactors.lean:107 — always as
+  `ofJetFamily I (weight ε) (weight_pos hε) ...`, i.e. with strictly positive weights.
+- Consumed downstream: `coefficient_ext` (:263) at AxisOperators.lean:160,172,236,247,256,267,
+  AxisInverseFactors.lean:136, AxisEvaluationAlgebra.lean:249; `hasDerivAt_jet_interior` (:156) at
+  AxisEvaluation.lean:186,455 and AxisAnalyticCoefficients.lean:22; `abs_jet_sub_le` (:217) at
+  AxisContraction.lean:675,687; `axisSpace_norm_le_iff` (:450) at AxisResolvent.lean:316.
+  (Twin warning: `ShapeTransition.lean:1248` declares an unrelated `abs_jet_sub_le`.)
+
+### JUNK-VALUE SWEEP — PASSES, unlike the two known defects. Every statement that divides by the weight
+carries the nonvanishing hypothesis IN ITS OWN SIGNATURE:
+:224 `normalized_derivative` has `hw : ∀ n m, w n m ≠ 0`; :233 `quotient_abs_derivative` and
+:245 `norm_le_iff_derivative_bound` have `hw : ∀ n m, 0 < w n m`; :276 `rawOfJetFamily` and :330
+`ofJetFamily`, :387 `ofSmoothFamily` all take `hw : ∀ n m, 0 < w n m` before the `/ w` in their bodies
+(:280, :293); the ε-level statements :442 and :450 take `hε : 0 < ε` and route through
+`AxisWeightEstimates.weight_pos` (AxisWeightEstimates.lean:55). The unweighted bound statements use
+`|w n m|` (:205, :212, :219) so they are correct even for a signed weight. NO unguarded division found.
+
+### NOTE 4 (shape 3, mitigated but real): `AxisSpace I ε` (:430) is a TYPE that does not certify `0 < ε`.
+Concretely, `weight ε n m = (1/20)^n * (ε⁻¹)^m * m! * (n+m).choose m / (((n:ℝ)+1)^2 * ((m:ℝ)+1)^2)`
+(AxisWeightEstimates.lean:28-30). At `ε = 0`, Mathlib gives `(0:ℝ)⁻¹ = 0`, so
+`weight 0 n 0 = (1/20)^n / ((n+1)^2) > 0` but `weight 0 n m = 0` for every `m ≥ 1`. WITNESS of the
+degeneracy: in `AxisSpace I 0` every jet with `m ≥ 1` is identically `0` (by `jet` :52-53), so
+`Compatible` (:92) at `m = 0` reads `jet A n 0 x = jet A n 0 I.left + ∫ 0`, i.e. the coefficient functions
+are forced CONSTANT. The two ε-statements that carry no `hε` — `axisSpace_complete` (:434) and
+`axisSpace_smooth` (:437) — are therefore true but content-free at `ε = 0` (constants are smooth). This
+is only a NOTE, not an escalation: the two quantitative ε-statements (:442, :450) DO take `hε : 0 < ε`,
+and every downstream construction supplies `weight_pos hε`. Similarly `w : ℕ → ℕ → ℝ` is unconstrained in
+the generic half of the file (:52-:220): with `w ≡ 0` every `jet` is `0`, `Compatible` holds for all `A`,
+and `CoefficientSpace I 0 = RawJets I` — the smoothness/bound theorems then say nothing. The file is
+honest about this: exactly the statements whose content needs nonvanishing (`normalized_derivative` :224,
+`coefficient_ext` :263, and all constructors) demand it.
+COUNTER-PATTERN worth recording: `Window.nondegenerate : left < right` (:31) certifies nondegeneracy IN
+THE TYPE, and that is what feeds `uniqueDiffOn_Icc I.nondegenerate` (:153, :382, :395) — without it
+`iteratedDerivWithin` on `Icc` would be junk. This is the artifact doing shape 3 the RIGHT way.
+
+### NOTE 5 (dead but harmless): the `ofSmoothFamily` block (:387 def, :398, :409, :419) has no caller
+anywhere outside this file; only the `ofJetFamily` route is used. Also with no external caller:
+`quotient_abs_derivative` (:233), `axisSpace_complete` (:434), `axisSpace_smooth` (:437),
+`axisSpace_derivative_bound` (:442), `contDiffAt_coefficient_interior` (:195). These are presentation
+lemmas; `ofSmoothFamily` is proved correctly (its jets are the genuine `iteratedDerivWithin`, :404-405).
+
+### KERNEL-RISK SWEEP: one `structure Window` (:28, three fields, no recursion), one `Submodule` bundle
+(:98), one `instance coefficientSpace_complete` (:132, from `IsClosed.completeSpace_coe`), three
+`abbrev`s (:49, :130, :430 — reducible, no `decide`). No `inductive`, no `deriving`, no `termination_by`,
+no `.rec`, no `decide`, no metaprogramming. The only induction is `iteratedDerivWithin_jet` (:167, plain
+`Nat` recursion). Largest numeral in this file: `2` (in `Nat` exponents / index arithmetic); the numeral
+`20` and the `factorial`/`choose` numerals live in AxisWeightEstimates.lean:28-30, outside my files, and
+appear here only symbolically. => no kernel risk.
+
+FILE 3 TALLY: 52 decls read — OK 50 / NOTE 2 (:430/:434/:437 ε-degeneracy; :387 dead `ofSmoothFamily`
+block) / UNCLEAR 0 / ESCALATE 0 / KERNEL-RISK 0.
+
+## OVERALL (worker _sub-read-struct-4)
+The one thing to carry forward: `WaveStateRegularity.CoefficientSupport` (WaveStateRegularity.lean:197) is
+NEVER constructed anywhere in the artifact, killing 6 in-cone theorems (:209, :248, :258, :269, :278, :288)
+including that file's `waveStage_covariance_regular` capstone — whose name collides with the LIVE
+`GaugeDebtIncrement.waveStage_covariance_regular` (GaugeDebtIncrement.lean:360) that CorrectionStep.lean:7549
+actually uses. By contrast `VolterraRegularity.SmoothCoefficientData` (VolterraRegularity.lean:660) IS
+constructed (PositiveAxisExistence.lean:348-356, via `LowerInputRegularity.system` :341) and IS consumed
+(PositiveAxisExistence.lean:55,59), so it should come off the unsupplied-hypothesis candidate list.
