@@ -2256,6 +2256,28 @@ vacuity. Worth keeping only as a reading hazard: `MeanStateRegularity.waveStage`
 the mean, so a reader who follows only the *wave* stage will conclude the mean is always zero and be wrong
 — the mean moves in the *temporal* and *rank* stages instead.
 
+**Complete census of what touches `mean`** (worker's, parent-spot-checked). Exactly **seven** constructors
+reach it and only **two** write anything: `reconstructState` (`VariableGaugeMean.lean:517-523`),
+`retainPressureAlias` (`CorrectionInitialization.lean:1281-1284`), `gaugeRefreshPressureAlias`
+(`CorrectionStep.lean:3042-3046`), `SignedMeanGain.waveStage` (`:168-172`, with
+`waveStage_mean … = u.mean := updated_zeroTriple u.mean` at `:180-184`) and `CorrectionStep.gaugeWaveStage`
+(`:3328-3342`) all **preserve** it; only `temporalStageState` (`:559-563`) and `rankStageState` (`:580-583`)
+**add** to it. **Nothing anywhere replaces it** — `addIncrement` only ever does `mean := updated s.mean m`.
+At cycle level this is stated exactly: `next_mean` (`CorrectionStep.lean:5115-5122`) says every cycle adds
+both increments, while `afterParticular_mean`/`afterSigned_mean` (`:5314-5318`) preserve.
+**First place the mean provably leaves zero:** `VariableGaugeMean.lean:562`, instantiated on the live chain
+at `ActualInitialMean.lean:51-53`.
+
+**One precision the worker was right to insist on, and it keeps this honest.** "Nonzero" here means
+**structurally nonzero and residual-driven**, *not* proved `≠ 0`: **no theorem in the repository asserts a
+pointwise nonvanishing or lower bound on `mean` itself.** What is proved is that the increment is driven by
+the wave covariance rather than by the (zero) seed mean — at the seed the residuals reduce to the primary
+Reynolds stress by `zeroMean_gr`/`zeroMean_theta`/`zeroMean_axial`
+(`CorrectionInitialization.lean:1825-1844`) with `W = bilinearCovariance (seed oscillation) (seed oscillation)`
+(`:1114-1118`). So the vacuity worry is answered structurally, and the *quantitative* question — is the mean
+ever bounded away from zero — is simply **not addressed by the artifact**, which is fine because nothing
+downstream appears to need it.
+
 ### Front 1: **35 verified → 24 CONFIRMED UNSUPPLIED carrying 391 in-cone hypothesis sites, 11 false
 positives (69% precision)**
 `nosupplier-9` finished 8/8 on the hint-free queue, with the route-4 discipline finally applied in both
