@@ -180,3 +180,78 @@ NOTEs:
   `ConstructedSlowBase.lean:100-107`, so the theorem is live, but read alone it is a pure bridge.
 - NOTE :314 `radialDivergence_congr_germ` and :287 `coefficient_germ` are germ-transport helpers;
   they hold for arbitrary `k` and arbitrary functions and carry no analytic content (fine).
+
+## 4. NavierStokes/ModulatedExterior.lean (536 lines, 37 decls, 1 structure, 1 Prop-def)
+
+Verdict: OK (both new predicates are constructed IN-FILE; exterior field is genuinely nonzero).
+33 OK / 4 NOTE / 0 UNCLEAR / 0 ESCALATE / 0 KERNEL-RISK.
+
+Structure / Prop-def census (defect shape 1 test):
+- `RestoredSquaredSwirl W Q` (:93, Prop-def: the primitive of `f^2` at `nominalOuterX` agrees with
+  the nominal one for every eta in S). CONSTRUCTED IN-FILE by `actual_squared_swirl_restored` (:326)
+  from `v.restored` + `squared_swirl_anchor_of_rows` (:49). Not an unsupplied hypothesis.
+- `RealizesScheme s hI d` (:144, Prop structure, three `d.field = extendedCoefficient` equations for
+  indices 0, 1, 3). CONSTRUCTED twice by `rfl`: `realizes_coefficients` (:150) and
+  `actual_realizes` (:334). Consumed downstream at `SlowBaseEndpoint.lean:360` and
+  `FinalSlowBase.lean:609`. Live.
+- Note the interface pins only indices 0/1/3 (phi, axial, pressure), never index 2 (the flux/beta
+  row) nor 4; the flux row is instead constrained through `BasePrefixIdentity.VelocityMatches`
+  (file 3) -- the two interfaces are complementary, not redundant.
+
+The real content chain is honest: `integral_equal_after` (:28) is a plain
+`integral_add_adjacent_intervals` splice; `squared_swirl_anchor_of_rows` (:49) cancels the shared
+`pressure0` out of row 4 of `profileRows`; :105/:115/:126 propagate mass and pressure past the
+outer radius; :226 `realized_exterior_coefficients` then yields `ExteriorCoefficients` and
+:276/:289 conclude the exterior fields EQUAL the heat fields and the NS residual is exactly 0.
+
+Non-vacuity check (shape 2) on the exterior target: `heatVelocity C h` is
+`AxisymmetricResidual.velocity (fun _ => 0) (heatCoefficient C h) (fun _ => 0)`
+(`BaseExterior.lean:37`) -- a PURE SWIRL field (zero radial and axial components). So the exterior
+claims are only non-trivial because the swirl amplitude is nonzero:
+`nominalHeatNormalization = PhysicalHeatCoordinates.normalization F.data (nominalHeatSwitch W)`
+(`BaseExterior.lean:466`) is provably POSITIVE via `normalization_pos`
+(`PhysicalHeatCoordinates.lean:42`) plus `nominalHeatSwitch_pos` (`BaseExterior.lean:469`).
+If that constant were 0 the exterior fields would be identically 0 and :289/:363 would be
+`residual of the zero field = 0`. It is not 0. GOOD.
+
+NOTEs:
+- NOTE (the one thing to know about this file) :460 `completed_fields_smooth_near_terminal`,
+  :490 `realized_terminal_extension` and :514 `actual_terminal_extension` all require
+  `hx : x 2 = 0` -- the terminal-time smooth extension is proved ONLY at terminal points on the
+  central plane (third coordinate zero), plus `0 < radialEnergy x` (off the axis). The reason is
+  structural, not cosmetic: the neighbourhood in `exists_terminal_exterior_neighborhood` (:402)
+  needs `0 < forwardScalar (2h) (x 2) b = b - (x 2)^2 * b^(2h)`
+  (`SimilarityCoordinates.lean:22`) at `t = 1`, which is exactly `0 < b` when `x 2 = 0` and can
+  FAIL for `x 2 ≠ 0` since `b = radialEnergy x / (2*(R+1))` is not free. Checked the complement:
+  `SlowBaseEndpoint.lean:365-380` splits on `x 2 = 0` and covers the other branch with
+  `velocityNonzeroAxial` / `pressureNonzeroAxial`, assembling `AwayExtensions` for ALL `x ≠ 0`.
+  So the restriction is COMPLETED downstream and is not a gap -- but the theorems in this file
+  must not be quoted as terminal-plane statements on their own.
+- NOTE :445/:448 `completedVelocity` / `completedPressure` are `if z.1 < 1 then u z else heat...`
+  patches. Consequently every conclusion at or after `t = 1` is TRUE BY DEFINITION of the patch
+  (`ite_eq_right`), and on the produced neighbourhood U the completed field is EqOn the heat field
+  (:472-483), i.e. it carries no information beyond the heat solution there. The non-trivial input
+  is the exterior equality :276, which is genuinely proved.
+- NOTE (shape 3) the `C` argument of `completedVelocity`/`completedPressure` (:445, :448) and of
+  the heat fields is unconstrained in this file; positivity comes one layer up
+  (`nominalHeatNormalization`, see above). Same "non-degeneracy ruled out one layer up" pattern as
+  files 1 and 3.
+- NOTE :188 `realized_positive_exterior` and :199/:207 depend on `houter : s.B = nominalOuterRadius W`
+  as an EQUATION on the scheme's outer radius, and the header comment (:11-13) claims the interface
+  "allows any seed cutoff with the same order-zero profile and outer radius". That is accurate:
+  `hbase` and `houter` are equations, not inequalities, so a scheme with a different outer radius
+  gets nothing from this file even if it is larger. Deliberate, but a narrow interface.
+
+## Closing summary (all 4 files)
+
+All four files are CLEAN in direction. Every `structure`, `class`-free Prop record and Prop-def
+introduced in them (`CompactCutoff`, `TrueConeRealization`, `ClockWindow`, `VelocityMatches`,
+`CoefficientMatches`, `RealizesScheme`, `RestoredSquaredSwirl`) is CONSTRUCTED, either in-file or
+at a located downstream site, so shape 1 (unsupplied hypothesis) does not appear here. Zero kernel
+risk: no `inductive`, no recursion, no `decide`, no metaprogramming, no numeral bigger than one
+digit in all 2428 lines. The systematic residue is the artifact's known shape-3/4 pattern -- junk
+`0⁻¹ = 0` divisors (`C⁻¹` in BasePrefixIdentity, `Kr / K` in PeriodicPhaseAssembly,
+`E (X,η) ≠ 0` in ParametricModulation) whose non-degeneracy is certified only one layer up -- plus
+a THIRD instance of the stronger-hypothesis/weaker-used-twin pattern at
+`PeriodicPhaseAssembly.lean:621,:678,:865` (`∀ n, b.frequency n ≠ 0` where two instances are used,
+next to the correctly-weak `:612`).

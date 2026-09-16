@@ -2172,3 +2172,59 @@ and `ActualCycleAssembly.lean:652,663`. Two coordinate identities were also re-d
 **Kernel risk across all four of `read-C`'s files: zero a priori** — a single grep for `sorry`, `axiom`,
 `native_decide`, `decide`, `termination_by`, `deriving`, `.rec`, `partial def`, `unsafe`, `macro`, `elab`,
 `inductive`, `class` over 2,428 lines returns **nothing**; largest numerals are single digits.
+
+### W35 addendum 4 — block complete: 10 structural files, 617 declarations, and a NEW named pattern
+
+`ModulatedExterior.lean` — 37 decls: **OK 33 / NOTE 4 / ESCALATE 0 / KERNEL-RISK 0.** Its terminal
+extension theorems (`:460,490,514`) hold **only** for `x 2 = 0` (the central plane), forced by
+`0 < forwardScalar (2h) (x 2) b` (`SimilarityCoordinates.lean:22`) — but the other branch is covered at
+`SlowBaseEndpoint.lean:365-380`, so **no gap**.
+
+`BasePrefixIdentity.lean` — 29 decls: **OK 25 / NOTE 4.** `CoefficientMatches` (`:281`) has no in-file
+constructor but **is** built at `ConstructedSlowBase.lean:67`, and its strong extra input
+`hp : ∀ n, ∀ w ∈ profileWindow, pressureCoefficient … = 0` (`:379`) **is** discharged, via
+`ConstructedSlowBase.lean:227` ← `GlobalSlowProfiles.lean:1781`. Non-vacuity is witnessed rather than
+asserted: `profileWindow` (`:203`) `= Ioi 0 ×ˢ Ioo (-1) 1` is a nonempty open half-strip and `:207`
+proves the physical similarity point lands in it.
+
+**NEW NAMED PATTERN — Lean's junk values for division and inverse silently empty a whole channel.**
+Two independent instances in this block, both PARENT-VERIFIED:
+1. `PeriodicPhaseAssembly.transportPhase` (`:481`) carries `Kr / K`. Lean gives `Kr/0 = 0`, so at `K = 0`
+   the phase is identically `0` and **eight** theorems stated without `K ≠ 0`
+   (`:492,499,508,520,535,567,722,734`) degenerate to `0 = 0` — including `transportPhase_path` (`:734`),
+   which advertises "exact values on the entire sampling interval".
+2. `BasePrefixIdentity`'s swirl channel runs through `C⁻¹` — parent-read at `:119`
+   (`fun n w => -C⁻¹ * d.phi n w`) and `:255` (`congrArg (fun r : ℝ => C⁻¹ * r)`) — and `C : ℝ` is
+   **unconstrained in every signature** (`:86,112,133,158,237,262`). At `C = 0`, `0⁻¹ = 0` collapses
+   `:111,236,261` to `0 = 0` for that component.
+In both cases the degenerate value is excluded **one layer up** (`hK : ∀ n, b.frequency n ≠ 0`;
+`W.axis.normalization_pos`), so neither is a falsity — but neither is visible to a reader of the theorem
+alone, and **no type certifies it**. This is a Lean-specific vacuity shape distinct from the artifact's
+`zeta = 0`/`cartesianPotential = 0` cases, because here the collapse comes from the *ambient convention*
+rather than from a definition being zero. It belongs on the checklist for any Lean artifact audit.
+
+### Block summary — front 2 after this cycle
+**10 of the 73 untouched STRUCTURAL files read line-by-line: 617 declarations, 357 in-cone theorems —
+42% of the structural bucket's 843, and 7.0% of the 5,067 never-named in-cone theorems.**
+
+| result | count |
+|---|---|
+| declarations OK | 573 |
+| NOTE | 41 |
+| UNCLEAR | 4 |
+| **ESCALATE** | **3** |
+| KERNEL-RISK | **0** |
+
+**Zero kernel risk across all 10 files** — no `inductive`, `.rec`, `termination_by`, `deriving`, `decide`,
+metaprogramming, or `sorry`; largest numerals single-digit. That is now measured, not assumed, for this
+block.
+
+**The three escalations:** `PulseCovariance.TangentPulse` (never constructed — kills the actual-pulse-pair
+positivity branch), the `PulseCovariance` dead-leaf chain, and the `MeanStateRegularity` **zero-mean
+bootstrap** of the `PrimitiveData` spine (under active investigation by worker `zero-mean`).
+
+**And the most reassuring negative:** across all 10 files, **every one of the 7 newly-declared
+structures/Prop-defs outside `PulseCovariance` is constructed** — `CompactCutoff`, `TrueConeRealization`,
+`VelocityMatches`, `CoefficientMatches`, `TangentInvariant`, `StageRealizations`, `TorusPeriodic`, plus the
+12-site `InjOn` hypothesis discharged for a concrete window. The unsupplied-hypothesis defect is **real
+but not pervasive**: it clusters, and `nosupplier.py` is what finds the clusters.
