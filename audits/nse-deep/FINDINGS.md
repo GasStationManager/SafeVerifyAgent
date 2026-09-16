@@ -1774,13 +1774,28 @@ first is the W30 defect.
     so a BUNDLE hit is only interesting if the headline chain needs an instance and none exists.
     Reporting all 104 as one number would repeat the count-for-surface error.
 
-**Verified by reading: 12 of the top in-cone candidates → 8 CONFIRMED UNSUPPLIED, 4 false positives.
-Precision 67% at the top**, and the honest reason is that 3 of the 4 misses are routes this instrument
+**Verified by reading: 17 of the top in-cone candidates → 12 CONFIRMED UNSUPPLIED, 5 false positives.
+Precision 71% at the top**, and the honest reason is that 4 of the 5 misses are routes this instrument
 *cannot* see without elaboration (anonymous constructor against an expected type; a field of a parent
-structure that is itself constructed). The 4th was the header bug and is now fixed.
+structure that is itself constructed). The 5th was the header bug and is now fixed.
+The four extra false positives are worth naming, because they are what the instrument will always miss:
+`ParticularWaveAssembly.BandCharts` (route 2, `ActualReferenceRebase.lean:246-250`),
+`SignedMeanGain.MovingField` (route 4, `MeanStateRegularity.lean:454-470`),
+`MovingMomentBounds.Support` (route 4, `:337-350`), and `NavierStokesR3.PressureRecovery.Hypotheses`
+(route 2, parent-verified: `R3/PressureRecovery.lean:436` builds it with
+`let H : Hypotheses T u v p q := ⟨hT, hu, hv, hp, hq, hdivu, hdivv, hNS, heu, hev⟩` — a *bundling*
+convenience, so its consumers are reachable exactly when those ten components are).
+Two reliability signals from the cheap workers, both unprompted: one distinguished
+`PhysicalWaveSum.RegularFamily` from the twin `PhysicalCopyBounds.RegularFamily` supplied at
+`PhysicalCopyBounds.lean:586` (the masking trap, caught in the right direction), and one rejected
+`AngularPeriodic.direction/.mul/.add/total_periodic` as suppliers because each takes an `AngularPeriodic`
+hypothesis.
 
-**The 8 confirmed, carrying 185 in-cone hypothesis sites** (worker file:line detail in
-`workers/_sub-nosupplier-{1,2,3}.md`):
+**The 12 confirmed, carrying 271 in-cone hypothesis sites** (worker file:line detail in
+`workers/_sub-nosupplier-{1,2,3}.md`). Beyond the eight tabulated below, `nosupplier-2b` confirmed
+`CorrectionStep.ParticularParameters.NativeDynamics` (`:6124`, 23 sites — so **both** `NativeDynamics`
+twins are unsupplied), `GaussianTailFlat.FlatEdges` (`:446`, 28), `PhysicalWaveSum.RegularFamily`
+(`:745`, 19) and `MeanResidual.AngularPeriodic` (`:56`, 16):
 
 | predicate | declared | sites | note |
 |---|---|---|---|
@@ -1795,8 +1810,8 @@ structure that is itself constructed). The 4th was the header bug and is now fix
 
 **Verdict, and it is the same direction as W30, at scale.** None of this makes a theorem false — an
 unsatisfiable hypothesis yields an unreachable theorem, never a wrong one. What it does is falsify
-`in_cone = True` on a large block: W30's witness was 21 sites, and there are now **8 confirmed
-predicates totalling 185 in-cone sites**, with 48 in-cone PREDICATE candidates (390 sites) nominated
+`in_cone = True` on a large block: W30's witness was 21 sites, and there are now **12 confirmed
+predicates totalling 271 in-cone sites**, with 48 in-cone PREDICATE candidates (390 sites) nominated
 and mostly unread. The pattern named at the end of W30 is confirmed as **systemic, not anecdotal**.
 
 **One shape this instrument cannot see, stated so its output is not mistaken for completeness.**
