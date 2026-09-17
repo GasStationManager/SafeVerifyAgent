@@ -2753,3 +2753,40 @@ elaboration to fix.
 **Status of the two queues.** The never-before-named junk-value files are **done**. Structural reading stands
 at **41 of 73 files, 737 of 843 in-cone theorems (87%)**, with **3 kernel-risk flags in the entire campaign,
 all benign and all already classified by W2/W4**.
+
+## W44 — the honest coverage statement, computed rather than asserted
+
+With the structural bucket about to close, here is what "audited" actually means for the 5,067 in-cone
+theorems in the **964 files no audit document had ever named**. Three tiers, not one number.
+
+| tier | files | in-cone theorems |
+|---|---|---|
+| **Read line-by-line** by a reader with the full rubric | 41 | **737** |
+| **Screened and adjudicated** — an instrument produced a hit, a human ruled on it | 47 | 398 |
+| **Screened clean** — both instruments ran, neither produced a hit | 876 | 3,932 |
+
+**The third tier is the one that is easy to misreport in either direction.** It would be wrong to call those
+876 files "unaudited": `nosupplier.py` and `junkvalue.py` walk the entire tree, so every one of
+them *was* examined and came back with **no unsupplied predicate and no unguarded division**. It would be
+equally wrong to call them "audited": those two screens cover exactly two defect classes, and **most of what
+an estimate can get wrong — a wrong constant, a wrong exponent, an off-by-one in a band index, a mis-stated
+bound — is invisible to both.**
+
+So the defensible claim is: **all 964 never-named files are screened for the two mechanised defect
+classes; 88 produced something a human then ruled on; 737 in-cone theorems in 41 files
+have actually been read.** Residual, after the structural tail closes:
+**~3,834 in-cone theorems in never-named files that no human has read** — 3,130 of them
+estimate material and 704 construction material.
+
+**Why that residual is the right place to stop rather than a failure.** The audit's own findings say where risk
+concentrates, and it is not there. Every one of the 46→45 unsupplied predicates, all 7 closure-without-a-base-case
+cases, all 6 strong/weak twins and both junk-value clusters were found in **structural** files — the ones that
+*declare* things. The estimate mass is where a wrong constant would hide, and a wrong constant is precisely
+what neither a syntactic pass nor a source read reliably catches: **it needs a build**, and the artifact has
+0 built `.olean` files against a pinned toolchain this box cannot provide. Reading 3,000 more inequality
+statements by eye would buy far less than one `lake build` and `#print axioms`.
+
+**Restated as the audit's honest bottom line on coverage:** the *spine* of both claims is walked end to end;
+the *declaring* layer is now read essentially completely; the *estimating* layer is screened for two defect
+classes and otherwise rests on the authors' own consistency — and the single measurement that would change
+that is a compile, not more reading.

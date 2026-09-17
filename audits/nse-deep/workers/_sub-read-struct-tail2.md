@@ -1,0 +1,8 @@
+# sub-read-struct-tail2 — structural tail (8 files), READ-ONLY, NSE @ f9e8bc5
+
+## 1. Euler/TransversePacketForwardGradeBounds.lean — 5 decls: 3 nonneg lemmas, `structure GradeGuards (C : ℝ) : Prop` (:48-53), `grade_fields` (:65).
+- **CONSTRUCTED, unconditionally.** `EulerTransversePacketForward.Budget.GradeGuards` is built by anonymous constructor at `Euler/PacketForwardCommonRadius.lean:43` (`gradeRadius_guards`, from `gradeRadius_bounds` + `hR`), for ANY `0 ≤ C`; also `exists_grade_radius` (:45-49) and `commonRadius_guards` (:94-107) / `exists_common_radius` (:109) supply it with `C = 1` and `C = terminalCost`. So not an unsupplied hypothesis. Note the same-named twins in `EulerTransversePacketJoin.Budget` (`Euler/PacketJoinedGradeBounds.lean:84`), `EulerMeanPacketProvider.Budget`, `EulerTransversePacketPrimary.Budget` — distinct arities (ours takes `C`).
+- Vacuity: `C = 0` satisfies all four guard inequalities trivially (`L.R ≥ 1` by `L.radius_one`), but `grade_fields`'s conclusion (`WordBound 6 L.R 1 e` for 5 fields) does not mention `C`; `C` only scales the hypotheses `hforce`/`hinitial`. So a degenerate `C = 0` makes the HYPOTHESES stronger, not the conclusion weaker — safe direction. Live callers use `C = 1` (`PacketForwardStepBudget.lean:22`) and `C = wordCost (Fin 4) 6 δ*‖ξ‖` (`PacketForwardInitializedProfiles.lean:36`), i.e. non-degenerate witnesses exist. **OK**
+- Junk values: no `/`, no `⁻¹` in this file. `c` is guarded `0 < c` in-signature (:57). Kernel: no inductive/rec/decide/termination_by; one `cases i using Fin.cases` on `Fin 4` inside a proof (:79) — benign; largest numeral 6.
+- Verdict: **OK (clean)**.
+
