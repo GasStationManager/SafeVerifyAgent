@@ -183,3 +183,154 @@
   fragile tactic and it is proof-side.
 - Verdict: 3/3 OK (1 NOTE: `homogeneousSourceErrors_of_global` is never called).
 
+## 6. Euler/MeanPacketSobolevData.lean (116 lines, 5 decls, 1 structure) -- CLEAN (guards all in-signature)
+
+- Declares `structure SobolevData (D : Data) (iota) [Fintype iota] (q : N) (R : R)` (`:24-62`):
+  7 real fields (`Rc, M, CF, CF1, CH, CM, Cf`), `radius_lower : 1024 <= Rc`, `inverse_cost_lower : 1 <= M`,
+  five `_nonneg`s, five explicit budget inequalities (`:39-54`) and four coefficient-derivative bounds
+  (`:55-62`). One theorem, `normalized_bounds :81`, which just feeds all fields into
+  `EulerMeanSourceTimeSobolev.source_strong_time_block_bounds` and
+  `EulerMeanSourcePressureSobolev.source_pressure_block_bounds`.
+- CONSTRUCTED. `EulerMeanPacketProvider.Budget D q R extends SobolevData D (Fin 4) q R`
+  (`Euler/MeanPacketBudget.lean:26`), and that is built for real by
+  `EulerPacketParentLabelBudgets.meanBudget` (`Euler/PacketParentLabelBudgets.lean:80-102`) via
+  `EulerPacketParentMeanBudget.sourceMeanBudget`, plus the radius-enlargement rebuild at
+  `Euler/PacketCommonRadius.lean:17` (`toSobolevData := { M.toSobolevData with ... }`) and the live use in
+  my file 4 (`Euler/ParentPacketJoinedInput.lean:79,88`). NOT an unsupplied hypothesis.
+- DEGENERATE-WITNESS CHECK (the one that matters here). The live witness's numeric fields are
+  `Rc := coefficientRadius K = max 1024 (4*K)`, `CF := frameAmplitude K = 1+embeddingCost*K^2`,
+  `CF1 = CH := gradientAmplitude K = embeddingCost*K^2` (`Euler/PacketParentLabelCoefficients.lean:17-19`).
+  So `Rc >= 1024 > 0` and `CF >= 1 > 0` ALWAYS -- the witness is never the all-zero record.
+  Only `CF1 = CH = 0` at `K = 0`, which would force `D.F1`/`D.H` derivatives to vanish; the live label
+  constant is `K = k^80` (`Euler/BaseFirstPacketChoice.lean:41`, `label_constant : labels.K = k^80`) with
+  `k` large, so a NON-degenerate witness exists. NOTE only, not an escalation.
+- JUNK-VALUE SWEEP -- this file is the sharpest positive control in my block. `operator_budget :39-42`
+  and `forcing_budget :43-46` both INVERT a coercivity: `(sourceFixedCoercivity D.T D.F D.F1 D.opInv)^-1`.
+  That inverse is NOT guarded by a hypothesis in the signature -- it is guarded by a THEOREM:
+  `sourceFixedCoercivity_pos : 0 < sourceFixedCoercivity T F F1 FInv`
+  (`Euler/MeanSourceFixedInverse.lean:57`), whose only side condition `0 <= T` comes from
+  `D.T_pos` (a field of `D : Data`, used in this file at `:94,:101`). So the quantity is provably
+  positive for EVERY `D` and the `x^-1 = 0` junk branch is unreachable -- strictly better than a
+  hypothesis guard. Confirmed used that way at `Euler/PacketParentMeanBudget.lean:112-113`
+  (`inv_nonneg.mpr (sourceFixedCoercivity_pos ...).le`). No `/` in any statement of this file.
+- KERNEL RISK: largest numeral = `1024` (`:32`), and it appears only inside the real inequality
+  `1024 <= Rc` -- no `decide`, no `Nat` literal arithmetic, nothing evaluated. Other numerals `1,2,3,6`.
+  No `inductive`, `.rec`, `deriving`, `termination_by`, `Fin.cases`, metaprogramming. `Fin 4` is the
+  only `Fin` (n = 4).
+- Verdict: 5/5 OK.
+
+## 7. Euler/EulerCorrectionLocal.lean (78 lines, 8 decls, 2 structures) -- 1 NOTE (kappa/direction not certified by the type)
+
+- Declares `structure CoefficientPath (q) (T) [TopologicalSpace T]` (`:22-25`) and
+  `structure CorrectionData (q) (T)` (`:33-45`), plus `CoefficientPath.operatorPath :28`,
+  `CorrectionData.coefficients :48`, `CorrectionData.source_gradient_zero :57`, and
+  `exists_local_euler_correction :66`.
+- BOTH STRUCTURES ARE CONSTRUCTED. `CorrectionData` is produced by
+  `EulerAllOrderCorrectionData.Data.atOrder` (`Euler/AllOrderCorrectionData.lean:75-88`), and `Data` has
+  two independent witnesses:
+  (a) `EulerConstantCorrection.data` (`Euler/ConstantCorrectionData.lean:104-121`): `kappa := 1`,
+      `direction := 0`, `coercivity := 1`, identity metric, `linear = quadratic = 0`;
+  (b) `EulerPacketCorrectionCoefficients.correctionData` (`Euler/PacketCorrectionSourceData.lean:17-31`):
+      `kappa := kappa` (any `|kappa| <= 1`), `direction := D.m0` with
+      `direction_bound := D.m0_unit.le`, i.e. a UNIT direction, `coercivity := D.normalLower` positive.
+  `CoefficientPath` is constructed inside both (e.g. `metricTower`/`tower`,
+  `Euler/ConstantCorrectionData.lean:99-102`). So no unsupplied hypothesis.
+- NOTE, and it is the closest thing in my eight files to the "exact identity that collapses" pattern.
+  `CorrectionData` constrains the two frequency parameters only by
+  `scale_bound : |kappa| <= 1` (`:36`) and `direction_bound : ||direction|| <= 1` (`:37`).
+  Both therefore ADMIT `kappa = 0` and `direction = 0` simultaneously. I re-derived what happens then:
+  `liftedGradient kappa m phi x = toLp (fun i => kappa * d_{y_i} phi + m i * d_theta phi)`
+  (`Euler/EulerProof.lean:1127-1131`), so at `kappa = 0 AND m = 0` every generator is 0, hence
+  `gradientSpace = (span {0}).topologicalClosure = bot` (`Euler/EulerProof.lean:1265-1267`),
+  hence `gradientProjection = bot.starProjection = 0` (`:1277-1278`) and
+  `divergenceFreeSpace = bot.orthogonal = top` (`:1340-1341`). Consequences at that degenerate point:
+  * `CorrectionData.source_gradient_zero :57-59` -- an EXACT identity `gradientProjection ... = 0` --
+    becomes `0 = 0`;
+  * the third conjunct of `exists_local_euler_correction :71`
+    (`value (e t) in divergenceFreeSpace period D.kappa D.direction`) becomes trivially true.
+  NEITHER theorem's own signature rules this out. WHY THIS IS ONLY A NOTE: the guard exists one layer
+  up, at BOTH constructors, and neither is degenerate -- witness (a) has `kappa = 1 =/= 0` (so the
+  `kappa * grad_y` generators survive), witness (b) has `||direction|| = 1 =/= 0` (so the `d_theta`
+  generators survive). And on the packet path `kappa` additionally satisfies `k*kappa = 1`
+  (`Euler/ParentHomogeneousPacketLowBounds.lean:28`, `Euler/CommonPressureRepresentative.lean:80`
+  `hk : k * A.kappa = 1`), which is an explicit in-signature `kappa =/= 0` certificate.
+  So: a real shape-3 instance, direction-safe, non-degenerate alternative present at both witnesses.
+  The remaining content of `exists_local_euler_correction` (a Duhamel fixed point with `e 0 = 0`,
+  `||e|| <= 1`, `T > 0`) is NOT vacuous even at the degenerate parameters.
+- Good non-degeneracy that IS certified by the type: `coercivity_pos : 0 < coercivity` (`:40`), which is
+  what the metric coercivity `metric_pos :41` needs.
+- JUNK-VALUE SWEEP: no `/` and no `^-1` anywhere in this file's statements. `hnu : 0 < nu` and
+  `hS : 0 < S` are in-signature (`:66-67`), `hT : 0 < T` is produced by the theorem (`:68`).
+- KERNEL RISK: none. Largest numeral = `6` (`:49,:58,:66`, the `6 <= q` order threshold); `Fin 3`
+  (`:43`, n = 3) and `Vector3`. No `inductive`, `.rec`, `decide`, `deriving`, `termination_by`,
+  `Fin.cases`, metaprogramming; the two `local instance ... := inferInstance` (`:18-19`) add nothing.
+- Verdict: 8 decls, 7 OK / 1 NOTE (`CorrectionData` `:33-37`, with `source_gradient_zero :57`).
+
+## 8. Euler/AllOrderCorrectionBudget.lean (81 lines, 2 decls, 1 structure) -- ESCALATE (direction-safe): the structure is NEVER CONSTRUCTED, and it has a live twin
+
+- Declares `structure Budget {T} (hT : 0 < T) (A : Data period T)` (`:18-50`) with 15 fields
+  (`metric, radius, constant, delta, initialRadius, spatial, constant_bound, delta_pos, delta_le_one,
+  radius_pos, decay, scale, small, radius_eq, divergence`) and one theorem `finite_exists :53-79`.
+- FINDING (shape 1 UNSUPPLIED HYPOTHESIS + shape 6 SUPERSEDED TWIN).
+  `EulerAllOrderCorrectionBudget.Budget` is NEVER CONSTRUCTED anywhere in the artifact. Evidence:
+  * its two distinguishing fields have exactly ZERO assignment sites -- artifact-wide grep for
+    `constant_bound` returns only `Euler/AllOrderCorrectionBudget.lean:33` (the declaration) and `:70`
+    (its own use inside `finite_exists`); no `constant_bound :=` and no `constant :=` for this record
+    exists in any file;
+  * nothing `extends Budget` and no `toBudget` projection exists (grep `extends Budget|toBudget`:
+    no hit for this namespace);
+  * every other occurrence of the name in the six files that open `EulerAllOrderCorrectionBudget` is in
+    HYPOTHESIS position: `Euler/AllOrderCorrectionStability.lean:17` (`stabilityBudget ... (B : Budget ...)`),
+    `Euler/AllOrderCorrectionFamily.lean:18,23` (`solution`/`solution_initial ... (B : Budget ...)`),
+    `Euler/AllOrderLiftedCorrection.lean`, `Euler/AllOrderPressureCoherence.lean`,
+    `Euler/AllOrderSmoothPressure.lean`, `Euler/CommonPressureRepresentative.lean:19,25,33,41,48,67,72,79`.
+  * a decl `B.foo` that consumes `B` supplies nothing, so `finite_exists :53` never fires.
+  THE LIVE TWIN. `EulerAllOrderDriftCorrection.Budget` (`Euler/AllOrderDriftBudget.lean:19`) is a
+  near-identical record over the same `Data period T` -- same `metric`/`radius`/`delta`/`initialRadius`/
+  `spatial`/`decay`/`scale`/`small`/`radius_eq`/`divergence`, with `constant`+`constant_bound` replaced by
+  `growthCoefficient`+`growth_bound` ("only the actual transport drift enters the shrinking-radius
+  slope", `:18`). THAT one IS constructed on the live path:
+  `Euler/PacketInitializedAllOrderBudget.lean:102-118` (`refine { metric := ...; growthCoefficient := cg;
+  ... growth_bound := ?_ ... }`) and `Euler/PacketForwardInitializedAllOrderBudget.lean:99`, and it is
+  consumed by the twin theorem `EulerAllOrderDriftCorrection.finite_exists`
+  (`Euler/AllOrderDriftFinite.lean:19`), which then builds the `FiniteFamily`
+  (`Euler/AllOrderDriftFinite.lean:66-68`) that the live pressure reconstruction actually uses
+  (`Euler/CorrectionAssemblyReconstruction.lean:21-67`, its OWN `pointPressure`/`graphPressure`).
+  SCOPE OF THE DEAD BRANCH: the whole chain
+  `AllOrderCorrectionBudget -> AllOrderCorrectionStability -> AllOrderCorrectionFamily ->
+  AllOrderLiftedCorrection -> AllOrderPressureCoherence -> AllOrderSmoothPressure ->
+  CommonPressureRepresentative` (7 files, ~540 lines) is parameterized on this unconstructible record,
+  so all of it is unreachable -- EXCEPT the one Budget-free declaration
+  `EulerCommonPressureRepresentative.cylinderGraph_continuous`
+  (`Euler/CommonPressureRepresentative.lean:60`), which IS used live at
+  `Euler/CorrectionAssemblyReconstruction.lean:61`. That single decl is why the chain still sits in the
+  import cone. DIRECTION: SAFE -- nothing here is false, and no live theorem depends on it; the risk is
+  purely that a reader credits this branch (and its `finite_exists`) as part of the proof.
+- Everything else in the file is internally coherent: `delta_pos :36`, `radius_pos :40` give the
+  needed strict positivity in-type; `q-4` (`:31`) is safe truncated subtraction under `hq : 6 <= q`;
+  `radius_eq :48` pins the radius path affinely, and `finite_exists :63-72` feeds exactly those fields
+  into `exists_global_inviscid_gevrey_PDE`.
+- JUNK-VALUE SWEEP: the only divisions are by the literal `2` (`initialRadius/2 :42`, `delta/2 :46,:59`).
+  No unguarded inverse. Note `divergence :50` runs through the same
+  `divergenceFreeSpace period A.kappa A.direction` channel flagged in file 7 (would be `top` at
+  `kappa = 0 and direction = 0`), but here it is moot -- the record is never built.
+- KERNEL RISK: none. Largest numeral = `6` (`:30,:54`); `by omega` inside the type at `:30` is a benign
+  `Nat` side condition. No `inductive`, `.rec`, `decide`, `deriving`, `termination_by`, `Fin.cases`,
+  `native_decide`, metaprogramming.
+- Verdict: 2 decls, 0 OK / 1 NOTE (`divergence :50`) / 1 ESCALATE (`Budget :18` unconstructed, taking
+  `finite_exists :53` with it).
+
+## Block summary (structural tail 4)
+
+- NO `Acc.rec`, NO `native_decide`, NO `decide` at all, NO `Fin n` with n > 4, NO `termination_by`, NO
+  `deriving`, NO `inductive` and NO metaprogramming in any of the eight files. Largest numeral in the
+  whole block: `1024` (`Euler/MeanPacketSobolevData.lean:32`), inside a real-number inequality, never
+  evaluated. So the structural block's "exactly two benign flags" count does NOT grow here.
+- Junk-value sweep: 4 files invert something (`tau^-1`, `A.ell^-1`, `G.T^-1`, `sourceFixedCoercivity^-1`)
+  and ALL FOUR are guarded in-signature or by an unconditional positivity theorem
+  (`MeanSourceFixedInverse.lean:57`). No unguarded division anywhere. These are positive controls.
+- One VARIABLE-SHADOWING check done (the `PacketKnownTermSums.lean:16` vs `:18` pattern):
+  `Euler/PacketKnownPieceBounds.lean:13` has `[Fact (0 < P)]` and no theorem in the file re-binds `P`;
+  `Euler/EulerCorrectionLocal.lean:16` and `Euler/AllOrderCorrectionBudget.lean:15` likewise bind
+  `period` once, at section level, and never shadow it. No escape found.
+

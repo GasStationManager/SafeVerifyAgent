@@ -272,9 +272,24 @@ def main() -> int:
             for P in bres:
                 if P != full:
                     hyp[P].append((rel, line, kind))
-            for P in cres - bres:
-                if P != full:
-                    sup[P].append((rel, line, kind))
+            # AMBIGUOUS RESOLUTION MUST NOT CREDIT A SUPPLIER.
+            # 7 predicates in this artifact are named exactly `Budget`, 8 `Regular`,
+            # 8 `Data`. When a file writes the bare short name and the namespace/open
+            # context cannot single one out, the old code credited a supplier to ALL
+            # of them -- which is the twin-masking bug in a subtler form, and it hid a
+            # genuine ESCALATE: `EulerAllOrderCorrectionBudget.Budget` never became a
+            # candidate at all, because three files supplying OTHER `Budget` twins
+            # (PacketForwardInitializedExactLifted:52, PacketParentJoinedBudget:27,
+            # StaticEulerCorrection:48) were credited to it. A reader found it instead.
+            # Fix: credit a supplier only when the token resolves UNAMBIGUOUSLY. That
+            # over-reports candidates, which is the safe direction here.
+            for t in ctoks:
+                r = resolve(t, ctx)
+                if len(r) != 1:
+                    continue
+                for P in r - bres:
+                    if P != full:
+                        sup[P].append((rel, line, kind))
                     if "\u27e8" in proof:
                         anon[P] += 1
 

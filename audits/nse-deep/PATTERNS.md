@@ -143,7 +143,7 @@ constructed — just never for the objects that matter.
 ---
 
 ## What the instruments cost, and what that says
-Five instrument bugs were found in this audit, **four of them by a worker's number disagreeing with the
+SEVEN instrument bugs were found in this audit, **four of them by a worker's number disagreeing with the
 script's**, and one by a reader finding a case the tool passed. Two failed in the dangerous direction
 (hiding findings): bare-suffix twin masking, and multi-line `variable` blocks. One was blindness to Greek
 identifiers — in an analysis library. **The working rule: treat every parent/worker numeric disagreement as
@@ -154,6 +154,18 @@ suppliers through **definitional wrappers**, so it called `ValidBandGluing.Compa
 theorem concluding `ValidDyadicBandCover.Compatible` -- a `def` whose body IS that predicate -- supplies it.
 Same shape as `junkvalue.py`'s two-level-indirection gap. Both need definition unfolding, which is precisely
 what a syntactic pass cannot do, so both are recorded rather than fixed.
+
+**The seventh bug is the one that matters most, and it bounds what this instrument's SILENCE is worth.**
+7 predicates here are named exactly `Budget`, 8 `Regular`, 8 `Data`. When a file wrote the bare short name and
+the namespace context could not single one out, `nosupplier.py` credited a supplier to EVERY twin -- so
+`EulerAllOrderCorrectionBudget.Budget`, which nothing in 641,332 lines constructs, never became a candidate.
+A reader found it. **Measured exposure: 228 of 976 predicates (23%) have a colliding short name and were
+marked supplied.** Fixed by refusing credit on ambiguous resolution (over-reporting, the safe direction);
+the known miss is now nominated and all 45 confirmed findings survive, at a cost of 112 -> 143 candidates.
+**Net position: this pass's POSITIVES are reliable (45 confirmed by reading, 71% precision); its NEGATIVES are
+reliable only for the 748 predicates with a unique short name.** Five of the seven bugs were found by a worker
+or reader disagreeing with the tool, never by the tool -- the strongest argument in this audit for pairing
+every mechanical pass with human reading rather than trusting either alone.
 
 **And one methodological result worth more than any single finding: a rule that measured 41/41 was still
 wrong.** A triage worker recommended "flag only if the denominator reaches one side of the equality"; a

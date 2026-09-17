@@ -2860,3 +2860,68 @@ All 4 division sites guarded in their **own** signature, 3 of them by a field of
 `hz.mono_amplitude` (`:106-107`) — parent-verified; the other five use real `wordBound_congr` transfers. A
 seven-field budget of which two fields bound the zero field. All 8 structures constructed; **zero** junk-value
 exposures; no `Fact` shadowing.
+
+## W46 — the structural bucket CLOSES at 73/73, with one ESCALATE and a 7th instrument bug that a reader caught
+
+### `tail-4` — 8 files, 43 decls, and the tail's single ESCALATE
+**`EulerAllOrderCorrectionBudget.Budget` (`AllOrderCorrectionBudget.lean:18`) is never constructed anywhere in
+the artifact.** Its `constant_bound`/`constant` fields have zero `:=` sites, nothing extends it, and all six
+downstream files hold it only in hypothesis position. Its **live twin** is
+`EulerAllOrderDriftCorrection.Budget` (`AllOrderDriftBudget.lean:19`), built at
+`PacketInitializedAllOrderBudget.lean:102-118` and consumed by the twin `finite_exists`
+(`AllOrderDriftFinite.lean:19`).
+
+**Consequence — the largest dead chain this audit has found.** `finite_exists`
+(`AllOrderCorrectionBudget.lean:53`) plus a **7-file, ~540-line chain reaching
+`CommonPressureRepresentative` is unreachable**, because its `Budget` is unconstructible and the drift twin
+superseded it. Only the `Budget`-free `cylinderGraph_continuous` (`CommonPressureRepresentative.lean:60`) is
+live, used at `CorrectionAssemblyReconstruction.lean:61`. **Direction-safe — nothing false.** This is P1 and P4
+together at the largest scale seen, and it is on the **Euler** side: the Euler thread stays closed for
+*soundness*, but ~540 lines of it are decoration.
+
+Also from `tail-4`: `EulerCorrectionLocal.CorrectionData` (`:36-37`) admits `kappa = 0` **and**
+`direction = 0`, at which `liftedGradient` (`EulerProof.lean:1127`) is `0` and `gradientSpace = ⊥`, so the
+**exact** identity `source_gradient_zero` (`:57`) becomes `0 = 0` and the divergence clause of `:71` goes
+trivial — guarded one layer up at *both* witnesses (`ConstantCorrectionData.lean:105` `kappa = 1`;
+`PacketCorrectionSourceData.lean:20` unit direction). NOTE. And `MeanPacketSobolevData` is called the block's
+best positive control: `(sourceFixedCoercivity …)⁻¹` (`:40,44`) guarded by the **unconditional**
+`sourceFixedCoercivity_pos` (`MeanSourceFixedInverse.lean:57`), witness `Rc ≥ 1024`, `CF ≥ 1`.
+Kernel: zero `Acc.rec`/`native_decide`/`decide`, max `Fin n` = 4, largest numeral 1024.
+
+### The 7th instrument bug, and it is the one that matters most
+**`nosupplier.py` never nominated that predicate at all** — a reader found it. Diagnosis, measured:
+**7 predicates in this artifact are named exactly `Budget`; 8 are named `Regular`; 8 are named `Data`.** When a
+file writes the bare short name and the namespace/`open` context cannot single one out, the old resolver
+credited a supplier to **every** matching twin. So three files supplying *other* `Budget` twins —
+`PacketForwardInitializedExactLifted:52`, `PacketParentJoinedBudget:27`, `StaticEulerCorrection:48` — were
+credited to `EulerAllOrderCorrectionBudget.Budget`, which therefore never became a candidate.
+
+**This is the twin-masking bug of W32 in a subtler form, and my earlier "fix" did not cover it.** The W32 fix
+handled *qualified* tokens; this is the *bare, ambiguous* token case.
+**Measured exposure: 228 of 976 predicates (23%) have a short name shared by at least one other predicate AND
+were marked supplied** — every one of them could have been masked this way.
+
+**Fixed by refusing to credit a supplier when the token does not resolve uniquely** — over-reporting, which is
+the safe direction. Validated: the known miss is now nominated (85 hypothesis sites), all **45** confirmed
+unsupplied predicates survive, and both original ground-truth controls still pass. Cost, stated plainly:
+**112 → 143 candidates**, and **17 predicates that readers had confirmed SUPPLIED are now re-flagged**, because
+ambiguity now refuses them credit. Several of the 19 newly in-cone candidates are near-certainly supplied —
+`ProblemStatement.CandidateProperties` (43 sites) is the headline's own property record, whose 12 fields W25
+verified are all discharged.
+
+**So the honest position on this instrument, at the end of the campaign:** its **positives are reliable** — 45
+confirmed by reading at 71% precision. Its **negatives are reliable only for predicates with a unique short
+name** (748 of 976); for the other 228 a "not nominated" verdict means little, and the fix trades that
+silence for noise. **Five of the seven bugs in this instrument were found by a worker or reader disagreeing
+with it, never by the instrument itself** — which is the strongest single argument in this audit for pairing
+every mechanical pass with human reading rather than trusting either alone.
+
+### Structural bucket: **73 of 73 files read**
+| | |
+|---|---|
+| files read line-by-line | **73 of 73** |
+| declarations read | **~1,000** |
+| in-cone theorems covered | **843 of 843 (100% of the structural bucket)** |
+| ESCALATE | **4** (`TangentPulse`, `PulseCovariance` dead leaves, `CoefficientSupport`, `AllOrderCorrectionBudget.Budget`) |
+| KERNEL-RISK flags | **3**, all benign, all already classified by W2/W4 |
+| new vacuity mechanisms found | **3** (P5b redundant guards, P7b propagate-only non-degeneracy, P8 filter vacuity) |
