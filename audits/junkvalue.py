@@ -44,13 +44,25 @@ from safeverifyagent.extract import blank_comments              # noqa: E402
 from cone import decls_with_ns, SKIP_DIRS                       # noqa: E402
 from nosupplier import split_sig, strip_header                  # noqa: E402
 
-# `/ x` or `x inv`, where x is a single identifier
-DIV = re.compile(r"/\s*([A-Za-z_][\w'\u2080-\u2089]*)\b")
-INV = re.compile(r"\b([A-Za-z_][\w'\u2080-\u2089]*)\s*\u207b\u00b9")
+# `/ x` or `x inv`, where x is a single identifier.
+# The character class MUST include Greek: this artifact names its scales
+# `epsilon`, `alpha`, `kappa` with the actual letters, and an ASCII-only class made
+# the pass blind to `(eps-inv) ^ m` in `AxisWeightEstimates.weight` -- i.e. blind to
+# the single most common denominator name in an analysis library. That miss was
+# caught by a READER finding two content-free statements the tool had passed
+# (AxisCoefficientSpace.lean:434,437).
+_ID = r"[A-Za-z_\u03b1-\u03c9\u0391-\u03a9][\w'\u2080-\u2089\u03b1-\u03c9\u0391-\u03a9]*"
+DIV = re.compile(r"/\s*(" + _ID + r")")
+INV = re.compile(r"(" + _ID + r")\s*\u207b\u00b9")
 # a binder introducing that identifier as a bare scalar
 SCALAR_BINDER = r"[({{\u2983]\s*(?:[^:()]*\b{name}\b[^:()]*)\s*:\s*(?:\u211d|\u2102|NNReal|\u211d\u22650)\s*[)}}\u2984]"
+# A triage worker measured 13 of 38 sampled hits as false positives of ONE kind:
+# the signature already said `1 <= k` or `4 <= k`, which implies nonzero. Those forms
+# must count as constraints.
 NONZERO = [r"{name}\s*\u2260\s*0", r"0\s*<\s*{name}\b", r"0\s*\u2260\s*{name}\b",
-           r"{name}\s*>\s*0", r"0\s*<\s*\|{name}\|"]
+           r"{name}\s*>\s*0", r"0\s*<\s*\|{name}\|",
+           r"[1-9]\d*\s*\u2264\s*{name}\b", r"{name}\s*\u2265\s*[1-9]\d*",
+           r"[1-9]\d*\s*<\s*{name}\b", r"{name}\s*>\s*[1-9]\d*"]
 
 
 def risky_defs(files):
@@ -77,6 +89,12 @@ def risky_defs(files):
                     continue
                 if re.search(SCALAR_BINDER.format(name=re.escape(nm)), binders):
                     out.setdefault(full.split(".")[-1], set()).add(nm)
+    # NOT DONE: transitive risk (an abbrev passing its own scalar param to a risky
+    # def, e.g. `abbrev AxisSpace I eps := CoefficientSpace I (weight eps)`). A
+    # working implementation cost >15 min on 2,659 files and was cut. Consequence,
+    # stated so the output is not mistaken for complete: two-level indirection is
+    # MISSED -- which is exactly how AxisCoefficientSpace.lean:434,437 escaped, found
+    # by a reader instead. One-level indirection IS covered.
     return out
 
 

@@ -2405,3 +2405,86 @@ nondegenerate **by type** — denominators `1 + ‖FInv.field‖`, `1 + ‖F.fie
 **Front-1 tally: 44 verified → 32 CONFIRMED UNSUPPLIED carrying 428 in-cone hypothesis sites,
 12 false positives (73% precision). 19 in-cone hint-free candidates
 (44 sites) remain.**
+
+## W39 — priority 1 COMPLETE (46 confirmed unsupplied), the junk-value pass triaged, and a 4th instrument bug
+
+### Priority 1 — **the in-cone hint-free queue is EMPTY.** All 19 remaining candidates verified
+Two workers, 19 verdicts, **14 UNSUPPLIED / 5 SUPPLIED**. Running total:
+**63 candidates verified → 46 CONFIRMED UNSUPPLIED carrying 463 in-cone hypothesis sites, 17 false
+positives (73% precision).** Every in-cone candidate my instrument could not explain away
+has now been read by a human-equivalent reader.
+
+**The genuinely suspicious results, stated plainly:**
+* **A THREE-LEVEL cluster in which nothing is ever constructed.** Both workers independently and explicitly
+  confirmed: `ActualWaveRegularity.ModeData` (`:390`), `.ParticularData` (`:606`) and `.SignedData` (`:773`)
+  are **none of them ever constructed**. `ModeData` is a field of the other two, and both of those are
+  binder-only — so route 4 fails at every level. Its twin `SignedMeanGain.NativeData` is *proved `IsEmpty`*.
+* **A stranded coupled pair.** `CorrectionStep.RepresentsPhysical` (`:940`) takes an argument `v` which *is*
+  a `CorrectionStep.PhysicalFields` (`:912`), already confirmed unsupplied; and its only builder
+  `.addIncrement` (`:959`) concludes `RepresentsPhysical` from **two** `RepresentsPhysical` hypotheses while
+  yielding only `v.add w`. **Both predicates are stranded together** — closure algebra on top of an object
+  nobody can make.
+* `ParticularWaveAssembly.BackgroundControl` (`:1403`) is a field of **two** parents
+  (`LocalControl:1439`, `CorrectionStep.ParticularParameters.NativeDynamics:6125`) and **both are
+  binder-only** — route 4 refuted twice over.
+* Also unsupplied: `ActualSignedPhysicalData.PrimitiveLocalization`, `ActualStageEstimates.WaveInputs` and
+  `.Representations`, `ErrorHarmonics.GaussianData.Compatible`, `GaugeMomentBalances.LocalFluxInputs`,
+  `LocalPhysicalCopyBounds.PatchData`, `PhysicalResidualJetBounds.ResidualChartData`,
+  `ActualParticularRealization.CurrentInputs`, `PrimaryMaterialDefect.DirectionMatch`.
+
+**And one of my own claims was refuted.** I had recorded `ActualCycleResidualBounds.PhysicalFields` as
+"only an `abbrev` alias". Wrong: it is a **real structure** at `:1015` (the `abbrev PhysicalData` at `:1142`
+is *of* it), and it **is** supplied at `ActualPhysicalPrefixFields.lean:438/475`. Both workers agreed
+against me. The four other false positives: `ActivationContinuation.HoldSourceControl` (`:977`, the second
+component of a proved existential is the def body verbatim), `AxisResolvent.AxisVanishesBelow` (`:384`, base
+case closed by `intro A x n hn; omega`), `VolterraParity.CoefficientParity` (`PositiveAxisSystem.lean:761,767`
+— **bare version only**, and the bridge is **one-way bare → On**, so the `CoefficientParityOn` verdict
+stands), `GluedStageEstimates.Representations` (`ActualCandidateAssembly.lean:772,868`).
+
+### Priority 2 — junk-value triage: **A=13 B=12 C=10 D=3** over 38 in-cone hits in 10 never-named files
+* **D (genuinely unguarded) = 3, and severity is NIL.** All three are one object: `h = 0` in
+  `Euler/MeanCutoffDifferenceBound` gives `h⁻¹ = 0` hence a zero cutoff. `:57 differenceQuotient_fderiv`
+  ("fderiv commutes exactly with the difference quotient") → `0 = 0`; `:69 differenceQuotient_support`
+  ("support grows by ≤ 1") → empty subset of a ball. Benign because the collapse is **symmetric** and the
+  artifact *deliberately proves* the `h = 0` case (`:43-45`).
+* **The best finding is a C**, and it is worth stating in full: `PulseCovariance:74 integral_gaussian_scaled`
+  claims `∫ gaussian b m r = r * sqrt(π/b)` with `hr : 0 < r` — **`r` is guarded and `b` is not.** At `b = 0`
+  the LHS integrand is the constant 1, non-integrable, so Lean's integral junk-value makes it `0`; and the
+  RHS `sqrt(π/0) = 0`. **An exact slot-mass identity that survives only because two independent junk values
+  conspire** — and the same holds for every `b < 0` since `sqrt` of a negative is `0`. The caller does guard
+  (`:233` via `PulseBounds.decay_pos:134`), so this is statement hygiene, not soundness. But it is the
+  sharpest example yet of why reading a theorem alone is not enough in Lean.
+* Also C: `WholeSpaceGaussianKernel:32,42` (exact `fderiv` formulas) collapse to `0 = 0` at zero
+  normalization; all callers pass `0 < t`.
+* **25 of 38 were false positives, and the worker gave me the rule to fix it:** *flag only if the denominator
+  reaches a subterm on **one** side.* Two new FP kinds it named: a denominator inside a **shared evaluation
+  point** (`physicalTime = t0 + (e/a)T`, so `a = 0` re-evaluates *both* sides at `t0` — 9 hits), and a
+  **deliberate smooth zero extension where the junk value is proved correct** (`FlatCutoff:97-100`, 3 hits).
+
+### The instrument's **4th** self-bug, and it was the worst kind
+`junkvalue.py`'s `DIV`/`INV` regexes matched **ASCII identifiers only**. This artifact writes its scales with
+the actual Greek letters, so the pass was **blind to `(ε⁻¹) ^ m` in `AxisWeightEstimates.weight`** — i.e.
+blind to the single most common denominator name in an analysis library. Found not by me but by a *reader*
+producing two content-free statements (`AxisCoefficientSpace.lean:434,437`) that my tool had passed.
+Fixed, plus the `1 ≤ k` / `4 ≤ k` constraint forms the triage worker identified. **Measured effect, with no
+regression: `transportPhase` still 8/8, `BasePrefixIdentity` still caught, `FourierAlias` correctly silent
+(its `M⁻¹` is guarded in its own signature), and all 13 A-type false positives eliminated (13 → 0).**
+One extension was **cut for performance and the gap recorded**: transitive risk through an intermediate
+`abbrev` costs >15 min on 2,659 files, so **two-level indirection is missed** — which is exactly how
+`AxisCoefficientSpace:434,437` escaped. One-level indirection is covered.
+
+### Priority 3 — 18 of 73 structural files read; `read-F`'s 4 files: 119 decls, **0 ESCALATE, 0 KERNEL-RISK**
+* **A reversed-polarity twin, which is new.** `NaturalAxisRange.lean` re-derives `NaturalAxisData.lean:47-378`
+  under a *weaker* hypothesis (~14 twin pairs) — but its `Parameters` (`:13`, `h ≤ 1/100`, `j ≤ 1/20`) is
+  **only ever inhabited via `ofSmall` (`:20`) from the much stronger `SmallParameters` (`≤ 1/1000`)**. No site
+  builds one directly, so the file's advertised "complete printed range" (`:12`) is **never exercised**. In the
+  earlier four instances the *weak* twin carried the live traffic; here the *strong* one does, and the general
+  result is decoration. Numerals re-derived exact (`287/100` `:51`, `29/10` `:242`).
+* `FourierAlias.lean` (54 decls) is the **positive control for W37**: every `(-M⁻¹)^p` statement carries
+  `M ≠ 0` in its **own** signature (`:375,390,404,545`), discharged for real at `:735`. A jet bound that
+  "looks false but is correct" was checked and is correct — `totalIntegral` is defined in shifted coordinates
+  (`TransportPrimitive.lean:121`) so z-derivatives never hit `M`. Non-vacuity witness given.
+* `SmoothParameterIntegral.lean`: all 3 Prop-defs constructed, and `integrable_jet` (`:40`) explicitly closes
+  the "non-integrable ⇒ integral = 0" junk hole. `PacketCylinderTermBudget.lean`: `CoefficientBudget`
+  constructed (`PacketSourceCoefficientBudget.lean:87-111`); `Rc = amplitude = 0` admitted but both only
+  **strengthen**.
