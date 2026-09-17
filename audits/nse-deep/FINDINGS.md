@@ -2706,3 +2706,50 @@ make it, like P2 and P4, characteristic of this artifact.
 The same file is simultaneously the audit's **best junk-value positive control**: all 7 of its divisions are
 guarded in their own signature, and one of those guards (`:284 hHne`) is genuinely load-bearing because
 `mul_left_cancel₀` needs it.
+
+## W43 — the junk-value pass over never-before-named files is COMPLETE, and both planted controls were caught
+
+Four tranches, **127 triaged rows covering all 104 in-cone hits in the 74 files no audit document had
+ever named.** Aggregate:
+
+| verdict | count | meaning |
+|---|---|---|
+| **A** guarded in signature | 23 | tool false positive |
+| **B** certified by type/construction | 67 | tool false positive |
+| **C** guarded by callers only | 31 | benign; statement alone says less than it appears |
+| **D** genuinely unguarded | **6** | the finding class — **all LOW severity** |
+
+**90 of 127 (71%) were false positives**, which is the honest cost of a syntactic pass, and
+**not one D case is a soundness problem.** All six D cases are *property* claims — `ContDiffAt ∞ 0`,
+`Invariant θ 0`, `0 ≤ 0` — never an exact value, so the collapse costs nothing:
+`ClosedNativeWaveIdentities:279`, `CopyAngularInvariance:327`, `PeriodicPhaseAssembly:28` (neighbours `:32,39`
+*do* take `0 < d`), plus tranche 1's three `MeanCutoffDifferenceBound` cases.
+
+**Both planted controls were caught, which is what makes the negative result credible.** `junkvalue-4` was
+told only that two of its 25 files had known answers. It classified `BasePrefixIdentity:111` as materially
+affected — correctly identifying that `C⁻¹` appears on **both** sides (`coefficientBundle:1137`,
+`slowSwirl:553`) so **two junk values collapse an exact identity**, that `C` is free in all six signatures,
+and that the guard is **~5 layers up** (`ConstructedSlowBase:219,346` → `BaseWitnessClosure:92` →
+`NominalProfile:79`) — adding "call it D if you demand one layer". It also independently flagged a *new* hit
+in `PeriodicPhaseAssembly` (`:28`, distinct from the known `transportPhase` cluster).
+
+### Two mechanisms worth naming from this tranche
+* **A guard defeated by VARIABLE SHADOWING** — `Euler/PacketKnownTermSums.lean`. Parent-verified: `:16`
+  declares `variable {P T : ℝ} [Fact (0 < P)]`, and then `:18 angleMean_congr_at (P : ℝ) …` **re-binds `P`
+  as its own explicit argument**, so the section's positivity instance does not apply to it. At `P = 0`,
+  `angleMean P f = P⁻¹ • ∫₀^P …` is `0` on both sides. The file *has* the guard and the theorem opts out of
+  it by reusing the name. A distinctive sub-shape of P5: not a missing guard, a **shadowed** one.
+* **A sibling record that carries the field this one lacks.** `RawJetsAt` (`:545-552`) has no `freq ≠ 0`
+  field, while its sibling `LocalizedCurlRealization.RawData` (`:55`) **does** — and `freq` is a bare field
+  (`LinearWaveBounds:185`). That is the P4 strong/weak-twin shape appearing in *record fields* rather than in
+  theorem hypotheses, and it is what makes `ClosedNativeWaveIdentities:279` collapse.
+
+### One more instrument gap the workers named, recorded not fixed
+`Euler/PacketExactPhysicalEuler:47` and `…Momentum:27` are guarded by an **equation**, `k * κ = 1`, which
+forces `k ≠ 0`. `junkvalue.py`'s `NONZERO` patterns look only for inequalities, so equation-shaped guards read
+as absent. Same class as the definitional-wrapper and two-level-indirection gaps: cheap to state, needs real
+elaboration to fix.
+
+**Status of the two queues.** The never-before-named junk-value files are **done**. Structural reading stands
+at **41 of 73 files, 737 of 843 in-cone theorems (87%)**, with **3 kernel-risk flags in the entire campaign,
+all benign and all already classified by W2/W4**.
