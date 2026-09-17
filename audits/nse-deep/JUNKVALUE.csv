@@ -1,28 +1,14 @@
 file,line,decl,denominator,statement
 NavierStokes/ActivationCone.lean,296,NavierStokes.ActivationCone.reducedStress_edge_projection,A,(reducedStress F A B κ 0 dA dB dR).1 + (B / A) * (reducedStress F A B κ 0 dA dB dR).2 = F * (A + B ^ 2 / A)
-NavierStokes/ActivationCone.lean,304,NavierStokes.ActivationCone.reducedStress_edge_margin,A,2 * F < (reducedStress F A B κ 0 dA dB dR).1 + (B / A) * (reducedStress F A B κ 0 dA dB dR).2
 NavierStokes/ActivationContinuation.lean,44,NavierStokes.ActivationContinuation.projection_identity,A,p + q * (θ * (B / A) * R) - (A + θ * B ^ 2 / A) = (p - A) + (q - B) * θ * (B / A) * R + θ * B * (B / A) * (R - 1)
-NavierStokes/ActivationContinuation.lean,49,NavierStokes.ActivationContinuation.projection_comparison,A,|p + q * (θ * (B / A) * R) - (A + θ * B ^ 2 / A)| ≤ ε * projectionConstant M
 NavierStokes/ActualGaussianCoverage.lean,598,NavierStokes.ActualGaussianCoverage.normalizedLinear_apply,L,normalizedLinear (P := P) g L x = (g.coordinateLinear x.2).2 / L
 NavierStokes/ActualGaussianCoverage.lean,603,NavierStokes.ActualGaussianCoverage.normalized_coordinate_affine,L,(g.coordinates k x.2).2 / L = (g.coordinates k 0).2 / L + normalizedLinear (P := P) g L x
-NavierStokes/ActualGaussianCoverage.lean,983,NavierStokes.ActualGaussianCoverage.actual_scaled_slot_lower,upper,(2 * sys.radius / upper) * ChartScales.S m ≤ ChartScales.slotLength sys.radius h m / c
-NavierStokes/ActualSignedGeometry.lean,1056,NavierStokes.ActualSignedGeometry.phase_normal_view_germ,K,(fun y => HarmonicCalculus.phaseNormal PhysicalResidualBridge.ScaledGraph.radius (PhysicalResidualBridge.commonGraph Q h i).radial PhysicalResidualBridge.Scaled
-NavierStokes/AnalyticCoefficientBounds.lean,148,NavierStokes.AnalyticCoefficientBounds.cauchy_bound_le_weight,ρ,(m.factorial : ℝ) * (ρ⁻¹) ^ m ≤ radiusLoss (ε / ρ) * AxisWeightEstimates.weight ε 0 m
-NavierStokes/AnalyticCoefficientBounds.lean,205,NavierStokes.AnalyticCoefficientBounds.UnitHolomorphic.degreeZeroJet_bound,ρ,|degreeZeroJet f n m x| ≤ radiusLoss (ε / ρ) * AxisWeightEstimates.weight ε n m
-NavierStokes/AnalyticCoefficientBounds.lean,228,NavierStokes.AnalyticCoefficientBounds.UnitHolomorphic.norm_toAxisSpace_le,ρ,‖hf.toAxisSpace hε hερ‖ ≤ radiusLoss (ε / ρ)
 NavierStokes/AnalyticCoefficientBounds.lean,303,NavierStokes.AnalyticCoefficientBounds.normalizedExp_re_of_real,C,(normalizedExp F Λ C (x : ℂ)).re = Real.exp (Λ * (F (x : ℂ)).re) / C
-NavierStokes/AnalyticCoefficientBounds.lean,315,NavierStokes.AnalyticCoefficientBounds.uniform_normalizedExp_axisData,ρ,"AxisSpace I ε, ‖a‖ ≤ radiusLoss (ε / ρ) ∧ (∀ x ∈ I.interval, coefficient I (AxisWeightEstimates.weight ε) a 0 x = Real.exp (Λ * (F (x : ℂ)).re) / C) ∧ (∀ n : ℕ,"
-NavierStokes/AnalyticCoefficientBounds.lean,340,NavierStokes.AnalyticCoefficientBounds.uniform_normalizedExp_axisData_of_compact,ρ,"AxisSpace I ε, ‖a‖ ≤ radiusLoss (ε / ρ) ∧ (∀ x ∈ I.interval, coefficient I (AxisWeightEstimates.weight ε) a 0 x = Real.exp (Λ * (F (x : ℂ)).re) / C) ∧ (∀ n : ℕ,"
 NavierStokes/AnalyticPrimitive.lean,199,NavierStokes.AnalyticPrimitive.amplitude_zero,C,amplitude g Λ C 0 = 1 / C
 NavierStokes/AnalyticPrimitive.lean,234,NavierStokes.AnalyticPrimitive.amplitude_ofReal,C,"amplitude g Λ C x = ((Real.exp (Λ * (x * ∫ t in (0 : ℝ)..1, f (t * x))) / C : ℝ) : ℂ)"
-NavierStokes/AxisContraction.lean,536,NavierStokes.AxisContraction.exists_unique_natural_fixedPoint,Λ,"V × V, ‖y - x₀‖ ≤ 1 → x₀ + (1 / (2 * Λ)) • naturalRemainder O d S (1 / Λ) a y = y → y = x"
 NavierStokes/AxisSourceRegularity.lean,577,NavierStokes.AxisSourceRegularity.lowerPressureSource_eq_quotient,C,lowerPressureSource h C φ U v (k + 1) w = C⁻¹ ^ 2 * lowerConvolution φ φ (k + 1) w - (omega h U (fun j => axisFactor (v j)) k w / w.1) / 2
 NavierStokes/AxisWeightEstimates.lean,186,NavierStokes.AxisWeightEstimates.coreWeight_factorial,ε,coreWeight ε n m = (1 / 20 : ℝ) ^ n * (ε⁻¹) ^ m * ((n + m).factorial : ℝ) / (n.factorial : ℝ)
-NavierStokes/AxisymmetricFields.lean,234,NavierStokes.AxisymmetricFields.tsupport_potential_slice_subset,t,"tsupport (fun x : Space => potential H K (t, x)) ⊆ profilePoint t ⁻¹' (tsupport H ∪ tsupport K)"
-NavierStokes/AxisymmetricFields.lean,249,NavierStokes.AxisymmetricFields.tsupport_velocity_slice_subset,t,"tsupport (fun x : Space => velocity H K (t, x)) ⊆ profilePoint t ⁻¹' (tsupport H ∪ tsupport K)"
 NavierStokes/BaseChartJets.lean,640,NavierStokes.BaseChartJets.leadingFrequency_eq,C,leadingFrequency h C d p = (normalizedCoordinates h p).1 ^ (-CoordinateAlgebra.A h - 1 / 2) / C * d.phi 0 (normalizedCoordinates h p).2
-NavierStokes/BasePhaseGeometry.lean,159,NavierStokes.BasePhaseGeometry.scaled_div_mono,B,a * δ / B ≤ A * δ / b
-NavierStokes/BasePhaseGeometry.lean,628,NavierStokes.BasePhaseGeometry.FamilyData.reciprocal_bound,x,1 / x ≤ M
 NavierStokes/CartesianCopySource.lean,113,NavierStokes.CartesianCopySource.rotationMap_apply,cartesianRadius,"rotationMap y v = ![(y.1 / cartesianRadius y : ℝ) • v 0 - (y.2 / cartesianRadius y : ℝ) • v 1, (y.2 / cartesianRadius y : ℝ) • v 0 + (y.1 / cartesianRadius y : "
 NavierStokes/CoordinateAlgebra.lean,165,NavierStokes.CoordinateAlgebra.xTime_from_qTime,q,xTime q h η X = -(X / q) * qTime h η
 NavierStokes/ExtendedHeatDebts.lean,123,NavierStokes.ExtendedHeatDebts.correctionJet_succ,X,correctionJet h K (n + 1) ν X = switch K X * (2 / X) ^ (n + 1) * iteratedDeriv (n + 1) (HeatProfileExtension.extension (1 + h)) (2 * ν / X)
@@ -33,15 +19,7 @@ NavierStokes/FiveRowRank.lean,385,NavierStokes.FiveRowRank.angularDebt_rescale,C
 NavierStokes/FiveRowRank.lean,391,NavierStokes.FiveRowRank.axialDebt_rescale,C,axialDebt C d = C⁻¹ • axialDebt 1 d
 NavierStokes/FiveRowRank.lean,397,NavierStokes.FiveRowRank.deltaV_rescale,C,deltaV lam C a b d = C⁻¹ • deltaV lam 1 a b d
 NavierStokes/FiveRowRank.lean,403,NavierStokes.FiveRowRank.gamma_rescale,C,gamma lam C a b d = C⁻¹ • gamma lam 1 a b d
-NavierStokes/FiveRowRank.lean,433,NavierStokes.FiveRowRank.angularDebt_norm_le,C,‖angularDebt C d‖ ≤ ‖C⁻¹‖ * ‖d‖
-NavierStokes/FiveRowRank.lean,437,NavierStokes.FiveRowRank.axialDebt_norm_le,C,‖axialDebt C d‖ ≤ ‖C⁻¹‖ * ‖d‖
-NavierStokes/FiveRowRank.lean,444,NavierStokes.FiveRowRank.finite_jet_bound,C,"ℝ, 0 ≤ K ∧ ∀ (C : ℝ) (k : ℕ), k ≤ N → ∀ (d e : Debt) (R : ℝ), |iteratedDeriv k (deltaV lam C a b d) R - iteratedDeriv k (deltaV lam C a b e) R| + |iteratedDeriv"
-NavierStokes/FlatPrimitive.lean,112,NavierStokes.FlatPrimitive.edge_hasDerivAt,x,HasDerivAt (edge c) (2 * c * edge c x / x ^ 3) x
-NavierStokes/FlatPrimitive.lean,126,NavierStokes.FlatPrimitive.scale_hasDerivAt,x,HasDerivAt (scale c j) ((edge c x / x ^ j) * (2 * c + (3 - (j : ℝ)) * x ^ 2)) x
-NavierStokes/GaussianEnvelope.lean,213,NavierStokes.GaussianEnvelope.hasDerivAt_referenceRate,ell,HasDerivAt (referenceRate lam u ell) (referenceSlope lam u (PulseGrowth.slotMagnitude u ell time) * (u / ell)) time
 NavierStokes/GaussianTailFlat.lean,93,NavierStokes.GaussianTailFlat.slotCutoff_deriv,L,deriv (slotCutoff L) v = L⁻¹ * deriv profile (v / L)
-NavierStokes/GaussianTailFlat.lean,392,NavierStokes.GaussianTailFlat.cutoffError_eq_slot,L,cutoffError L (fun y => v y / L) u f x = deriv (slotCutoff L) (v x) • u x + (1 - slotCutoff L (v x)) • f x
-NavierStokes/HarmonicWaveInteraction.lean,165,NavierStokes.HarmonicWaveInteraction.fullPhase_hasFDerivAt,b,HasFDerivAt (fullPhase b n) ((fderiv ℝ (b.phase n) p.1).comp projection + ((b.angularFrequency n : ℝ) / b.frequency n) • ContinuousLinearMap.snd ℝ D ℝ) p
 NavierStokes/HarmonicWaveInteraction.lean,181,NavierStokes.HarmonicWaveInteraction.along_fullPhase_angular,b,along HarmonicResidual.angularDirection (fullPhase b n) p = (b.angularFrequency n : ℝ) / b.frequency n
 NavierStokes/HeatProfileExtension.lean,206,NavierStokes.HeatProfileExtension.iteratedDeriv_scaledProfile,X,iteratedDeriv n (scaledProfile a X) ν = (2 / X) ^ n * iteratedDeriv n (extension a) (2 * ν / X)
 NavierStokes/HeatTailEdit.lean,58,NavierStokes.HeatTailEdit.edit_after,X,edit E h ν K X = E X * RadialHeatProfile.profile (1 + h) (2 * ν / X)
@@ -50,15 +28,9 @@ NavierStokes/LinearWaveResidual.lean,460,NavierStokes.LinearWaveResidual.map_div
 NavierStokes/LocalSignedRequest.lean,855,NavierStokes.LocalSignedRequest.physicalBarSigma_eq_negative_primitive,r,"SignedStressPrimitive.physicalBarSigma P e (SimilarityCoordinates.coordinateQ coord) f (r, s) = -(∫ t in (0 : ℝ)..r, t ^ e * SignedStressPrimitive.physicalAdjus"
 NavierStokes/LoopMoments.lean,272,NavierStokes.LoopMoments.oneSidedPair_upper_projection,d,p * ((oneSidedPair m p d V).rightValue - m) = V * p ^ 2 / d
 NavierStokes/LoopVariance.lean,618,NavierStokes.LoopVariance.solveScale_mul,d,solveScale d p r * p = inverseRoot (p * (r / d))
-NavierStokes/MatchingConeBounds.lean,591,NavierStokes.MatchingConeBounds.shapeValue_hasDerivAt_eta,T,HasDerivAt (shapeValue C T li X) (shapeValue C T li X eta * ((1 - OutgoingSchedule.sigma (Real.log (X / NominalProfile.Xi) / T)) * deriv li eta - OutgoingSchedu
 NavierStokes/MatchingConeBounds.lean,645,NavierStokes.MatchingConeBounds.profiles_shape_radialF,X,"radialPartial (c.profiles hsep).f (X, eta) = (c.profiles hsep).f (X, eta) * (ShapeTransition.logarithmicSlope c.shapeTime c.initialShape (Real.log (X / NominalP"
 NavierStokes/ModulatedCone.lean,91,NavierStokes.ModulatedCone.signed_shear_factor,n,-((-C + D / n) / Real.exp (A / n)) - C = (1 / n) * (-C * A * StressActivation.meanExp (-(1 / n) * A) - D * Real.exp (-(1 / n) * A))
-NavierStokes/ModulatedCone.lean,369,NavierStokes.ModulatedCone.quotient_perturbation_bound,e,|y / f - x / e| ≤ (1 / μ + M / (μ * μ)) * ε
-NavierStokes/ModulatedCone.lean,369,NavierStokes.ModulatedCone.quotient_perturbation_bound,f,|y / f - x / e| ≤ (1 / μ + M / (μ * μ)) * ε
-NavierStokes/ModulatedCone.lean,392,NavierStokes.ModulatedCone.shear_perturbation_bound,E₀,|(1 - 2 * X * EX₁ / E₁) - (1 - 2 * X * EX₀ / E₀)| ≤ (2 * R * (1 / μ + M / (μ * μ))) * ε ∧ |-(2 * X * UX₁ / E₁) - -(2 * X * UX₀ / E₀)| ≤ (2 * R * (1 / μ + M / (μ
-NavierStokes/ModulatedCone.lean,392,NavierStokes.ModulatedCone.shear_perturbation_bound,E₁,|(1 - 2 * X * EX₁ / E₁) - (1 - 2 * X * EX₀ / E₀)| ≤ (2 * R * (1 / μ + M / (μ * μ))) * ε ∧ |-(2 * X * UX₁ / E₁) - -(2 * X * UX₀ / E₀)| ≤ (2 * R * (1 / μ + M / (μ
 NavierStokes/ModulatedHistories.lean,143,NavierStokes.ModulatedHistories.densityFamily_frequency,N,"densityFamily r f E U (1 / N, X, eta, N * Real.log X) = density (rawF r f N) (rawU r E U N) (X, eta)"
-NavierStokes/NaturalAxisCoefficients.lean,269,NavierStokes.NaturalAxisCoefficients.boundedAxisElement_norm,ρ,‖boundedAxisElement hε hερ hB hf hb‖ ≤ B * radiusLoss (ε / ρ)
 NavierStokes/NaturalProfile.lean,265,NavierStokes.NaturalProfile.transportW_reconstruct,Λ,transportW h (affineProfile (NaturalAxisData.U j) (1 / Λ) Λ B) p = reconstructedW (actualData h j σ P0) (1 / Λ) B (rescalePoint Λ p)
 NavierStokes/NaturalProfile.lean,276,NavierStokes.NaturalProfile.transportH_reconstruct,Λ,transportH h (affineProfile (NaturalAxisData.U j) (1 / Λ) Λ u) p = reconstructedH (actualData h j σ P0) (1 / Λ) u (rescalePoint Λ p)
 NavierStokes/NominalConeAssembly.lean,517,NavierStokes.NominalConeAssembly.scaled_difference_quotient,x,a * (R * u - eta * (R * v)) / (R * x) = a * (u - eta * v) / x
@@ -66,9 +38,6 @@ NavierStokes/NominalConeAssembly.lean,522,NavierStokes.NominalConeAssembly.scale
 NavierStokes/NominalConeAssembly.lean,762,NavierStokes.NominalConeAssembly.stock_ratio_identity,L,x * n / (L * e) = (x * q / L) * (n / (e * q))
 NavierStokes/NominalProfile.lean,1679,NavierStokes.NominalProfile.halfKernel_eq,x,"halfKernel E eta x = (E (x, eta) ^ 2 / x) / 2"
 NavierStokes/OutgoingDilation.lean,94,NavierStokes.OutgoingDilation.energyDensity_scaling,XR,energyDensity F XR eta X = F.energyDensity eta (X / XR)
-NavierStokes/OutgoingDilation.lean,141,NavierStokes.OutgoingDilation.dilation_contDiffOn,XR,"ContDiffOn ℝ ∞ (fun p : ℝ × ℝ => (p.1 / XR, p.2)) domain"
-NavierStokes/OutgoingTail.lean,23,NavierStokes.OutgoingTail.edge_derivative_nonneg,x,0 ≤ 2 * FlatCutoff.edge 1 x / x ^ 3
-NavierStokes/ParticularWaveAssembly.lean,929,NavierStokes.ParticularWaveAssembly.actualCarrier_affine,b,"AffinePhase (((0 : P), (1 : ℝ)), (0 : Plane)) ((b.angularFrequency n : ℝ) / b.frequency n) ((actualCarrier base b j).phase n)"
 NavierStokes/PartitionedCovariance.lean,161,NavierStokes.PartitionedCovariance.cosine_actual_phase,ε,"Real.cos (k * PhaseCalculus.phase ε p pz x0 F G (s, θ, v Y)) = Real.cos ((mode : ℝ) * θ + k * ((pz / ε) * s.2.1 + x0 * s.1 - v Y * (p * F s + pz * G s)))"
 NavierStokes/PeriodicPhaseAssembly.lean,507,NavierStokes.PeriodicPhaseAssembly.transportPhase_eq_refined,K,transportPhase (phase g χ A B) φ gap K Kr = phase (CopySolveCompatibility.refineGeometry g gap) χ (fun p => (Kr / K) * A (φ p)) (fun p => (Kr / K) * B (φ p))
 NavierStokes/PeriodicPhaseAssembly.lean,519,NavierStokes.PeriodicPhaseAssembly.transportPhase_eq_scaled_clock,K,transportPhase (phase g χ A B) φ gap K Kr = phase (CopySolveCompatibility.transportGeometry g gap 0 rate hrate) (χ ∘ CopySolveCompatibility.nativeTimeMap 0 rate
@@ -82,49 +51,20 @@ NavierStokes/PhaseCalculus.lean,83,NavierStokes.PhaseCalculus.phase_dZ,ε,fderiv
 NavierStokes/PhaseEstimates.lean,72,NavierStokes.PhaseEstimates.representative_slope,L,"⟪representativeFrequency B sigma u L K g, g⟫_ℝ = -sigma * B * u / L"
 NavierStokes/PhaseEstimates.lean,114,NavierStokes.PhaseEstimates.radial_reference_identity,L,sigma * B * u / 2 - v * (-sigma * B * u / L) = B * signedSlot sigma u L v
 NavierStokes/PhaseEstimates.lean,277,NavierStokes.PhaseEstimates.representative_slope_coordinates,L,target * FR0 + pz * GR0 = -sigma * B * u / L
-NavierStokes/PhaseEstimates.lean,291,NavierStokes.PhaseEstimates.representative_coordinate_errors,R0,|target / R0 - B * K 0| ≤ |B| * |sigma| * |u| / (|L| * ‖g‖) ∧ |pz - B * K 1| ≤ |B| * |sigma| * |u| / (|L| * ‖g‖)
-NavierStokes/PhaseEstimates.lean,358,NavierStokes.PhaseEstimates.representative_tilt_scaled,S,|B| * |sigma| * |u| / (|L| * ‖g‖) ≤ M ^ 4 / S
-NavierStokes/PhaseEstimates.lean,460,NavierStokes.PhaseEstimates.representative_slope_scaled,L,|-sigma * B * u / L| ≤ M ^ 3 / S
-NavierStokes/PhaseEstimates.lean,460,NavierStokes.PhaseEstimates.representative_slope_scaled,S,|-sigma * B * u / L| ≤ M ^ 3 / S
-NavierStokes/PhaseJetBounds.lean,345,NavierStokes.PhaseJetBounds.PolynomialJets.div_const,c,PolynomialJets D (fun i x => f i x / c)
-NavierStokes/PhaseJetBounds.lean,1031,NavierStokes.PhaseJetBounds.normalized_slot_rate_le,ell,|u / ell| * S ≤ M / c
-NavierStokes/PhysicalGraphBounds.lean,931,NavierStokes.PhysicalGraphBounds.norm_phaseLinear_le,ε,‖phaseLinear ε p pz x0‖ ≤ |p| + |pz / ε| + |x0|
-NavierStokes/PhysicalGraphBounds.lean,949,NavierStokes.PhysicalGraphBounds.phase_slot_jet_bound,ε,"∀ k ≤ m, ‖iteratedFDeriv ℝ k (PhaseCalculus.phase ε p pz x0 F G) q‖ ≤ (|p| + |pz / ε| + |x0|) * M + (2 : ℝ) ^ m * M * ((|p| + |pz|) * B)"
 NavierStokes/PhysicalGraphBounds.lean,1074,NavierStokes.PhysicalGraphBounds.slotMap_formula,ci,"slotMap κ ci center r0 y = (((κ (liftXY y)).1, (y.1.2.2.2, y.1.1)), ((κ (liftXY y)).2, (etaCoordinate (y.2 - center) + r0) / ci))"
-NavierStokes/PhysicalGraphBounds.lean,1086,NavierStokes.PhysicalGraphBounds.norm_slotLinear_le,ci,‖slotLinear ci‖ ≤ 1 + |ci⁻¹| * ‖etaCoordinate‖
-NavierStokes/PhysicalGraphBounds.lean,1115,NavierStokes.PhysicalGraphBounds.slotMap_positive_jet_bound,ci,"∀ i, 1 ≤ i → i ≤ m → ‖iteratedFDeriv ℝ i (slotMap κ ci center r0) y‖ ≤ K + 1 + |ci⁻¹| * ‖etaCoordinate‖"
-NavierStokes/PhysicalParticularWave.lean,525,NavierStokes.PhysicalParticularWave.physicalPhase_affine,D,"AffinePhase ((0 : ℝ), coordinateVector 1) ((D.carrierBlock.angularFrequency D.reference.band : ℝ) / D.carrierBlock.frequency D.reference.band) (physicalPhase D "
-NavierStokes/PhysicalSignedWave.lean,167,NavierStokes.PhysicalSignedWave.ReferencePhase.phase_affine,K,"CopyAngularInvariance.AffinePhase (0, 1) (C.angularMode / K) (C.phase K)"
-NavierStokes/PositiveAxisSystem.lean,1044,NavierStokes.PositiveAxisSystem.realTrace_solves_system,r,"∀ i, deriv (fun q => realTrace W q eta i) r + (diagonal i : ℝ) / r * realTrace W r eta i = matrixRHS h lam C r eta b s (realTrace W r eta) (fun j => deriv (fun "
 NavierStokes/PositiveOrderMoments.lean,58,NavierStokes.PositiveOrderMoments.cauchy_phiHistory,R,cauchy n (phiHistory C e) (phiHistory C e) R = (C / R) ^ 2 * cauchy n e e R
-NavierStokes/PrimaryCovarianceBounds.lean,321,NavierStokes.PrimaryCovarianceBounds.normalizedPair_entry_error,r,|normalizedPair P i j - H0 i j| ≤ (E + D * PulseCovariance.concentrationConstant a A b B) / r
 NavierStokes/PrimaryFieldAssembly.lean,350,NavierStokes.PrimaryFieldAssembly.actual_phase_identification,ε,"k * PhaseCalculus.phase ε p pz x0 F G (s, θ, v Y) = (m : ℝ) * θ + k * ((pz / ε) * s.2.1 + x0 * s.1 - v Y * (p * F s + pz * G s))"
-NavierStokes/PrimaryODE.lean,380,NavierStokes.PrimaryODE.FrameData.energy_bound,S,"⟪w, d.coefficient j z w⟫_ℝ ≤ (d.eigenvalue z - referenceDamping + (D + 4 * C) / S) * ‖w‖ ^ 2"
 NavierStokes/ProfileSpectralCone.lean,92,NavierStokes.ProfileSpectralCone.cancel_signed_scale,d,q * (k * j) / (-k * d) = -(q * j / d)
-NavierStokes/ProfileSpectralCone.lean,266,NavierStokes.ProfileSpectralCone.radial_composition_hasDerivAt,rho,"HasDerivAt (fun r => f ((r ^ 2 / 2) / rho, eta)) (R / rho * SimilarityProfile.partialX f ((R ^ 2 / 2) / rho, eta)) R"
 NavierStokes/ProfileSpectralCone.lean,276,NavierStokes.ProfileSpectralCone.leadingFrequency_germ,C,BaseChartJets.leadingFrequency h C d =ᶠ[𝓝 p] (fun q => (BaseChartJets.normalizedCoordinates h q).1 ^ (-CoordinateAlgebra.A h - 1 / 2) / C * d.phi 0 (BaseChartJe
 NavierStokes/ProfileSpectralCone.lean,305,NavierStokes.ProfileSpectralCone.leadingFrequency_slowR,C,PhaseCalculus.slowR (BaseChartJets.leadingFrequency h C d) p = (BaseChartJets.normalizedCoordinates h p).1 ^ (-CoordinateAlgebra.A h - 1 / 2) / C * (p.1 / (Base
 NavierStokes/PulseCovariance.lean,48,NavierStokes.PulseCovariance.gaussian_eq_length,r,gaussian b m r v = Real.exp (-b * (v - m) ^ 2 / r ^ 2)
 NavierStokes/PulseCovariance.lean,74,NavierStokes.PulseCovariance.integral_gaussian_scaled,b,"(∫ v : ℝ, gaussian b m r v) = r * Real.sqrt (Real.pi / b)"
-NavierStokes/PulseCovariance.lean,521,NavierStokes.PulseCovariance.hasDerivAt_affineSlope,r,HasDerivAt (affineSlope s₀ slope r) (slope / r ^ 2) v
-NavierStokes/PulseCovariance.lean,527,NavierStokes.PulseCovariance.affineSlope_deriv_bound,r,|deriv (affineSlope s₀ slope r) v| ≤ C / r ^ 2
 NavierStokes/PulseCovariance.lean,532,NavierStokes.PulseCovariance.affineSlope_distance,r,|affineSlope s₀ slope r v - s₀| = |slope| * |v - r ^ 2 / 2| / r ^ 2
-NavierStokes/PulseCovariance.lean,537,NavierStokes.PulseCovariance.modelDirection_affine_drift,r,|modelDirection c₀ (affineSlope s₀ slope r v) i - modelDirection c₀ s₀ i| ≤ ((|c₀| + 1) * |slope|) * |v - r ^ 2 / 2| / r ^ 2
-NavierStokes/PulseCovariance.lean,706,NavierStokes.PulseCovariance.normalizedMatrix_entry_error,r,|normalizedMatrix pulses i j - signedModel c₀ u i j| ≤ (E + ((|c₀| + 1) * |u|) * concentrationConstant a A b B) / r
-NavierStokes/RadialModulation.lean,116,NavierStokes.RadialModulation.modulatedE_hasDerivAt_eta,n,HasDerivAt (modulatedE n E A X) (deriv (E X) η * Real.exp (A (phasePoint n X η) / n) + E X η * (Real.exp (A (phasePoint n X η) / n) * (partialEta A (phasePoint 
-NavierStokes/RadialModulation.lean,126,NavierStokes.RadialModulation.modulatedU_hasDerivAt_eta,n,HasDerivAt (modulatedU n U B X) (deriv (U X) η + partialEta B (phasePoint n X η) / n) η
 NavierStokes/RadialPullback.lean,96,NavierStokes.RadialPullback.inverseChart_eq,d,inverseChart d a U = U ^ d⁻¹
-NavierStokes/RadialSchedule.lean,230,NavierStokes.RadialSchedule.lag_solution_hasDerivAt,a,HasDerivAt (lagSolution a c q₀) (-(a * (q₀ - c / a) * Real.exp (-a * y))) y
-NavierStokes/ReferenceBounds.lean,133,NavierStokes.ReferenceBounds.pressure_dot_bound,C,|p.1 * radialPartial P.pressure p| ≤ p.1 * K ^ 2 / C ^ 2
-NavierStokes/ReferenceBounds.lean,300,NavierStokes.ReferenceBounds.lower_comparison_preserves,X,b ≤ b * a / X + q / (2 * L) * (X - a ^ 2 / X)
-NavierStokes/ReferenceBounds.lean,766,NavierStokes.ReferenceBounds.endpoint_strict_collar,Λ,(4 / Λ : ℝ) < (Input.ofNatural hΛ F.family).endpoint * Real.exp δ
 NavierStokes/RenormalizedHeatMoment.lean,732,NavierStokes.RenormalizedHeatMoment.heated_exterior,X,"HeatedOutgoing.E P XR c (X, eta) = outgoingPowerAmplitude P XR * X ^ (-A P.data.h) * RadialHeatProfile.profile (1 + P.data.h) (2 * (1 - eta ^ 2) / X)"
-NavierStokes/ShapeTransition.lean,234,NavierStokes.ShapeTransition.blend_iteratedDeriv,T,"iteratedDeriv n (fun e => blend T li (y, e)) eta = (1 - OutgoingSchedule.sigma (y / T)) * iteratedDeriv n li eta + OutgoingSchedule.sigma (y / T) * iteratedDeri"
 NavierStokes/SignedRequestContinuation.lean,489,NavierStokes.SignedRequestContinuation.physicalBarSigma_integral,r,"SignedStressPrimitive.physicalBarSigma P e q f (r, s) = -(∫ t in (0 : ℝ)..r, t ^ e * SignedStressPrimitive.physicalAdjusted P e q (PressureStream.torusAverage f"
-NavierStokes/SlowBorelBase.lean,1340,NavierStokes.SlowBorelBase.partialX_swirl_primitive,C,SimilarityProfile.partialX (fun w => -C⁻¹ * ProfileHistories.primitive f w) = (fun w => -C⁻¹ * f w)
 NavierStokes/SlowBorelBase.lean,1349,NavierStokes.SlowBorelBase.partialS_swirlPotential,C,AxisymmetricFields.partialS (swirlPotential a h C d) p = -C⁻¹ * physicalProfile a h (-CoordinateAlgebra.A h - 1 / 2) d.phi p
 NavierStokes/SlowBorelBase.lean,1564,NavierStokes.SlowBorelBase.baseVelocity_angularMoment,C,"-x 1 * baseVelocity a h C d (t, x) 0 + x 0 * baseVelocity a h C d (t, x) 1 = (2 * AxisymmetricFields.radialEnergy x) * C⁻¹ * physicalProfile a h (-CoordinateAlg"
-NavierStokes/SlowExpansionResidual.lean,581,NavierStokes.SlowExpansionResidual.angular_finite_expansion,C,transportResidual 1 2 (slowFlux N h f) (slowAxial N h f) (slowSwirl N h C f) (fun _ => 0) p = C⁻¹ * (finiteSeries N (SimilarityProfile.q h p) h (angularExponent
 NavierStokes/SlowExpansionResidual.lean,649,NavierStokes.SlowExpansionResidual.pressure_series_identity,C,finiteSeries N q h (-1) omega + tail + 2 * (q * X) * (finiteSeries N q h (pressureExponent h - 1) px - (C⁻¹ * finiteSeries N q h (angularExponent h) phi) ^ 2) =
 NavierStokes/SlowExpansionResidual.lean,829,NavierStokes.SlowExpansionResidual.pressureCoefficient_eq_zero_iff,C,pressureCoefficient h C f n w = 0 ↔ partialX (f.pressure n) w = C⁻¹ ^ 2 * convolution (fun i j => f.phi i w * f.phi j w) n - previous (fun j => omegaCoefficient
 NavierStokes/SlowFirstOrderEdge.lean,40,NavierStokes.SlowFirstOrderEdge.taperSecond_factorization,x,deriv (tailShapeDeriv d) (3 - x) = (FlatCutoff.edge 4 x / x ^ 6) * taperSecondFactor d x
@@ -136,8 +76,6 @@ NavierStokes/SlowResidualMatching.lean,737,NavierStokes.SlowResidualMatching.tim
 NavierStokes/SlowResidualMatching.lean,749,NavierStokes.SlowResidualMatching.axialOp_swirlRadius,C,SlowStressSupport.axialOp h b (swirlRadius C f) w = w.1 / C * Z h (b - 1 / 2) f (radiusPoint w)
 NavierStokes/SlowResidualMatching.lean,782,NavierStokes.SlowResidualMatching.axialOp2_swirlRadius,C,SlowStressSupport.axialOp2 h b (swirlRadius C f) w = w.1 / C * Z2 h (b - 1 / 2) f (radiusPoint w)
 NavierStokes/SlowResidualMatching.lean,801,NavierStokes.SlowResidualMatching.partialXX_swirlRadius,C,partialX (partialX (swirlRadius C f)) w = 3 * w.1 / C * partialX f (radiusPoint w) + w.1 ^ 3 / C * partialX (partialX f) (radiusPoint w)
-NavierStokes/SmoothLoop.lean,59,NavierStokes.SmoothLoop.angularMean_div_const,c,angularMean (fun θ => f θ / c) = angularMean f / c
-NavierStokes/SmoothLoop.lean,301,NavierStokes.SmoothLoop.expTilt_variance,p,angularMean (fun θ => (expTilt m d μ p θ - m) ^ 2) = (d / p) ^ 2 * (expNormalizer (2 * (μ * p)) / expNormalizer (μ * p) ^ 2 - 1)
 NavierStokes/SquaredPartition.lean,343,NavierStokes.SquaredPartition.productMask_eq_rescale,δ,productMask δ k x = productMask 1 0 (δ⁻¹ • x - fun j => (k j : ℝ))
 NavierStokes/TerminalPressure.lean,43,NavierStokes.TerminalPressure.heatJet_zero,v,heatJet h 0 ν v = RadialHeatProfile.profile (1 + h) (2 * ν / v)
 NavierStokes/TerminalPressure.lean,129,NavierStokes.TerminalPressure.heatPressureJet_zero,v,heatPressureJet h 0 ν v = pressureWeight h v * RadialHeatProfile.profile (1 + h) (2 * ν / v) ^ 2
@@ -145,54 +83,28 @@ NavierStokes/TerminalStress.lean,893,NavierStokes.TerminalStress.tailShapeDeriv_
 NavierStokes/WaveStageContinuation.lean,1858,NavierStokes.WaveStageContinuation.ParticularPrimitives.carrier_integer,D,PhysicalParticularWave.referenceFrequency D j * ((D.carrierBlock.angularFrequency D.reference.band : ℝ) / D.carrierBlock.frequency D.reference.band) = ((j * D.c
 NavierStokes/WeightedRadialPrimitive.lean,394,NavierStokes.WeightedRadialPrimitive.log_remaining,X,logLength a b - logPosition a X = Real.log (b / X)
 NavierStokes/WeightedRadialPrimitive.lean,404,NavierStokes.WeightedRadialPrimitive.logWeight_formula,X,logWeight cL cR a b m X = Real.exp (-cL / (Real.log (X / a)) ^ 2 - cR / (Real.log (b / X)) ^ 2) / (min 1 (min (Real.log (X / a)) (Real.log (b / X)))) ^ m
-NavierStokes/R3/ParabolicSupport.lean,18,NavierStokesR3.ProblemStatement.isCompact_affineSpacetime_image,b,"IsCompact ((fun z : SpaceTime => ((z.1 - d) / c, b⁻¹ • z.2)) '' K)"
-NavierStokes/R3/ParabolicSupport.lean,18,NavierStokesR3.ProblemStatement.isCompact_affineSpacetime_image,c,"IsCompact ((fun z : SpaceTime => ((z.1 - d) / c, b⁻¹ • z.2)) '' K)"
-NavierStokes/R3/RadialKernelBounds.lean,78,NavierStokesR3.Comparison.levelset_measure_le_ball,q,volume {z | t ≤ f z} ≤ volume (Metric.closedBall (0 : Space) (t ^ q⁻¹))
-NavierStokes/R3/SpatialSupportScaling.lean,18,NavierStokesR3.ProblemStatement.isCompact_spatialScale_image,b,IsCompact ((fun x : Space => b⁻¹ • x) '' K)
-NavierStokes/R3/SpatialSupportScaling.lean,36,NavierStokesR3.ProblemStatement.isCompact_spacetimeSpatialScale_image,b,"IsCompact ((fun z : SpaceTime => (z.1, b⁻¹ • z.2)) '' K)"
 Euler/EulerProof.lean,933,EulerInverseRegularity.differenceQuotient_commutator,h,commutator (differenceQuotient τ h) T = h⁻¹ • commutator τ T
-Euler/EulerProof.lean,942,EulerInverseRegularity.inverse_differenceQuotient_norm_le,h,‖differenceQuotient τ h (coerciveInverse T c hc hT f)‖ ≤ c⁻¹ * (‖differenceQuotient τ h f‖ + ‖h⁻¹ • commutator τ T (coerciveInverse T c hc hT f)‖)
-Euler/EulerProof.lean,11063,EulerGevreyCutoff.real_part_inv_lower_bound,z,1 / (8 * x) ≤ (z⁻¹).re
-Euler/EulerProof.lean,13065,EulerPacketAlgebra.inversion_equation,β,HasDerivAt (fun z => V z⁻¹ / z) (-V y⁻¹ / y ^ 2 - V₁ y⁻¹ / y ^ 3) y ∧ HasDerivAt (fun z => (1 + z ^ 4) * (-V z⁻¹ / z ^ 2 - V₁ z⁻¹ / z ^ 3)) ((2 / β - 2 * y ^ 2)
-Euler/EulerProof.lean,13837,EulerPacketGrowth.inversion_second_derivative,β,HasDerivAt f₁ (((2 / β - 2 * y ^ 2) * f y - 4 * y ^ 3 * f₁ y) / (1 + y ^ 4)) y
 Euler/EulerSpatialRescaling.lean,18,EulerSpatialRescaling.coordinates_apply,ell,"coordinates ell q=(q.1,ell⁻¹ • q.2)"
 Euler/EulerTimeRescaling.lean,18,EulerTimeRescaling.coordinates_apply,ε,"coordinates ε q=(ε⁻¹*q.1,q.2)"
-Euler/EulerTimeRescaling.lean,28,EulerTimeRescaling.velocity_hasFDerivAt,ε,HasFDerivAt (velocity ε u) (ε⁻¹ • (fderiv ℝ u (coordinates ε q)).comp (coordinates ε)) q
-Euler/EulerTimeRescaling.lean,34,EulerTimeRescaling.pressure_gradient,ε,"gradient (fun y => pressure ε p (q.1,y)) q.2 = (ε⁻¹)^2 • gradient (fun y => p (ε⁻¹*q.1,y)) q.2"
 Euler/EulerTimeRescaling.lean,46,EulerTimeRescaling.momentumResidual_eq,ε,momentumResidual (velocity ε u) (pressure ε p) q = (ε⁻¹)^2 • momentumResidual u p (coordinates ε q)
-Euler/EulerTimeRescaling.lean,68,EulerTimeRescaling.spatial_derivative,ε,"fderiv ℝ (fun y => velocity ε u (t,y)) x = ε⁻¹ • fderiv ℝ (fun y => u (ε⁻¹*t,y)) x"
 Euler/MeanBoundaryDerivative.lean,23,EulerMeanBoundary.cutoffCurl_differenceError,h,cutoffCurl (χ.differenceError a h) = h⁻¹ • (cutoffCurl (χ.translate (h • a)) - cutoffCurl χ) - cutoffCurl (χ.directional a)
 Euler/MeanBoundaryDerivative.lean,68,EulerMeanBoundary.weakPotential_differenceError,h,weakPotential (χ.differenceError a h) = h⁻¹ • (weakPotential (χ.translate (h • a)) - weakPotential χ) - weakPotential (χ.directional a)
 Euler/MeanBoundaryDifference.lean,37,EulerMeanBoundary.spatialDifference_apply,h,spatialDifference a h z = h⁻¹ • (translation (h • a) z - z)
 Euler/MeanBoundaryDifference.lean,43,EulerMeanBoundary.Cutoff.differenceQuotient_field,h,(χ.differenceQuotient a h).field x = h⁻¹ * (χ.field (x + h • a) - χ.field x)
 Euler/MeanBoundaryDifference.lean,46,EulerMeanBoundary.spatialDifference_commutator,h,(spatialDifference a h).comp A - A.comp (spatialDifference a h) = h⁻¹ • translationCommutator (h • a) A
-Euler/MeanCutoffDifferenceBound.lean,39,EulerMeanBoundary.norm_differenceQuotient_le,h,‖h⁻¹ • (f (x + h • a) - f x)‖ ≤ M * ‖a‖
 Euler/MeanCutoffDifferenceBound.lean,57,EulerMeanBoundary.differenceQuotient_fderiv,h,fderiv ℝ (χ.differenceQuotient a h).field x = h⁻¹ • (fderiv ℝ χ.field (x+h•a) - fderiv ℝ χ.field x)
 Euler/MeanCutoffTaylor.lean,121,EulerMeanBoundary.Cutoff.differenceError_fderiv,h,fderiv ℝ (χ.differenceError a h).field x = h⁻¹ • (fderiv ℝ χ.field (x+h•a) - fderiv ℝ χ.field x) - fderiv ℝ (fderiv ℝ χ.field) x a
-Euler/PacketForwardInitialSupport.lean,55,EulerPacketTerminalDatum.forwardInitializedInitial_split,k,"scale M.ℓ (fun x => forwardInitializedVelocity M D δ hδ ξ hs α N k⁻¹ (0,(x,k*inner ℝ D.m₀ x))) = forwardInitializedInitialHigh M D δ hδ ξ hs α N k + forwardInit"
 Euler/PacketForwardInitializedResidualEquation.lean,68,EulerPacketTerminalDatum.forwardInitializedNormalizedField_path_eq,k,(forwardInitializedNormalizedField M D hTime δ hδ ξ hs α N k).path = (coordinateField D (forwardInitializedVelocityField M D hTime δ hδ ξ hs α N k⁻¹) k).path
 Euler/PacketForwardInitializedResidualEquation.lean,73,EulerPacketTerminalDatum.forwardInitializedNormalizedField_tower_eq,k,(forwardInitializedNormalizedField M D hTime δ hδ ξ hs α N k).toFieldTower = (coordinateField D (forwardInitializedVelocityField M D hTime δ hδ ξ hs α N k⁻¹) k)
-Euler/PacketGraphHessian.lean,65,EulerPacketGraphHessian.gradient_physical,k,gradient (fun y => k⁻¹^2 * q (graphMap k m (Y y))) x = k⁻¹^2 • J.adjoint (spatialGradient q (graphMap k m (Y x)))+ (k⁻¹^2*k*angularDerivative q (graphMap k m (Y
-Euler/PacketGraphHessian.lean,153,EulerPacketGraphHessian.lowerHessian_norm_le,k,‖lowerHessian q k m Y J x‖ ≤ |k⁻¹|^2 * ‖fderiv ℝ (slowForce q k m Y J) x‖ + |k⁻¹| * (|angularDerivative q (graphMap k m (Y x))| * ‖fderiv ℝ (transportedNormal m
-Euler/PacketInitializedInitialExact.lean,22,EulerPacketTerminalDatum.initializedInitial_split,k,"scale M.ℓ (fun x => initializedVelocity M D τ hτ hτT B δ hδ ξ hs α N k⁻¹ (0,(x,k*inner ℝ D.m₀ x))) = initializedInitialHigh M D τ hτ hτT B δ hδ ξ hs α N k + ini"
 Euler/PacketInitializedResidualEquation.lean,69,EulerPacketTerminalDatum.initializedNormalizedField_path_eq,k,(initializedNormalizedField M D hTime τ hτ hτT B δ hδ ξ hs α N k).path = (coordinateField D (initializedVelocityField M D hTime τ hτ hτT B δ hδ ξ hs α N k⁻¹) k)
 Euler/PacketInitializedResidualEquation.lean,74,EulerPacketTerminalDatum.initializedNormalizedField_tower_eq,k,(initializedNormalizedField M D hTime τ hτ hτT B δ hδ ξ hs α N k).toFieldTower = (coordinateField D (initializedVelocityField M D hTime τ hτ hτT B δ hδ ξ hs α N
-Euler/PacketLiftedCoefficientBounds.lean,47,EulerAllOrderDriftCorrection.liftedInputRadius_error,ρ,‖coordinateEquiv.symm.toContinuousLinearMap‖ * ρ⁻¹ ≤ liftedInputRadius R ρ
-Euler/PacketPhysicalLowBounds.lean,57,EulerPacketPhysicalLowBounds.shearTerm_norm_le,δ,‖shearTerm amp slope r w‖ ≤ (amp*(‖r‖*‖w‖))/δ
-Euler/PacketPhysicalLowBounds.lean,65,EulerPacketPhysicalLowBounds.pressureTerm_norm_le,δ,‖pressureTerm amp slope M r w‖ ≤ 2*‖M‖*(amp*(‖r‖*‖w‖))/δ
 Euler/PacketPointJets.lean,103,EulerPacketPointJets.momentumResidual_formula,κ,momentumResidual κ FInv M m u p z = fderiv ℝ u z timeDirection + M (u z) + FInv.adjoint ((toDual ℝ Space).symm ((fderiv ℝ p z).comp spatialInjection)) + κ⁻¹ • (
-Euler/PacketPressureFastHessian.lean,49,EulerPacketGraphHessian.fastHessianRemainder_norm_le,k,‖fastHessianRemainder a k m Y J x‖ ≤ |k⁻¹| * (|a (graphMap k m (Y x))| * ‖fderiv ℝ (transportedNormal m J) x‖ + ‖fderiv ℝ a (graphMap k m (Y x))‖ * ‖J x‖ * ‖tra
-Euler/PacketPrimaryGlobalShear.lean,39,EulerPacketPrimaryShear.slowGraphDerivative_norm_le,k,‖slowGraphDerivative q k m Y J x‖ ≤ |k⁻¹| * ‖fderiv ℝ q (graphMap k m (Y x))‖ * ‖J‖
-Euler/PacketPrimaryScaling.lean,60,EulerPacketPrimaryShear.scaled_terminal_wave_eq,k,"(fun x : Space => k⁻¹ • vector τ hτ hτT B (initialData D δ hδ (a • ξ) hs) (t,(x,k*⟪D.m₀,x⟫_ℝ))) = fullWave τ hτ hτT B δ hδ ξ hs a k t"
-Euler/PacketScaledRay.lean,14,EulerPacketMovingFrame.physicalTime_hasDerivAt,a,HasDerivAt (physicalTime t₀ a ε) (ε/a) τ
-Euler/PacketTailBound.lean,54,EulerPacketTailBound.normalized_tail_norm_le,k,"‖k • L (∑ n ∈ Ico (N+1) (2*N+3), (k⁻¹)^n • c n)‖ ≤ 2*C*k*B*(B/k)^(N+1)"
 Euler/ParentStageHorizon.lean,70,EulerParentStageHorizon.scaled_rate,h,a/sqrt (a/h)=sqrt (a*h)
 Euler/ParentStageHorizon.lean,76,EulerParentStageHorizon.physical_rate,a,sqrt (a/h)/a=1/sqrt (a*h)
 Euler/ParentStageHorizon.lean,76,EulerParentStageHorizon.physical_rate,h,sqrt (a/h)/a=1/sqrt (a*h)
 Euler/ParentStageHorizon.lean,79,EulerParentStageHorizon.physical_target_identity,h,physicalTime τ a (sqrt (a/h)) (x/sqrt β)=τ+x/sqrt (β*a*h)
 Euler/PhysicalL2Scaling.lean,54,EulerPhysicalL2Scaling.iteratedFDeriv_scale,ell,iteratedFDeriv ℝ n (scale ell f) x = (ell*(ell⁻¹)^n) • iteratedFDeriv ℝ n f (ell⁻¹ • x)
 Euler/SmoothPhysicalGraphFlow.lean,62,EulerGraphInvariantFlow.physicalCoefficient_apply,ell,(physicalCoefficient k m T A ell).field t x = ell • (A.field t (graphLinear k m (ell⁻¹ • x))).1
-Euler/TimeH1Reconstruction.lean,59,EulerTimeH1Reconstruction.mean_norm_le,T,‖mean T hT p‖ ≤ (T⁻¹ * Real.sqrt T) * ‖p‖
 NavierStokes/ActivationCone.lean,363,NavierStokes.ActivationCone.cone_error_bounds,A (via projectionError),|projectionError A B z dA dB dR| ≤ comparisonConstant M ∧ |crossError A B z dA dB dR| ≤ comparisonConstant M ∧ |sizeError κ A B z dR| ≤ comparisonConstant M
 NavierStokes/ActivationCone.lean,363,NavierStokes.ActivationCone.cone_error_bounds,A (via crossError),|projectionError A B z dA dB dR| ≤ comparisonConstant M ∧ |crossError A B z dA dB dR| ≤ comparisonConstant M ∧ |sizeError κ A B z dR| ≤ comparisonConstant M
 NavierStokes/ActivationCone.lean,363,NavierStokes.ActivationCone.cone_error_bounds,A (via sizeError),|projectionError A B z dA dB dR| ≤ comparisonConstant M ∧ |crossError A B z dA dB dR| ≤ comparisonConstant M ∧ |sizeError κ A B z dR| ≤ comparisonConstant M

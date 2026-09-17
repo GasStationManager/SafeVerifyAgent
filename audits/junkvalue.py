@@ -65,6 +65,51 @@ NONZERO = [r"{name}\s*\u2260\s*0", r"0\s*<\s*{name}\b", r"0\s*\u2260\s*{name}\b"
            r"[1-9]\d*\s*<\s*{name}\b", r"{name}\s*>\s*[1-9]\d*"]
 
 
+# ONE filter, and a REJECTED second one. Two triage workers disagreed here and the
+# disagreement is the useful part.
+#
+# KEPT -- require an EQUALITY conclusion. A bound, regularity, measurability, support
+# or compactness claim does not "collapse to 0 = 0" in any interesting way: `0 <= 0`
+# and `ContDiff of 0` are still the intended content. This was the largest false-positive
+# group in a 41-hit triage that came back A=1 B=36 C=4 D=0 (ParabolicSupport:18,
+# SpatialSupportScaling:18,36, RadialKernelBounds:33, ActivationCone:363,
+# ParentChoiceInitialSupport:20,28, ...). Both triage workers agree on this one.
+#
+# REJECTED -- the "denominator must reach only ONE side" rule. One worker measured it
+# holding on 41 of 41 hits and recommended it. A second worker produced the
+# counterexample and it is decisive: in `PulseCovariance:74`,
+# `INT gaussian b m r = r * sqrt(pi / b)`, the divisor `b` occurs on BOTH sides -- in the
+# LHS integrand and in the RHS square root -- yet the statement IS content-free at b = 0,
+# because both sides independently collapse to 0. That is the audit's sharpest junk-value
+# finding, and this filter would have deleted it. Same for
+# `WholeSpaceGaussianTimeKernel.lean:41`, where `t` is on both sides and both vanish.
+# The correct test is semantic (evaluate both sides at the junk point and ask whether ANY
+# term survives) and is not available to a syntactic pass, so no symmetry filter is applied
+# and the resulting false positives are accepted.
+NOT_A_VALUE = re.compile(r"ContDiff|Differentiable|Measurable|Integrable|HasCompactSupport"
+                         r"|tsupport|IsOpen|IsCompact|Continuous|Tendsto|MemClass|JetRate"
+                         r"|\u2264|\u2265|<|>|\u2208|\u2286")
+_OPEN, _CLOSE = "([{\u2983\u27e8", ")]}\u2984\u27e9"
+
+
+def informative(concl: str, name: str) -> bool:
+    """Is this an EQUALITY of values, i.e. could a collapse to 0 = 0 empty it?"""
+    depth, eq = 0, None
+    for i, ch in enumerate(concl):
+        if ch in _OPEN:
+            depth += 1
+        elif ch in _CLOSE:
+            depth -= 1
+        elif (ch == "=" and depth == 0 and i > 0
+              and concl[i - 1] not in "<>=!\u2260\u2264\u2265"
+              and (i + 1 >= len(concl) or concl[i + 1] != "=")):
+            eq = i
+            break
+    if eq is None:
+        return False
+    return not NOT_A_VALUE.search(concl[:eq])
+
+
 def risky_defs(files):
     """Definitions whose BODY divides by / inverts one of their own scalar params.
 
@@ -127,6 +172,8 @@ def main() -> int:
                         continue            # not a bare scalar binder here
                     if any(re.search(p.format(name=re.escape(nm)), sig) for p in NONZERO):
                         continue            # constrained: fine
+                    if not informative(concl, nm):
+                        continue
                     rows.append({"file": rel, "line": line, "decl": full,
                                  "denominator": nm,
                                  "statement": " ".join(concl.split())[:160]})

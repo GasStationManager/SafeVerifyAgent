@@ -2488,3 +2488,79 @@ One extension was **cut for performance and the gap recorded**: transitive risk 
   the "non-integrable ⇒ integral = 0" junk hole. `PacketCylinderTermBudget.lean`: `CoefficientBudget`
   constructed (`PacketSourceCoefficientBudget.lean:87-111`); `Rc = amplitude = 0` admitted but both only
   **strengthen**.
+
+## W40 — a confirmed verdict REVERSED, a recommended filter REJECTED, and 26 more structural files' worth of reading
+
+### A standing UNSUPPLIED verdict was WRONG: `ValidBandGluing.Compatible` is supplied
+`read-H` reversed it and the parent verified the whole chain. `ActualValidBandWaves.lean:260-268`
+(`theorem compatible`) concludes `ValidDyadicBandCover.Compatible h N (localPotential x)`, and
+`ValidDyadicBandCover.lean:72-73` is
+`def Compatible (h) (N) (f) : Prop := ValidBandGluing.Compatible (charts h N) (fun n => f n.val)`.
+**A definitional wrapper — so proving the wrapper proves the body**, by `intro n m w hw` closed with
+`local_fields_eq`; consumed at `:271-282`, premise built at `ActualCyclePreservation.lean:842`.
+The earlier verdict (`nosupplier-3`) had *correctly* observed that `:72-73` is "only a wrapper definition,
+not a proof" and drew the wrong conclusion from it: a def-wrapper is not itself a proof, but **a theorem
+concluding the wrapper is a proof of what it wraps**.
+
+**That is instrument limitation #6, and it is the same shape as `junkvalue.py`'s two-level indirection
+gap:** `nosupplier.py` does not chase suppliers through definitional wrappers, so it can report a
+predicate as unsupplied when the supply arrives via an alias. Recorded, not fixed — the fix needs
+definition-unfolding, which is exactly what a syntactic pass cannot do.
+**Corrected tally: 45 confirmed unsupplied carrying 444 in-cone hypothesis sites, 18 false positives
+(71% precision) over 63 verified.**
+
+### The junk-value pass: 64 more hits triaged, **D = 0**, and one worker's rule REJECTED by another
+`junkvalue-2` (**A=1 B=36 C=4 D=0**, 41 hits) and `junkvalue-3` (**A=2 B=11 C=10 D=0**, 23 rows / 19
+theorems). No genuinely unguarded case in either tranche. Two more caller-guarded specimens of the
+`PulseCovariance:74` shape, both **exact identities**:
+* `Euler/PhysicalL2Scaling.lean:54 iteratedFDeriv_scale` — at `ell = 0`, `scale 0 f = 0` and the prefactor
+  `ell * (ell⁻¹)^n = 0`, so `0 = 0`. Callers guard (`:64,73,86`).
+* `NavierStokes/HeatProfileExtension.lean:206 iteratedDeriv_scaledProfile` — at `X = 0` the profile is
+  `ν`-constant and `(2/X)^n = 0`, so `0 = 0` for every `n ≥ 1` (`n = 0` survives via `0^0 = 1`). Notable
+  because its consumer `ExtendedHeatDebts.lean:123 correctionJet_succ` is **itself unguarded with the same
+  collapse**, and the guard only appears two layers up (`:149` domain `Ioi 0`, `:167` `1 ≤ X`).
+* `Euler/WholeSpaceGaussianTimeKernel.lean:41 timeKernel_second_sum` — an exact heat-kernel trace identity
+  with no `0 < t`; at `t = 0` the normalisation `(π·0)^(-3/2) = 0` and `t⁻¹ = 0` zero **both** sides.
+
+**The methodological result is the disagreement.** `junkvalue-2` measured the "denominator must reach only
+ONE side" rule holding on **41 of 41** hits and recommended it; I was about to implement it.
+`junkvalue-3` produced the counterexample and it is decisive: in `PulseCovariance:74`,
+`∫ gaussian b m r = r * sqrt(π/b)`, the divisor `b` sits on **both** sides — in the LHS integrand and in the
+RHS square root — and the statement **is** content-free at `b = 0` because both sides collapse
+independently. **The filter would have deleted the audit's sharpest junk-value finding.**
+`WholeSpaceGaussianTimeKernel:41` is a second counterexample. So the rule was **rejected**, the correct test
+is semantic (evaluate both sides at the junk point and ask whether any term survives), and the resulting
+false positives are **accepted rather than filtered**. Only the agreed filter was implemented — require an
+**equality of values**, since a bound or regularity claim collapsing to `0 ≤ 0` or `ContDiff 0` keeps its
+intended content. Measured: **873 → 785 hits (in-cone 581 → 518), with `transportPhase` still 8/8,
+`PulseCovariance:74` still present, `BasePrefixIdentity` still caught.**
+Further FP kinds the workers named for the record: divisor inside a **shared evaluation point**
+(`physicalTime = t0 + (ε/a)τ`), divisor **also in a hypothesis** that pins the LHS to the same junk value
+(`PhysicalLowBounds:58,66`), `normalized`/`normalize` reciprocals that need a term-level positivity witness,
+and one plain tool error — in `PacketForwardScalarPressureGrade:60,112` the flagged `C` **is never a
+denominator at all** (it is the `GradeGuards` amplitude).
+
+### Structural reading: 26 of 73 files done. `read-G` + `read-H`: 8 files, 146 decls, **1 ESCALATE**
+* **`Euler/MeanPacketData.lean` — a P7 (zero-witness) instance on the Euler side.** The base `Data` witness
+  has `Bc = 0, L = 0, r = 0` **by `rfl`** (`BaseEulerState.lean:56-62`), so `core_lower` (`:50`) is vacuous
+  and the `boundaryLocalizationC2 * Bc * r^3 * T` term of `small` (`:64`) is identically 0 — the solver and
+  evolution (`:113,120`) run with boundary budget **0**. NOTE not ESCALATE, because a non-degenerate witness
+  does exist (`Stage.low L = C1*Bc + 1 ≥ 1`, `r = baseRadius > 0`, `PacketInductionStage.lean:45,46`, built
+  at `BaseInductionStage.lean:22-94`). **The lesson is the same as `cartesianPotential = 0`: a Data-level
+  estimate must say WHICH witness.**
+* `MixedDiagonalSchedule.lean` — `ThreeCutBounds` (`:68-72`) constrains only `1 ≤ j`, so it says **nothing
+  about stage 0**, and `cut_bounds_of_positiveStages` (`:108-117`) re-labels a bound proved with stage 0
+  *deleted* as a bound "for A". Sound and docstringed; the consumer takes stage 0 from a separate `E`.
+* **First kernel-risk flags of the whole structural block**, both benign-by-inspection:
+  `CylinderCompactTranslation.lean:149-163` uses `Nat.rec`, and `MixedDiagonalSchedule.lean:30-41` has a
+  Type-valued `if c = 2` with `Fin.cases` instances.
+* Clean and live: `LocalizedGaussianBounds` (`UniformComplementJets` supplied `:276,289`),
+  `ActualWaveCoefficientPeriodicity` (concluded at `ActualCyclePeriodicity.lean:496-501`),
+  `ActualExteriorPrefix` (`ExteriorStages` constructed for the real candidate,
+  `ActualCandidateAssembly.lean:701-724`), `CylinderDirichletData` (`Coefficients` supplied by a real
+  `where` term at `TransversePacketHistoryData.lean:68`).
+* `CylinderCompactTranslation` is a **closure-only file with a base case that DOES exist**
+  (`PacketTerminalDatum.lean:81-85`, nonzero via `innerCutoff_zero = 1`) — the negative control for P2.
+* Two more junk-value **positive controls**: `MixedDiagonalSchedule.lean:265` puts `ha0 : 0 < a 0` right
+  beside `1/(a 0 : ℝ)`, and `LocalizedGaussianBounds`' `(s.delta x)⁻¹` is double-guarded
+  (`WeightedClasses.lean:40,50`).

@@ -13,7 +13,7 @@ headline claims are not touched by any of it.
 ---
 
 ## P1 — UNSUPPLIED HYPOTHESIS: a predicate nobody ever constructs
-**46 confirmed, carrying 463 in-cone hypothesis sites.** Found mechanically by
+**45 confirmed, carrying 444 in-cone hypothesis sites** (one earlier verdict, `ValidBandGluing.Compatible`, was REVERSED -- supplied through a definitional wrapper). Found mechanically by
 `audits/nosupplier.py`, each one confirmed by reading. Effect: the theorems taking it are **unreachable**,
 so a dependency cone that counts them as live is wrong. Never a falsity — an unsatisfiable hypothesis makes
 a vacuously fine theorem.
@@ -105,3 +105,15 @@ script's**, and one by a reader finding a case the tool passed. Two failed in th
 (hiding findings): bare-suffix twin masking, and multi-line `variable` blocks. One was blindness to Greek
 identifiers — in an analysis library. **The working rule: treat every parent/worker numeric disagreement as
 a defect report against the instrument, not as noise to average away.**
+
+A sixth limitation was then found by a reader rather than by a count: `nosupplier.py` does not chase
+suppliers through **definitional wrappers**, so it called `ValidBandGluing.Compatible` unsupplied when a
+theorem concluding `ValidDyadicBandCover.Compatible` -- a `def` whose body IS that predicate -- supplies it.
+Same shape as `junkvalue.py`'s two-level-indirection gap. Both need definition unfolding, which is precisely
+what a syntactic pass cannot do, so both are recorded rather than fixed.
+
+**And one methodological result worth more than any single finding: a rule that measured 41/41 was still
+wrong.** A triage worker recommended "flag only if the denominator reaches one side of the equality"; a
+second worker produced a counterexample showing it would delete the audit's sharpest junk-value finding
+(`PulseCovariance:74`, where the divisor is on both sides and both sides collapse independently). Perfect
+agreement on a sample is not validation when a single counterexample can be decisive.

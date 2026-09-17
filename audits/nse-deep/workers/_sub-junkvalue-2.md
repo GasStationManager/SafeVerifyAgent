@@ -99,3 +99,209 @@ evaluation point die (`(0:ℝ)⁻¹ = 0`), so `scale 0 f = 0` (the zero function
 
 (The two "hits" at :54 -- `ell` and `ell via scale` -- are one theorem.)
 
+
+## 4. NavierStokes/ActivationCone.lean -- 3 hits (all one theorem, :363): FALSE POSITIVE (B)
+
+`projectionError` (:335-336), `crossError` (:338-339), `sizeError` (:341-342) contain `B / A`
+and `B ^ 2 / A`.
+
+- :363 `cone_error_bounds` -- CLAIMS: three uniform BOUNDS
+  `|projectionError| , |crossError| , |sizeError| ≤ comparisonConstant M`. The signature does
+  not say `A ≠ 0`, but it does not need to: the hypotheses bound the quotients THEMSELVES,
+  `hBA : |B / A| ≤ M` (:365) and `hB2A : |B ^ 2 / A| ≤ M` (:365). The theorem is a statement
+  about whatever real number `B / A` is, junk value included. At A = 0 the conclusion does NOT
+  collapse -- e.g. `projectionError = dA + 0 + 0 = dA` and the claim `|dA| ≤ M + 2M^2 + M^3`
+  is still real content; the proof (:376-394) uses only `hBA`/`hB2A`/`gcongr`, never `A ≠ 0`.
+  Moreover it is a bound, not an exact value, so a degenerate instance costs nothing.
+  **B (three hits, one theorem).**
+
+Author guards where an IDENTITY needs it: `hA : A ≠ 0` at :346 `cone_error_factorizations`
+(used by `field_simp [hA]` :355, :357) and at :410 `cone_comparison_from_stock_bounds`.
+
+
+## 5. Euler/AngleMeanZeroPrimitive.lean -- 3 hits, ALL FALSE POSITIVES (B)
+
+`primitive P f θ = rawPrimitive f θ - P⁻¹ • (∫ s in 0..P, rawPrimitive f s)` (:25-26).
+At P = 0 BOTH factors of the subtracted constant vanish honestly (`(0:ℝ)⁻¹ = 0`, and
+`∫ s in 0..0 = 0`), so `primitive 0 f = rawPrimitive f`. The mean-removal term is a pure
+CONSTANT, so it cannot damage any of the three hit statements.
+
+- :40 `primitive_hasDerivAt` -- CLAIMS: `HasDerivAt (primitive P f) (f θ) θ`. Proof (:42) is
+  `(rawPrimitive_hasDerivAt ...).sub_const _`, valid for every P. At P=0 it is the (true,
+  non-vacuous) derivative statement for `rawPrimitive`. **B.**
+- :45 `primitive_continuous` -- CLAIMS: continuity. Same argument (:47, `.sub continuous_const`).
+  **B.**
+- :61 `primitive_periodic` -- CLAIMS: `Function.Periodic (primitive P f) P`. At P=0 the claim IS
+  trivial, but only because `Periodic g 0` is trivially true for any g -- and the hypotheses
+  `hper : Periodic f 0` and `hmean : ∫ θ in 0..0, f θ = 0` are then trivial too. The degeneracy
+  is in the period-0 statement schema, not in the `P⁻¹` channel; no exact value is lost and
+  nothing is silently false. **B (harmless, not a junk-value channel).**
+
+Author guards exactly the exact-value theorems: `hP : P ≠ 0` at :68 `primitive_mean_zero`
+(needs `mul_inv_cancel₀ hP`, :73) and :76 `primitive_unique` (:97).
+
+
+## 6. Euler/PacketScaledVelocity.lean -- 3 hits, ALL FALSE POSITIVES (B), FP kind (i)
+
+`physicalTime t₀ a ε τ = t₀ + (ε/a)*τ` (Euler/PacketScaledRay.lean:12). This is exactly the
+previous triage's FP kind (i): `a` sits ONLY inside a SHARED EVALUATION POINT. In each hit the
+same term `physicalTime t₀ a ε τ` occurs on both sides (on the left inside
+`scaledRay`/`scaledVelocity`, whose defs -- PacketScaledRay.lean:36 and this file :18-19 --
+evaluate the moving fields at that same time), so a = 0 simply re-evaluates both sides at
+`t₀`. The identities stay exactly true and non-vacuous. The genuine denominators ARE guarded:
+`hs₀ : s₀ ≠ 0`, `hε : ε ≠ 0` in every signature (:22, :28, :41), and `ha : a ≠ 0` appears
+where `a` really is a divisor (:50 `movingFlux_scaling`, :92 `scaledVelocity_hasDerivWithinAt`).
+
+- :21 `scaledRay_restore` -- CLAIMS: exact restoration `s₀*rayScale ε i*scaledRay ... =
+  movingRay ... (physicalTime ...)`. It is `s₀*rs*(X/(s₀*rs)) = X` with X evaluated at the
+  shared time; `a`-independent. **B.**
+- :27 `scaledVelocity_restore` -- CLAIMS: the same exact restoration for the velocity row. **B.**
+- :40 `movingDenominator_scaling` -- CLAIMS: exact scaling law
+  `movingDenominator ... (physicalTime ...) = s₀^2 * rayDenominator ε (scaledRay ...)`.
+  Again `a` only in the shared time argument on both sides (:42-44). **B.**
+
+
+## 7. Euler/ParentChoiceInitialSupport.lean -- 3 hits, ALL FALSE POSITIVES (B)
+
+`k` enters via `forwardInitializedInitialHigh/Mean` (Euler/PacketForwardInitialSupport.lean
+:22-24, :26-28) as the frequency argument `k⁻¹` plus the fast coordinate `k*inner ℝ D.m₀ x`.
+
+- :20 `forwardInitializedInitialMean_support` and :28
+  `forwardInitializedInitial_common_support` -- CLAIM: SUPPORT LOCALIZATION,
+  `tsupport (...) ⊆ Metric.closedBall 0 2`. Two reasons these are false positives:
+  1. The `k⁻¹` is only a frequency PARAMETER handed to `EulerPacketInitial.mean/high`; the
+     supporting lemmas `mean_scaled_support` (Euler/PacketInitialSupport.lean:63-68) and
+     `high_scaled_support` (:48-53) are proved for ARBITRARY `κ k : ℝ` with no nonzero
+     hypothesis -- their only positivity is `hell : 0 < ell`, supplied here by the structure
+     field `M.ℓ_pos` (used at :22, :37), i.e. CERTIFIED BY TYPE, exactly like `StripData`.
+  2. The conclusion is an inclusion in a k-free ball, so at k=0 it is still a genuine
+     localization claim about the k=0 field, not `0 = 0`. Nothing exact degenerates.
+  **B (3 hits, 2 theorems).**
+
+
+## 8. Euler/TransverseHistoryLipschitz.lean -- 3 hits, ALL FALSE POSITIVES (B)
+
+`historyDifferenceCost` (Euler/TransverseHistoryBounds.lean:105-108) contains `c⁻¹` through
+`traceCost T (2*c⁻¹*q*q₁)` and `generatorDifferenceCost c q q₁ ...`
+(Euler/TransverseGeneratorDifference.lean:67-68). `c⁻¹` is a POLYNOMIAL ATOM here: every
+statement in this file is an algebraic (in)equality in which `historyDifferenceCost` occurs
+with the SAME `c` on both sides.
+
+- :15 `historyDifferenceCost_linear` -- CLAIMS: exact linearity in the three difference slots,
+  `HDC(x,y,z) = HDC(1,0,0)*x + HDC(0,1,0)*y + HDC(0,0,1)*z`. `c` occurs in all four terms
+  (both sides): symmetric, so the ONE-SIDE rule already discards it. Proof (:20-22) is
+  `unfold ...; ring`, i.e. valid for ANY real value of the atom `c⁻¹`, so at c=0 the identity
+  is still the same nontrivial linear-decomposition identity, not `0 = 0`. **B.**
+- :24 `historyDifferenceCost_nonneg` -- CLAIMS: `0 ≤ historyDifferenceCost ...`. Signature has
+  `hc : 0 ≤ c` (:25); `positivity` (:31) needs only `0 ≤ c⁻¹`, which holds at c=0 too. A
+  nonnegativity claim about a still-nonzero expression. **B.**
+- :33 `historyDifferenceCost_le_scale` -- CLAIMS: the scaling BOUND
+  `HDC(x,y,z) ≤ HDC(L₀,L₁,LH)*s`. Same `c` on both sides; a bound, not an exact value. **B.**
+
+Extra note for the tool: `traceCost T b = (1+T)*(T⁻¹+2*b)`
+(Euler/TimeH1GeneratorBounds.lean:29) and `affineCost T = (1+T)*|T⁻¹|`
+(Euler/TransverseEndpointBounds.lean:150) put an UNGUARDED `T⁻¹` in the same three statements
+(only `hT : 0 ≤ T`), and it is harmless for exactly the same symmetric reason. The real
+consumer :71 `historyVelocity_sub_norm_le_of_coefficient_bounds` anyway carries `hc : 0 < c`
+(variable block :57) and `hTpos : 0 < T` (:71).
+
+
+## 9. NavierStokes/HeatProfileExtension.lean -- 2 hits (one theorem, :206): C
+
+`scaledProfile a X ν = extension a (2 * ν / X)` (:191). At X = 0 this is the CONSTANT function
+`ν ↦ extension a 0`.
+
+- :206 `iteratedDeriv_scaledProfile {a} (ha : 1 < a) (n : ℕ) (X ν : ℝ)` -- CLAIMS: the EXACT
+  derivative-scaling law
+  `iteratedDeriv n (scaledProfile a X) ν = (2 / X) ^ n * iteratedDeriv n (extension a) (2*ν/X)`.
+  At X = 0: LHS = jets of a constant = 0 for every n ≥ 1; RHS = `(2/0)^n * ... = 0^n * ... = 0`.
+  So for all n ≥ 1 the statement is exactly `0 = 0` -- CONTENT-FREE, and it is an exact
+  identity (the n = 0 case survives honestly: `0^0 = 1` and both sides are `extension a 0`).
+  Note the sibling statements in the same file DO carry the guard: :193
+  `scaledProfile_contDiffOn` restricts to `Ioi 0 ×ˢ univ`, :200 `scaledProfile_eq_profile`
+  (`hX : 0 < X`), :219 `scaledProfile_derivative_bound` (`hX : 0 < X`), :229
+  `scaledProfile_sub_one_bound` (`hX : 0 < X`). So the missing `0 < X` at :206 is an outlier.
+  CALLERS that exclude X = 0:
+    * NavierStokes/HeatProfileExtension.lean:219-222 `scaledProfile_derivative_bound`, `hX : 0 < X`;
+    * NavierStokes/ExtendedHeatDebts.lean:135 inside `correctionJet_succ` -- this caller is
+      itself UNGUARDED (:123 `{h} (hh : 0 < h) (K X ν : ℝ) (n : ℕ)`), and its own conclusion
+      `correctionJet h K (n+1) ν X = switch K X * (2/X)^(n+1) * iteratedDeriv (n+1) ...`
+      likewise collapses to `0 = 0` at X = 0 (LHS: jets in ν of a ν-constant; RHS: `0^(n+1)`).
+      That propagated instance is finally guarded one layer further up, by
+      ExtendedHeatDebts.lean:149-150 `correctionJet_continuousOn_X` (domain `Ioi 0`) and
+      :167 `correctionJet_bound` (`hX : 1 ≤ X`).
+  **C.** Benign in the current call graph, but two exact jet identities (:206 here and
+  ExtendedHeatDebts:123) advertise scaling laws that say nothing at X = 0.
+
+
+## 10. NavierStokes/R3/ParabolicSupport.lean -- 2 hits (one theorem, :18): FALSE POSITIVE (B)
+
+- :18 `isCompact_affineSpacetime_image {K} (hK : IsCompact K) (b c d : ℝ)` -- CLAIMS: the image
+  of a compact set under `z ↦ ((z.1 - d)/c, b⁻¹ • z.2)` is compact. `b`, `c` unguarded, but the
+  claim is "continuous image of a compact set is compact", and the map is continuous for EVERY
+  b, c (proof :21-22 uses `.div_const c` and `.const_smul b⁻¹`, no nonzero facts). At b = 0 or
+  c = 0 the map merely becomes degenerate/constant in that coordinate and its image is still
+  compact -- the statement is true and not vacuous (a nonempty compact image, not `0 = 0`).
+  No exact value at stake. **B (2 hits, 1 theorem).**
+  For the record, the consumer `CompactPositiveTimeSupport.affineScale` (:26-28) does carry
+  `hb : b ≠ 0` and `hc : 0 < c`, which it needs at :43 (`field_simp`) and :45.
+
+
+## 11. NavierStokes/R3/RadialKernelBounds.lean -- 2 hits: 1 A, 1 B
+
+- :78 `levelset_measure_le_ball {f} {q t} (hq : q < 0) (ht : 0 < t) (hf : ∀ z, f z ≤ ‖z‖ ^ q)`
+  -- the flagged denominator is `q` in `t ^ q⁻¹` (:80). The signature contains `hq : q < 0`
+  (:79), which already forces `q ≠ 0`; the proof even uses `hq.ne` at :87 and
+  `Real.le_rpow_inv_iff_of_neg ... hq` at :90. **A -- GUARDED IN SIGNATURE, false positive.**
+  (Tool fix: treat `q < 0`, `0 < q`, `q ≠ 0`, and `0 < q`-style order hypotheses on the
+  denominator variable as guards.)
+- :33 `radialCommutatorKernel_measurable (R : ℝ)` -- CLAIMS: `Measurable
+  (radialCommutatorKernel R)`, where `radialCommutatorKernel R z = ‖z‖^(-3) * min (‖z‖/R) 1`
+  (:25-26). At R = 0 the kernel is identically 0 (`min 0 1 = 0`) and the claim becomes "the
+  zero function is measurable" -- true, trivial, no exact value lost; `fun_prop` (:36) proves it
+  for every R. **B.**
+
+
+## 12. NavierStokes/R3/SpatialSupportScaling.lean -- 2 hits, FALSE POSITIVES (B)
+
+- :18 `isCompact_spatialScale_image` and :36 `isCompact_spacetimeSpatialScale_image` -- CLAIM:
+  the image of a compact set under `x ↦ b⁻¹ • x` (resp. `z ↦ (z.1, b⁻¹ • z.2)`) is compact.
+  Same shape as ParabolicSupport:18: continuous image of a compact set, continuity holding for
+  every b (:20, :39). At b = 0 the map collapses the fibre to 0 and the image is still compact;
+  a compactness claim, no exact value. **B (2 hits, 2 theorems).**
+  Consumers that do need it carry `hb : b ≠ 0`: :26 `tsupport_spatialScale_subset` (used at :33)
+  and :44 `CompactPositiveTimeSupport.spatialScale` (used at :54).
+
+---
+
+## SUMMARY (41 hits)
+
+**A = 1, B = 36, C = 4, D = 0.**
+
+* A (guarded in signature): RadialKernelBounds.lean:78 (`hq : q < 0`).
+* C (guarded by callers only) -- 4 hits, 2 theorems, both EXACT jet-scaling identities:
+  1. Euler/PhysicalL2Scaling.lean:54 `iteratedFDeriv_scale`; at ell = 0 it is `0 = 0`.
+     Callers with `0 < ell`: :64, :73, :86.
+  2. NavierStokes/HeatProfileExtension.lean:206 `iteratedDeriv_scaledProfile`; at X = 0 it is
+     `0 = 0` for every n ≥ 1. Callers: HeatProfileExtension:219 (`0 < X`) and
+     ExtendedHeatDebts:123 `correctionJet_succ`, which is ITSELF unguarded (same `0 = 0`
+     collapse) and only guarded a further layer up (ExtendedHeatDebts:149-150 domain `Ioi 0`,
+     :167 `1 ≤ X`).
+* D: NONE in this batch.
+
+**ONE-SIDE RULE: held up, 41/41, and can be sharpened.** Every FP had the denominator either
+(a) symmetric on both sides (PhaseCalculus:83 `pz/ε`, SquaredPartition:235, all of
+TransverseHistoryLipschitz), (b) inside a SHARED EVALUATION POINT -- kind (i) --
+(SquaredPartition `x/δ`, PacketScaledVelocity `physicalTime t₀ a ε τ`), (c) reaching only a
+statement whose content is REGULARITY / MEASURABILITY / COMPACTNESS / SUPPORT / a BOUND
+(ParabolicSupport:18, SpatialSupportScaling:18+36, RadialKernelBounds:33, ActivationCone:363,
+ParentChoiceInitialSupport, `*_contDiff` lemmas), or (d) confined to an additive CONSTANT
+(AngleMeanZeroPrimitive `P⁻¹ • ∫`).
+Sharpening: the ONLY two non-FPs share one narrow shape -- the one-sided occurrence is a
+MULTIPLICATIVE PREFACTOR of an EXACT identity (`ell*(ell⁻¹)^n`, `(2/X)^n`) whose vanishing is
+matched by an independent LHS vanishing (jets of a function that degenerated to a constant).
+That is the PulseCovariance:74 "two junk values conspire" shape. Rule to implement:
+flag only when (i) the conclusion is an equality (not ≤ / ⊆ / ContDiff / Measurable), AND
+(ii) the denominator occurs on exactly one side, AND (iii) it occurs as a factor of that whole
+side (or inside a `^n`), AND (iv) the other side degenerates for an independent reason.
+
