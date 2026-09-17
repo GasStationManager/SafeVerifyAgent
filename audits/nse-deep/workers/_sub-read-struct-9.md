@@ -202,3 +202,112 @@ non-recursive. LARGEST NUMERAL IN FILE: `1024` (:81, `(by norm_num : (0:ℝ) ≤
 
 TALLY file 3: OK 16 / NOTE 2 (`grade_profile_bounds` :172 is a renaming of :161;
 `Bc=L=r=0` witness inheritance, non-propagating) / UNCLEAR 0 / ESCALATE 0 / KERNEL-RISK 0.
+
+## 4. NavierStokes/StressAlgebra.lean (344 lines, 24 decls)
+
+VERDICT: the CLEANEST file of the four, and the best POSITIVE CONTROL in the whole structural
+block: 2 structures, BOTH genuinely constructed, and 7 divisions ALL guarded in their own
+signature. 2 structures (`AngularMomentData` :128-151, `AxialMomentData` :178-209), no Prop-def.
+
+### SUPPLIER — both structures ARE constructed, from a record of arbitrary smooth fields
+- `AngularMomentData h p.2 p.1` is built at ProfileHistories.lean:475-501 (`Profiles.angularData`)
+  and `AxialMomentData h p.2 p.1` at ProfileHistories.lean:505-545 (`Profiles.axialData`). Neither
+  takes a `*MomentData` as input: the inputs are `P : Profiles D`, a point `p`, `hp : p ∈ D.carrier`
+  and (axial only) `hX : 0 ≤ p.1`. So this is a REAL base case, not the `P.foo`-from-`P` shape.
+- `Profiles` (ProfileHistories.lean:303-309) has only 5 fields: two fields `f U : Field`, their
+  smoothness, an arbitrary `pressure0` and its smoothness. So it is inhabited by ANY pair of smooth
+  functions — no smallness, no non-degeneracy needed, hence non-degenerate witnesses abound
+  (e.g. `f = 1`, `U = 0`). Every derived field is DEFINED, not assumed: `H := 2*p.1*P.f p` (:318),
+  `M/I/J/S := primitive …` (:323-326), `W := 1 - 2*axialExponent h*p.2*P.Ubar p - …` (:328-330),
+  and crucially `W_balance` is a PROVED theorem (ProfileHistories.lean:392-393), not a hypothesis.
+- The two lag theorems of my file are actually CONSUMED: `angular_integrated_lag` at
+  ProfileHistories.lean:597 and `axial_integrated_lag` at :606. The file is live, not scaffolding.
+- Twin warning respected: `angularSource`/`axialSource`/`angularPrimitive`/`axialPrimitive` also
+  exist as UNRELATED decls elsewhere (`ParametricModulation.axialPrimitive`, ParametricModulation.lean:334,
+  used by ModulatedHistories.lean:103; `SupportedActualContext.axialSource`, MeanStageContinuation.lean:341;
+  `Profiles.angularSource`, ProfileHistories.lean:554 which WRAPS `StressAlgebra.angularSource`).
+  Only ProfileHistories.lean is a true consumer of this namespace's versions.
+  `axialExponent`/`velocityExponent`/`coordinateFactor` (:23,:26,:29) are also used qualified in
+  MatchingConeBounds.lean:180,:191 and ReferenceUniformStocks.lean:176-177.
+
+### VACUITY — EXHIBITED WITNESSES, computed exactly (Fraction arithmetic, all h, all X)
+I did not merely argue satisfiability; I built three closed-form witnesses and evaluated both
+sides of the integrated identities.
+(A) `AngularMomentData` at η = 1/2, any h, any X: W ≡ 1, Wx ≡ 0, H ≡ 1, Hx ≡ 0, Hη ≡ 1, U ≡ 0,
+    Uη ≡ 0, I = id, Iη = id, J ≡ 0, Jη ≡ 0. Checks: `W_balance` 1+x·0 = 1 = 1−0−(3/4)·0 ✓;
+    `I_deriv` I′ = 1 = H ✓; `Iη_deriv` Iη′ = 1 = Hη ✓; `J_deriv`/`Jη_deriv` 0 = U·H = 0 ✓;
+    all four `_zero` fields ✓. Then `angularSource = −h/2 − 1/4` (constant, NONZERO for h ≠ −1/2),
+    ∫₀ˣ = X(−h/2−1/4), and `angularPrimitive … X = X(−h/2−1/4)`. Equal for h ∈ {1/3, 0, −2/5, 7/4}
+    and X ∈ {1, 3/2, 2}. Both `hX : X ≠ 0` and `hH : p.H X = 1 ≠ 0` hold, so
+    `angular_integrated_lag` (:238) is ALSO non-vacuous (both sides = −h/2−1/4).
+(B) `AxialMomentData` with the VELOCITY channel active, η = 0: W ≡ 1, U = id, Ux ≡ 1, Uη ≡ 0,
+    E ≡ 0, M = x²/2, Mη ≡ 0, S = x³/3, Sη ≡ 0, P = Px = Pη = Pηx ≡ 0. `axialSource = −(3/2+h)x`,
+    ∫₀ˣ = −(1+velocityExponent h)X²/2, `axialPrimitive` = −X²+(1/2−h)X²/2. Equal exactly. NONZERO.
+(C) `AxialMomentData` with the PRESSURE channel active, η = 1/2: W ≡ 1, U ≡ Uη ≡ 0, E = id,
+    Eη = id, Px = x/2, P = x²/4, Pηx = x, Pη = x²/2, S = −x³/6, Sη = −x³/3, M = Mη ≡ 0.
+    `pressure_balance` x·(x/2) = x²/2 = E(x)²/2 ✓; `pressure_η_balance` x·x = E·Eη ✓;
+    `S_deriv` S′ = −x²/2 = U²−E²/2 ✓; `Sη_deriv` Sη′ = −x² = 2UUη−EEη ✓.
+    `axialSource = (3/8+h/2)x²`, ∫₀ˣ = (1/8+h/6)X³ = `axialPrimitive … X`. Equal exactly.
+So neither integrated identity is vacuous, and the pressure and η channels are both reachable.
+(Note `pressure_balance` at x = 0 forces `E 0 = 0`; that is a genuine axis condition, satisfied by
+E = id, and `E = sqrt(2x)·f` in the supplier (ProfileHistories.lean:319) makes it automatic —
+which is exactly why `axialData` needs `hX : 0 ≤ p.1`, ProfileHistories.lean:505.)
+
+### JUNK-VALUE SWEEP — 7 divisions, ALL guards IN-SIGNATURE (clean positive control)
+| theorem | divides by | guard, same signature |
+| `angular_integrated_lag` :238 | `X * p.H X` | `hX : X ≠ 0` AND `hH : p.H X ≠ 0` (:239) — both NEEDED (at H X = 0 the LHS would be 0 while the RHS is −W X) |
+| `axial_integrated_lag` :255 | `X` | `hX : X ≠ 0` (:256) — NEEDED |
+| `angular_source_logarithmic_form` :272 | `H` (twice) | `hH : H ≠ 0` (:273) — NEEDED (at H = 0 LHS = 0, RHS = −W x Hx − (…)Hη ≠ 0) |
+| `angular_lag_primitive_iff` :282 | `H x` | `hHne : H x ≠ 0` (:284) — NEEDED (`mul_left_cancel₀` at :296) |
+| `stressFree_angular_lag_algebra` :316 | `φ, φ²` | `hφ : φ ≠ 0` (:317) — REDUNDANT but present (see NOTE) |
+| `axial_stress_coefficient` :330 | `R, L*E, E, L` | `hR, hE, hL` (:331) |
+| `angular_stress_coefficient` :338 | `R, L, E` | `hR, hE, hL` (:339) |
+The two `HasDerivAt`/FTC theorems (:155, :212) and the two algebra identities (:54, :65) contain no
+division except the harmless literal `E^2/2` (division by the numeral 2). NO statement in this file
+divides by, or inverts, an unconstrained quantity. This is the opposite of the `Kr / K` and
+`C⁻¹` swirl cases: here every guard is local.
+
+### NOTE — 5 REDUNDANT nonvanishing hypotheses (direction-safe, worth logging as a pattern)
+Re-deriving each identity under Mathlib's `x/0 = 0`:
+- `axial_stress_coefficient` (:330-334): `hE` is genuinely needed (at E = 0 the LHS collapses to 0
+  while the RHS is `(x/R)*(Ns/L+2*Ux)`), but `hR` and `hL` are NOT: at R = 0 both sides are 0, and
+  at L = 0 both sides equal `2*x*Ux/R`.
+- `angular_stress_coefficient` (:338-342): same — `hE` needed; at R = 0 both sides are 0, at L = 0
+  both sides equal `(2*x*Ex − E)/R`. So `hR`, `hL` redundant.
+- `stressFree_angular_lag_algebra` (:316-321): `hφ` is redundant — at φ = 0 the LHS is
+  `x*0 + (2+0)*0 = 0` and the RHS is `-2*L*(…)/0 = 0`.
+These are extra hypotheses (a weaker theorem than provable), so the DIRECTION is safe: no user can
+be misled into an unjustified conclusion, only into supplying more than needed. They are presumably
+artefacts of `field_simp`, which demands the nonvanishing side goals. Classification NOTE. They are
+NOT the shape-6 defect (no weaker twin is used elsewhere), but if a third file shows the same
+`field_simp`-driven over-hypothesising it becomes a named cosmetic pattern.
+
+### Kernel risk
+NONE. No `inductive`/`.rec`/`Nat.rec`/`Acc.rec`/`termination_by`/`deriving`/`decide`/`Fin.cases`/
+Type-valued `if`/metaprogramming (grep empty over the file). Two flat non-recursive `structure`s
+(:128, :178) with 22 and 30 fields — large but first-order, all fields `ℝ → ℝ` or `∀ x ∈ uIcc 0 X`
+Props. LARGEST NUMERAL IN FILE: `4` (:40, :45, :50, :71, :74 — the `4*velocityExponent h*η*P`
+coefficient), then `2`. No numeral arithmetic to evaluate; every proof is `ring`/`linear_combination`
+/`field_simp`. Benign by inspection.
+
+TALLY file 4: OK 21 / NOTE 3 (`stressFree_angular_lag_algebra` :317 redundant `hφ`;
+`axial_stress_coefficient` :331 redundant `hR`,`hL`; `angular_stress_coefficient` :339 redundant
+`hR`,`hL`) / UNCLEAR 0 / ESCALATE 0 / KERNEL-RISK 0.
+
+## OVERALL (this worker's 4 files)
+Read 4 files, 98 decls, 38 in-cone theorems. NOTHING to ESCALATE. Kernel-risk flags: ZERO — the
+structural block's count of benign flags stays at two (neither is in my files). Largest numeral seen
+anywhere in my four files: `1024` (MeanPacketBudget.lean:81, a `norm_num` on `(0:ℝ) ≤ 1024`).
+The block's headline: all 6 structures in my files have a genuine BASE-CASE supplier that assumes no
+copy of itself — `NormalBudget` ← PacketParentNormalBudget.lean:56; `Mean…Budget` ←
+PacketParentMeanBudget.lean:99; `AngularMomentData`/`AxialMomentData` ← ProfileHistories.lean:475/:505;
+`TwoPoint` ← LoopMoments.lean:216/:235. That is 6 clean counter-examples to the
+closure-without-a-base-case pattern, and (for StressAlgebra and LoopMoments) I certified
+non-vacuity with exhibited numerical witnesses rather than an opinion. The junk-value sweep found
+NO unguarded denominator in any statement; the only three "unguarded" items are the reverse defect
+(REDUNDANT nonvanishing hypotheses in StressAlgebra.lean:317/:331/:339, plus the unconditional but
+genuinely-true identity LoopMoments.lean:272). The two soft points worth a line in the ledger are
+(a) the entire finite `TwoPoint`/`avg` block of LoopMoments.lean (:30-97, :198-300) is UNUSED
+downstream and self-declared as superseded by LoopVariance.lean:882, and (b) MeanPacketBudget.lean's
+`grade_profile_bounds` (:172) is `three_shift_bounds` (:161) reparenthesised, with ℕ-truncated
+`H₀^(2*p-2)` silently equal to 1 at p ∈ {0,1}.

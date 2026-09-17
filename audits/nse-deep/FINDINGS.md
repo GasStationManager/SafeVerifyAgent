@@ -2619,3 +2619,90 @@ audit keeps finding in its own instruments.
 **Net: the kernel-trust verdict is unchanged and is now better supported.** Zero `Acc.rec`, one `Nat.rec`,
 no `native_decide`, no metaprogramming, no Type-valued `if`, worst finite case split 22-way, and the
 `decide` literal bound re-confirmed against an adversarial reading of its own counterexamples.
+
+## W42 — the degenerate-witness phenomenon gets a MECHANISM, and two more clean blocks
+
+### `read-K` — the sharpest finding of the cycle, and PARENT-VERIFIED in full
+This refines the `Euler/MeanPacketData` `Bc = L = r = 0` witness from W40 into something precise. All three
+links checked against source:
+* **`lowBoundsFromPhysical` admits `r = 0`.** Its signature (`ParentEulerLowBounds.lean:61-70`) requires only
+  `hr : 0 ≤ r` and `hrq : r ≤ 1/4` — nothing forces `r` positive.
+* **A non-degenerate witness exists exactly ONCE.** `firstChildLowBounds`
+  (`ParentFirstPacketLowGuards.lean:77-79`) calls it with `r := A.ell`, discharging `0 ≤ r` by
+  `exact A.ell_pos.le`. It is applied on the live base path at `BaseFirstPacket.lean:67`.
+* **But nothing re-establishes it.** `updateLowBounds` (`ParentEulerLowBounds.lean:84-92`) passes **`H.r`
+  unchanged**, and so do both generic child steps (`ParentPacketChildLowGuards.lean:41,76`).
+
+**So the non-degeneracy is established once at the base and merely propagated, never re-proved.** For the
+live Euler tower that is fine — `r = A.ell > 0` from `BaseFirstPacket.lean:67` onward, and unchanged
+propagation preserves it. **Verdict: BENIGN for the headline, but the general-purpose lemmas say less than
+they appear to.** Any tower that skips `firstChildLowBounds` keeps `r = 0` forever, and then `core_lower` is
+vacuous (`∀ x, ‖x‖ < 0 → …`), `exterior_lower` covers all `x`, and the
+`boundaryLocalizationC2 * Bc * r^3 * T` term of the smallness budget is **identically 0 in every
+generation** (`ParentPacketSourceData.lean:30-35`), with those numbers consumed at
+`MeanPacketReflection.lean:48-68` where `D.L` weights the boundary operator.
+
+**This is the mechanism behind the whole degenerate-witness family**, and it is more useful than the
+individual instances: *non-degeneracy proved once at a base case and thereafter carried by unchanged
+propagation is invisible to every lemma downstream.* `cartesianPotential = 0` and this `r = 0` case are the
+same shape. It also explains why "which witness?" is the right question to ask of a Data-level estimate.
+
+Other `read-K` results (4 files, 0 ESCALATE, 0 KERNEL-RISK): `ValidBandGluing.Compatible` **independently
+re-confirmed constructed** at `ActualValidBandWaves.lean:259` (third confirmation of the W40 reversal), and
+`representative = 0` is *stated content*, not junk (`:34,72`). `TransversePacketForwardBudget.Budget` really
+built at `PacketShortTimePhysicalGrowth.lean:60` — **not** by the non-supplying `enlargeRadius` shape — with
+its only division `C*g t/g s` guarded by the record's own `positive` field (`:29`); NOTE, its sole witness has
+`g = 1` **by `rfl`**. `ParentEulerState` **certifies Euler content non-vacuous**: `Evolution` (`:15`) built at
+`BaseStaticEuler.lean:119`, `Ioo 0 A.T` nonempty because `T_pos` is a `Parent` field, and the witness
+`b = 0, ell = 1` has a **nonzero** gradient. `MeanPacketReflection.EvenData` constructed at
+`ParentPacketParity.lean:89` from the supplied `OddData`; NOTE that four `hodd` theorems conclude `X = -X`,
+trivial if `raw = 0`, and no closed-form nonzero witness was found (live site keeps `raw = meanForce`).
+
+### `read-I` — 4 files, 98 decls, **0 ESCALATE, 0 KERNEL-RISK**; largest numeral in the block **1024**
+* `StressAlgebra` is called the **best positive control so far**: both structures constructed (`:475,505`
+  from arbitrary smooth `f, U`), `W_balance` is a **theorem** (`:392`) rather than a field, consumed at
+  `:597,606`, and **all 7 divisions guarded in-signature**, with three exact fraction witnesses verified.
+* `LoopMoments` — `TwoPoint` constructed twice parametrically, and `exists_projected_twoPoint` (`:281`)
+  certified non-vacuous by an **explicit numeric witness**: `p1=3, p2=1, m=0, V=1` giving `d=1/2` and
+  `oneSidedPair = ⟨4/5, 1/5, -1/2, 2⟩` with mass 1, mean 0, variance `1 = V`, projections `5/2 > 2` and
+  `5 > 2`. **But the whole `avg`+`TwoPoint` block (`:30-97,198-300`) is unused downstream**, superseded by
+  `LoopVariance:882` — correct, live-looking, and dead.
+* Two more P2-with-a-base-case cases: `NormalBudget` (`:18`) is a hypothesis in **~25 files** and both
+  apparent producers are the non-supplying `enlargeRadius` shape, but a **real base case** exists at
+  `PacketParentNormalBudget:56`, and its `C = 0` collapse is excluded **in-signature** by `hdet`
+  (`det = 1` forbids `F = 0`). Likewise `MeanPacketBudget`'s base supplier at
+  `PacketParentMeanBudget:99`, with the `CF = 0` collapse excluded by `Data.inverse_left`.
+
+**Structural reading now stands at 41 of 73 files (737 of the 843 in-cone theorems in that bucket,
+87%). Kernel-risk flags in the entire reading campaign: 3, all benign, all already classified by W2/W4.**
+
+### W42 addendum — the MIRROR IMAGE of the junk-value defect: guards that are not needed
+
+`read-I` found, and the parent re-derived by hand, the exact inverse of the P5 family. In
+`NavierStokes/StressAlgebra.lean` **five nonvanishing hypotheses are redundant** — the identities hold
+*under* Mathlib's `x/0 = 0` convention without them:
+* `:317 stressFree_angular_lag_algebra (hφ : φ ≠ 0)` — at `φ = 0` the first term is `x * (junk 0) = 0`,
+  `x*φx/φ = 0` leaves the factor `(2 + 0)`, and `-2*L*φx/φ = 0`, so the LHS is `0`; the RHS
+  `-2*L*(x*φxx + 2*φx)/φ` is also `0`. **`hφ` is not needed.**
+* `:339 angular_stress_coefficient (hR) (hE) (hL)` — at `L = 0`, `x*Qs/L = 0` so the LHS becomes
+  `(E/R)*(2*x*Ex/E − 1) = (2*x*Ex − E)/R`, which is exactly the RHS once its `(E/R)*(x*Qs/L)` term
+  vanishes. At `R = 0` both sides are `0`. **`hL` and `hR` are not needed; only `hE` is.** Same at `:331`.
+
+**Cause: they are `field_simp` artefacts.** Both proofs are literally `field_simp; ring`, and `field_simp`
+*requires* nonvanishing side conditions to clear denominators during the proof — so the author supplies them
+in the statement even though the statement is true without them.
+
+**Direction: safe, and safer than P5.** A theorem with extra hypotheses is weaker than provable, so nothing
+is overclaimed. The practical cost is different from P5's: **callers must discharge a non-degeneracy that
+the mathematics does not require**, which propagates an unnecessary positivity obligation upward through the
+file's consumers. Where P5 makes a statement quietly say *less* than it appears to, this makes it quietly
+*demand* more than it needs.
+
+**Status: candidate pattern, 1 file / 5 sites.** Recorded now because it is the same phenomenon as P5 seen
+from the other side — both are consequences of Lean's total-division convention interacting with statement
+hygiene, one by omission and one by over-caution. A second file would make it worth naming; a third would
+make it, like P2 and P4, characteristic of this artifact.
+
+The same file is simultaneously the audit's **best junk-value positive control**: all 7 of its divisions are
+guarded in their own signature, and one of those guards (`:284 hHne`) is genuinely load-bearing because
+`mul_left_cancel₀` needs it.

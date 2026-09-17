@@ -240,3 +240,84 @@ FALSE POSITIVE, twice over. Claim: `0 < amplitude P C R hC hR` where
 (b) Structurally, a `0 < x` conclusion is IMMUNE to junk-value degeneration: if the channel collapsed to 0 the
 theorem would be FALSE, not content-free. Same remark applies to `amplitude_le_one`:40.
 
+## 22. Euler/PacketParentTransverseCosts.lean:120 `inverseRadius_bound` — denom `c` — **B (nondegenerate by construction: `1 + c⁻¹*(…)`)**
+
+FALSE POSITIVE. Claim: the bound `2*EulerTimeLpGramGevrey.gramCost c C 1*(R+1) ≤ inverseRadius R C`, with
+`(c : ℝ)` free and only the REVERSE guard `hi : c⁻¹ ≤ gramInverseEnvelope C` (:121) — which is satisfied, not
+violated, at c = 0. But nothing collapses: `gramCost c C D = 1 + c⁻¹*(3*C^2+D+1)`
+(Euler/TimeLpGramGevrey.lean:23), so at c = 0 the LHS is `2*1*(R+1) = 2*(R+1)`, NOT 0, and the RHS
+`inverseRadius R C = 2*(1+gramInverseEnvelope C*(3*C^2+2))*(R+1)` (Euler/PacketParentTransverseCosts.lean:30-31)
+with `gramInverseEnvelope C = (3*C^2+1)^2 ≥ 0` (Euler/PacketParentMeanCoercivity.lean:21) still dominates it.
+The `1 +` is the same nondegeneracy device as `Euler/TransversePacketData`'s `1 + ‖F.field‖`.
+
+## 23. Euler/PacketScalarPressureGrade.lean:197 `Budget.angular_grade_bound` — denom `C` — **A/B (guarded; the C-inverse does not exist)**
+
+FALSE POSITIVE. Claim: a Gevrey-type norm BOUND — `((angularField …).normalized … (α • L.fullProfile) …).WordBound 6 L.R 1 (highShift 1)`.
+Two reasons it cannot degenerate:
+(a) There is no `C⁻¹` anywhere in the file (`grep -n 'C⁻¹\|/C'` on Euler/PacketScalarPressureGrade.lean: no
+match); `C` is an AMPLITUDE constant occurring only multiplicatively in `hYb`'s `(α*C)*majorant …` (:202-203),
+and `W : Budget.GradeGuards … C` supplies `terminal_nonneg : 0 ≤ C`
+(Euler/PacketPrimaryGradeBounds.lean:30, used at :183-184).
+(b) The only real division is the profile normalization `normalize g hg f t = (g t)⁻¹ • f t`
+(Euler/ContinuousTimeWeight.lean:30-38), and it is impossible to even WRITE it without the pointwise
+positivity proof `hg : ∀ t, 0 < g t` — supplied here as
+`smul_profile_pos L.fullProfile L.fullProfile_pos α hα` with `hα : 0 < α` in the signature (:201, :204-205).
+This is the strongest form of guard: the divisor's nonvanishing is an argument of the DEFINITION.
+
+## 24. Euler/PacketTangentInvariant.lean:24 `rescaled_tangentPairing_zero` — denom `a` — **B (false positive, shared-evaluation-point kind (i))**
+
+Claim: the exact identity `∀ τ ∈ Icc 0 T, ⟪r (physicalTime t₀ a ε τ), w (physicalTime t₀ a ε τ)⟫_ℝ = 0`
+(tangency propagates), with `{a : ℝ}` free (:25). `physicalTime t₀ a ε τ = t₀ + (ε/a)*τ`
+(Euler/PacketScaledRay.lean:12): at a = 0 the path degenerates to the constant t₀ and the conclusion becomes
+`⟪r t₀, w t₀⟫_ℝ = 0` — which is precisely the HYPOTHESIS `h0` at :31, not `0 = 0`. Both the hypotheses
+(hmap, hr0 at :26, :30) and the conclusion are re-evaluated at the same point; no factor is annihilated.
+The other divisor, `‖r t‖^2` in the velocity ODE (:15, :29), is guarded by `hr0` (:16, :30) and used as
+`pow_ne_zero 2 …` at :20. Exempt kind (i).
+
+### Addendum to #2 (ClosedNativeWaveIdentities:279)
+
+Contrast INSIDE the same file confirms the omission is deliberate-and-harmless rather than load-bearing: the
+substantive curl-realization identities `native_realizes_curl_at`:645-651 and `native_divergence_zero_at`:657-664
+DO take `hK : a.background.frequency n ≠ 0` (:647, :660). Only the two smoothness/invariance wrappers
+(:279 here, CopyAngularInvariance:327) drop it. So the K = 0 degeneration never reaches an exact identity.
+
+## 25. Euler/PacketTargetAmplification.lean:41 `physical_target_exponential_lower` — denom `a` — **B (false positive, shared-evaluation-point kind (i))**
+
+CLAIM: `0 < ‖r (physicalTime t₀ a ε T)‖*‖w …‖ ∧ s₀*exp (1/(4σ)) ≤ 4*Θ*(‖r …‖*‖w …‖)` — a strict positivity
+plus an exponential lower bound. `{a : ℝ}` free (:42), appearing ONLY inside
+`physicalTime t₀ a ε T = t₀ + (ε/a)*T` (Euler/PacketScaledRay.lean:12).
+At a = 0 every occurrence — hm, hv, hmv, hN, hV (:45-48) and both conclusion conjuncts (:53-54) — is
+re-evaluated at the constant time t₀; the RHS `s₀*exp (1/(4σ))` and `4*Θ` do not involve a, so the bound keeps
+full content. Note also the first conjunct is a STRICT positivity, which cannot silently degenerate (it would
+become false, not vacuous). The genuine divisors are guarded in the signature: `hs₀ : 0 < s₀`, `hε : ε ≠ 0`
+(:43) for `scaledRay`/`scaledVelocity` (Euler/PacketScaledRay.lean:35-36, Euler/PacketScaledVelocity.lean:18-19),
+and `Z T > 0` is derived at :57 before the `…/Z T` in hV is used (:58-62). Exempt kind (i).
+
+---
+
+# SUMMARY (25 hits)
+
+**A = 7** (guarded in signature): FlatPrimitiveFactor:128, Flatness:30, PacketCorrectionPrimitiveBounds:17,
+PacketExactPhysicalEuler:47, PacketExactPhysicalMomentum:27, PacketParentNormalBudget:22 (no division exists),
+PacketScalarPressureGrade:197.
+**B = 8** (certified by type / by construction / shared-eval-point kind (i)): ZerothStressIdentity:253
+(`Scheme.nonzero_scale`), AnglePrimitiveMap:18, AnglePrimitiveSpatialRegularity:32 (`P⁻¹` only in a subtracted
+mean; `primitive 0 = rawPrimitive`), PacketEarlyPhysical:52, PacketTangentInvariant:24,
+PacketTargetAmplification:41 (all three kind (i) `physicalTime`), PacketParentTransverseCosts:120
+(`1 + c⁻¹*(…)`), StaticEulerCorrection:37 (`Scale.positive`; strict-positivity conclusions cannot degenerate).
+**C = 7** (caller-guarded only): BasePrefixIdentity:111 (**material** — exact identity, guard ~5 layers away),
+CorrectionStabilityConstants:69, FixedEvolutionSobolev:29, MeanStrongContinuousGevrey:21 (all three `0 ≤ …`
+bounds, severity nil), PacketForwardInitializedFieldParity:41, PacketInitializedFieldParity:43 (parity of a
+field that becomes 0), PacketKnownTermSums:18 (congruence; `(P : ℝ)` shadows `[Fact (0 < P)]`).
+**D = 3** (genuinely unguarded, ALL low-severity property claims, none an exact value):
+ClosedNativeWaveIdentities:279 (`ContDiffAt ∞ (fun _ => 0)`), CopyAngularInvariance:327
+(`Invariant θ (fun _ => 0)`), PeriodicPhaseAssembly:28 (`ContDiff ∞ (fun _ => 0)`).
+
+RULE OF THUMB CONFIRMED BY THIS TRANCHE (offered for the instrument):
+1. `hk : k*κ = 1` is a nonzero-guard — whitelist equation-shaped guards.
+2. `1 + c⁻¹*(…)` and `1/(… + 1)` never collapse (the `+1` device); `x⁻¹` inside a SUBTRACTED mean-removal term
+   never collapses either (the main term survives).
+3. `0 < …` conclusions are immune: degeneration would make them FALSE, so they cannot silently say nothing.
+4. `c⁻¹ ≤ envelope`-style hypotheses are REVERSE guards: they are satisfied at c = 0, not violated.
+5. Denominator inside a shared evaluation point (`physicalTime t₀ a ε τ`) = exempt kind (i).
+

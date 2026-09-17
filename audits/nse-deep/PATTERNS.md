@@ -81,6 +81,30 @@ auditing *any* Lean development.
   `1 + ‖·‖` denominators, shared evaluation points, and deliberate zero-extensions whose junk value is
   *proved* right. **Rule that works: flag only if the denominator reaches a subterm on ONE side.**
 
+## P5b — THE MIRROR IMAGE: nonvanishing guards that are NOT needed
+**Candidate pattern, 1 file / 5 sites.** `NavierStokes/StressAlgebra.lean` `:317` (`hφ`), `:331` and `:339`
+(`hR`, `hL`) carry nonvanishing hypotheses the identities do not require — parent-re-derived: under
+`x/0 = 0` each identity still holds at the excluded value (at `L = 0` both sides of `:340-341` equal
+`(2x·Ex − E)/R`; at `φ = 0` and `R = 0` both sides are `0`). Only `hE` is genuinely needed.
+**Cause:** both proofs are `field_simp; ring`, and `field_simp` demands the side conditions to clear
+denominators, so they migrate into the statement. **Direction: safe** — a theorem with extra hypotheses is
+weaker than provable. **Cost:** callers must discharge a non-degeneracy the mathematics does not need.
+Where P5 makes a statement say *less* than it appears to, P5b makes it *demand* more than it needs. Both are
+the same total-division convention seen from opposite sides.
+
+## P7b — NON-DEGENERACY PROVED ONCE AT A BASE CASE, THEN ONLY PROPAGATED
+**The mechanism behind the degenerate-witness family**, parent-verified in the Euler tower.
+`ParentEulerLowBounds.lean:61-70 lowBoundsFromPhysical` admits `r = 0` (it asks only `0 ≤ r`, `r ≤ 1/4`).
+`firstChildLowBounds` (`ParentFirstPacketLowGuards.lean:77-79`) is the **only** place that supplies a positive
+one, `r := A.ell` with `A.ell_pos`, applied on the live path at `BaseFirstPacket.lean:67`. Every later step —
+`updateLowBounds` (`:84-92`) and both generic child steps (`ParentPacketChildLowGuards.lean:41,76`) — passes
+`H.r` **unchanged**. So non-degeneracy is established once and thereafter merely carried, and is invisible to
+every lemma downstream: a tower skipping the first child keeps `r = 0` forever, making `core_lower` vacuous
+and the `C2·Bc·r³·T` budget term identically zero in every generation.
+**Benign for the headline** (the live tower does go through `firstChildLowBounds`), but it is why
+"which witness?" is the right question to ask of any Data-level estimate. Same shape as
+`cartesianPotential = 0`.
+
 ## P6 — SUPPLIED PREDICATE USED AT ARGUMENTS NOBODY ESTABLISHES
 **3 instances.** The half of P1 that no syntactic instrument catches, because the predicate *is*
 constructed — just never for the objects that matter.

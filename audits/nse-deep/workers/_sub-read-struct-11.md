@@ -165,3 +165,95 @@ monotonicity direction is correct (smaller time interval = weaker obligation), s
 smuggle in strength.
 
 Tally: 9 decls read — OK 9 / NOTE 0 / UNCLEAR 0 / ESCALATE 0 / KERNEL-RISK 0.
+
+## 4. Euler/MeanPacketReflection.lean (131 lines, 9 decls, 1 Prop-structure) — OK, 1 NOTE
+##    (+ NEW information on the already-confirmed `Bc = L = r = 0` base-witness finding)
+
+Declares `structure EvenData (D : Data) : Prop` (MeanPacketReflection.lean:26-31): five literal parity
+assumptions `F, F₁, H, M0, M` even in `x`.
+
+(A) IS `EvenData` CONSTRUCTED? **YES.** `EulerParentPacketFrames.OddData.meanEvenData`
+(Euler/ParentPacketParity.lean:89-94) proves `EvenData (A.meanData H)` field-by-field from an `OddData A`
+(frame_even/first_even/curvature_even/initialStrain_even/strain_even, ParentPacketParity.lean:73-87).
+`OddData` in turn is concretely supplied: `EulerBaseDatum.initialOddData` (Euler/BaseEulerState.lean:52-53)
+← `solutionOddData` (Euler/BaseEulerInput.lean:53-57) ← `velocity_odd (linear β)`. NOT vacuous by
+zero-ness: on that witness `D.F = A.frame.toSmoothCoefficientPath`
+(Euler/ParentPacketSourceData.lean:60) and `frame.field zeroTime x = id` (ParentPacketFrames.lean:110-111),
+so the `frame` parity field constrains a field that equals the IDENTITY at t=0, not 0.
+Consumed as a hypothesis in ~15 parity files (PacketSourceParity.lean:28, PacketCylinderHighParity.lean:50,
+PacketProfilesParity.lean:21, PacketInitializedFieldParity.lean:21, …) — so it is live, not decorative.
+
+(B) `Forcing D raw` (the other hypothesis-position record used here, from Euler/MeanPacketForcing.lean:24-29)
+is NOT a closure-without-a-base-case case: it is pure raw-field regularity (smooth L² slices + continuous
+jets + `raw_eq`), with base constructions `angularMeanForcing_of_raw` used via
+`EulerPacketCylinderField.Field.meanForcing` (Euler/PacketCylinderFieldAverage.lean:47-51), and the
+algebra (`smul`, `congr`, `bilinear`, `vectorForcing` — MeanPacketNonlinearForcing.lean:25,34,
+MeanPacketOrbitForcing.lean:42-55) sits ON TOP of that base, not instead of it.
+
+(C) VACUITY of the four `include hodd` theorems (`path_reflection` :85, `lp_reflection` :96,
+`velocityLp_reflection` :105, `coordinate_velocity_reflection` :115). Every conclusion has the form
+`X = -X`, which is TRIVIALLY true when `raw = 0` (and `hodd` then holds for free). So the content depends
+entirely on a nonzero odd `raw` existing. Status: the application site keeps `raw` general and nonzero-typed
+— `EulerPacketCylinderField.ProfileParity.step` (Euler/PacketProfileStepParity.lean:36-37) supplies
+`hm : Nonempty (Forcing M (meanForce O p a))` via `F.meanForcing …` and discharges `hodd` as `hm0`
+(:46-49) from `F.meanForce_odd` (:44), then applies `meanSolve_odd` / `meanSolve_even`
+(Euler/MeanPacketParity.lean:108,116) which route through my `coordinate_velocity_reflection`
+(MeanPacketParity.lean:40). `meanForce O p a` is the order-p profile-recursion mean force, not a literal
+`0`. So these theorems are not restricted to the zero forcing — but I could not exhibit a CLOSED-FORM
+nonzero witness inside my budget (the profile family `a` stays a variable at every site I traced).
+That is the one open item in this file, recorded as NOTE not ESCALATE.
+
+(D) JUNK-VALUE SWEEP: **no `/` and no `⁻¹` in the 131 lines** (verified by scan) — and this file is a
+second POSITIVE CONTROL for a different reason: the inversion it depends on is NOT a Mathlib `⁻¹` that
+could silently be `0`. `D.opInv` is a supplied operator field of `Data` carrying in-type identity
+certificates `opInv_left`, `opInv_right`, `opInv_initial`, which are exactly what
+`coordinateSolver` (:48-52) and `velocityLp_eq_coordinateSolver` (:76-80) pass along. Likewise the
+pointwise-to-a.e. upgrade in `coordinate_velocity_reflection` (:126) needs `T ≠ 0` and gets it in-type
+from `Data.T_pos` (`D.T_pos.ne`), not from an outer layer.
+
+(E) NEW INFORMATION on the previously CONFIRMED degenerate witness (`Euler/MeanPacketData`,
+`Bc = 0, L = 0, r = 0` by `rfl` at BaseEulerState.lean:56-62). My `coordinateSolver` (:48-52) and
+`coordinateSolver_reflection` (:54-68) are exactly the consumers of those numbers: `D.L` is the WEIGHT of
+`boundaryOperator (scaledCutoff D.ℓ D.ℓ_pos)` in the coercive form (:57), and `D.Bc`/`D.r` enter through
+`sourceFixedForm_coercive` (:65-68). The mapping is literal: `Data.Bc := H.Bc`, `Data.L := H.L`,
+`Data.r := H.r` (Euler/ParentPacketSourceData.lean:67-70). Two facts I established that the earlier
+finding did not have:
+ 1. **A NON-DEGENERATE witness DOES exist, one generation later** →
+    `Evolution.firstChildLowBounds` (Euler/ParentFirstPacketLowGuards.lean:37) builds its `LowBounds` by
+    `lowBoundsFromPhysical CM Cnew (boundaryLocalizationC1*Cnew+1) A.ell Knew`
+    (ParentFirstPacketLowGuards.lean:77). With the argument order `(Be Bc L r K)`
+    (Euler/ParentEulerLowBounds.lean:61) this sets **r := A.ell > 0** (`A.ell_pos`, plus
+    `hquarter : A.ell ≤ 1/4` at :78-83) and **L := boundaryLocalizationC1*Cnew + 1 ≥ 1**. It is actually
+    applied: `EulerBaseDatum.firstPacketLowBounds` (Euler/BaseFirstPacket.lean:54-80), which discharges
+    `hL` as `rfl` (:74). So the `L = r = 0` collapse is confined to the BASE generation ⇒ that earlier
+    finding should stay **NOTE, not ESCALATE** (caveat: the first-child witness is still parametric in
+    `Q : Budget`, `G : PhysicalGraphFlowBounds.Data`, `hG`, `herr`, `hsmall`, which remain hypotheses
+    at BaseFirstPacket.lean:33-43,58-68).
+ 2. **But `r` is otherwise frozen forever.** `Evolution.updateLowBounds`
+    (Euler/ParentEulerLowBounds.lean:77-92) passes `H.r` through UNCHANGED (:85) while growing `Be`,`Bc`,
+    and BOTH generic child steps — `joinedChildLowBounds` (Euler/ParentPacketChildLowGuards.lean:41-63)
+    and `forwardChildLowBounds` (:76-105) — go through `updateLowBounds`. And `firstChildLowBounds`, the
+    ONLY step that installs a new `r`, requires `hL : H.L = 0` (ParentFirstPacketLowGuards.lean:37, really
+    used at :89), i.e. it can fire only where `L` is still 0 — the base. CONSEQUENCE: a tower that does not
+    pass through `firstChildLowBounds` keeps `r = 0` at every generation, and then for every generation
+    (i) `core_lower : ∀ x, ‖G.ell • x‖ < r → …` (ParentPacketSourceData.lean:32-33) is VACUOUS,
+    (ii) `exterior_lower` (:30-31) silently covers ALL x, and
+    (iii) the boundary term `boundaryLocalizationC2*Bc*r^3*G.T` of `small` (:35) is identically 0, so `Bc`
+    is then bounded by nothing that matters. The core/boundary localization apparatus is inert in that
+    sector. Recommend the parent record this as the *mechanism* behind the earlier `r = 0` finding.
+
+(F) KERNEL RISK: **none.** No `inductive` (only a Prop-valued `structure`), no `.rec`, no `termination_by`,
+no `deriving`, no `decide`, no `Fin.cases`, no Type-valued `if`, no metaprogramming, no `sorry`.
+Largest numeral: `0`. Benign by inspection. (`Classical.choice` occurs in the CONSUMER
+MeanPacketParity.lean:113,120 — not in this file.)
+
+Tally: 9 decls read — OK 8 / NOTE 1 / UNCLEAR 0 / ESCALATE 0 / KERNEL-RISK 0.
+
+## Block summary (4 files, 56 decls)
+OK 53 / NOTE 3 / UNCLEAR 0 / ESCALATE 0 / KERNEL-RISK 0. Every structure and Prop-def in this block IS
+constructed by a non-circular declaration (`Compatible` ← ActualValidBandWaves.lean:259;
+`Budget` ← PacketShortTimePhysicalGrowth.lean:60; `Evolution` ← BaseStaticEuler.lean:119;
+`EvenData` ← ParentPacketParity.lean:89) — no unsupplied-hypothesis, no closure-without-base-case,
+no junk-value degeneration (the two divisions/inversions in the block are guarded in-signature),
+and no kernel-risk flag. The one thing worth carrying upward is (E): the `r = 0` freeze mechanism, plus
+the fact that a non-degenerate `r > 0`, `L ≥ 1` witness exists exactly once, at the first child.
