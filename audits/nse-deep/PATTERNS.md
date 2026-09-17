@@ -92,6 +92,18 @@ weaker than provable. **Cost:** callers must discharge a non-degeneracy the math
 Where P5 makes a statement say *less* than it appears to, P5b makes it *demand* more than it needs. Both are
 the same total-division convention seen from opposite sides.
 
+## P8 — FILTER VACUITY: `∀ᶠ x in ⊥, P x` is true for every `P`
+**2 instances, both BENIGN and arguably correct design.** The filter analogue of P5, and the sharpest vacuity
+question this audit managed to aim at the blow-up argument itself.
+`Flatness.lean:24 PowerFlat` has **no `[NeBot l]`**, so at `l = ⊥` it holds for any `f` with `C = 0`.
+`BaseResidual.lean:350 PhysicalApproach` has **every field** `∀ᶠ` or `Tendsto` and **no `NeBot` field**, so with
+`carrier := ∅` it is inhabited at `l = ⊥`.
+**But the guard sits exactly where the contradiction is derived:** `BlowupImplication.lean:78
+no_eventual_bound_of_profile` and `:95 no_continuous_extension_of_profile` are both `[NeBot l]`.
+One does not need `NeBot` to *state* flatness; one needs it to *conclude* from flatness — and that is where it
+is. **Residual cost: a reading hazard.** A `PowerFlat`/`PhysicalApproach` hypothesis read in isolation carries
+no content, and the reader must go two layers up to find the instance that makes it bite.
+
 ## P7b — NON-DEGENERACY PROVED ONCE AT A BASE CASE, THEN ONLY PROPAGATED
 **The mechanism behind the degenerate-witness family**, parent-verified in the Euler tower.
 `ParentEulerLowBounds.lean:61-70 lowBoundsFromPhysical` admits `r = 0` (it asks only `0 ≤ r`, `r ≤ 1/4`).
@@ -104,6 +116,13 @@ and the `C2·Bc·r³·T` budget term identically zero in every generation.
 **Benign for the headline** (the live tower does go through `firstChildLowBounds`), but it is why
 "which witness?" is the right question to ask of any Data-level estimate. Same shape as
 `cartesianPotential = 0`.
+**Four consequences of that single base witness, all traced and all confined to the base generation:**
+`ParentPacketSourceData:30-35` makes `C2·Bc·r³·T` identically 0; `MeanPacketData:50 core_lower` is vacuous
+while `exterior_lower` covers all `x`; `MeanStrongEquation:39 initial_velocity` collapses to `velocity 0 = 0`;
+and `PacketPrimaryGradeBounds:89` discharges 2 of 7 `ProfileBudget` fields against the zero field.
+`BaseEulerState.initialLowBounds_values:56-62` states `.Bc = 0 ∧ .L = 0 ∧ .r = 0` **each by `rfl`**, and
+`firstChildLowBounds` (`ParentFirstPacketLowGuards.lean:77`) is the sole escape, setting `r := A.ell > 0` and
+`L := C1·Cnew + 1 ≥ 1`. Three independent workers reached this chain from different files.
 
 ## P6 — SUPPLIED PREDICATE USED AT ARGUMENTS NOBODY ESTABLISHES
 **3 instances.** The half of P1 that no syntactic instrument catches, because the predicate *is*

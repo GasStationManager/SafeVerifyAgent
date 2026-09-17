@@ -2790,3 +2790,73 @@ statements by eye would buy far less than one `lake build` and `#print axioms`.
 the *declaring* layer is now read essentially completely; the *estimating* layer is screened for two defect
 classes and otherwise rests on the authors' own consistency — and the single measurement that would change
 that is a compile, not more reading.
+
+## W45 — a NEW vacuity mechanism: FILTER VACUITY (P8). It touches the blow-up machinery, and it comes out clean
+
+`tail-1` found the one shape this audit had not looked for, and it matters more than the others because the
+entire blow-up argument is stated along filters. Parent-verified end to end.
+
+**The mechanism.** In Mathlib the bottom filter contains the empty set, so `∀ᶠ x in ⊥, P x` is **true for every
+`P`**, and `Tendsto f ⊥ y` is true for every `f` and `y`. A predicate built out of `∀ᶠ`/`Tendsto` over a filter
+`l` with no `[NeBot l]` instance is therefore **vacuously satisfiable at `l = ⊥`** — the filter analogue of
+`x / 0 = 0`, and invisible for the same reason: nothing in the statement records it.
+
+**Both of the artifact's flatness carriers have this shape:**
+* `Flatness.lean:24` — `def PowerFlat (l : Filter α) (q f : α → ℝ) : Prop := ∀ n, ∃ C, 0 ≤ C ∧ ∀ᶠ x in l,
+  |f x| ≤ C * |q x| ^ n`. **No `[NeBot l]`.** At `l = ⊥` it holds for *any* `f` with `C = 0`, so every
+  flatness claim is trivially true there.
+* `BaseResidual.lean:350` — `structure PhysicalApproach (l : Filter SpaceTime) (h lo hi : ℝ)` whose fields are
+  `in_carrier : ∀ᶠ z in l, z ∈ carrier`, `past : ∀ᶠ z in l, z.1 < 1`, `radial : ∀ᶠ z in l, … ∈ Icc lo hi`, and
+  `scale : Tendsto … l (𝓝 0)` — **every field is `∀ᶠ` or `Tendsto`, and there is no `NeBot` field.** With
+  `carrier := ∅` (which `IsCompact` accepts) the structure is **inhabited at `l = ⊥`**.
+
+**And the guard is present exactly where it is needed.** The theorems that actually *derive the contradiction*
+both require it: `BlowupImplication.lean:78 no_eventual_bound_of_profile` and `:95
+no_continuous_extension_of_profile` are each stated `{l : Filter ι} [NeBot l]`.
+
+**Verdict: BENIGN, and on reflection this is correct design rather than an oversight.** One does not need
+`NeBot` to *state* flatness — flatness of the zero function along the empty filter is a true and harmless
+fact. One needs `NeBot` to *conclude a contradiction* from a lower bound, and that is precisely where the
+instance sits. **The residual cost is a reading hazard, and a sharp one:** a `PowerFlat` or `PhysicalApproach`
+hypothesis read in isolation carries no content, and a reader must go **two layers up** to find the `NeBot`
+that makes it bite. That is the same "the statement alone says less than it appears to" cost as P5, now on the
+machinery that carries the headline claim.
+
+**Why this is a satisfying place for the structural campaign to end.** P8 is the vacuity question aimed
+directly at the blow-up argument rather than at its supporting estimates — the sharpest version of "is this
+whole thing vacuous?" that the audit has been able to formulate — and the answer is that the artifact guards
+it correctly.
+
+### `tail-1` — 8 files, 74 decls: OK 69 / NOTE 5 / ESCALATE 0 / KERNEL-RISK 0
+* `Flatness.lean` also gives a P4 instance with a **dead** base: `:62 PowerFlat.mul` assumes full flatness but
+  uses only `hg 0` (its own docstring `:60` admits this), has **0 uses**, and the weaker twin `:79` is the one
+  actually used — while the base constructor `:101` is itself **dead (0 uses)**.
+* `PacketSourceEquations:85` — an exact `= 0` identity that collapses **only** if `Iprimary = InitialData.zero`;
+  the agreement is built at `BaseFirstPacket.lean:24`. `TransversePacketForcing` — `InitialData.zero` (`:38`) is
+  degenerate but non-degenerate alternatives exist (`TransversePacketEndpoint.lean:108`).
+* `PacketForwardRadiusPolynomial` — the `delta⁻¹` field (`:134`) is unconstrained **in the structure**, but
+  `hd : 0 < delta` is in the **own signature** of both users (`:137,188`) and is used (`:145,169`).
+* Four more closure-only predicates **with base cases that exist**: `ParentParticleInverse` ops (`:82,90` →
+  `BaseEulerInput.lean:37`), `SmoothTimeFieldJoint.TimeDerivative` (→ `BaseEulerParent.lean:66`),
+  `MeanMollifierLimit` (→ `MeanHarmonicComponents.lean:26`), `LpSmoothFamily.derivative`
+  (→ `MeanForcingTranslation.lean:26`).
+* `BaseFirstPacketScales` — satisfiability of `FirstScaleGuards` is **proved** at `:70` (an eventually-atTop
+  argument yielding a witness), which is the strongest form of the non-vacuity check seen in this campaign.
+* Kernel: `Acc.rec`/`native_decide`/`decide` **zero**, max `Fin n` = 4, largest numeral 2000 (an exponent).
+
+### `tail-3` — 8 files, 50 decls: OK 48 / NOTE 2 / ESCALATE 0 / KERNEL-RISK 0
+`MeanStrongEquation:39`'s field `initial_velocity : (velocity 0 : L2) = L • A (label 0)` collapses to
+`velocity 0 = 0` on the base path — parent-verified, because `BaseEulerState.initialLowBounds_values`
+(`:56-62`) proves `.Bc = 0 ∧ .L = 0 ∧ .r = 0` **each by `rfl`**. `L` is free in the structure, so the general
+statement is fine. **This is the second consumer reached by that one degenerate base witness**, and with
+`tail-2`'s `ParentPacketSourceData` it is the third independent confirmation of the P7b chain.
+All 4 division sites guarded in their **own** signature, 3 of them by a field of the same record. No
+`inductive`/`termination_by`/`deriving`/`decide`; max `Fin n` = 4.
+`ChildParticleFieldTime`'s derivative trio (`:58,71,86`) has **zero consumers artifact-wide** — dead, not wrong.
+
+### `tail-2` — 8 files, 47 decls: OK 45 / NOTE 2 / ESCALATE 0 / KERNEL-RISK 0
+`PacketPrimaryGradeBounds:89 profile_budget` discharges **2 of its 7 `ProfileBudget` fields** via
+`Field.wordBound_normalized_of_zero (Field.zero P D.T)` proved `fun _ _ _ => rfl` (`:97-98`) and
+`hz.mono_amplitude` (`:106-107`) — parent-verified; the other five use real `wordBound_congr` transfers. A
+seven-field budget of which two fields bound the zero field. All 8 structures constructed; **zero** junk-value
+exposures; no `Fact` shadowing.
