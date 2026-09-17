@@ -51,3 +51,192 @@ SEVERITY: low. This is the "bound collapsing to 0 ≤ 0" kind — a smoothness c
 `c • f` is insensitive to c anyway. Report it only as a missing-hypothesis hygiene item, not as a
 content-free EXACT identity. (Class-A/B it is not: nothing at all excludes K = 0.)
 
+## 3. NavierStokes/CopyAngularInvariance.lean:327 `curlRemainder_invariant` — denom `K` — **D (unguarded, LOW severity)**
+
+CLAIM: a STRUCTURAL property — `Invariant θ (curlRemainder K R Vr Vθ Vz a)` (translation invariance of the
+stripped curl error), proved at :331-332 by `.map (fun v => (1 / K) • (Complex.I • v))`. `(K : ℝ)` free (:329).
+
+COLLAPSE AT K = 0: `curlRemainder` becomes the zero function (CurlClassBounds.lean:269-271, `1/0 = 0`), so
+the conclusion is `Invariant θ (fun _ => 0)` — trivially true, hypotheses unused. Nothing anywhere in the
+chain constrains K (same bare `WaveCoefficients.frequency : ℕ → ℝ`, LinearWaveBounds.lean:185); the
+consumer `realizedCoefficient_invariant`:333-338 also takes `(K : ℝ)` free.
+
+SEVERITY: very low, and lower than #2 — invariance of `c • f` follows from invariance of `f` for every c
+including 0, so the theorem loses nothing usable. Hygiene only, NOT an "exact value" collapse.
+
+## 4. NavierStokes/FlatPrimitiveFactor.lean:128 `transformed_integrand` — denom `t` — **A (guarded in signature)**
+
+FALSE POSITIVE. Claim: the change-of-variables Jacobian identity
+`|-(x³/(2·denominator x t³))| * integrand c j b (coordinate x t) = scale c j x * kernel c j b x t`.
+The signature (:129) carries BOTH `hx : 0 < x` and `ht : 0 ≤ t`. Every denominator in sight is then
+nonzero: `denominator x t = sqrt (1 + x² t)` with `denominator_pos` from `ht` (:41-42, used at :133),
+`x ^ j`/`x ^ 3` in `integrand`/`scale` (FlatPrimitive.lean:25-26, :33-34) from `hx`, and `edge`'s `-c / x²`
+is the guarded branch of `if x ≤ 0` (FlatCutoff.lean:26-27). No degeneration is possible.
+
+## 5. NavierStokes/Flatness.lean:30 `fixed_power_loss_bound` — denom `scale` — **A (guarded in signature)**
+
+FALSE POSITIVE, textbook case: the signature is `(hscale : scale ≠ 0)` (Flatness.lean:31). Claim is the
+bound `|x / scale ^ loss| ≤ C * |scale| ^ n`. Denominator explicitly nonzero; the proof uses it at :34.
+
+## 6. NavierStokes/PeriodicPhaseAssembly.lean:28 `intervalCutoff_contDiff` — denom `d` — **D (unguarded, LOW severity)**
+
+CLAIM: `ContDiff ℝ ∞ (intervalCutoff a b d)` — a REGULARITY claim about the explicit cutoff
+`smoothTransition ((x - (a - 2d))/d) * smoothTransition (((b + 2d) - x)/d)` (:24-26). `(a b d : ℝ)` all free.
+
+COLLAPSE AT d = 0: both arguments become `_/0 = 0`, `smoothTransition 0 = 0`
+(`Real.smoothTransition.zero_of_nonpos`, used in this file at :47), so `intervalCutoff a b 0 = fun _ => 0`
+and the conclusion is "the zero function is smooth". Unguarded: no `0 < d` here, in contrast with the
+NEIGHBOURING lemmas `intervalCutoff_one`:32 and `intervalCutoff_support`:39, which both take `hd : 0 < d`.
+
+SEVERITY: low. The proof (:29-30, `div_const d`) is uniform in d, so the d = 0 instance is a genuinely
+correct trivial statement rather than a false-looking one, and the plateau/support content that a reader
+cares about IS guarded (:32, :39). Hygiene only.
+
+## 7. NavierStokes/ZerothStressIdentity.lean:253 `scheme_zero_densities_eq` — denom `C` — **B (certified by type)**
+
+FALSE POSITIVE. Claim: the assembled scheme's zeroth theta- and z-densities agree with the leading
+profiles' at `(R, eta)`. `thetaDensity h C f n w = w.1 ^ 3 / C * angularCoefficient …`
+(SlowResidualMatching.lean:417-418) does divide by C, and the signature's `{h C : ℝ}` (:253) is bare —
+BUT the very next argument is `(s : GlobalSlowProfiles.Scheme S h C)` (:254), and that structure carries
+the field `nonzero_scale : C ≠ 0` (GlobalSlowProfiles.lean:732). C = 0 is therefore uninhabitable here:
+the type records the guard, exactly like `WeightedClasses.StripData.epsilon_pos`.
+(Additional margin: the second conjunct uses `zDensity h`, SlowResidualMatching.lean:421-422, which has no
+C at all, so even a hypothetical C = 0 would leave that half of the conjunction with full content.)
+
+## 8. Euler/AnglePrimitiveMap.lean:18 `primitive_map` — denom `P` — **B (nondegenerate by construction)**
+
+FALSE POSITIVE, and of a kind worth naming. Claim: a bounded linear map commutes with the mean-zero
+angular primitive, `L (primitive P f θ) = primitive P (L ∘ f) θ`. `(P : ℝ)` is free (:18).
+`primitive P f θ = rawPrimitive f θ - P⁻¹ • ∫ s in 0..P, rawPrimitive f s`
+(Euler/AngleMeanZeroPrimitive.lean:25-26): the `P⁻¹` sits in a SUBTRACTED CORRECTION term, so at P = 0 both
+`P⁻¹ = 0` and `∫ 0..0 = 0`, and `primitive 0 f = rawPrimitive f`. The statement then reads
+`L (rawPrimitive f θ) = rawPrimitive (L ∘ f) θ` — the FULL-content commuting identity of :14-16, not `0 = 0`.
+No term is lost; the mean-removal is simply switched off. Nothing collapses.
+
+## 9. Euler/AnglePrimitiveSpatialRegularity.lean:32 `primitive_joint_contDiff` — denom `P` — **B (nondegenerate by construction)**
+
+FALSE POSITIVE, same mechanism as #8. Claim: joint smoothness in `(x, θ)` of the mean-zero angular
+primitive. Signature (:32) has `(P : ℝ) (hP : 0 ≤ P)`, so P = 0 is allowed — but at P = 0 the `P⁻¹`-weighted
+mean term vanishes and `primitive 0 f = rawPrimitive f` (Euler/AngleMeanZeroPrimitive.lean:25-26), so the
+conclusion becomes the FULL-content joint smoothness of `rawPrimitive` (:25-26 of this file). Nothing
+collapses to a trivial statement.
+
+## 10. Euler/CorrectionStabilityConstants.lean:69 `growthConstant_nonneg` — denom `c` — **C (caller-guarded), severity NIL**
+
+CLAIM: a sign/BOUND statement `0 ≤ growthConstant c Kb Kx Kt V L`, where
+`growthConstant = (Kt+2*Kx*V+4*Kx^2/c^2+2*Kb*L+1)/c^2` (:22-23). `(c : ℝ)` free (:69).
+At c = 0 both `/c^2` become `/0 = 0`, so the constant IS 0 and the claim is `0 ≤ 0`.
+Guarded one layer up: the only consumer is `StabilityBudget.growth_nonneg`
+(Euler/CorrectionStabilityBudget.lean:85-91), which instantiates c := `B.c` for
+`B : StabilityBudget`, and that structure carries `c_pos : 0 < c`
+(Euler/CorrectionStabilityBudget.lean:27-29); the quantitative user
+`difference_metric_deriv_bound` (Euler/CorrectionDifferenceMetric.lean:25) has `hc : 0 < c` at :30.
+SEVERITY: nil — a nonnegativity bound collapsing to `0 ≤ 0`, exactly the harmless kind.
+
+## 11. Euler/FixedEvolutionSobolev.lean:29 `traceCost_nonneg` — denom `T` — **C (caller-guarded), severity NIL**
+
+CLAIM: `0 ≤ traceCost T` for `traceCost T = T⁻¹*sqrt T + 2*sqrt T` (:27), with only `hT : 0 ≤ T` (:29).
+At T = 0 BOTH terms vanish (`0⁻¹ = 0`, `sqrt 0 = 0`), so the claim is `0 ≤ 0`. Every caller supplies a
+STRICTLY positive time: Euler/CylinderEndpointBudget.lean:72 (`D.time_pos.le`),
+Euler/PacketInitializedRadiusPolynomial.lean:174, :235, :335, :360 (`hτ.le` from `0 < τ`),
+Euler/CylinderDirichletPhysicalBounds.lean:86, :112, :118 (`D.time_pos.le`),
+Euler/TransversePacketNormalBudget.lean:81, :90, Euler/PacketParentJoinedBudget.lean:80.
+SEVERITY: nil — nonnegativity bound; `positivity` proves it uniformly.
+
+## 12. Euler/MeanStrongContinuousGevrey.lean:21 `coordinateTraceCost_nonneg` — denom `T` — **C (caller-guarded), severity NIL**
+
+Identical to #11: `coordinateTraceCost T = T⁻¹*sqrt T + 2*sqrt T` (:19), claim `0 ≤ …` with `hT : 0 ≤ T`
+(:21); at T = 0 it is `0 ≤ 0`. Callers pass strict positivity: Euler/PacketInitializedRadiusPolynomial.lean:466
+(`M.T_pos.le`), Euler/PacketParentMeanBudget.lean:135 (`D.T_pos.le`), Euler/MeanPressureSobolev.lean:63.
+SEVERITY: nil.
+
+## 13. Euler/PacketCorrectionPrimitiveBounds.lean:17 `correction_envelopes` — denom `R`/`c` — **A (guarded in signature) + B**
+
+FALSE POSITIVE twice over. Claim: the constructed correction envelopes are dominated by the polynomial
+envelopes (five conjoined `≤`). The signature (:18) already carries `hc : 0 < c` for the `pressureCost c …`
+channel (`correctionPressureEnvelope`, Euler/PacketCorrectionCoefficientBudget.lean:63-65), and the target
+`pressureEnvelope X = 1 + pressureCost ((1+X)^2)⁻¹ …`
+(Euler/PacketCorrectionPrimitivePolynomial.lean:19-21) inverts `(1+X)^2` with `0 ≤ X` derived at :26 —
+the `1 + (nonneg)` construction, nondegenerate exactly like `Euler/TransversePacketData`.
+
+## 14. Euler/PacketEarlyPhysical.lean:52 `early_physical_size_suppression` — denom `a` — **B (false positive, shared-evaluation-point kind (i))**
+
+Claim: early physical amplitude products are exponentially small relative to the center target,
+`(‖r ξ (physicalTime t₀ a ε τ)‖*‖w ξ …‖)/(‖r center (physicalTime t₀ a ε T)‖*‖w center …‖) ≤ 8232*exp 9*Θ^5*exp (-(1/(4σ)))`.
+`physicalTime t₀ a ε τ = t₀ + (ε/a)*τ` (Euler/PacketScaledRay.lean:12), and `{a : ℝ}` is unconstrained (:54).
+At a = 0 `physicalTime` becomes the CONSTANT t₀, so every occurrence — in the hypotheses hm/hv/hmv/hrw/hP/hQ/hN/herror
+(:59-74) and on both sides of the conclusion (:75-79) — is re-evaluated at the SAME point. No factor is
+multiplied by 0: the bound still reads `(‖r ξ t₀‖*‖w ξ t₀‖)/(‖r center t₀‖*‖w center t₀‖) ≤ 8232*exp 9*Θ^5*exp(-(1/(4σ)))`
+with the RHS independent of a, so the statement keeps content (indeed the hypotheses hP/hQ (:63-64) then demand a
+constant to track `σ²τ²`/`-2σ²τ` within `ρ ≤ 1/2`, which is even harder). The other divisors — `s₀*rayScale ε i`
+in `scaledRay` (Euler/PacketScaledRay.lean:35-36) and `velocityScale ε i` in `scaledVelocity`
+(Euler/PacketScaledVelocity.lean:18-19) — ARE guarded in the signature by `hs₀ : 0 < s₀`, `hε : 0 < ε` (:55).
+This is exactly the parent's exempt kind (i).
+
+## 15. Euler/PacketExactPhysicalEuler.lean:47 `exact_source_euler` — denom `k` — **A (guarded in signature, via `k*κ = 1`)**
+
+## 16. Euler/PacketExactPhysicalMomentum.lean:27 `exact_source_momentum` — denom `k` — **A (same)**
+
+FALSE POSITIVES. Both claim the classical Euler/momentum(+divergence) equations for the parent velocity plus
+the constructed packet, with pressure `p + physicalPressure (S.rawGraphPotential k) Y` (PacketExactPhysicalEuler:64-67,
+PacketExactPhysicalMomentum:41-42) — genuine EXACT identities, so a collapse here would matter. It cannot
+happen: both signatures carry `(k : ℝ) (hk : k*κ = 1)` (PacketExactPhysicalEuler.lean:48,
+PacketExactPhysicalMomentum.lean:28). `k*κ = 1` forces `k ≠ 0` AND `κ ≠ 0` — a nonzero-denominator guard
+stated as an equation instead of a `≠`. The proof uses it exactly there
+(`S.rawGraphPotential_smooth k hk`, `rawGraphPotential_gradient k hk`, PacketExactPhysicalMomentum.lean:59-60;
+`rawGraphPotential` is `graphPotential`/`graphPressure k` with the `k⁻¹`-type normalization,
+Euler/ExactLiftedGraphPressure.lean:36-37, :60-61, :63). Instrument note: a `k*κ=1`-style guard should be
+whitelisted; it is the same information as `k ≠ 0`.
+
+## 17. Euler/PacketForwardInitializedFieldParity.lean:41 `forwardInitializedNormalizedField_odd` — denom `k` — **C (caller-guarded), severity LOW**
+
+CLAIM: a PARITY property — `(forwardInitializedNormalizedField … N k).ReflectionOdd`, i.e. the normalized
+initialized packet field is odd under reflection. `(k : ℝ)` free (:41).
+`forwardInitializedNormalizedField N k = ((forwardInitializedPacketField … k⁻¹).smul k).changeTime`
+(Euler/PacketForwardInitializedCorrectionData.lean:22-23), so at k = 0 the field is `0 • (…)` = the zero
+field and the claim degenerates to "the zero field is odd" — content-free but true.
+GUARD ONE LAYER UP: the sole consumer `forwardInitializedCorrectionParityData`
+(Euler/PacketForwardInitializedCorrectionParity.lean:20-27, use at :37) takes `(k : ℝ) (hk : 4 ≤ k)` (:25);
+the sibling lemmas in this same family also carry `hk : 4 ≤ k`
+(PacketForwardInitializedFieldParity.lean:64-65, PacketForwardInitializedCorrectionData.lean:26, :55, :62).
+SEVERITY: low — a parity property, not an exact value; and the k ≥ 4 users are unaffected.
+
+## 18. Euler/PacketInitializedFieldParity.lean:43 `initializedNormalizedField_odd` — denom `k` — **C (caller-guarded), severity LOW**
+
+Exact twin of #17 for the history-initialized packet. CLAIM: `(initializedNormalizedField … N k).ReflectionOdd`;
+`(k : ℝ)` free (:43). `initializedNormalizedField N k = ((initializedPacketField … k⁻¹).smul k).changeTime`
+(Euler/PacketInitializedCorrectionData.lean:23-24), so at k = 0 it is the zero field and the parity claim is
+vacuous. GUARDED BY THE SOLE CALLER `initializedCorrectionParityData`
+(Euler/PacketInitializedCorrectionParity.lean:21-29, use at :39) which requires `(k : ℝ) (hk : 4 ≤ k)` (:27);
+the sibling `initializedNormalizedResidualField_odd`:66-67 also carries `hk : 4 ≤ k`.
+SEVERITY: low (parity property, not an exact value).
+
+## 19. Euler/PacketKnownTermSums.lean:18 `angleMean_congr_at` — denom `P` — **C (caller-guarded), severity NIL**
+
+CLAIM: a CONGRUENCE — if `f (t,(x,θ)) = g (t,(x,θ))` for all θ then `angleMean P f (t,(x,θ)) = angleMean P g …`.
+`angleMean P f z = P⁻¹ • ∫ θ in 0..P, f …` (Euler/PacketProfileRecursion.lean:40-41), so at P = 0 both sides
+are `0 • 0 = 0` and the statement is `0 = 0` (both sides collapse independently — formally the
+PulseCovariance:74 shape). Mechanism worth noting: the file's section variable is `{P T : ℝ} [Fact (0 < P)]`
+(:16), but this theorem re-binds its own explicit `(P : ℝ)` (:18) and thereby SHADOWS the positivity instance.
+The caller `PrefixFields.meanForce_decomposition` (:63, use at :71) is inside that section, so it applies the
+lemma to the `P` that does carry `[Fact (0 < P)]`.
+SEVERITY: nil — it is a congruence lemma (`f = g` in, means equal out); no exact value is advertised.
+
+## 20. Euler/PacketParentNormalBudget.lean:22 `amplitude_nonneg` — denom `C` — **A (instrument artefact: there is no division)**
+
+FALSE POSITIVE. `amplitude C C₁ = 9*C^2 + 27*C^2*C₁` (:15) — a POLYNOMIAL, no inverse and no division at all;
+the claim `0 ≤ amplitude C C₁` with `hC₁ : 0 ≤ C₁` (:22) is true for every C by `positivity`. The instrument
+must have matched the `1/(…)`-free `inverseRadius`/`gramCost` names or a downstream `C`-inverse; nothing in
+this theorem's statement can degenerate.
+
+## 21. Euler/StaticEulerCorrection.lean:37 `amplitude_pos` — denom `C` — **B (certified by type; and a STRICT-positivity claim cannot silently degenerate)**
+
+FALSE POSITIVE, twice over. Claim: `0 < amplitude P C R hC hR` where
+`amplitude P C R hC hR = (scales P C R hC hR).value` (:35) and the proof is the structure FIELD
+`Scale.positive : 0 < value` (Euler/SmallCorrectionScales.lean:38-40, used at :38).
+(a) The guard is in the type: `scales` (:29-33) is built by `scale` which demands `0 ≤ C`, `0 ≤ R`,
+`0 < residualCost …` (Euler/SmallCorrectionScales.lean:47) and whose inverses are all of the
+`1/(… + 1)` form (:48-52) — the "+1" nondegeneracy construction.
+(b) Structurally, a `0 < x` conclusion is IMMUNE to junk-value degeneration: if the channel collapsed to 0 the
+theorem would be FALSE, not content-free. Same remark applies to `amplitude_le_one`:40.
+
