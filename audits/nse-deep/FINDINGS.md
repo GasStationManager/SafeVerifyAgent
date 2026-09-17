@@ -2564,3 +2564,58 @@ denominator at all** (it is the `GradeGuards` amplitude).
 * Two more junk-value **positive controls**: `MixedDiagonalSchedule.lean:265` puts `ha0 : 0 < a 0` right
   beside `1/(a 0 : ℝ)`, and `LocalizedGaussianBounds`' `(s.delta x)⁻¹` is double-guarded
   (`WeightedClasses.lean:40,50`).
+
+## W41 — the kernel-risk census re-measured independently: two gaps found, both benign, and the headline claim CONFIRMED
+
+Parent work, no delegation. The kernel-trust census (W1-W4) was built early in this audit; the structural
+reading block then flagged two constructs it had not mentioned (`Nat.rec`, and a Type-valued `if` with
+`Fin.cases`). Rather than assume those were the only gaps, the whole artifact was re-swept for
+recursor-shaped constructs.
+
+| construct | hits | files |
+|---|---|---|
+| `inductive` | 14 | 12 |
+| `termination_by` | 12 | 3 |
+| `Nat.rec` | **1** | 1 |
+| `.casesOn` | 12 | 2 |
+| `Acc.rec`, `brecOn`, `native_decide`, Type-valued `if` | **0** | 0 |
+| `deriving` | 6 | 6 |
+| `decide` | 210 | 85 |
+| `Fin.cases` | **46** | 25 |
+| `fin_cases` (tactic) | **767** | **198** |
+| `Classical.choice` | 164 | 68 |
+
+**Gap 1 — `fin_cases` was never counted, and it is the largest recursor-shaped population in the artifact:
+767 uses across 198 files.** The census counted `inductive`/`termination_by`/explicit `.rec`, so this whole
+class was invisible to it. Its kernel cost is entirely a function of the `Fin` size, so that was measured too:
+
+| `Fin n` | occurrences |
+|---|---|
+| `Fin 2` | 1,807 |
+| `Fin 3` | 4,158 |
+| `Fin 4` | 1,812 |
+| `Fin 5`/`6` | 315 |
+| `Fin 7`-`12` | 30 |
+| `Fin 18`/`19`/`22` | 14 |
+
+**Largest `Fin` in the artifact is `Fin 22`** (a handful of occurrences, `ActivationContinuation.lean` holds
+the `Fin 10`/`Fin 12` ones). So the worst case is a 22-way finite case split. **Verdict: benign — but now
+measured rather than assumed**, which is the difference between "we did not look" and "we looked and it is
+small". `Nat.rec` occurs exactly **once** in 641,332 lines (`CylinderCompactTranslation.lean:149-163`), and
+`Acc.rec` — the construct that actually threatens kernel termination — occurs **zero** times.
+
+**Gap 2 — and it resolves as a CONFIRMATION of the headline claim, by an independent route.** A proximity
+sweep found 30 `decide` sites with a 4+-digit numeral nearby, including **1,000,000,000**, which would
+contradict the published "every `decide` literal ≤ 1000". Reading the sites settles it: **every one of those
+`decide` goals is `0 ≤ 40`, `5 ≤ 40`, `8 ≤ 29`, `21 ≤ 40`, `29 ≤ 40` — literals ≤ 40.** The large numerals
+belong to *adjacent* goals discharged by `norm_num` over **ℝ**, e.g.
+`(by norm_num : (1:ℝ) ≤ 1000000000)` at `Euler/PacketGeometryGuards.lean:55,77`, and `8000000*e*Θ^21 ≤ 1`
+at `:102` — real-number inequalities, not `Nat` numeral reduction, and far under the measured 61-bit
+single-word ceiling. **So the claim stands, and the false-alarm mechanism is now named: `decide` goals in
+this artifact sit textually beside much larger ℝ-valued `norm_num` goals.** Any future automated re-check of
+the `decide` bound must read the goal, not the neighbourhood — the same statement-versus-context error this
+audit keeps finding in its own instruments.
+
+**Net: the kernel-trust verdict is unchanged and is now better supported.** Zero `Acc.rec`, one `Nat.rec`,
+no `native_decide`, no metaprogramming, no Type-valued `if`, worst finite case split 22-way, and the
+`decide` literal bound re-confirmed against an adversarial reading of its own counterexamples.
