@@ -1,0 +1,32 @@
+{
+  "controller": {
+    "requested": [
+      "GPT-5.6 Sol via openai-codex",
+      "direct Anthropic Claude Opus 5"
+    ],
+    "conflict": "The two instructions in the same message name DIFFERENT controller models.",
+    "actual": "openrouter/~anthropic/claude-opus-latest (this session, unchanged)",
+    "note": "A running controller cannot swap its own model mid-session; a controller change requires a new session. No action taken, contradiction reported."
+  },
+  "subagent_policy_requested": "GPT-5.6 Luna for every subagent; NOT Claude Opus, NOT OpenRouter Opus",
+  "subagent_probes": {
+    "openai-codex/gpt-5.6-luna": "FAIL 429 usage_limit_reached (team plan), resets_in ~129,771s (~36h)",
+    "prime-inference/openai/gpt-5.6-luna": "FAIL 402 Insufficient balance (including overdraft)",
+    "openrouter/openai/gpt-5.6-luna": "FAIL 403 Key limit exceeded (MONTHLY limit) -- note: worse than the transient 429 rate-limit measured earlier this session",
+    "conclusion": "GPT-5.6 Luna is unavailable on ALL THREE providers. Per instruction, Opus subagents are forbidden, so NO subagents were spawned for audit work; remaining checks executed in the controller."
+  },
+  "artifact": {
+    "repo": "/home/gsm/.openclaw/workspace/repos/NSE",
+    "commit": "f9e8bc5",
+    "lean_pin": "leanprover/lean4:v4.34.0-rc2",
+    "mathlib_rev": "85e3a25e006c"
+  },
+  "environment_change_vs_audit_record": {
+    "disk_recorded": "99-100% full, 4.1G free -> build impossible",
+    "disk_now": "88% used, ~62G free",
+    "toolchain_recorded": "box had Mathlib v4.33.0 only; pin v4.34.0-rc2 unavailable",
+    "toolchain_now": "leanprover/lean4:v4.34.0-rc2 INSTALLED, `lean --version` = 4.34.0-rc2 (commit 6a10ac8c22be)",
+    "network": "github reachable (HTTP 200)",
+    "olean_recorded": "0 built .olean; .lake absent"
+  }
+}
