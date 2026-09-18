@@ -2925,3 +2925,28 @@ every mechanical pass with human reading rather than trusting either alone.
 | ESCALATE | **4** (`TangentPulse`, `PulseCovariance` dead leaves, `CoefficientSupport`, `AllOrderCorrectionBudget.Budget`) |
 | KERNEL-RISK flags | **3**, all benign, all already classified by W2/W4 |
 | new vacuity mechanisms found | **3** (P5b redundant guards, P7b propagate-only non-degeneracy, P8 filter vacuity) |
+
+## W47 — the build changes the environment the instruments run in, and that is a provenance hazard
+
+Recorded now, before any instrument is re-run, because it would silently corrupt every number this audit has
+published.
+
+Until this cycle the artifact had **no `.lake` directory at all** -- nothing had ever been fetched. So every
+bare `grep -rn ... --include=*.lean .` in this audit was *automatically* artifact-only. After
+`lake exe cache get`, `.lake/packages/` holds Mathlib, aesop, Qq, proofwidgets, importGraph, batteries and
+more, and the identical command now silently includes **dependency source**.
+
+Measured immediately: a bare `sorry` grep returns a page of hits from `proofwidgets/Demos`,
+`Qq/Qq/Simp.lean`, `importGraph/ImportGraphTest/WithSorry/` and `aesop/AesopTest/`. With
+`--exclude-dir=.lake` it returns **5 lines: 4 real `sorry` plus 1 docstring**, all in `ComparatorChallenges/`
+-- `Euler.lean:88,184` and `NavierStokes.lean:277,284`. **That is exactly the published figure** ("4 `sorry`
+-- both challenge files' intentional placeholders"), and it confirms the solution files `Euler/Solution.lean`
+and `NavierStokes/ComparatorSolution.lean` carry none.
+
+**The audit's own instruments are safe**: `cone.py`, `nosupplier.py` and `junkvalue.py` all walk with
+`SKIP_DIRS = (".lake", ".git", "build", ".venv")`, so their published counts are unaffected. **Ad-hoc greps
+are not**, and this audit has used many. Anyone re-deriving a number from this point must pass
+`--exclude-dir=.lake`, or they will measure Mathlib and call it the artifact.
+
+This is the same class of error the audit has caught in itself seven times -- a measurement whose *scope*
+silently changed -- except that this time the cause is the environment rather than a regex.
