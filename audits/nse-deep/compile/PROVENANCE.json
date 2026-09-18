@@ -6,7 +6,8 @@
     ],
     "conflict": "The two instructions in the same message name DIFFERENT controller models.",
     "actual": "openrouter/~anthropic/claude-opus-latest (this session, unchanged)",
-    "note": "A running controller cannot swap its own model mid-session; a controller change requires a new session. No action taken, contradiction reported."
+    "note": "A running controller cannot swap its own model mid-session; a controller change requires a new session. No action taken, contradiction reported.",
+    "resolution": "Resolved per updated authorization: current direct-Anthropic controller retained. Conflict closed."
   },
   "subagent_policy_requested": "GPT-5.6 Luna for every subagent; NOT Claude Opus, NOT OpenRouter Opus",
   "subagent_probes": {
@@ -28,5 +29,21 @@
     "toolchain_now": "leanprover/lean4:v4.34.0-rc2 INSTALLED, `lean --version` = 4.34.0-rc2 (commit 6a10ac8c22be)",
     "network": "github reachable (HTTP 200)",
     "olean_recorded": "0 built .olean; .lake absent"
+  },
+  "subagent_policy_actual": {
+    "approved_now": "Sonnet",
+    "used": "anthropic/claude-sonnet-4-5 (direct Anthropic)",
+    "luna_status": "unavailable on all 3 providers (429 / 402 / 403) -- superseded by Sonnet authorization",
+    "opus_subagents": "none spawned at any point after the restriction"
+  },
+  "build": {
+    "action": "full `lake build` STOPPED per instruction",
+    "modules_built": 1264,
+    "of_total": "~2659",
+    "mathlib_oleans": 8758,
+    "artifact_git_status": "clean before and after",
+    "retained": "all build output kept; lake is incremental",
+    "headline_modules_built": false,
+    "note": "ComparatorSolution / Euler.Solution / ComparatorR3Theorem NOT built -> #print axioms on the headline theorems is NOT reachable"
   }
 }

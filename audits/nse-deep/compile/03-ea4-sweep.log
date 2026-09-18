@@ -1,0 +1,5 @@
+=== E-A4 FULL SWEEP over built NavierStokes modules, Fri Sep 18 20:37:23 UTC 2026 ===
+PASS NavierStokes/ActivationBounds.lean
+PASS NavierStokes/ActivationCone.lean
+PASS NavierStokes/ActivationContinuation.lean
+PASS NavierStokes/ActivationHolomorphic.lean
