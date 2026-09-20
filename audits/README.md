@@ -11,6 +11,9 @@ the auditor.
 | date | artifact | verdict | escalations |
 |---|---|---|---|
 | 2026-09-15 | [openai/NavierStokesAndEuler](2026-09-15-openai-NavierStokesAndEuler.md) | no defect found | 3, for expert review |
+| 2026-09-16 | [openai/NavierStokesAndEuler — kernel trust](2026-09-16-openai-NavierStokesAndEuler-kernel-trust.md) | no defect found | kernel-exposure surface classified; closing-`rfl` defeq goals unbounded |
+| 2026-09-18 | [openai/NavierStokesAndEuler — final](2026-09-18-openai-NavierStokesAndEuler-FINAL.md) | no defect found | E-A4 closed clean by compile; coverage stated in tiers |
+| 2026-09-20 | [openai/NavierStokesAndEuler — paper alignment](2026-09-20-openai-NavierStokesAndEuler-paper-alignment.md) | no load-bearing weakening; headline EXACT | 4 open checks, none a defect; docstrings cite a draft numbering |
 
 ## How to read one
 

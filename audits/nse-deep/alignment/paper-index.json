@@ -1,0 +1,287 @@
+{
+ "1.1": {
+  "kind": "Theorem",
+  "page": 1,
+  "snippet": "For every \u03bd > 0 there exist a force f \u2208C\u221e c (R3 \u00d7 (0, \u221e); R3), a compact set K \u2282R3, and smooth velocity and pressure fields u, p on R3 \u00d7 [0, 1) satisfying \u2202tu + (u \u00b7 \u2207)u \u2212\u03bd\u2206u + \u2207p = f, \u2207\u00b7 u = 0, u(\u00b7, 0) = 0, (1.1) such t"
+ },
+ "3.1": {
+  "kind": "Theorem",
+  "page": 15,
+  "snippet": "There are constants 0 < h < 1/100, q\u2217> 0, 0 < Xa < Xext < \u221e, and smooth fields on \u2126\u2217= {(x, t) : \u03c4 > 0, q < q\u2217} with the following properties. (i) There is a vector potential A and an axisymmetric scalar B such that u = c"
+ },
+ "3.2": {
+  "kind": "Definition",
+  "page": 18,
+  "snippet": "(Regularity at the axis). A leading field is regular at the axis if its velocity and pressure extend smoothly across r = 0 in Cartesian coordinates, for t < 1. For scalar auxiliary profiles, \u201cregular at the axis\u201d means a"
+ },
+ "3.3": {
+  "kind": "Definition",
+  "page": 18,
+  "snippet": "(Parameter smallness and order of choices). For \u03b1 \u22650 and \u03b2 > 0, we write \u03b1 \u226a\u03b2 when \u03b1/\u03b2 is required to be sufficiently small, with the allowed size depending on all data already fixed. In a chain of constants, choices pro"
+ },
+ "4.1": {
+  "kind": "Lemma",
+  "page": 25,
+  "snippet": "For a smooth profile f and any real b, \u2202t(qb f ) = qb\u22121Tb f, \u2202z(qb f ) = qb\u2212DZb f, {\ufe04 Tb f = L\u22121(\u2212b f + D\u03b7 f\u03b7 + DX f ), Zb f = L\u22121(2b\u03b7 f + d f\u03b7 \u22122\u03b7DX f ). (4.2) Proof. Differentiating the equation for q, followed by \u03b7 = "
+ },
+ "4.2": {
+  "kind": "Proposition",
+  "page": 27,
+  "snippet": "The residuals R(0) \u03b8 , R(0) z in (4.12) are minus the cylindrical divergences \u2202r + 2/r and \u2202r + 1/r of q\u2212A\u22121/2T0. In particular the equations for vanishing leading residual stress are \u22122LX\u03d5XX + 2\u03d5X \u03d5 = Sq, \u22122L(XUXX + UX)"
+ },
+ "4.3": {
+  "kind": "Lemma",
+  "page": 28,
+  "snippet": "For the solutions of (4.9) with CQ = CN = 0, Qs = \u2212W + (1 \u2212h)I \u2212D\u03b7I\u03b7 \u2212dJ\u03b7 + 2(h \u2212D)\u03b7J XH , Ns = \u2212WU + D(M \u2212\u03b7M\u03b7) + 4h\u03b7S \u2212dS\u03b7 X + 4A\u03b7\u03a0 \u2212d\u03a0\u03b7. (4.16) Proof. Use \u2202X(XW) = 1 \u22122D\u03b7U \u2212dU\u03b7 to integrate the terms \u2212WDXH and \u2212WDXU. T"
+ },
+ "4.4": {
+  "kind": "Lemma",
+  "page": 28,
+  "snippet": "Fix h \u2208(0, 1/2). For i = 1, 2, let (Ui, Ei) be smooth on (0, \u221e) \u00d7 [\u22121, 1], with Ei > 0, and suppose the five integrals in (4.15) define smooth functions there, including one-sided \u03b7-derivatives at \u03b7 = \u00b11. Write Hi = \u221a 2X"
+ },
+ "4.5": {
+  "kind": "Lemma",
+  "page": 31,
+  "snippet": "Let a > 0, bs \u2208R, and ps = (ps,1, ps,2) \u2208R2, and define ts, vs, Pc, Jc by (4.20). If vs > 2, the admissible stress cone condition, namely the inequalities in (4.21) together with vs > 2, is equivalent to Pc > vs, (vs \u22122)"
+ },
+ "4.6": {
+  "kind": "Theorem",
+  "page": 8,
+  "snippet": ", and define the core at time t = 1 \u2212\u03c4 by C\u03c4 = {(r cos \u03b8, r sin \u03b8, z) : 0 \u2264X(r, z, \u03c4) \u2264Xc, |\u03b7(z, \u03c4)| \u2264\u03b7c}. Since q \u224d\u03c4 there, its radial and axial extents satisfy \u2113r \u224d\u03c41/2, \u2113z \u224d\u03c41/2\u2212h, \u2113z \u2113r \u224d\u03c4\u2212h. Both extents vanish; the"
+ },
+ "4.7": {
+  "kind": "Lemma",
+  "page": 34,
+  "snippet": "Let \u03b11, . . . , \u03b1m be distinct real numbers, and let \u03b21, . . . , \u03b2m be nonnegative, nonzero smooth functions supported in ordered disjoint compact intervals of (0, \u221e). Then Bij = \u222b\ufe02\u221e 0 x\u03b1i\u03b2j(x) dx is invertible. Its inve"
+ },
+ "4.8": {
+  "kind": "Lemma",
+  "page": 35,
+  "snippet": "There are finite parameters Md, P\u2217, \u03bb, h and a constant R\u2217> 0 with the following properties. The parameter Md is fixed first; P\u2217may then depend on Md, \u03bb on Md, P\u2217, and h on Md, P\u2217, \u03bb. These choices satisfy Td = eMd + 10,"
+ },
+ "4.9": {
+  "kind": "Lemma",
+  "page": 36,
+  "snippet": "The family in Lemma 4.8 can be chosen with the following additional property for every XR \u2265R\u2217. Suppose a leading field is regular at the axis, agrees with that family for X \u2265Xtail, satisfies the four moment identities in"
+ },
+ "4.10": {
+  "kind": "Proposition",
+  "page": 36,
+  "snippet": "Fix the outer-profile data of Lemma 4.8 and any prescribed finite collection of \u03b7-derivative orders. One can choose finite axis parameters j0, \u03b4\u2217, \u03c3\u2217, \u039b, a logarithmic transition length Tsh, and an amplitude threshold C0"
+ },
+ "4.11": {
+  "kind": "Lemma",
+  "page": 34,
+  "snippet": "These results supply the inputs to the proof of Theorem 4.6; their detailed constructions are proved in the appendices at the references below. A parameter derivative in these statements means an \u03b7-derivative, with all c"
+ },
+ "5.1": {
+  "kind": "Lemma",
+  "page": 47,
+  "snippet": "There exists an interval 0 \u2264\u03be \u2264a, \u03be = \u221a X, extending from the axis into the inner collar of Theorem 4.6(i), where the stress cone inequalities hold with a uniform positive margin, on which every positive order has a uniq"
+ },
+ "5.2": {
+  "kind": "Lemma",
+  "page": 21,
+  "snippet": ", Proposition 8.3 and preceding definition Ca(\u03b5), Cb(\u03b5) Fixed profile collars at the two radial annular edges. Here \u03b5 denotes their logarithmic width, independent of the physical scale q. (4.24) Waves, amplitudes, and mo"
+ },
+ "5.3": {
+  "kind": "Proposition",
+  "page": 55,
+  "snippet": "Fix the leading profiles of Theorem 4.6. There is a sequence of positive-order profiles constructed at each order by Lemma 5.1 and then Lemma 5.2, using the finalized lower orders. Every finite velocity sum u[N] slow is "
+ },
+ "5.4": {
+  "kind": "Lemma",
+  "page": 15,
+  "snippet": "and Proposition 9.9; (3.4) Localize and extend the residual as a smooth force The force is smooth and compactly supported; the leading velocity blowup persists. Lemmas 10.3 and 10.5; Theorem 1.1 repeat Figure 6. Residual"
+ },
+ "5.5": {
+  "kind": "Proposition",
+  "page": 19,
+  "snippet": "; (5.41) (b, V, G) Radial, azimuthal (swirl), and axial components of the fixed background in normalized chart coordinates. (8.1), (9.7) T0, T = q\u2212A\u22121/2T0 Leading stress profile and physical stress pair, in (r\u03b8, rz) orde"
+ },
+ "6.1": {
+  "kind": "Lemma",
+  "page": 65,
+  "snippet": "For the labels \u0393 and slow supports K\u03b3 in Equations (6.8) and (6.9), there exist centers c\u03b3 and a radius r0 > 0, common to all labels and independent of the band, such that the enlarged rectangles in (6.10) are injectivel"
+ },
+ "6.2": {
+  "kind": "Lemma",
+  "page": 67,
+  "snippet": "For U, i0, H as in (6.17), each change H \u21a6\u2192Yi has uniformly bounded derivative factors, and RH \u03b3 consists of 14\u2206\u2113\u226414\u2206max disjoint lifts of R\u03b3. Haar averages on the absolute, common, and band tori agree whenever the funct"
+ },
+ "6.3": {
+  "kind": "Lemma",
+  "page": 68,
+  "snippet": "(Number of relevant labels). There is a constant C, independent of the band and point, such that sup (r,z,t) #{\u03b3 \u2208\u0393 : (r, z, t) \u2208K\u03b3} \u2264C. For a fixed band \u2113, compact chart set B \u2282R3, and bounded normalized radial interval"
+ },
+ "6.4": {
+  "kind": "Definition",
+  "page": 69,
+  "snippet": "(Mean and moment coefficients). A smooth coefficient f = f (R, Z, T, H) belongs to M\u03b1 if it descends to each applicable common torus with representatives satisfying (6.20), extends smoothly by zero outside the active rad"
+ },
+ "6.5": {
+  "kind": "Definition",
+  "page": 23,
+  "snippet": "; (6.29) M\u03b1 Normalized angular mean coefficients of order \u03b5\u03b1, with radial weight \u03b6; auxiliary dependence is allowed. Definition 6.4; (6.24) S\u03b1 Normalized radial moments depending on (Z, T), of order \u03b5\u03b1, with the radial i"
+ },
+ "6.6": {
+  "kind": "Proposition",
+  "page": 62,
+  "snippet": "All preliminary geometric choices are made on one domain 0 < q < qbig. The number qbig may be decreased when the fixed base and pulse coefficients are chosen, before the correction iteration begins. 6.1. Dyadic charts an"
+ },
+ "7.1": {
+  "kind": "Lemma",
+  "page": 75,
+  "snippet": "For the labels and phases in Equations (6.8), (7.2) and (7.3), there exists a sufficiently small q\u2217> 0, common to all labels and fixed derivative orders, such that every rectangle on 0 < q < q\u2217 has the following properti"
+ },
+ "7.2": {
+  "kind": "Proposition",
+  "page": 77,
+  "snippet": "Fix \u03b1 \u2208R, a finite set of harmonics 0 < |m| \u2264M, and a label at level i on a common torus H = Yi0, with i \u2212i0 bounded as in Lemma 6.2. For each harmonic, let fm(x\u2217, H) \u2208C3 be a coefficient descending to H, smooth on the f"
+ },
+ "7.3": {
+  "kind": "Corollary",
+  "page": 80,
+  "snippet": "The solution operators fm \u21a6\u2192(tm, \u03c0m) for the projected amplitude equation with tm(0) = 0 are defined at every finite correction stage on the same domain 0 < q < q\u2217. Increasing the finite harmonic set or the derivative or"
+ },
+ "7.4": {
+  "kind": "Lemma",
+  "page": 13,
+  "snippet": "; (7.22) Choose the squared amplitudes Match the averaged radial flux of tangential momentum to the leading annular stress. Proposition 7.5; (7.24)\u2013(7.26) Add exactly divergence-free waves Take curls. The divergence of t"
+ },
+ "7.5": {
+  "kind": "Proposition",
+  "page": 22,
+  "snippet": "; (7.24) Cm, Am, rm, am Wave-potential coefficient, oscillating vector potential, curl remainder, and full harmonic velocity amplitude am = tm + rm. (7.38), (7.39) Was 0 = wtan 0 , w Assembled leading wave transverse to "
+ },
+ "7.6": {
+  "kind": "Proposition",
+  "page": 84,
+  "snippet": "For every \u03b1 \u2208R and every real two-vector \u03a3(R, Z, T) \u2208M\u03b1 independent of the angular and auxiliary variables, (7.31) defines a linear operation L\u03a3. Its harmonic coefficients on the slow neighborhood satisfy the local deriv"
+ },
+ "7.7": {
+  "kind": "Lemma",
+  "page": 13,
+  "snippet": "; (9.11) shear Figure 5. Construction of the background and the first oscillatory correction. The averaged pulse flux cancels the leading background stress divergence. The remaining residual is corrected by the cycle in "
+ },
+ "7.8": {
+  "kind": "Corollary",
+  "page": 87,
+  "snippet": "Fix \u03b1, \u03c1 \u2208R, and use the normalized representatives of (7.35). Suppose U is a real divergence-free wave field, including its curl remainders, such that U = Was 0 + E, U \u2208W1/2, E \u2208W\u03c1. Let \u03a3(R, Z, T) \u2208M\u03b1 be a real two-vect"
+ },
+ "8.1": {
+  "kind": "Proposition",
+  "page": 20,
+  "snippet": "Sn, An Physical background Stokes streamfunction and its azimuthal vector potential An = (Sn/r)e\u03b8. Taking its curl gives radial and axial velocity. (5.27) K(r, \u03c4), Hext Exterior swirl heat velocity and its profile: K = r"
+ },
+ "8.2": {
+  "kind": "Lemma",
+  "page": 64,
+  "snippet": "and in the mean correction equations. 6.2. Slow cutoffs and disjoint auxiliary rectangles. We next assign supports to the localized oscillations. The squared partition of unity formed from the slow cutoffs in (6.9) will "
+ },
+ "8.3": {
+  "kind": "Proposition",
+  "page": 92,
+  "snippet": "Fix the radial operators of Lemma 8.2 and the bump \u03c1 above. "
+ },
+ "8.4": {
+  "kind": "Proposition",
+  "page": 94,
+  "snippet": "Let (\u03b2, v, \u03b3) and w be the smooth shell-supported corrections of (8.1). Suppose that the two moments in (8.2) vanish at every (Z, T), and reconstruct pm from their radial source gr by (8.12). For the residual components "
+ },
+ "8.5": {
+  "kind": "Corollary",
+  "page": 95,
+  "snippet": "Under the hypotheses of Proposition 8.4, define the covariance targets H\u03b8 = \u2212T2 (\ufe01\u27e8E\u03b8\u27e9Y \u2212\u03c3\u03b8\u03b5\u2202ZJ\u03b8 )\ufe01 , Hz = \u2212T1 (\ufe01\u27e8Ez\u27e9Y \u2212\u03c3z\u03b5\u2202Z(Jz + c\u03c1P) )\ufe01 (8.18) They are independent of the auxiliary variable, compactly supported in the"
+ },
+ "8.6": {
+  "kind": "Lemma",
+  "page": 95,
+  "snippet": "Let N = vt \u00b7 \u2202y on T2, with vt as in (6.2), and let F be a smooth function of zero Haar mean. Then N\u03c6 = F has a unique smooth zero-mean solution \u03c6 = N\u22121F. This solution is given by the following Fourier series and satisf"
+ },
+ "8.7": {
+  "kind": "Lemma",
+  "page": 97,
+  "snippet": "Suppose that the fixed slow base satisfies (8.24) on the reserved interior interval Im, with \u03bb > 0 and |a(\u03b7)| \u2265a0 > 0. There are three fixed azimuthal bump profiles and two fixed axial bump profiles supported in this int"
+ },
+ "8.8": {
+  "kind": "Lemma",
+  "page": 98,
+  "snippet": "Suppose that the slow base satisfies (8.24), with the fixed \u03bb > 0 and lower bound |a(\u03b7)| \u2265a0 > 0. Let (\u03b2, v, \u03b3) be a smooth divergence-free mean correction supported in the active shell, and keep the base and wave field "
+ },
+ "9.1": {
+  "kind": "Proposition",
+  "page": 101,
+  "snippet": "Fix a label, m \u2208Z \\ {0}, and \u03b1 \u2208R. Let fm \u2208W\u03b1 satisfy the support and smooth- extension hypotheses of Proposition 7.2. Assume also that the source harmonic fmeikm\u03a6 extends smoothly by zero outside the fixed local rectang"
+ },
+ "9.2": {
+  "kind": "Lemma",
+  "page": 102,
+  "snippet": "Let w be a wave in W\u03b1, and let v be a mean field with tangential components in M\u00b5 and radial component in M\u00b5+1. The nonzero harmonics of (w \u00b7 \u2207\u2217)v + (v \u00b7 \u2207\u2217)w belong to W\u03b1+\u00b5\u22121/2. "
+ },
+ "9.3": {
+  "kind": "Proposition",
+  "page": 15,
+  "snippet": "; (9.3) Correct waves, mean flow, pressure, and radial moments Each cycle improves the decay of the residual. \u03c3j+1 = \u03c3j + 1 10 Proposition 9.6; (9.8), (9.18) Sum the corrections with shrinking cutoffs The residual and al"
+ },
+ "9.4": {
+  "kind": "Definition",
+  "page": 22,
+  "snippet": "Wab = \u27e8wawb\u27e9\u03b8 Full angularly averaged wave covariance in cylindrical components; its radial off-diagonal entries transport azimuthal and axial momentum. (8.1), (8.3) C(w), B(w, v) Doubly averaged radial momentum-flux pai"
+ },
+ "9.5": {
+  "kind": "Proposition",
+  "page": 106,
+  "snippet": "Starting with the fixed base and the curls of the primary potentials, perform the temporal mean update (8.20) and the five-equation correction (8.25), reconstructing pressure by (8.12) before and after each update. The r"
+ },
+ "9.6": {
+  "kind": "Proposition",
+  "page": 13,
+  "snippet": ", so newly created terms enter the next stage. Starting from (uB + w, pB + \u03c0), we reconstruct the pressure and correct the angularly averaged velocity and its radial integral defects. Proposition 9.5 proves that the resu"
+ },
+ "9.7": {
+  "kind": "Lemma",
+  "page": 14,
+  "snippet": "To sum the corrections, we apply cutoffs to their vector potentials and pressures, then take curls; the direct axisymmetric azimuthal increments receive the same cutoffs. Each cutoff equals one sufficiently close to q = "
+ },
+ "9.8": {
+  "kind": "Lemma",
+  "page": 113,
+  "snippet": "For every Cartesian space\u2013time derivative order m, |Zj|m + |\u2206uj|m \u2264Cj,mqgj\u2212\u2113m(1 + | log q|)Pj,m, gj = h 10 j \u2212\u2192\u221e, (9.17) where \u2113m is independent of j and includes the additional spatial differentiation recovering velocit"
+ },
+ "9.9": {
+  "kind": "Proposition",
+  "page": 114,
+  "snippet": "There are smooth fields (uloc, ploc) on \u2126\u2217, obtained by summing the finite correc- tions above, such that div uloc = 0 and all conclusions of Theorem 3.1 hold. Proof. We apply the summation lemma with F(u, p) = R(u, p), "
+ },
+ "10.1": {
+  "kind": "Proposition",
+  "page": 117,
+  "snippet": "There are a compact set K \u2282R3, a smooth vector field u and a smooth scalar field p on R3 \u00d7 [0, 1), with supp u(\u00b7, t) \u222asupp p(\u00b7, t) \u2282K for every 0 \u2264t < 1, satisfying div u = 0, u(\u00b7, t) = p(\u00b7, t) = 0 for all sufficiently s"
+ },
+ "10.2": {
+  "kind": "Lemma",
+  "page": 118,
+  "snippet": "For every spatial multi-index \u03b1 and integer j \u22650, \u2202\u03b1 x\u2202j t f converges uniformly on R3 as t \u21911. There are functions Fj \u2208C\u221e c (R3; R3), all supported in K, such that lim t\u21911 \u2202\u03b1 x\u2202j t f (x, t) = \u2202\u03b1 xFj(x), \u2202\u03b1 xFj(0) = 0. ("
+ },
+ "10.3": {
+  "kind": "Lemma",
+  "page": 120,
+  "snippet": "The force in (10.5) extends to f \u2208C\u221e c (R3 \u00d7 (0, \u221e); R3), with support contained in K \u00d7 [0, 2]. Proof. We choose \u03c70 \u2208C\u221e c (R), equal to one near zero and zero for arguments at least one. For \u03c3 = t \u22121 \u22650, we set f (x, 1 +"
+ },
+ "10.4": {
+  "kind": "Lemma",
+  "page": 17,
+  "snippet": "proves the global energy and integrated dissipation bounds for the localized fields directly from their equation. Finally, Lemma 10.5 applies to any smooth solution with the same force and zero initial datum whose kineti"
+ },
+ "10.5": {
+  "kind": "Lemma",
+  "page": 121,
+  "snippet": "Fix T < 1. If v, P is a smooth solution of (1.1) at viscosity one on R3 \u00d7 [0, T], with the force f of Lemma 10.3, zero initial velocity, and v \u2208L\u221e([0, T]; L2(R3)), then v = u on that interval, where u is the localized ve"
+ },
+ "10.6": {
+  "kind": "Corollary",
+  "page": 125,
+  "snippet": "For every \u03bd > 0, there is a smooth force on T3 \u00d7 [0, \u221e), compactly supported in time, for which the solution (U, Pper) of the periodic Navier\u2013Stokes equations with viscosity \u03bd and zero initial velocity is smooth on [0, 1"
+ }
+}

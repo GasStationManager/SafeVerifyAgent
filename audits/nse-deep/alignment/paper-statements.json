@@ -1,0 +1,470 @@
+{
+ "9.7": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 14,
+  "text": "To sum the corrections, we apply cutoffs to their vector potentials and pressures, then take curls; the direct axisymmetric azimuthal increments receive the same cutoffs. Each cutoff equals one sufficiently close to q = 0, and its support shrinks with the stage. The bounds in (9.17) have a loss in the power of q that depends on derivative order but is independent of the stage. They allow the cutoffs to be chosen so that every differentiated tail satisfies (5.35). The sum is locally finite for q > 0 and defines smooth fields (uloc, ploc) for t < 1. Comparing their residual with that of a fixed finite stage proves (9.20), while preserving the leading velocity growth (Proposition 9.9). The summation gives the required local velocity growth. To pass to the whole space, we also need a vector-potential representation and regularity up to time one away from the origin. Proposition 9.9 proves these properties together with flatness of the residual. In the theorem, we write (u, p) for the local pair (uloc, ploc)."
+ },
+ "3.1": {
+  "kind": "Theorem",
+  "name": "",
+  "page": 15,
+  "text": "There are constants 0 < h < 1/100, q∗> 0, 0 < Xa < Xext < ∞, and smooth fields on Ω∗= {(x, t) : τ > 0, q < q∗} with the following properties. (i) There is a vector potential A and an axisymmetric scalar B such that u = curl A + Beθ. (3.3) Both A and Beθ are smooth in Cartesian coordinates at the axis. The field is exactly divergence- free. (ii) Every Cartesian space-time derivative of A, Beθ, p is uniformly bounded on compact spatial subsets with c ≤q ≤c′ < q∗, for each 0 < c < c′, up to the one-sided boundary τ = 0. The resulting limits of the derivatives are compatible under spatial and time differentiation. (iii) For every α, b, N and every finite X1, |∂α x∂b tR(u, p)| ≤Cα,b,N,X1qN (0 ≤X ≤X1, q ↓0). (3.4) For X ≥Xext the residual is identically zero, and A = 0, B = K(r, τ), p = − ∫︂∞ r K(ρ, τ)2 ρ dρ, K(r, τ) = r−1−2hHext(τ/r2). (3.5) Here Hext is smooth on [0, ∞), with each fixed derivative bounded. The radial swirl heat equation satisfied by K is −∂τK = ∂2 rK + r−1∂rK −r−2K."
+ },
+ "3.2": {
+  "kind": "Definition",
+  "name": "(Regularity at the axis).",
+  "page": 18,
+  "text": "A leading field is regular at the axis if its velocity and pressure extend smoothly across r = 0 in Cartesian coordinates, for t < 1. For scalar auxiliary profiles, “regular at the axis” means a smooth extension in (X, η) to X = 0."
+ },
+ "3.3": {
+  "kind": "Definition",
+  "name": "(Parameter smallness and order of choices).",
+  "page": 18,
+  "text": "For α ≥0 and β > 0, we write α ≪β when α/β is required to be sufficiently small, with the allowed size depending on all data already fixed. In a chain of constants, choices proceed from right to left; small reciprocals specify large parameters. For expressions depending on profile variables, this smallness is uniform on the stated domain and is ensured by those parameter choices. The following table collects the principal symbols used in the construction, with references to their definitions. The different background fields are grouped together. Repeated letters are identified by their role or the section in which they are used. Orders in the coefficient classes refer to normalized representatives, with the weights and derivative bounds specified in their definitions."
+ },
+ "8.1": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 20,
+  "text": "Sn, An Physical background Stokes streamfunction and its azimuthal vector potential An = (Sn/r)eθ. Taking its curl gives radial and axial velocity. (5.27) K(r, τ), Hext Exterior swirl heat velocity and its profile: K = r−1−2hHext(τ/r2). The exterior velocity is Keθ. (3.5) u[j], p[j] Full fields at finite correction stage j: the fixed background, waves, and mean corrections. Square brackets count correction cycles. (9.7); Definition 9.4 Zj = (Aj, Bj, pj) in summation Physical correction tuple from stage j −1 to j, j ≥1: vector potential Aj, direct azimuthal velocity vector Bj, and pressure increment pj = p[j] −p[j−1]. Its velocity increment is ∆uj = curl Aj + Bj. (9.15), (9.16) A, B, uloc, ploc Summed local fields and their potential representation uloc = curl A + Beθ; B is an axisymmetric scalar. The local pair is written (u, p) in Theorem 3.1. (3.3), (9.21) u, p after localization Whole-space velocity and pressure obtained by applying spatial and time cutoffs to the local potential representation. Their residual supplies f. (10.4), (10.5) Coordinates, scales, and auxiliary variables (r, θ, z), t, (er, eθ, ez) Physical cylindrical coordinates, time, and unit vectors. The directions tangent to a cylinder are azimuthal and axial. Section 3.1 τ, q Remaining time τ = 1 −t and concentration scale q = q(z, t), determined by τ = q(1 −η2), z = qDη. (4.1); Lemma 4.1 s, X, η Squared radial variable s = r2/2, radial similarity variable X = s/q, and axial similarity variable η = z/qD. (4.1) h, A, D Fixed small exponent h, tangential velocity growth exponent A = 1/2 + h, and axial length exponent D = 1/2 −h. (4.1), (4.3) λ Fixed radial decay exponent in the reserved power-law profile, E ∝X−1/2−λ. (4.30) Continued on the next page."
+ },
+ "4.6": {
+  "kind": "Theorem",
+  "name": "(ii)",
+  "page": 21,
+  "text": "Ipos, Imean Disjoint fixed intervals inside the active annulus reserved for positive-order background corrections and mean-velocity corrections, respectively. They are intervals in X."
+ },
+ "9.4": {
+  "kind": "Definition",
+  "name": "",
+  "page": 22,
+  "text": "Wab = ⟨wawb⟩θ Full angularly averaged wave covariance in cylindrical components; its radial off-diagonal entries transport azimuthal and axial momentum. (8.1), (8.3) C(w), B(w, v) Doubly averaged radial momentum-flux pair and its symmetric cross term, used to prescribe covariance changes. (7.23) Σ, LΣ in the wave correction Prescribed signed covariance increment and its linearized principal-wave correction. The base stresses are Σa above. (7.31), (7.34) Mean velocity and its compatibility conditions (β, v, γ) Angularly invariant radial, azimuthal, and axial velocity corrections. They may depend on the auxiliary torus. (8.1) pm, pw Angular mean pressure correction and nonzero-harmonic pressure correction, respectively. (8.12), (9.7) Continued on the next page."
+ },
+ "4.1": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 25,
+  "text": "For a smooth profile f and any real b, ∂t(qb f ) = qb−1Tb f, ∂z(qb f ) = qb−DZb f, {︄ Tb f = L−1(−b f + Dη fη + DX f ), Zb f = L−1(2bη f + d fη −2ηDX f ). (4.2)"
+ },
+ "4.2": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 27,
+  "text": "The residuals R(0) θ , R(0) z in (4.12) are minus the cylindrical divergences ∂r + 2/r and ∂r + 1/r of q−A−1/2T0. In particular the equations for vanishing leading residual stress are −2LXϕXX + 2ϕX ϕ = Sq, −2L(XUXX + UX) = Sn. (4.13)"
+ },
+ "4.3": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 28,
+  "text": "For the solutions of (4.9) with CQ = CN = 0, Qs = −W + (1 −h)I −DηIη −dJη + 2(h −D)ηJ XH , Ns = −WU + D(M −ηMη) + 4hηS −dSη X + 4AηΠ −dΠη. (4.16)"
+ },
+ "4.4": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 28,
+  "text": "Fix h ∈(0, 1/2). For i = 1, 2, let (Ui, Ei) be smooth on (0, ∞) × [−1, 1], with Ei > 0, and suppose the five integrals in (4.15) define smooth functions there, including one-sided η-derivatives at η = ±1. Write Hi = √ 2XEi, mi = (Mi, Ii, Ji, Si, Cp,i). Fix one smooth function Πax(η) on [−1, 1] and set Πi(X, η) = Πax(η) + Cp,i(X, η), Πi(0, η) = Πax(η), i = 1, 2. Thus the pressures have the same integration constant at the axis; the velocity profiles need not agree near the axis. Define V0,i by (4.7), Qs,i, Ns,i by (4.16), and ps,i, ai, bs,i, T0,i by (4.11). We use the explicit formulas (4.16), previously derived with CQ = CN = 0. For any of these quantities f, let ∆f = f2 −f1. Then the following two conclusions hold."
+ },
+ "4.11": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 34,
+  "text": "These results supply the inputs to the proof of Theorem 4.6; their detailed constructions are proved in the appendices at the references below. A parameter derivative in these statements means an η-derivative, with all construction constants held fixed. For functions on [−1, 1], we write ∥f ∥Ck = max0≤j≤k supη |∂j η f |, with componentwise maximum for vectors. Only finitely many such norms must be small when choosing parameters. Once those parameters are fixed, every other fixed derivative order has a finite bound."
+ },
+ "4.7": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 34,
+  "text": "Let α1, . . . , αm be distinct real numbers, and let β1, . . . , βm be nonnegative, nonzero smooth functions supported in ordered disjoint compact intervals of (0, ∞). Then Bij = ∫︂∞ 0 xαiβj(x) dx is invertible. Its inverse and every fixed parameter derivative are bounded for a smooth compact family preserving these hypotheses. More generally, let B(η) be a smooth invertible matrix on [−1, 1], let Qη be a smooth bilinear map, and let d ∈C∞([−1, 1]; Rm). For a fixed integer k ≥0, denote by νj the norm of multiplication by B−1 on Cj, and by qj the bilinear norm of Q on Cj, for j = 0, k. If 8ν2 j qj∥d∥Cj ≤1 (j = 0, k), then the equation B(η)c(η) + Qη(c(η), c(η)) = d(η) has a smooth solution, unique in ∥c∥C0 ≤2ν0∥d∥C0, and ∥c∥Ck ≤2νk∥d∥Ck. When Q = 0, the solution is c = B−1d without any smallness condition."
+ },
+ "4.8": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 35,
+  "text": "There are finite parameters Md, P∗, λ, h and a constant R∗> 0 with the following properties. The parameter Md is fixed first; P∗may then depend on Md, λ on Md, P∗, and h on Md, P∗, λ. These choices satisfy Td = eMd + 10, P∗> eTd, 0 < h < min{1/100, λ, e−Td}. For every XR ≥R∗, there are smooth profiles (Uo, Eo) on (0, ∞) × [−1, 1], with Eo > 0, satisfying the conditions below. Put x = X/XR and f (η) = (1 + η2)−1. (i) For 0 < x ≤1, Uo = 4η, Eo = P∗f (η)x1/10. The pressure datum Π0(η) = − ∫︂∞ 0 Eo(X, η)2 2X dX, Πo(X, η) = Π0(η) + Cp,o(X, η) (4.31) is independent of XR, analytic on one complex neighborhood of [−1, 1], even, and satisfies Π0 ≤−5 2P2 ∗f 2, ηΠ′ 0(η) > 0 (η̸ = 0). For this temporary profile, define the five cumulative integrals by (4.15), V0,o by (4.7), and Qs,o, Ns,o by the explicit formulas (4.16). Its shear, stress, and cone coordinates are then given by (4.11) and (4.20). These are the definitions used in Lemma 4.4; they apply on X > 0 even though this temporary inner branch need not be regular at the physical axis. (ii) There are four nonempty ordered disjoint intervals Ij = XR(αj, βj) and radii XR < Xgood < inf I1, sup I4 < Xv < Xtail < Xb = e3Xtail, whose endpoints divided by XR are fixed independently of XR, η. On all four intervals Uo = 0, and Eo = cpatch f (η)X−1/2−λ on I1, I3, I4, cpatch > 0. The heat compensation uses only I2; the other three intervals remain available for corrections. Moreover Uo = Mo = Jo = 0 (X ≥Xv), Mo(∞) = Jo(∞) = So(∞) = 0, ∫︂∞ 0 (Ho −Hpow) dX = 0, where Ho = √ 2XEo and Hpow = √ 2Xc∞X−A. Both cpatch, c∞> 0 are independent of X, η. (iii) The relaxed cone condition holds on [e−5XR, e1/2Xtail] × [−1, 1], and the admissible condition holds on [Xgood, e1/2Xtail] × [−1, 1], with a positive minimum for each defining gap on its closed rectangle. These minima may depend on XR. For X ≥Xb, Uo = V0,o = 0, Eo = c∞X−AH(2d/X), where H is defined in (4.29). The physical swirl K = c∞(r2/2)−AH(4τ/r2) satisfies ∂tK = (∂rr + r−1∂r −r−2)K and "
+ },
+ "4.9": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 36,
+  "text": "The family in Lemma 4.8 can be chosen with the following additional property for every XR ≥R∗. Suppose a leading field is regular at the axis, agrees with that family for X ≥Xtail, satisfies the four moment identities in (4.28) as functions of η, and has the canonical pressure (4.25). Then its physical stress T = q−A−1/2T0 satisfies Tθ(r) = r−2 ∫︂∞ r r′2R(0) θ (r′) dr′, Tz(r) = r−1 ∫︂∞ r r′R(0) z (r′) dr′, so T0 = 0 for X ≥Xb. On e1/2Xtail ≤X < Xb, the admissible cone holds and bs = 0, 2 + h < a ≤2 + 2h, Tθ > 0, 2 −(a −2)(Tz/Tθ)2 ≥κo > 0. For yb = log(Xb/X), there are smooth functions bθ, bz on a closed outer collar, with inf bθ > 0, such that T0,θ = e−4/y2 by−3 b bθ(yb, η), T0,z = e−4/y2 by3 bbz(yb, η). (4.32) All assertions are uniform in η ∈[−1, 1] for the fixed profile. Their constants may depend on XR, but not on physical q."
+ },
+ "4.10": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 36,
+  "text": "Fix the outer-profile data of Lemma 4.8 and any prescribed finite collection of η-derivative orders. One can choose finite axis parameters j0, δ∗, σ∗, Λ, a logarithmic transition length Tsh, and an amplitude threshold C0 such that every C ≥C0 admits the following construction. Set Xa = 4/Λ, XR = 110(CP∗)10, x = X/XR, Xh = XRe−5, f = (1 + η2)−1. After C, choose a positive activation width t1 in the logarithmic coordinate log(X/Xa), a positive shear factor κ0, and the remaining transition widths. There are profiles E = √ 2X ϕ/C, U, and Π = Π0 + Cp on [0, Xh] × [−1, 1] with these properties. (i) The scalar ϕ is positive, and ϕ, U, Π, V0/X are smooth on [0, Xh] × [−1, 1], including X = 0. Thus Equations (4.4) to (4.5) give a smooth Cartesian velocity and pressure across the axis. For some Xan ∈(Xa, Xh), these scalars and every fixed radial derivative are analytic in η on one common complex neighborhood throughout [0, Xan] × [−1, 1]. The profiles solve (4.13) for 0 ≤X ≤Xa, and T0 = 0 there."
+ },
+ "5.1": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 47,
+  "text": "There exists an interval 0 ≤ξ ≤a, ξ = √ X, extending from the axis into the inner collar of Theorem 4.6(i), where the stress cone inequalities hold with a uniform positive margin, on which every positive order has a unique solution of Equations (5.2) to (5.6) with ϕn(0, η) = Un(0, η) = Πn(0, η) = 0. The profiles are smooth in X and, for each fixed radial derivative, holomorphic on a neighborhood of [−1, 1] in the parameter η. That neighborhood and its bounds may depend on the order and the radial derivative; a does not. Uniqueness holds among solutions whose profiles extend holomorphically in η to a neighborhood of [−1, 1], with bounds uniform for 0 ≤ξ ≤a. The zero axis values leave the leading traces of ϕ, U, and Π unchanged by every positive- order coefficient."
+ },
+ "5.2": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 50,
+  "text": "There are radii Xa < X−< X+ < Xb, independent of n, for the following induction. Fix n ≥1. For each 1 ≤j < n, assume that Pj is smooth, satisfies Equations (5.2) and (5.5) globally, and obeys (5.12) with n = j. Assume also that these profiles agree with their inner solutions on [0, X−] and retain the parameter regularity of Lemma 5.1 throughout [0, a2]. For n = 1, there are no lower positive-order hypotheses. Then the inner order-n solution of Lemma 5.1 has a smooth extension to X ≥0, |η| ≤1, agreeing with it on [0, X−] and retaining its parameter regularity throughout [0, a2], satisfying Equations (5.2) and (5.5) globally, and obeying mn(η) = 0 (|η| ≤1), suppX Pn ⊂[0, X+]. (5.12) Both Vn/X and Fn/X extend smoothly to X = 0. The stress defined by (5.9) satisfies suppX T1 ⊂[X−, Xb], suppX Tn ⊂[X−, X+] (n ≥2), and, for every fixed profile derivative ∂I, |∂ITn(X, η)| ≤Cn,Iζ(X)δ(X)−Nn,I (Xa < X < Xb, |η| ≤1). (5.13) Here Cn,I, Nn,I may depend on the order and derivative; for n ≥2 one may take Nn,I = 0."
+ },
+ "5.3": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 55,
+  "text": "Fix the leading profiles of Theorem 4.6. There is a sequence of positive-order profiles constructed at each order by Lemma 5.1 and then Lemma 5.2, using the finalized lower orders. Every finite velocity sum u[N] slow is divergence-free. On every fixed compact profile range 0 ≤X ≤Xmax, −1 ≤η ≤1, with 0 < Xmax < ∞, for each N, m ≥0 and 0 < q ≤1, its augmented momentum residual satisfies |Fslow(U [N])|m ≤CN,mq2h(N+1)−Km, Km independent of N. (5.25) The constants may depend on the fixed profile range, and CN,m may depend on N; the exponent loss Km does not."
+ },
+ "5.4": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 57,
+  "text": "There are numbers aj+1 ≥2aj, with a−1 1 < q0, and a fixed smooth cutoff χ, equal to one on [0, 1/2] and zero on [1, ∞), such that U = U0 + ∑ j≥1 (︁ curl(χ(ajq)Aj) + χ(ajq)Bj, χ(ajq)pj, χ(ajq)Tj )︁ (5.34)"
+ },
+ "5.5": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 60,
+  "text": "There are smooth axisymmetric fields (uB, pB) for q > 0 and two physical tangential stress components Tphys, supported where Xa ≤X(r, z, t) ≤Xb, such that div uB = 0 and R(uB, pB) = −(∂r + 2/r)Tphys,θ eθ −(∂r + 1/r)Tphys,z ez + EB. (5.41) For every fixed 0 < Xmax < ∞, uniformly on the profile rectangle [0, Xmax] × [−1, 1] in (X, η), for every Cartesian space-time derivative ∂α and every M > 0, |∂αEB| ≤Cα,MqM as q ↓0. The constants may depend on Xmax. The formal expansion of (uB, pB, Tphys) has the finite truncations U [N] from"
+ },
+ "6.6": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 62,
+  "text": "All preliminary geometric choices are made on one domain 0 < q < qbig. The number qbig may be decreased when the fixed base and pulse coefficients are chosen, before the correction iteration begins. 6.1. Dyadic charts and derivatives after phase evaluation. Recall q = q(z, t) and A = 1/2 + h, D = 1/2 −h from (4.1). We work on dyadic regions where q is comparable to a fixed scale Q. The radial, axial, and temporal coordinates are rescaled by Q1/2, QD, Q, respectively, so that the concentrating annulus has bounded size in each region. For a dyadic index ℓ, we set Q = 2−ℓ, ε = Qh, S∗= ℓ2, R = r √Q, Z = z QD , T = τ Q, τ = 1 −t. (6.1)"
+ },
+ "6.1": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 65,
+  "text": "For the labels Γ and slow supports Kγ in Equations (6.8) and (6.9), there exist centers cγ and a radius r0 > 0, common to all labels and independent of the band, such that the enlarged rectangles in (6.10) are injectively parametrized and γ̸ = γ′, Kγ ∩Kγ′̸ = ∅ =⇒ Rabs,+ γ ∩Rabs,+ γ′ = ∅. (6.13)"
+ },
+ "6.2": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 67,
+  "text": "For U, i0, H as in (6.17), each change H ↦→Yi has uniformly bounded derivative factors, and RH γ consists of 14∆ℓ≤14∆max disjoint lifts of Rγ. Haar averages on the absolute, common, and band tori agree whenever the function is a pullback from the respective torus. Radial integration at fixed (z, t), torus translation, averaging, and directional Fourier inversion on zero-mean functions preserve common-torus descent and introduce no new dyadic band."
+ },
+ "6.3": {
+  "kind": "Lemma",
+  "name": "(Number of relevant labels).",
+  "page": 68,
+  "text": "There is a constant C, independent of the band and point, such that sup (r,z,t) #{γ ∈Γ : (r, z, t) ∈Kγ} ≤C. For a fixed band ℓ, compact chart set B ⊂R3, and bounded normalized radial interval IR, #{(ℓ, a, σ) ∈Γ : Bℓ,a ∩B̸ = ∅} ≤CBS9 ℓ, sup Z,T #{(ℓ, a, σ) ∈Γ : Bℓ,a ∩(IR × {Z} × {T})̸ = ∅} ≤CIRS3 ℓ. The same bounds hold for fixed-factor enlargements of the mesh boxes."
+ },
+ "6.4": {
+  "kind": "Definition",
+  "name": "(Mean and moment coefficients).",
+  "page": 69,
+  "text": "A smooth coefficient f = f (R, Z, T, H) belongs to Mα if it descends to each applicable common torus with representatives satisfying (6.20), extends smoothly by zero outside the active radial shell, and on Xa < X < Xb satisfies ∂θ f = 0, ∀I ∈N5 0 ∃Cj,I, bj,I, dj,I : |∂I f | ≤Cj,IεαS bj,I ∗ζ δ−dj,I. (6.24)"
+ },
+ "6.5": {
+  "kind": "Definition",
+  "name": "(Labelled wave coefficients).",
+  "page": 70,
+  "text": "For γ ∈Γ and m ∈Z \\ {0}, a smooth amplitude aγ,m on E+ γ belongs to Wα if its local formulas agree whenever lifts represent the same common-torus point, satisfy (6.20) on overlapping neighborhoods, and ∂θaγ,m = 0, supp(aγ,m|Eγ) ⊂Ωγ. It extends smoothly by zero across the slow and transverse support boundaries and both shell edges. On Eγ ∩{Xa < X < Xb}, its bounds are ∀I ∈N5 0 ∃Cj,I, bj,I, dj,I : |∂Iaγ,m| ≤Cj,IεαS bj,I ∗ √︁ ζ δ−dj,I Pv, 0 ≤v ≤Ls. (6.29) These are amplitude derivatives; Pv is only a pointwise weight. The continuation beyond v = 0, Ls has no envelope bound or temporal zero-extension condition. Cut-off fields and sums. An actual cut-off coefficient additionally has supp acut γ,m ⊂Ωcut γ and smooth zero extension in v. No divisibility by ηγ, χg, ψ is assumed."
+ },
+ "7.7": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 73,
+  "text": "The additional velocity terms and cutoff errors remain in the covariance estimate of Corollary 7.8 and the residual identity (7.40). All calculations use normalized chart representatives until physical factors are displayed. A band, its representative, its discrete labels, and its integer frequencies are fixed before differentiation. Constants for derivatives of any fixed order may depend on the fixed profiles and that order; in applications they may also depend on the finite correction stage. They remain uniform over bands, labels, and rectangle copies. 7.1. Phase construction and a frame orthogonal to its gradient. We first construct the phase Φ in (7.3) that approximately follows transport by the background, controlling the defect in the leading transport terms as in (7.9). For a harmonic eikmΦ, the leading incompressibility condition on its amplitude tm is ∇∗Φ · tm = 0. The frame B in (7.8) for this two-dimensional plane will compare the undamped principal equation with a diagonal system having one positive and one negative eigenvalue, as in (7.10). Fix a label γ = (ℓ, a, σ) from (6.8). On each of its lifted rectangles we use the slow point x∗= (R, Z, T), transverse coordinate ξg, and pulse coordinate v ∈[0, Ls], where Ls = 2r0/ci ≍S∗, as in (6.11). Recall Q = 2−ℓ, ε = Qh, and S∗= ℓ2 from (6.1). The normalized spatial derivatives are those in (6.6); write ∇∗f = (Dr f, R−1∂θ f, Dz f ). A prime means ∂v with x∗and ξg fixed. In coefficient estimates, DI denotes ordinary derivatives in the listed slow and auxiliary coordinates; the individual operators Dr, Dz retain their normalized meanings. We write the chart base velocity as ber + Veθ + Gez, and set F = V/R and g = (RFR, GR). Thus F is angular velocity, and g is the radial shear in the tangential component order (θ, z). We identify a tangential two-vector with the vector in span(eθ, ez) having those components. By (5.42), b = O(ε) and the tangential velocity differs from its order-zero value by O(ε2), in"
+ },
+ "7.1": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 75,
+  "text": "For the labels and phases in Equations (6.8), (7.2) and (7.3), there exists a sufficiently small q∗> 0, common to all labels and fixed derivative orders, such that every rectangle on 0 < q < q∗ has the following properties. Every eikmΦ, m ∈Z \\ {0}, is single-valued in θ, with nonzero angular frequency. On the rectangle 0 ≤v ≤Ls, |nΦ −Bs(s(v), K)| + |n′ Φ| ≤C/S∗, Eik := (t∗+ bDr + F∂θ + GDz)Φ = O(εSC ∗). (7.9) The estimate for Eik in (7.9) holds in every fixed coefficient derivative, with a corresponding polynomial degree. The coefficients extend smoothly to the fixed enlargement. All fixed mixed derivatives in the slow, transverse, and pulse coordinates of nΦ, and of the frames used here, have polynomial bounds in S∗. The real 3 × 2 matrix B in (7.8) has columns forming a basis of n⊥ Φ, and is also viewed as a map C2 −→{t ∈C3 : nΦ · t = 0}. It has a uniformly bounded left inverse Bℓand satisfies Bℓ(AΦB −B′) = diag(λ, −λ) + E, λ(v) = λ0 √︁ 1 + s(v)2 , |E| ≤C/S∗. (7.10) For the damping coefficient d in (7.5), put dref = εk2B2 s(1 + s2). Then |d −dref| ≤C/S∗. (7.11)"
+ },
+ "7.2": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 77,
+  "text": "Fix α ∈R, a finite set of harmonics 0 < |m| ≤M, and a label at level i on a common torus H = Yi0, with i −i0 bounded as in Lemma 6.2. For each harmonic, let fm(x∗, H) ∈C3 be a coefficient descending to H, smooth on the fixed enlargement of that label’s rectangles. Assume that it has a fixed closed slow support contained in the label’s slow support, a compact transverse support contained in supp χg, and support in the closed active shell Xa ≤X ≤Xb, with smooth zero extension across all these support boundaries. Assume also that on Xa < X < Xb and 0 ≤v ≤Ls, for every fixed multi-index I of derivatives in (R, Z, T, H), |DI fm| ≤CIεαSbI∗ √︁ ζ δ−aI P(v)."
+ },
+ "7.3": {
+  "kind": "Corollary",
+  "name": "",
+  "page": 80,
+  "text": "The solution operators fm ↦→(tm, πm) for the projected amplitude equation with tm(0) = 0 are defined at every finite correction stage on the same domain 0 < q < q∗. Increasing the finite harmonic set or the derivative order changes constants and polynomial degrees, but does not require shrinking this domain."
+ },
+ "7.4": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 80,
+  "text": "For each sign σ, let th σ = B(z+, z−)T solve (th σ)′ = AΦth σ −dth σ with z+(0) = P(0), z−(0) = 0. This specifies the real amplitude of the homogeneous m = 1 problem, with pressure given by (7.13) at fm = 0. With Ka, Na, sa as in (7.7), write th σ = x(er −saKa) + yNa. Then cP(v) ≤x(v) ≤CP(v), y(v) x(v) = c0 √︂ 1 + s(v)2 + O(S−1 ∗). (7.21) Every fixed derivative of this homogeneous solution in the coefficient variables or pulse coordinate is bounded by CISbI∗P(v). Its homogeneous pressure, given by (7.13) with f = 0, has the extra factor ε1/2."
+ },
+ "7.5": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 82,
+  "text": "For each slow box β, use the homogeneous pulses of Lemma 7.4 to form b± and H as above, and use the order-zero target T0,∗= (Q/q)A+1/2T0. After a further single decrease of q∗, the matrix H is invertible throughout each enlarged slow neighborhood, and the components of H−1T0,∗ are positive on its intersection with Xa < X < Xb. We may therefore define, with componentwise square roots, y = H−1T0,∗, aσ = √yσ, W0 = √ ε ∑ σ=± aσbσ. (7.24) The squared amplitudes satisfy, for every fixed slow multi-index I on Xa < X < Xb, yσ ≥c √︁ S∗ζ, |DIyσ| ≤CISbI∗ζδ−aI. (7.25) The coefficients aσ extend smoothly by zero at the shell edges. On the label’s slow neighborhood, the harmonic coefficients of W0 obey the derivative and envelope estimates of W1/2. Multiplication by the slow cutoff gives ηβW0 ∈W1/2. Before that multiplication, the covariance is C(W0) = εT0,∗. (7.26) This positive-coefficient decomposition uses only the order-zero target T0,∗."
+ },
+ "7.6": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 84,
+  "text": "For every α ∈R and every real two-vector Σ(R, Z, T) ∈Mα independent of the angular and auxiliary variables, (7.31) defines a linear operation LΣ. Its harmonic coefficients on the slow neighborhood satisfy the local derivative and envelope bounds of Wα−1/2, with smooth zero extension at the shell edges. With the slow cutoffs shown explicitly, its bounds and covariance are ηβLΣ ∈Wα−1/2, B(W0, LΣ) = Σ, C(ηβLΣ) ∈M2α−1. (7.32) The denominator aσ remains this fixed coefficient at every correction stage. No sign or relative-size restriction is imposed on Σ in Proposition 7.6."
+ },
+ "7.8": {
+  "kind": "Corollary",
+  "name": "",
+  "page": 87,
+  "text": "Fix α, ρ ∈R, and use the normalized representatives of (7.35). Suppose U is a real divergence-free wave field, including its curl remainders, such that U = Was 0 + E, U ∈W1/2, E ∈Wρ. Let Σ(R, Z, T) ∈Mα be a real two-vector independent of the angular and auxiliary variables. Apply"
+ },
+ "8.2": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 88,
+  "text": "For a source depending on the auxiliary torus, inversion of the fast time derivative requires zero auxiliary average at each slow point (Lemma 8.6). We first derive the mean momentum equations (Proposition 8.1) and construct the radial inverse (Lemma 8.2), including the remainder needed when its source depends on the torus. We then apply it to pressure and divergence-free axial increments (Proposition 8.3), and to tangential stresses (Corollary 8.5). The integrated equations (8.16) identify three scalar defects P, Jθ, Jz, defined in Equations (8.12) and (8.15). A final linear map chooses five velocity coefficients to cancel their linear changes while preserving two velocity moments (Lemma 8.7); we compute the nonlinear changes explicitly in Lemma 8.8. The correction cycle in Proposition 9.6 uses these constructions after each wave update. Unspecified radial integrals run from zero to infinity. We use the averaging and projection conventions of Equations (3.7) and (3.9). Recall that ⟨·⟩θ takes the angular average compo- nentwise in the cylindrical basis, whereas ⟨·⟩Y takes Haar average on the auxiliary torus of"
+ },
+ "8.3": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 92,
+  "text": "Fix the radial operators of Lemma 8.2 and the bump ρ above."
+ },
+ "8.4": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 94,
+  "text": "Let (β, v, γ) and w be the smooth shell-supported corrections of (8.1). Suppose that the two moments in (8.2) vanish at every (Z, T), and reconstruct pm from their radial source gr by (8.12). For the residual components Eθ, Ez in (8.3) and the defects Jθ, Jz, cρ in (8.15), one has ∫︂ R2⟨Eθ⟩Y dR = ε∂ZJθ, ∫︂ R⟨Ez⟩Y dR = ε∂Z(Jz + cρP). (8.16)"
+ },
+ "8.5": {
+  "kind": "Corollary",
+  "name": "",
+  "page": 95,
+  "text": "Under the hypotheses of Proposition 8.4, define the covariance targets Hθ = −T2 (︁⟨Eθ⟩Y −σθε∂ZJθ )︁ , Hz = −T1 (︁⟨Ez⟩Y −σzε∂Z(Jz + cρP) )︁ (8.18) They are independent of the auxiliary variable, compactly supported in the active shell, and satisfy (Dr + 2/R)Hθ = −⟨Eθ⟩Y + σθε∂ZJθ, (Dr + 1/R)Hz = −⟨Ez⟩Y + σzε∂Z(Jz + cρP). The radial primitives act at fixed (Z, T). Thus Hθ and Hz vanish whenever their respective integrands in (8.18) vanish for every R; the construction does not enlarge support in the axial variable Z."
+ },
+ "8.6": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 95,
+  "text": "Let N = vt · ∂y on T2, with vt as in (6.2), and let F be a smooth function of zero Haar mean. Then Nφ = F has a unique smooth zero-mean solution φ = N−1F. This solution is given by the following Fourier series and satisfies the displayed norm bound for every integer m ≥0: N−1F = ∑ k∈Z2\\{0} ˆ︁F(k) 2πivt · ke2πik·y, ∥N−1F∥Cm y ≤Cm∥F∥Cm+4 y . (8.19) For a pair Eθ, Ez ∈Mα of normalized angularly invariant residual coefficients, use this inverse in the original auxiliary coordinate Y to define the physical tangential update −N−1 abs(E◦ θ,phys, E◦ z,phys). Here"
+ },
+ "8.7": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 97,
+  "text": "Suppose that the fixed slow base satisfies (8.24) on the reserved interior interval Im, with λ > 0 and |a(η)| ≥a0 > 0. There are three fixed azimuthal bump profiles and two fixed axial bump profiles supported in this interval with the following property. At each (Z, T), for arbitrary scalar targets (P, Jθ, Jz), their physical rescalings have a unique linear combination (∆v, γd) satisfying ∫︂ R2∆v dR = 0, ∫︂ Rγd dR = 0, ∫︂ (2V/R)∆v dR = −P, ∫︂ R2(G∆v + Vγd) dR = −Jθ, ∫︂ (2RGγd −RV∆v) dR = −Jz. (8.25) The target triple is normalized row by row as in (8.17). The resulting increments are independent of the angular and auxiliary variables and depend linearly on the targets. For every α, targets in Sα give increments in Mα, for every fixed coefficient derivative, with constants permitted to depend on the fixed λ. The azimuthal-potential realization (8.14) has ∆γ = γd exactly and ∆β ∈Mα+1. The two integral constraints are preserved exactly. When the targets are the current defects defined by Equations (8.12) and (8.15), the last three equations cancel the displayed contributions involving the fixed base."
+ },
+ "8.8": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 98,
+  "text": "Suppose that the slow base satisfies (8.24), with the fixed λ > 0 and lower bound |a(η)| ≥a0 > 0. Let (β, v, γ) be a smooth divergence-free mean correction supported in the active shell, and keep the base and wave field w fixed. Form gr and (P, Jθ, Jz) by Equations (8.3), (8.12) and (8.15). Apply Lemma 8.7 with these three defects as its targets, and realize the resulting γd by (8.14). For the updated mean velocity (βnew, vnew, γnew) = (β + ∆β, v + ∆v, γ + ∆γ),"
+ },
+ "9.6": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 101,
+  "text": "We write an angular harmonic in a fixed label as a exp(ikmΦ), where m ∈Z \\ {0} and a is its amplitude. The phase normal nΦ is defined in (7.4), and the chain-rule operators for evaluation at Y = Y(r, t) are (6.6). The background coefficients (b, V, G) are those of Sections 6 and 7. For a transverse amplitude tm, the potential in (7.38) gives Cm = i nΦ × tm km|nΦ|2 , curl∗(CmeikmΦ) = (tm + rm)eikmΦ, am = tm + rm. Here rm is the curl correction. If tm ∈Wα, then Lemma 7.7 gives rm ∈Wα+1/2−κs. The longitudinal estimate (7.39) applies to the complete amplitude am. This distinction matters in quadratic transport: its advecting factor is the complete divergence-free velocity. We separate the principal linear operator, which is handled by the amplitude equation, from the remaining transport, pressure, and viscous terms. For later comparison with the residual, write the principal amplitude-pressure operator as Lm(a, π) = Q1+hNabsa + Ka + εk2m2|nΦ|2a + ikmnΦπ. (9.1) The inverse in Proposition 7.2 constructs (tm, πm) satisfying Lm(tm, πm) = −fm and nΦ · tm = 0, before the pulse cutoff is applied. The amplitude tm is not required to have temporal zero extension before cutoff."
+ },
+ "9.1": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 101,
+  "text": "Fix a label, m ∈Z \\ {0}, and α ∈R. Let fm ∈Wα satisfy the support and smooth- extension hypotheses of Proposition 7.2. Assume also that the source harmonic fmeikmΦ extends smoothly by zero outside the fixed local rectangle, including its pulse endpoints. Let (tm, πm) be the solution of Lm(tm, πm) = −fm. The same conclusions hold for a homogeneous pulse tm ∈Wα, with fm = 0. Multiply its potential and pressure by the pulse cutoff and take the curl as in (7.38). Then the normalized linear residual, after adding the prescribed source fmeikmΦ, belongs to Wα+1/2−3κs, apart from additive pulse-cutoff tails whose Cartesian space–time derivatives vanish to infinite order as q ↓0. The pressure amplitude πm belongs to Wα+1/2."
+ },
+ "9.2": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 102,
+  "text": "Let w be a wave in Wα, and let v be a mean field with tangential components in Mµ and radial component in Mµ+1. The nonzero harmonics of (w · ∇∗)v + (v · ∇∗)w belong to Wα+µ−1/2."
+ },
+ "9.3": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 103,
+  "text": "Fix j ∈N0. Let (u[j], p[j]) be obtained from the fixed slow base and primary waves by a finite sequence of the pulse inverse and curl construction, the signed amplitude map for auxiliary-independent stresses, and the mean maps of Section 8. Suppose that pressure is reconstructed by (8.12) after each update and all products use the complete velocity fields. There is a physical residual decomposition R(u[j], p[j]) = G[j] + F [j]. (9.3) In a common chart, put G[j] ∗= Q2A+1/2G[j] and F [j] ∗= Q2A+1/2F [j]. Then: (i) Supported sources. On the coarsest common auxiliary torus, the nonzero angular harmonics have the form G[j] ∗−⟨G[j] ∗⟩θ = ∑ γ∈Γ ∑ m∈Hj f [j] γ,meikγmΦγ, Hj ⊂Z \\ {0}, |Hj| < ∞. (9.4) The sum is locally finite, and Hj depends on the finite construction but not on the band. The coefficients satisfy supp( f [j] γ,m|Eγ) ⊂Ωγ, f [j] γ,m ∈C∞(E+ γ ; C3), with smooth zero extension across the fixed slow and transverse supports and the enlarged local torus rectangle. Let α, µ be any lower bounds for the wave and mean exponents furnished by"
+ },
+ "9.5": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 106,
+  "text": "Starting with the fixed base and the curls of the primary potentials, perform the temporal mean update (8.20) and the five-equation correction (8.25), reconstructing pressure by (8.12) before and after each update. The resulting fields form a state at stage 0 in the sense of Definition 9.4; in particular, their residual orders are B0 = 0.7 and C∗ 0 = 1.2."
+ },
+ "9.8": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 113,
+  "text": "For every Cartesian space–time derivative order m, |Zj|m + |∆uj|m ≤Cj,mqgj−ℓm(1 + | log q|)Pj,m, gj = h 10 j −→∞, (9.17) where ℓm is independent of j and includes the additional spatial differentiation recovering velocities from wave and mean vector potentials. The finite partial sums satisfy |(u[j], p[j])|m ≤Cj,mq−Km(1 + | log q|)Pj,m, with Km independent of j. Their residuals satisfy |R(u[j], p[j])|m ≤Cj,mqhσj−Km(1 + | log q|)Pj,m + Ej,m, Ej,m ≤Cj,m,NqN for every N, (9.18) with Km independent of j."
+ },
+ "9.9": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 114,
+  "text": "There are smooth fields (uloc, ploc) on Ω∗, obtained by summing the finite correc- tions above, such that div uloc = 0 and all conclusions of Theorem 3.1 hold."
+ },
+ "1.1": {
+  "kind": "Theorem",
+  "name": "",
+  "page": 117,
+  "text": "Rescaling gives arbitrary positive viscosity and the periodic construction (Corollary 10.6). 10.1. Localization within the local domain. In this subsection we localize the velocity and pressure inside the domain of Theorem 3.1. We first recall why the chosen vector potential A is smooth at the axis (Theorem 3.1(i)) and vanishes in the heat exterior (3.5). These properties will allow us to take its curl after localization and to estimate the force at time one (Lemma 10.2). For the background coefficients Un in (5.1), the Stokes streamfunctions and their sum are Sn = q1−A+2nh ∫︂X 0 Un(X′, η) dX′, S = S0 + ∑ n≥1 χ(cnq)Sn, Abase = S r eθ. (10.1) The cutoffs χ(cnq) are those used in Proposition 5.5. By (4.28) and (5.10), ∫︁∞ 0 Un(X, η) dX = 0 for every n ≥0. Thus each radial integral in (10.1) vanishes beyond the common support of the axial coefficients. Near the axis, S = r2a(r2, z, t) for a smooth scalar a, and hence (S/r)eθ = a(r2, z, t)(−x2, x1, 0). This formula gives the smooth Cartesian representative of the background potential. Every wave velocity is the curl of its supported physical potential. For a prescribed axial mean increment γd,phys, the mean construction uses the azimuthal potential coefficient Ψ = r−1Ic(rγd,phys), Icg = Ig −χmJ g, with the radial operations defined in (8.4). Beyond the source and the transition of χm, we have χm = 1 and Ig = J g, so Ψ = 0. These wave and mean potentials, with their summation cutoffs, are the terms added to Abase in (9.21). The direct azimuthal mean increments are included in B. Evaluation at Y(r, t) preserves their independence of θ, and all the annular corrections vanish near the axis for each fixed t < 1. In particular, for the fixed Xext in Theorem 3.1, the chosen potential satisfies A = 0 on X ≥Xext. We now choose cutoffs supported inside the local domain Ω∗= {τ > 0, q < q∗}, where τ = 1 −t. Applying the spatial cutoff before taking the curl preserves incompressibility, and the temporal cutoff gives zero initial dat"
+ },
+ "10.1": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 117,
+  "text": "There are a compact set K ⊂R3, a smooth vector field u and a smooth scalar field p on R3 × [0, 1), with supp u(·, t) ∪supp p(·, t) ⊂K for every 0 ≤t < 1, satisfying div u = 0, u(·, t) = p(·, t) = 0 for all sufficiently small t ≥0. (10.2) They agree with uloc, ploc on a spatial neighborhood of the origin for all times sufficiently close to 1."
+ },
+ "10.2": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 118,
+  "text": "For every spatial multi-index α and integer j ≥0, ∂α x∂j t f converges uniformly on R3 as t ↑1. There are functions Fj ∈C∞ c (R3; R3), all supported in K, such that lim t↑1 ∂α x∂j t f (x, t) = ∂α xFj(x), ∂α xFj(0) = 0. (10.6) These are the derivative limits of f from t < 1, compatible under spatial and time differentiation."
+ },
+ "10.3": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 120,
+  "text": "The force in (10.5) extends to f ∈C∞ c (R3 × (0, ∞); R3), with support contained in K × [0, 2]."
+ },
+ "10.4": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 121,
+  "text": "Let F(t) = ∫︁t 0 ∥f (s)∥2 ds for 0 ≤t ≤1. Then F(1) < ∞, and ∥u(t)∥2 2 + 2 ∫︂t 0 ∥∇u(s)∥2 2 ds ≤F(t)2 (0 ≤t < 1). (10.13) In particular the kinetic energy is uniformly bounded, and the total dissipation on [0, 1) is finite."
+ },
+ "10.5": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 121,
+  "text": "Fix T < 1. If v, P is a smooth solution of (1.1) at viscosity one on R3 × [0, T], with the force f of Lemma 10.3, zero initial velocity, and v ∈L∞([0, T]; L2(R3)), then v = u on that interval, where u is the localized velocity of Proposition 10.1."
+ },
+ "10.6": {
+  "kind": "Corollary",
+  "name": "",
+  "page": 125,
+  "text": "For every ν > 0, there is a smooth force on T3 × [0, ∞), compactly supported in time, for which the solution (U, Pper) of the periodic Navier–Stokes equations with viscosity ν and zero initial velocity is smooth on [0, 1) and satisfies lim sup t↑1 ∥U(t)∥L∞(T3) = ∞. Its velocity and pressure have support in a fixed compact subset of the interior of Q0 at every time before one. There is no global smooth periodic solution for the same datum and force."
+ },
+ "A.1": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 126,
+  "text": "Let α1, . . . , αm be distinct real numbers. For each j let βj be a nonnegative, nonzero smooth function supported in the interior of a compact interval Ij ⊂(0, ∞), with I1 < · · · < Im. The matrix Bij = ∫︂∞ 0 xαiβj(x) dx is invertible. The assertion also holds for exponential weights in a logarithmic coordinate. If these data vary smoothly over a compact parameter set and the stated separations persist, the inverse and each fixed parameter derivative of it are bounded."
+ },
+ "A.2": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 127,
+  "text": "Let K = [−1, 1] and suppose a finite family of correction coefficients c ∈Rm changes the required moments, after taking specified linear combinations of the moments and dividing each resulting component by a specified nonzero factor, by Fη(c) = B(η)c + Qη(c, c), η ∈K. (A.2) Here B and the bilinear map Q are smooth, and B is invertible on K, and the prescribed moment discrepancy is d ∈C∞(K; Rm). Write β0 = supK ∥B−1∥, κ0 = supK ∥Q∥, and d0 = ∥d∥C0(K). If 8β2 0κ0d0 ≤1, there is a unique solution of Fη(c) = d(η) in the ball ∥c∥C0 ≤2β0d0. It is smooth in η and is selected by iteration from zero of c ↦→B(η)−1(d(η) −Qη(c, c)). If Q = 0, there is no smallness requirement. For any preselected finite k, let βk be the operator norm of multiplication by B−1 on Ck(K), and let κk be the corresponding bilinear norm of Q. If also 8β2 kκk∥d∥Ck ≤1, the same branch satisfies ∥c∥Ck ≤2βk∥d∥Ck. (A.3)"
+ },
+ "A.3": {
+  "kind": "Corollary",
+  "name": "",
+  "page": 128,
+  "text": "Use the five radial moment functions (M, I, J, S, Cp) of (4.15), where Cp is the pressure increment. Under X = ρx their normalizing factors are (ρ, ρ3/2, ρ3/2, ρ, 1), H = ρ1/2√ 2xE. (A.4) On a fixed correction interval suppose U0 = uc(η) and E0 = e∗f∗(η)xα, with e∗> 0 and smooth f∗> 0. Two additive U bumps and three additive E bumps give an invertible Jacobian of the normalized five-moment map provided α /∈{−1/2, 1/2, 3/2}. The moment changes have the exact quadratic form (A.2). At U0 = 0, the three corrections to E can prescribe changes in (I, S, Cp) while preserving M, J."
+ },
+ "A.4": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 130,
+  "text": "There are finite choices in the order (A.6) for which the profile specified in Section A.2 defines smooth U, E for X > 0, η ∈[−1, 1], with E > 0, and satisfies (A.8). All stage boundaries divided by XR are independent of XR and η. After the compact axial pulse, U = M = J = 0; after the terminal interval, E = Epow. There are four disjoint unaltered patches, listed after (A.9), on which U = 0 and E is a positive multiple of f X−1/2−λ. For each fixed"
+ },
+ "A.5": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 133,
+  "text": "Let Eid,sched be the reference inner profile (A.7) followed by the outer profile E specified in Section A.2, with the azimuthal corrections that preserve the total pressure increment omitted and all other transition intervals unchanged. The function Π0(η) = −1 2 ∫︂∞ −∞Eid,sched(y, η)2 dy (A.21) is independent of XR and analytic on a complex neighborhood of [−1, 1]. It is even, Π′ 0(η) has the sign of η for η̸ = 0, and Π0(η) ≤−5 2P2 ∗f (η)2. (A.22) For the complete reference radial profile, integration of ΠX = E2/(2X) from this datum gives Π(X, η) = −1 2 ∫︂∞ log(X/XR) E(v, η)2 dv. (A.23)"
+ },
+ "A.6": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 138,
+  "text": "The function H is positive and smooth up to Z = 0 from the right. Every fixed derivative is bounded on bounded nonnegative intervals. The field K(r, t) = c∞s−AH(2τ/s), s = r2/2, (A.33) is independent of z, satisfies ∂tK = (∂rr + r−1∂r −r−2)K, and has Kr < 0. Its profile is Epow(X)H(2d/X), smooth with all η-derivatives extending continuously to η = ±1 from the interior."
+ },
+ "A.7": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 139,
+  "text": "Let XK = e.2Xtail, and choose a smooth step 0 ≤χK(y) ≤1 equal to zero for y ≤.2 and to one for y ≥.5. The terminal replacement Ecl ↦−→Ecl [︁ 1 + χK(y)(H(2d/X) −1) ]︁ (A.39) can be compensated by three additive E-bumps in the second reserved patch in the intermediate power- law interval. The complete edit preserves the functions M, J, the totals S(∞), Cp(∞) from (4.15), and the renormalized angular moment ∫︁∞ 0 (H −Hpow) dX, pointwise on [−1, 1]. For sufficiently large XR, it preserves E > 0 and the strict admissible stress cone from that patch through y = .5. The original axis pressure datum and the profiles before the compensation patch are unchanged."
+ },
+ "A.8": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 140,
+  "text": "Suppose the leading axisymmetric field is smooth at the axis, has U = 0 and E = Epow fo[1 + χK(H(2d/X) −1)] for y ≥0, and satisfies the exact moment conditions M(∞) = J(∞) = S(∞) = 0, ∫︂∞ 0 (H −Hpow) dX = 0, Π(X) = −1 2 ∫︂∞ X E(x)2 x dx. The leading tangential stresses vanish for X ≥Xb. On y ≥1/2, where χK = 1, they are given by the weighted integrals of the leading residual from r to infinity, with positive integration sign, in (A.46)."
+ },
+ "A.9": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 141,
+  "text": "Let c > 0, let j be a fixed nonnegative integer, and let b(u, η) be smooth for 0 ≤u ≤δ0 and for η in a compact interval K. There exists a coefficient B such that, for 0 < δ ≤δ0, ∫︂δ 0 e−c/u2u−jb(u, η) du = 1 2e−c/δ2δ3−jB(δ, η). (A.47)"
+ },
+ "A.10": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 142,
+  "text": "Under the regular axis and exact moment hypotheses of Lemma A.8, the profile on the terminal interval satisfies the admissible stress cone on .5 ≤y < 3. Its stress direction extends smoothly to the outer endpoint, and 2 −(a −2)(Tz/Tθ)2, interpreted through this extension, has a uniform positive lower bound. More precisely, for δ = 3 −y sufficiently small, T0,θ = e−4/δ2δ−3bθ(δ, η), bθ(0, η) > 0, (A.48) T0,z = e−4/δ2δ3bz(δ, η), (A.49) T0,z T0,θ = δ6 bz bθ −→0. (A.50) The coefficients are smooth on a closed outer collar, and bθ has a positive lower bound there. For every fixed mixed profile derivative ∂I, there are finite constants CI, NI such that |∂IT0| ≤CIe−4/δ2δ−NI, |T0| ≥ce−4/δ2δ−3. (A.51) These constants may depend on all fixed profile choices and on I, but not on the physical scale q."
+ },
+ "B.1": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 145,
+  "text": "Multiplication is bounded on Bρ. For ν = 1, 2, let JνF be the solution G of YGYY + νGY = F that extends smoothly to Y = 0 and satisfies G(0) = 0. Its coefficients are given by (JνF)α+1 = Fα (α + 1)(α + ν), (JνF)0 = 0. (B.5) The operator Jν is bounded on Bρ, as are radial averaging, multiplication by Y, and the operators I and ∂ηI. In addition,⃦⃦ Jν[(∂ηF)(DXG)]⃦⃦ ρ ≤Cρ∥F∥ρ∥G∥ρ. (B.6) The same estimate holds if either derivative is omitted or F is replaced by AX(F). Extra undifferentiated factors can be inserted, with one additional algebra constant for each factor."
+ },
+ "B.2": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 146,
+  "text": "With the axis data of Section B.1, there are Λ0 and, for each Λ ≥Λ0, an amplitude threshold C0(Λ) such that every C ≥C0(Λ) admits an analytic axis profile with vanishing leading residual stress on 0 ≤Y = ΛX ≤4.1. It has the form ϕ = ϕ∗Φ, U = U∗+ Λ−1u, Π = Π0 + Λ−1I(g2Φ2), g = ϕ∗/C, (B.12)"
+ },
+ "B.3": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 148,
+  "text": "Increase Λ and then C0(Λ) if necessary. The normalized azimuthal profile satisfies Φ ≥c0 > 0 on [0, 4.1] × [−1, 1]. On that rectangle its angular source satisfies Sq ≥2.5 + .95ΛLχ. (B.17) Let p1 = ps,1 = XQs/L, p2 = ps,2 = XNs/(LE), and ns = Ns/L. On 0 < X ≤4.1/Λ one has p1/X ≥c1 > 0, 0 < p1 ≤C1, ns = −2UX = Z∗/L + O(Λ−1). (B.18)"
+ },
+ "B.4": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 150,
+  "text": "After the parameters of the outer and axis profiles are fixed, one can take Λ, then C, sufficiently large, and then t1 sufficiently small, so that on [X0, Xi] × [−1, 1] Sq,r ≥.94LΛχ + 2.4, lr ≤1, vr := p1,r + p2 2,r p1,r > 2 + c. (B.23) Here p1,r > 0, and p1,r > 3 for Xb ≤X ≤Xi. For each fixed k, the parameter norms of CEr, its reciprocal, p1,r, and ns,r on [X0, Xi] have bounds independent of sufficiently large C and of 0 < t1 ≤¯t."
+ },
+ "B.5": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 151,
+  "text": "The analytic axis profile can be continued to Xi with positive E, remaining unchanged for X ≤X0. Its stress has the factorization T0 = eaB0, where the scalar factor ea vanishes to infinite order at X0 and the smooth vector coefficient B0 is nonzero there. The admissible stress cone holds on a first collar, and the strict relaxed cone condition holds on the rest of (X0, Xi]. At Xi, a = .8, DXU = 0, and p1 > 2."
+ },
+ "B.6": {
+  "kind": "Corollary",
+  "name": "",
+  "page": 153,
+  "text": "There is tc > 0, with tc < t1 and 4etc < 4.1, such that the functions E/ √ 2X, U, V0/X, Π on [0, X0etc] × [−1, 1] are smooth in (X, η) through X = 0 and analytic in η on one complex neighborhood. Every fixed radial derivative of these four functions has that same parameter neighborhood and finite bounds on a smaller neighborhood. On X0 < X ≤X0etc, the admissible stress cone condition and the factorization (B.30) hold. All subsequent profile modifications are supported strictly to the right of X0etc."
+ },
+ "B.7": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 154,
+  "text": "Fix the data for the outer profile and the axis, Λ, and a finite parameter order k. Put ℓi = log(CE(Xi, η)) and Gi = U(Xi, η). Let ωfin be the sum of the logarithmic radial lengths of the final axial cutoff and the interpolation of a to .8 in the proof of Proposition B.5. The continuations constructed there satisfy ∥ℓi∥Ckη ≤Bk, ∥Gi −U∗∥Ckη ≤Cnat k Λ + Cjoin k (Λ)(t1 + κ0 + ωfin). (B.32) The constant Cnat k is independent of both Λ and sufficiently large C, with the preceding axis data fixed. The bounds Bk and Cjoin k (Λ) may depend on Λ, but are independent of sufficiently large C and of smaller radial transition widths."
+ },
+ "B.8": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 155,
+  "text": "For a sufficiently large amplitude C, followed by sufficiently small activation transitions, the profile constructed in Proposition B.5 and continued by (B.34) can be continued to log x = −5, preserving the strict relaxed cone condition, so that its fields, pressure Π, and all five radial moment functions M, I, J, S, Cp agree exactly with those of the reference inner profile (A.7). It can then follow the reference outer radial profile without changing its prescribed pressure datum or the subsequent values of Qs, Ns."
+ },
+ "B.10": {
+  "kind": "Corollary",
+  "name": "",
+  "page": 157,
+  "text": "The analytic axis profile of Proposition B.2 admits a smooth continuation with E > 0 for X > 0, matching the reference outer radial profile at log(X/XR) = −5, with exact fields, pressure, and radial moment functions. It has vanishing leading residual stress through X0, followed by an inner collar on which the profile remains analytic in η and satisfies the admissible stress cone condition, with the flat factor (B.30). It satisfies the strict inequalities of the relaxed cone condition thereafter up to the matching point. Its finite parameters can be chosen in the order (B.40)."
+ },
+ "C.1": {
+  "kind": "Lemma",
+  "name": "",
+  "page": 158,
+  "text": "Let a, bs, ps be smooth on I × [−1, 1], with a > 0, and set ts = −bs/a, vs = a(1 + t2 s). Suppose the strict inequalities of the relaxed cone condition in (4.21) hold everywhere, and that the admissible stress cone holds in neighborhoods of the two radial boundary components. There is a smooth loop (aL, −bL)(X, η, φ), of period one in φ, with aL > 0, such that ∫︂1 0 (aL, −bL) dφ = (a, −bs). (C.1) Let Ψ be the vector of cone gaps in (4.35). There are constants κL, δ∂> 0, depending on the fixed data a, bs, ps, I, such that Ψj (︁ aL(X, η, φ), bL(X, η, φ), ps(X, η) )︁≥κL, (X, η, φ) ∈I × [−1, 1] × (R/Z), j = 1, 2, 3, 4. (C.2)"
+ },
+ "C.2": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 161,
+  "text": "For the fixed input profile E, U, Π selected at the beginning of this appendix, a sufficiently large finite integer N and a correction supported in the first reserved patch in the intermediate power-law interval give smooth profiles ˜︁E, ˜︁U, ˜︁Π with ˜︁E > 0 for X > 0, satisfying the admissible stress cone throughout (Xa, Xb). Both endpoint collars, the rectangle near the axis described above, and the two patches reserved for higher-order and mean corrections are unchanged. With ˜︁m, ˜︁Qs, ˜︁Ns defined from these profiles by (4.15) and (4.16), (˜︁m, ˜︁Π, ˜︁Qs, ˜︁Ns) = (m, Π, Qs, Ns) beyond the first correction patch. Before that point, profile values and each fixed number of η-derivatives differ from those of the input profile by O(N−1)."
+ },
+ "C.3": {
+  "kind": "Proposition",
+  "name": "",
+  "page": 163,
+  "text": "The profiles of Proposition C.2 satisfy all conclusions of Theorem 4.6, with the weight ya = log(X/Xa), yb = log(Xb/X), δ = min{1, ya, yb}, ζ = exp (︄ −t2 1 y2a −4 y2 b )︄ (Xa < X < Xb), (C.18) extended by zero for X ≤Xa and X ≥Xb."
+ }
+}
