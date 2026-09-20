@@ -211,3 +211,95 @@ every numbered statement in its slice, per-statement notes, ranked findings, a
 `lean-paper-layer.md` is the index of the artifact's own paper citations that the slices
 started from; `paper-statements.json` / `paper-index.json` are the 78 paper statements with
 page numbers.
+
+---
+
+## 6. Addendum (same day): the alignment joined against the dependency cone
+
+The four slices never asked whether a cited counterpart is USED by the headline
+proof. Joining the 195 citations against the cone census
+(`nse-deep/CONE.csv`, seeds `NavierStokesR3.theorem_1_1` and
+`Euler.euler_breakdown_R3`): 172 resolve to a census declaration and **64 of
+those are outside the headline cone**. One reader re-did those 64 rows against
+the in-cone declaration that actually carries each paper statement
+(`nse-deep/alignment/CONE_JOIN.md`, data in `CONE_JOIN.csv`, input rows in
+`CONE_JOIN_input.csv`). The coordinator re-verified the top items at the source.
+
+**Why out of cone.** 58 wrappers, 2 dead (an unconstructible hypothesis), 2 above
+the seed, 1 orphan module, 1 census blind spot (`@[simp]`). The structural fact
+behind it: 33 of the 64 are not even in the seeds' import closure, and 32 of
+those sit in modules reachable only through `NavierStokes/PaperResults.lean` and
+`NavierStokes/PaperAdditionalResults.lean`, which `NavierStokes.lean` imports
+BESIDE `NavierStokes.ComparatorSolution`, not below it. That is a paper-facing
+layer, about thirty modules, structurally unable to reach the headline. The
+other 31 are in scope but unreferenced, mostly existential repackagings of a
+construction the headline route performs definitionally
+(`FinalSlowBase.actualProfile := Classical.choice …`); those carriers are as
+strong as the wrappers.
+
+**29 of 64 classifications changed.** Section 2 above stands for what it
+compared, but several of its EXACT and LEAN STRONGER verdicts were verdicts
+about the paper-facing layer. Against the in-cone carrier:
+
+1. **Proposition 9.1's all-order flat error is proved only under an
+   unconstructible hypothesis.** Every theorem stating
+   `∀ N, UnweightedClass s N (excludedSlotError …)` takes
+   `GaussianTailFlat.FlatEdges` (`LinearWaveBounds.lean:868–871`), or lives in a
+   structure carrying it as a field (`CorrectionStep.lean:4232`
+   `GaussianControl.edges`; `ParticularWaveAssembly.LocalControl:1422`), and
+   `FlatEdges` is on the confirmed never-constructed list. The in-cone twin
+   `constructed_linear_wave_with_excluded:833` proves the `WaveClass` bound and
+   the decomposition, not the flatness clause. The headline does not need it;
+   the paper states it. LEAN WEAKER on the route.
+2. **Lemma 7.7's exact curl identity** is out of cone
+   (`OscillatoryCurl.lean:160, 188, 224, 274`); the carrier
+   `CurlClassBounds.curlRemainder_waveClass:758` is a class bound. The exact
+   clause enters only through the same unconstructed `LocalControl`.
+3. **Lemma 4.11's uniform cone margin is nowhere in cone.** `HasConeMargin`
+   occurs at its definition and three out-of-cone or display sites
+   (`TrueConeLoop.lean:283, 298, 784`; `TrueConeLoopPaper.lean:39`). The carrier
+   `family_pointwise_properties:658` gives strict `InTrueCone` with no ε. The
+   first pass recorded a hypothesis weakening; the conclusion is weakened too.
+4. **Proposition 4.2: EXACT → no in-cone counterpart.** The cited
+   `LeadingStress.lean:571` and `StressAlgebra.lean:316` and their whole chain
+   have zero consumers; the in-cone residual identity
+   (`ConstructedSlowBase.lean:906`, `FinalSlowBase.lean:330`) is the coarser
+   `navierStokesResidual = stressForce + error`.
+5. **Lemma 10.4's energy estimate (10.13) is above the seed.**
+   `theorem_1_1_with_dissipation` (`R3/Theorem.lean:66`) is the headline plus
+   `IntegratedDissipation.lean`, which is 0 of 8 in cone. The only in-cone energy
+   statement is `energy_bounded : UniformFiniteEnergy (Ico 0 1) u`
+   (`R3/ProblemStatement.lean:108`), a bare finite bound.
+6. **Lemma A.2 and Lemma 4.7(ii): EXACT / LEAN STRONGER → LEAN WEAKER.** The
+   whole `C^k`-over-an-interval repair framework is display-only
+   (`ClosedIntervalCk.lean` 0/48, `ClosedIntervalMomentRepair.lean` 0/24). The
+   carriers `MomentRepair.exists_unique_small_correction:206` and
+   `UniformAngularReset.exists_smooth_solver_on_ball:273` give neither the
+   `‖c‖_{C^k} ≤ 2β_k‖d‖_{C^k}` bound nor the same-branch identification.
+7. **Not located in cone:** Lemma B.3, Lemma B.7 (`NaturalExitBounds.lean` 0/8,
+   `ReferenceEndpointRate.lean` 0/17), Lemma 4.4(ii) and the counting half of
+   Lemma 6.2 (`SeedHandbackJets.lean` 0/40; the `14^Δ` count and the sheetwise
+   bijection are display-only).
+
+Two rows got stronger: Proposition 5.3's carrier
+`BaseResidual.baseResidual_jetRate_axis:2514` proves the jet rate for every real
+flatness order, and Lemma 4.5(ii)'s additive-gap form
+`UniformCone.compact_equation_eleven_gap:176` is in cone. Propositions 8.4/8.5
+and Lemma 8.2 have full in-cone twins generalised beyond the paper
+(`StateMomentBalances.lean:626, 661`; `UniformFourierAlias.lean:1193`).
+
+**What this changes about the verdict.** Nothing about the headline: the cone
+is what Comparator checked, and the wrapper layer proves extra things rather
+than fewer. What it changes is the answer to "is the intermediate Lean as
+strong as the paper": on the ROUTE, several paper clauses (all-order flatness
+of the linear-wave error, the exact curl, the uniform cone margin, the
+`C^k` repair bounds, the energy estimate) are either proved only in the
+display layer, only under a hypothesis nobody constructs, or not at all. The
+paper's argument as written is therefore not the formal proof's argument at
+those points, and the display layer is exactly what a statement-to-statement
+reader would have been reassured by. Method rule for any future alignment:
+carry a cone column from the start.
+
+Not checked here: carrier soundness (no `sorry`/axiom audit of the carriers;
+that is the 9/18 report's job), the 108 citations already in cone, and
+`@[simp]`/instance reachability, which name-level census cannot see.
