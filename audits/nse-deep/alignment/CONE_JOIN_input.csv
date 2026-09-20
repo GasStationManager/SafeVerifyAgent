@@ -1,0 +1,65 @@
+slice,file,line,lean_name,in_import_closure,paper_statements,cited_at
+B,NavierStokes/AppendixHeatResults.lean,66,NavierStokes.AppendixHeatResults.endpoint_derivatives,False,A.6 (Lemma),align-B.md:26
+A,NavierStokes/AppendixJoiningResults.lean,17,NavierStokes.AppendixJoiningResults.axis_initial_margin,False,4.10 (Proposition),align-A.md:40
+B,NavierStokes/AppendixJoiningResults.lean,67,NavierStokes.AppendixJoiningResults.reference_first_gt_three,False,B.4 (Lemma),align-B.md:34
+B,NavierStokes/AxisHolomorphic.lean,539,NavierStokes.AxisHolomorphic.exists_common_holomorphic_extension,True,B.6 (Cor),align-B.md:36
+B,NavierStokes/AxisHolomorphicJoint.lean,202,NavierStokes.AxisHolomorphicJoint.exists_common_joint_extension,True,B.6 (Cor),align-B.md:36
+B,NavierStokes/AxisJointAnalytic.lean,101,NavierStokes.AxisJointAnalytic.profile_analyticOnNhd,False,B.2 (Prop),align-B.md:32
+B,NavierStokes/AxisProfile.lean,48,NavierStokes.AxisProfile.profileCoeff,True,B.2 (Prop),align-B.md:32
+B,NavierStokes/BaseResidual.lean,1439,NavierStokes.BaseResidual.truncationResidual_rate,True,5.3 (Prop),align-B.md:18
+D,NavierStokes/BaseWitnessClosure.lean,22,NavierStokes.BaseWitnessClosure.actual_profile_eq,False,"(prose, line 250)",align-D.md:250
+A,NavierStokes/ClosedIntervalCk.lean,23,NavierStokes.ClosedIntervalCk.I,False,4.7 (2nd) (Lemma),align-A.md:37
+B,NavierStokes/ClosedIntervalMomentRepair.lean,16,NavierStokes.ClosedIntervalMomentRepair.Data,False,A.2 (Lemma),align-B.md:22
+A,NavierStokes/ClosedIntervalMomentRepair.lean,151,NavierStokes.ClosedIntervalMomentRepair.Data.exists_smooth_same_branch,False,4.7 (2nd) (Lemma),align-A.md:37
+B,NavierStokes/ConstructedSlowBase.lean,932,NavierStokes.ConstructedSlowBase.exists_actual_base,True,5.5 (Prop) ; B.10 (Cor),align-B.md:20 ; align-B.md:40
+D,NavierStokes/ExponentLedger.lean,63,NavierStokes.ExponentLedger.wave_increment,True,9.6 (Proposition),align-D.md:32
+B,NavierStokes/ExponentialMomentMatrix.lean,72,NavierStokes.ExponentialMomentMatrix.expBumpMomentMatrix_det_ne_zero,False,A.1 (Lemma),align-B.md:21
+D,NavierStokes/FinalSlowBase.lean,361,NavierStokes.FinalSlowBase.origin,True,"(prose, line 139) ; (prose, line 643)",align-D.md:139 ; align-D.md:643
+B,NavierStokes/FiveRowRank.lean,311,NavierStokes.FiveRowRank.exists_five_row_repair,True,5.2 (Lemma),align-B.md:17
+B,NavierStokes/FlatPrimitivePaper.lean,76,NavierStokes.FlatPrimitivePaper.exists_factor_on_rectangle,False,A.9 (Lemma),align-B.md:29
+A,NavierStokes/HeatedOutgoing.lean,875,NavierStokes.HeatedOutgoing.exists_heated_profile,True,4.8 (Lemma),align-A.md:38
+C,NavierStokes/IntegratedMeanBalances.lean,639,NavierStokes.IntegratedMeanBalances.integrated_angular_balance,True,8.4 (Proposition (integrated equations)),align-C.md:41
+C,NavierStokes/LabelCounting.lean,231,NavierStokes.LabelCounting.pointwise_count,False,6.3 (Lemma (number of relevant labels)),align-C.md:26
+A,NavierStokes/LeadingStress.lean,372,NavierStokes.LeadingStress.physicalVelocity,True,3.2 (Definition),align-A.md:26
+B,NavierStokes/LeadingStress.lean,458,NavierStokes.LeadingStress.theta_transport_stress,True,"(prose, line 461)",align-B.md:461
+A,NavierStokes/LeadingStress.lean,571,NavierStokes.LeadingStress.navierStokesResidual_tangential,True,4.2 (Proposition),align-A.md:29
+A,NavierStokes/LeadingStressWeights.lean,1154,NavierStokes.LeadingStressWeights.exists_weighted_profile,True,4.6 (Theorem) ; C.3 (Proposition),align-A.md:35 ; align-A.md:46
+D,NavierStokes/LinearWaveBounds.lean,898,NavierStokes.LinearWaveBounds.constructed_linear_wave_with_flat_error,True,9.1 (Proposition) ; 9.3 (Proposition),align-D.md:27 ; align-D.md:29
+D,NavierStokes/LocalAngularGrowth.lean,60,NavierStokes.LocalAngularGrowth.localized_eq_raw,False,10.1 (Proposition),align-D.md:21
+D,NavierStokes/LocalAngularGrowth.lean,238,NavierStokes.LocalAngularGrowth.selected_candidate_one_with_angular_growth,False,"(prose, line 84)",align-D.md:84
+A,NavierStokes/LocalPaperHeat.lean,22,NavierStokes.LocalPaper.Properties.exterior_profile_smooth,False,3.1 (Theorem),align-A.md:25
+AD,NavierStokes/LocalPaperTheorem.lean,53,NavierStokes.LocalPaper.Properties,False,3.1 (Theorem) ; 9.9 (Proposition),align-A.md:25 ; align-D.md:35
+D,NavierStokes/LocalPaperTheorem.lean,179,NavierStokes.LocalPaper.local_theorem,False,"(prose, line 596)",align-D.md:596
+A,NavierStokes/MatchingDebtBounds.lean,887,NavierStokes.MatchingDebtBounds.exists_nominal_witness,True,4.10 (Proposition),align-A.md:40
+B,NavierStokes/MatchingDebtBounds.lean,928,NavierStokes.MatchingDebtBounds.nominal_witness_exists,True,B.10 (Cor),align-B.md:40
+A,NavierStokes/ModulatedProfileAssembly.lean,1126,NavierStokes.ModulatedProfileAssembly.exists_modulated_profile,True,4.6 (Theorem) ; C.2 (Proposition),align-A.md:35 ; align-A.md:45
+A,NavierStokes/ModulatedProfileJetRates.lean,347,NavierStokes.ModulatedProfileJetRates.exists_with_moment_repair_all_jets,False,C.2 (Proposition),align-A.md:45
+A,NavierStokes/MomentRepairPicardConvergence.lean,21,NavierStokes.MomentRepairPicardConvergence.exists_small_solution_with_iterates,False,4.7 (2nd) (Lemma),align-A.md:37
+B,NavierStokes/NaturalAxisJointAnalytic.lean,87,NavierStokes.NaturalEntrance.CoefficientProfile.natural_analytic,False,B.2 (Prop),align-B.md:32
+B,NavierStokes/NaturalExitBounds.lean,130,NavierStokes.NaturalExitBounds.Estimates,False,B.3 (Prop),align-B.md:33
+A,NavierStokes/NominalProfile.lean,2637,NavierStokes.NominalProfile.exists_assembly_threshold,True,4.10 (Proposition),align-A.md:40
+C,NavierStokes/OscillatoryCurl.lean,160,NavierStokes.OscillatoryCurl.wave_eq,True,7.7 (Lemma (exact curls)),align-C.md:36
+A,NavierStokes/OutgoingProfile.lean,640,NavierStokes.OutgoingProfile.exists_outgoing_profile,True,3.3 (Definition),align-A.md:27
+B,NavierStokes/PositiveAxisDifferential.lean,257,NavierStokes.PositiveAxisDifferential.positive_solution_unique,False,5.1 (Lemma),align-B.md:16
+B,NavierStokes/QuadraticLinearization.lean,12,NavierStokes.QuadraticLinearization.isInvertible,False,A.2 (Lemma),align-B.md:22
+D,NavierStokes/R3/IntegratedDissipation.lean,143,NavierStokesR3.CompactEnergy.candidate_l2Norm_le_cumulativeForceNorm,True,10.4 (Lemma),align-D.md:24
+D,NavierStokes/R3/Theorem.lean,66,NavierStokesR3.theorem_1_1_with_dissipation,True,10.4 (Lemma),align-D.md:24
+B,NavierStokes/ReferenceEndpointRate.lean,275,NavierStokes.ReferenceEndpointRate.exists_entrance_envelope,False,B.7 (Lemma),align-B.md:37
+B,NavierStokes/ReferenceUniformStocks.lean,414,NavierStokes.ReferenceUniformStocks.uniform_reference_quantities,False,B.4 (Lemma),align-B.md:34
+A,NavierStokes/SchedulePressure.lean,175,NavierStokes.SchedulePressure.axisPressure_even,True,4.8 (Lemma),align-A.md:38
+A,NavierStokes/SeedHandbackJets.lean,94,NavierStokes.SeedHandbackJets.stocks_formulas,False,4.3 (Lemma),align-A.md:30
+A,NavierStokes/SeedHandbackJets.lean,354,NavierStokes.SeedHandbackJets.profile_comparison_norm,False,4.4(ii) (Lemma),align-A.md:32
+C,NavierStokes/SignedCovariance.lean,409,NavierStokes.SignedCovariance.physical_signed_cross_covariance,True,7.8 (Corollary (covariance expansion)),align-C.md:37
+C,NavierStokes/SignedStressPrimitive.lean,1014,NavierStokes.SignedStressPrimitive.axial_bump_identity,True,8.5 (Corollary (covariance targets)),align-C.md:42
+B,NavierStokes/SmoothExponentialMomentMatrix.lean,80,NavierStokes.SmoothExponentialMomentMatrix.Family.matrix_inverse_contDiffOn,False,A.1 (Lemma),align-B.md:21
+B,NavierStokes/SmoothPowerMomentMatrix.lean,178,NavierStokes.SmoothPowerMomentMatrix.Family.matrix_inverse_contDiffOn,False,A.1 (Lemma),align-B.md:21
+A,NavierStokes/SmoothPowerMomentMatrix.lean,197,NavierStokes.SmoothPowerMomentMatrix.Family.compact_inverse_jets_bound,False,4.7 (1st) (Lemma),align-A.md:36
+A,NavierStokes/StressAlgebra.lean,316,NavierStokes.StressAlgebra.stressFree_angular_lag_algebra,True,4.2 (Proposition),align-A.md:29
+B,NavierStokes/TerminalEdgeFactor.lean,1595,NavierStokes.TerminalEdgeFactor.physicalStress_factorization,True,A.10 (Prop),align-B.md:30
+B,NavierStokes/TerminalEdgePaper.lean,16,NavierStokes.TerminalEdgePaper.profileStress_lower_bound,False,A.10 (Prop),align-B.md:30
+C,NavierStokes/TorusCoverDegree.lean,208,NavierStokes.TorusCoverDegree.card_fiber,False,6.2 (Lemma (common torus)),align-C.md:25
+C,NavierStokes/TorusCoverLattice.lean,59,NavierStokes.TorusCoverLattice.indexHom_range_index,False,6.2 (Lemma (common torus)),align-C.md:25
+A,NavierStokes/TrueConeLoop.lean,765,NavierStokes.TrueConeLoop.exists_compact_trueCone_family_with_margin,True,4.11 (Lemma),align-A.md:41
+A,NavierStokes/UniformCone.lean,148,NavierStokes.UniformCone.compact_equation_eleven,True,4.5 (2nd) (Lemma),align-A.md:34
+C,NavierStokes/UniformFourierAlias.lean,1134,NavierStokes.UniformFourierAlias.meanClass_alias_superflat,True,8.2 (Lemma (compact radial primitive)),align-C.md:39
+B,NavierStokes/UniformQuadraticBranch.lean,131,NavierStokes.UniformQuadraticBranch.exists_smooth_small_branch,False,A.2 (Lemma),align-B.md:22
