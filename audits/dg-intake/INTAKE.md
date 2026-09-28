@@ -20,3 +20,21 @@ the headline route are the audit. A `Frontier` predicate that is never proved
 unconditionally, or is proved only from another undischarged one, is a `sorry`
 by another name, and the README's axiom claim cannot see it. Scale means the
 route extractor, not the cone CSV, is what a reader walks.
+
+## Regenerating the large outputs (not committed: 39 MB and 25 MB)
+
+```bash
+python3 audits/cone.py /path/to/differential-geometry \
+    --seed DifferentialGeometry.Topology.poincare_conjecture -o audits/dg-intake/CONE.csv
+python3 audits/cone.py route --cone audits/dg-intake/CONE.csv -o audits/dg-intake/ROUTE.md
+```
+
+First numbers from the name-level cone (weak on this artifact, see the
+cone.py docstring): 158,554 declarations, 85,255 in cone (53.8%); 69,610
+in-cone theorems and lemmas across 12,299 files; 3,415 candidate predicates
+on the route, of which 157 have no supplier anywhere, 142 none in cone, and
+146 are supplied only conditionally. Only 15 `Frontier` predicates carry
+in-cone hypothesis sites; 8 of those are unsupplied. Spot checks already show
+false positives at the top of the list (an in-proof `have` construction, an
+ambiguous short name, an out-of-cone supplier), so every row is a candidate
+to read, not a finding.
