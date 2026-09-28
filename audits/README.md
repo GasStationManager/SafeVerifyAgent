@@ -2,6 +2,9 @@
 
 Reports from running this agent at real, published artifacts.
 
+For a plain-language overview of the NavierStokesAndEuler series, read
+[`SUMMARY-openai-NavierStokesAndEuler.md`](SUMMARY-openai-NavierStokesAndEuler.md).
+
 They are kept in the repo for one reason: **a verdict whose method is not
 reproducible is an opinion.** Each report states the commit it audited, which
 rungs actually ran, what it did not cover, and how to re-run the mechanical
