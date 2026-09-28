@@ -299,8 +299,12 @@ class AuditToolsTest(unittest.TestCase):
         # the masking trap: a supplied twin must not supply Demo.Inner
         self.assertEqual(R["Demo.Inner"]["status"], "no_supplier")
         self.assertEqual(R["Demo.Inner"]["unique_short_name"], "False")
-        self.assertEqual(R["Demo.Inner"]["hint"], "route4")
+        self.assertEqual(R["Demo.Inner"]["hint"].split("; ")[0], "route4")
         self.assertIn("Demo.Outer (supplied)", R["Demo.Inner"]["route4_chain"])
+        # `seed_thm` applies `cone_lemma` without assuming `Inner`: a pointer,
+        # never a credit (crediting it flipped 3 of 4 true negatives on DG)
+        self.assertIn("route2-apply? Demo/Solution.lean:5 via cone_lemma",
+                      R["Demo.Inner"]["hint"])
         self.assertEqual(R["Other.Inner"]["status"], "supplied")
         self.assertEqual(R["Other.Inner"]["negative_reliable"], "False")
         # closure without a base case
@@ -334,7 +338,7 @@ class AuditToolsTest(unittest.TestCase):
         # only `cone_lemma` (in cone) takes a hypothesis on the route
         self.assertEqual(set(R), {"Demo.Inner"})
         self.assertEqual(R["Demo.Inner"]["hypothesis_sites_in_cone"], "1")
-        self.assertEqual(R["Demo.Inner"]["hint"], "route4")
+        self.assertEqual(R["Demo.Inner"]["hint"].split("; ")[0], "route4")
 
     # ---------------------------------------------------------------- scan
     def test_scan_lists_sites(self):
@@ -376,6 +380,264 @@ class AuditToolsTest(unittest.TestCase):
         self.assertIn(f"| 4. declared READ LINE BY LINE | 1 | {n_sol} |", text)
         self.assertIn("tiers consistent", text)
         self.assertIn("`Nope.lean` matches no file", text)
+
+
+# ---------------------------------------------------------------------------
+# Regression project for the 2026-09-28 instrument fixes (nosupplier N1-N7,
+# cone C1), whose oracle was a reader verifying 48 differential-geometry rows
+# (`audits/dg-intake/workers/nosupplier-verify-1.md`). Each shape below is one
+# root cause, reduced to a few lines; the ground truth is in the comments.
+# ---------------------------------------------------------------------------
+REG_FILES = {
+    "lakefile.toml": 'name = "reg"\n\n[[lean_lib]]\nname = "Reg"\n',
+    "Reg.lean": "import Reg.Basic\nimport Reg.Seed\n",
+    "Reg/Basic.lean": """namespace Reg
+
+structure Disk where
+  m : Nat
+
+/-- N4: supplied by `producer`, whose statement has a second top-level colon
+after the one that ends its binders. -/
+structure Mono : Prop where
+  ok : True
+
+theorem producer : ∃ σ : Mono, ∀ v : Disk, v.m = v.m := ⟨⟨trivial⟩, fun _ => rfl⟩
+
+theorem mono_user (h : Mono) : True := trivial
+
+/-- N4b: the statement opens with a `let`, whose `:=` is not the proof's. -/
+structure LetP : Prop where
+  ok : True
+
+theorem let_producer :
+    let k : Nat := 3
+    LetP := ⟨trivial⟩
+
+theorem letp_user (h : LetP) : True := trivial
+
+/-- N2 / N6: same-named twins reached only by dot notation. -/
+namespace A
+structure Curve where
+  x : Nat
+def Curve.Smooth (c : Curve) : Prop := c.x = c.x
+def mkCurve (n : Nat) : Curve := ⟨n⟩
+end A
+
+namespace B
+structure Curve where
+  y : Nat
+def Curve.Smooth (c : Curve) : Prop := c.y = c.y
+end B
+
+theorem a_smooth (n : Nat) : (A.mkCurve n).Smooth := rfl
+
+theorem a_user (c : A.Curve) (h : c.Smooth) : True := trivial
+
+theorem b_user (c : B.Curve) (h : c.Smooth) : True := trivial
+
+theorem pair_user (p : A.Curve × Nat) (h : p.1.Smooth) : True := trivial
+
+/-- N3: supplied only through a statement def. -/
+structure Wit : Prop where
+  ok : True
+
+def WitStatement : Prop := ∀ n : Nat, ∃ w : Wit, n = n
+
+theorem witStatement : WitStatement := fun n => ⟨⟨trivial⟩, rfl⟩
+
+theorem wit_user (h : Wit) : True := trivial
+
+/-- Never supplied; a statement def that only ASSUMES it must not change that. -/
+structure Bad : Prop where
+  ok : True
+
+def BadStatement : Prop := ∀ b : Bad, b = b
+
+theorem badStatement : BadStatement := fun _ => rfl
+
+theorem bad_user (h : Bad) : True := trivial
+
+/-- N5: an abbrev supplied by a theorem that states its unfolded body. -/
+abbrev Apart (a b : Nat) : Prop := ∀ x : Nat, Nat.succ (x + a) ≠ Nat.pred (x + b)
+
+theorem apart_exists :
+    ∃ a b : Nat, (∀ y : Nat, Nat.succ (y + a) ≠ Nat.pred (y + b)) ∧ a = a := by
+  exact ⟨2, 0, fun y => by omega, rfl⟩
+
+theorem apart_user (h : Apart 1 2) : True := trivial
+
+/-- N1: built only inside a proof. -/
+structure Built : Prop where
+  ok : True
+
+theorem built_user (h : Built) : True := trivial
+
+theorem uses_built : True := by
+  have hb : Built := ⟨trivial⟩
+  exact built_user hb
+
+structure Made : Prop where
+  ok : True
+
+theorem made_user (h : Made) : True := trivial
+
+theorem uses_made : True := made_user (Made.mk trivial)
+
+/-- N1 negative control: rebuilt only from itself, which supplies nothing. -/
+structure Closed : Prop where
+  ok : True
+
+theorem closed_step (h : Closed) : True := by
+  have h2 : Closed := h
+  trivial
+
+/-- N7: a negation or an unfolding `↔` supplies nothing. -/
+structure NotP : Prop where
+  ok : True
+
+theorem not_notp : ¬ NotP := fun h => absurd h.ok (by simp)
+
+theorem notp_user (h : NotP) : True := trivial
+
+def IffP (n : Nat) : Prop := n = n
+
+theorem iffP_iff (n : Nat) : IffP n ↔ n = n := Iff.rfl
+
+theorem iffp_user (h : IffP 3) : True := trivial
+
+/-- C1: generic names that must not pull these into the cone. -/
+structure Legacy : Prop where
+  ok : True
+
+theorem Legacy.trans (h : Legacy) : True := trivial
+
+theorem Legacy.refine (h : Legacy) : True := trivial
+
+namespace Qual
+theorem trans : True := trivial
+end Qual
+
+/-- C1 rescue: a generic tail on a hypothesis whose type the proof names. -/
+structure Step : Prop where
+  ok : True
+
+theorem Step.trans (h : Step) : True := trivial
+
+end Reg
+""",
+    "Reg/Seed.lean": """import Reg.Basic
+
+namespace Reg
+
+theorem seed (h : 1 = 1) (hs : Step) : True := by
+  have := h.trans rfl
+  have := Qual.trans
+  have := hs.trans
+  refine trivial
+
+end Reg
+""",
+}
+
+
+class InstrumentFixesTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.root = os.path.join(cls.tmp.name, "reg")
+        for rel, text in REG_FILES.items():
+            p = os.path.join(cls.root, rel)
+            os.makedirs(os.path.dirname(p), exist_ok=True)
+            with open(p, "w", encoding="utf-8") as fh:
+                fh.write(text)
+        cls.ns = os.path.join(cls.tmp.name, "NS.csv")
+        run(os.path.join(AUDITS, "nosupplier.py"), cls.root, "-o", cls.ns, "--all")
+        cls.R = {r["predicate"]: r for r in rows(cls.ns)}
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def status(self, name):
+        return self.R["Reg." + name]["status"]
+
+    def test_n4_binders_end_at_the_first_colon(self):
+        sys.path.insert(0, AUDITS)
+        from nosupplier import split_sig
+        b, c, _p = split_sig("(x : A) : ∃ σ : S, ∀ v : D, P v σ := by simp")
+        self.assertEqual(b.strip(), "(x : A)")
+        self.assertIn("∃ σ : S", c)
+        self.assertEqual(self.status("Mono"), "supplied")
+        self.assertIn("[concl]", self.R["Reg.Mono"]["supplied_by"])
+        # the `∀ v : Disk` binder is a hypothesis, not a supply
+        self.assertNotEqual(self.status("Disk"), "supplied")
+
+    def test_n4b_let_in_statement(self):
+        sys.path.insert(0, AUDITS)
+        from nosupplier import split_sig
+        _b, c, p = split_sig(":\n    let k : Nat := 3\n    LetP := ⟨trivial⟩")
+        self.assertIn("LetP", c)
+        self.assertEqual(p.strip(), ":= ⟨trivial⟩")
+        self.assertEqual(self.status("LetP"), "supplied")
+
+    def test_n2_n6_dot_notation_twins(self):
+        a, b = self.R["Reg.A.Curve.Smooth"], self.R["Reg.B.Curve.Smooth"]
+        # the receiver's type picks the twin: no pooling, no cross-credit
+        self.assertEqual(a["status"], "supplied")
+        self.assertEqual(b["status"], "no_supplier")
+        self.assertEqual(a["hypothesis_sites"], "1")       # a_user only
+        self.assertEqual(b["hypothesis_sites"], "1")       # b_user only
+        # `p.1.Smooth`: the receiver is unreadable, so the site is ambiguous,
+        # counted apart for both and credited to neither
+        self.assertEqual(a["hypothesis_sites_ambiguous"], "1")
+        self.assertEqual(b["hypothesis_sites_ambiguous"], "1")
+
+    def test_n3_statement_def(self):
+        self.assertEqual(self.status("Wit"), "supplied")
+        self.assertIn("[stmt-def WitStatement]", self.R["Reg.Wit"]["supplied_by"])
+        self.assertIn("stmt-def", self.R["Reg.Wit"]["hint"])
+        # a statement def that only ASSUMES a predicate supplies nothing
+        self.assertEqual(self.status("Bad"), "no_supplier")
+
+    def test_n5_abbrev_by_body(self):
+        self.assertEqual(self.status("Apart"), "supplied")
+        self.assertIn("[abbrev-body Apart]", self.R["Reg.Apart"]["supplied_by"])
+
+    def test_n1_in_proof_constructions(self):
+        self.assertEqual(self.status("Built"), "supplied")
+        sb = self.R["Reg.Built"]["supplied_by"]
+        self.assertIn("[route2-have]", sb)
+        # the site recorded is the `have` line, for a reader to check
+        line = [i for i, l in enumerate(REG_FILES["Reg/Basic.lean"].splitlines(), 1)
+                if "have hb : Built" in l][0]
+        self.assertIn(f"Reg/Basic.lean:{line} ", sb)
+        self.assertEqual(self.status("Made"), "supplied")
+        self.assertIn("[route2-mk]", self.R["Reg.Made"]["supplied_by"])
+        # rebuilding a hypothesis from itself supplies nothing: a hint only
+        self.assertEqual(self.status("Closed"), "no_supplier")
+        self.assertIn("route2?", self.R["Reg.Closed"]["hint"])
+
+    def test_n7_negation_and_unfolding_iff(self):
+        self.assertEqual(self.status("NotP"), "no_supplier")
+        self.assertEqual(self.status("IffP"), "no_supplier")
+
+    def test_c1_generic_names_leave_the_cone(self):
+        out = os.path.join(self.tmp.name, "CONE.csv")
+        p = run(os.path.join(AUDITS, "cone.py"), self.root, "--seed", "Reg.seed", "-o", out)
+        C = {r["name"]: r for r in rows(out)}
+        self.assertEqual(C["Reg.Legacy.trans"]["in_cone"], "False")    # `h.trans`
+        self.assertEqual(C["Reg.Legacy.refine"]["in_cone"], "False")   # the tactic
+        self.assertEqual(C["Reg.Qual.trans"]["in_cone"], "True")       # qualified use
+        # `hs.trans` with `hs : Step` named in the same declaration: kept
+        self.assertEqual(C["Reg.Step.trans"]["in_cone"], "True")
+        self.assertRegex(p.stdout, r"C1: [1-9][\d,]* name-level edges NOT added")
+        # the pre-C1 reading is still available, and wider
+        out2 = os.path.join(self.tmp.name, "CONE_generic.csv")
+        run(os.path.join(AUDITS, "cone.py"), self.root, "--seed", "Reg.seed", "-o", out2,
+            "--generic-names")
+        C2 = {r["name"]: r for r in rows(out2)}
+        self.assertEqual(C2["Reg.Legacy.trans"]["in_cone"], "True")
+        self.assertEqual(C2["Reg.Legacy.refine"]["in_cone"], "True")
 
 
 if __name__ == "__main__":

@@ -147,6 +147,50 @@ dot-notation tails (`h.symm`, `x.trans`, `.C`) resolving to every same-named
 declaration in scope are. It is opt-in because its binder reading is flat per
 declaration (see `local_names`), which is the under-approximating direction.
 
+C1 (2026-09-28, from a reader's NOSUPPLIER verification): generic identifiers
+resolved by short name. `f.trans` reached `MetricComparisonOn.trans`, the
+`refine` TACTIC reached `HasStageSeed.refine`, `rw [..] at h` reached
+`ExponentialRadiusScaleBounds.at` (3,137 consumers), and `.symm`/`.mono` gave
+`BInter.symm` 2,251 and `TerminalParentRegionConvexity.mono` 152 -- which is
+how four dead legacy predicates showed large "in-cone" site counts. Now a
+single-component run that is a dot-notation TAIL (not the token's first
+component, or any component of a token written right after a `.`, as in
+`(e).symm.trans` or leading-dot `.refl _`) is not resolved when it is shorter
+than 4 characters or in GENERIC_TAILS (`trans symm mono at mk le lt refl mp mpr
+cast comp map`); a BARE token that is a tactic word (TACTIC_WORDS) or in
+GENERIC_TAILS resolves only to a declaration of exactly that full name; and a
+GENERIC_TAILS/tactic word as the leading component of a dotted token
+(`trans.toFoo`, a local) is not a receiver. A run with a qualifier
+(`MetricComparisonOn.trans`, `Qual.trans`) always resolves. RESCUE: a withheld
+candidate `Foo.t` is kept when the same declaration names `Foo` (a binder
+`h : Foo`, a `have`, its statement) -- without it, a spot check of 10
+departed declarations found 3 genuinely used by dot notation on a hypothesis
+(`w.forward.transition.trans` for `StageTransition.trans`, `hnetProp.mono`,
+`(hslots j).mono` for `curvOrderAtMost.mono`). The run prints how many edges
+were withheld and how many rescued. Measured on differential-geometry, seed
+`poincare_conjecture`: 667,418 edges withheld, 12,311 rescued; the cone went
+85,255 -> 85,019 (236 declarations left, none entered); consumers of
+`HasStageSeed.refine` 4,028 -> 7, `MetricComparisonOn.trans` 1,815 -> 113,
+`BInter.symm` 2,251 -> 29, `StageTransition.trans` 2,499 -> 1, and
+`ExponentialRadiusScaleBounds.at` and `TerminalParentRegionConvexity.mono`
+left the cone. A second sample of 10 departed declarations had no
+fully qualified use in cone and no in-cone declaration naming the parent type
+with that tail. On the synthetic regression project (`tests/test_audit_tools.py`,
+`Reg`) the cone went 7 -> 4 (`Legacy`, `Legacy.trans`, `Legacy.refine` left;
+`Qual.trans` and the rescued `Step.trans`, `Step` stayed); on `Demo` it is unchanged
+(8). The cone is STILL 53.6% of the artifact: longer generic tails (`.subseq`
+keeps 734 consumers and keeps the dead `MetricCompactnessAssumptions`
+interface in cone via `HasStageSeed.subseq`) are untouched, so this removes
+the worst noise, not the bulk of the over-approximation.
+DIRECTION: this is the first rule here that can UNDER-approximate. A genuine
+dot use of a project lemma with a generic tail -- `h.trans h'` for `h : Foo`
+with a project `Foo.trans`, or leading-dot `.refl _` whose expected type is a
+project structure -- is no longer an edge unless the declaration names `Foo`
+(the rescue above). `--generic-names` restores the
+old resolution and reproduces the pre-C1 CONE.csv byte for byte, so the two
+can be diffed; a declaration whose membership depends on the difference is
+checked by reading.
+
 Use it to prioritise, and to state coverage honestly: "N of M in-cone theorems
 read" is a claim about the right M.
 
@@ -195,6 +239,19 @@ ATTRIBUTE = re.compile(r"^attribute[ \t]*\[[^\]]*\](?P<rest>[^\n]*(?:\n[ \t]+[^\
 IMPORT = re.compile(r"^(?:(?:public|private|meta)[ \t]+)*import[ \t]+(?:all[ \t]+)?([\w.]+)", re.M)
 IMPLICIT_USE = re.compile(r"@\[[^\]]*(simp|gcongr|positivity|bound|aesop|norm_cast|ext)")
 THEOREM_KINDS = ("theorem", "lemma")
+# C1 (see the docstring): generic identifiers that resolve by short name to an
+# unrelated project declaration. A single-component run that is NOT the leading
+# component of its token (a dot-notation tail or projection: `f.trans`,
+# `h.symm.le`) is skipped when shorter than 4 characters or in GENERIC_TAILS;
+# a bare token that is a tactic word or in GENERIC_TAILS resolves only to a
+# declaration of exactly that full name.
+GENERIC_TAILS = frozenset("trans symm mono at mk le lt refl mp mpr cast comp map".split())
+TACTIC_WORDS = frozenset("""refine exact apply intro intros constructor use exists show
+    have let obtain rcases rintro cases induction simp rw calc congr ext funext subst
+    unfold change specialize aesop omega linarith nlinarith positivity norm_num ring
+    field_simp gcongr filter_upwards exfalso contradiction trivial rfl decide
+    left right exact_mod_cast push_cast norm_cast split_ifs by_cases by_contra
+    choose lift set generalize revert clear rename refine' convert""".split())
 
 
 _SID = r"[%s][%s]*" % (_ID0, _ID1)
@@ -225,6 +282,19 @@ def _names(seg, out):
     for t in IDENT.findall(seg):
         if "." not in t:
             out.add(t)
+
+
+def body_tokens(body, start=0):
+    """Identifier tokens of `body[start:]`; a token written right after a `.`
+    (dot notation on an expression, or leading-dot `.refl`) is returned with
+    that `.` in front, so the resolver knows its first component is a tail."""
+    out = set()
+    for m in IDENT.finditer(body, start):
+        t = m.group(0)
+        if m.start() > 0 and body[m.start() - 1] == ".":
+            t = "." + t
+        out.add(t)
+    return out
 
 
 def binder_names(text):
@@ -429,7 +499,8 @@ def module_name(rel):
 class Graph:
     """The name-level graph of one repository. See the module docstring."""
 
-    def __init__(self, root, unsupplied=None, quiet=False, shadow_locals=False):
+    def __init__(self, root, unsupplied=None, quiet=False, shadow_locals=False,
+                 generic_names=False):
         self.root = root
         say = (lambda *_: None) if quiet else progress
         t0 = time.time()
@@ -507,6 +578,8 @@ class Graph:
 
         # ---- pass 2: edges, per file, scope-filtered
         edges = [set() for _ in range(nn)]
+        self.c1_removed = 0            # edges only the C1 filter dropped
+        self.c1_rescued = 0            # ... kept because the parent type is named
         self.direct_dead = set()
         unsup_names = set(unsupplied or ())
         unsup = {self.name_id[n] for n in unsup_names if n in self.name_id}
@@ -517,41 +590,98 @@ class Graph:
             bits = self.closure[fi].to_bytes((nf + 7) // 8, "little")
             cache = {}
 
-            def res(t):
+            def res2(t):
+                """(nodes a token reaches, nodes only the C1 filter kept it from)"""
                 r = cache.get(t)
                 if r is None:
+                    key = t
+                    # a token written right after a `.` (`(e).symm.trans`,
+                    # `.refl _`) is dot notation all the way: its first
+                    # component is a tail too, not a receiver or namespace
+                    tail_tok = t.startswith(".")
+                    if tail_tok:
+                        t = t[1:]
                     parts = t.split(".")
-                    cands = set()
+                    cands, gen = set(), set()
                     # every CONTIGUOUS run of components: `hx.foo` is a use of
                     # `Something.foo` (leading receiver), and `h.choose` is a use
                     # of `h` (trailing projection). Missing either made the cone
                     # too small, which is the direction that loses live code.
-                    for i in range(len(parts)):
-                        for j in range(i + 1, len(parts) + 1):
-                            cands.update(self.suffix.get(".".join(parts[i:j]), ()))
-                    r = frozenset(node for c in cands for node, m in name_nodes[c]
-                                  if bits[m >> 3] >> (m & 7) & 1)
-                    cache[t] = r
+                    if len(parts) == 1 and not tail_tok and (t in TACTIC_WORDS or t in GENERIC_TAILS):
+                        # C1: a bare tactic word / generic name only by full name
+                        nid0 = self.name_id.get(t)
+                        if nid0 is not None:
+                            cands.add(nid0)
+                        gen.update(self.suffix.get(t, ()))
+                    else:
+                        for i in range(len(parts)):
+                            for j in range(i + 1, len(parts) + 1):
+                                got = self.suffix.get(".".join(parts[i:j]), ())
+                                if (not generic_names and j == i + 1 and (
+                                        ((i > 0 or tail_tok)
+                                         and (len(parts[i]) < 4 or parts[i] in GENERIC_TAILS))
+                                        # a generic word as the RECEIVER of a
+                                        # dotted token (`trans.toFoo`) is a
+                                        # local, not every `*.trans`
+                                        or (i == 0 and len(parts) > 1 and (
+                                            parts[0] in GENERIC_TAILS
+                                            or parts[0] in TACTIC_WORDS)))):
+                                    gen.update(got)      # C1: a generic dot tail
+                                else:
+                                    cands.update(got)
+                    if generic_names:
+                        cands |= gen
+                    gen -= cands
+                    inscope = lambda cs: frozenset(
+                        node for c in cs for node, m in name_nodes[c]
+                        if bits[m >> 3] >> (m & 7) & 1)
+                    r = (inscope(cands), inscope(gen) if gen else frozenset())
+                    cache[key] = r
                 return r
+
+            def res(t):
+                return res2(t)[0]
 
             for full, _kind, _line, body, hdr, vtoks, vbound in decls_full(txt):
                 nid = node_of[(self.name_id[full], fi)]
                 tgt = edges[nid]
-                toks = set(IDENT.findall(body, hdr)) | vtoks
+                toks = body_tokens(body, hdr) | vtoks
                 if shadow_locals:
                     loc = local_names(body[hdr:]) | vbound
                     if loc:
                         kept = set()
                         for t in toks:
-                            head, _dot, rest = t.partition(".")
+                            head, _dot, rest = t.lstrip(".").partition(".")
+                            if t.startswith("."):
+                                kept.add(t)        # dot notation: never a local
+                                continue
                             if head not in loc:
                                 kept.add(t)
                             elif rest:
-                                kept.add(rest)     # `C.foo` with local `C`: `foo` still counts
+                                kept.add("." + rest)   # `C.foo`, local `C`: `foo` still counts, as a tail
                         toks = kept
+                dropped = set()
                 for t in toks:
-                    tgt |= res(t)
+                    kept, gen = res2(t)
+                    tgt |= kept
+                    if gen:
+                        dropped |= gen
+                if dropped:
+                    # C1 rescue: `h.mono` IS a use of `Foo.mono` when `h : Foo`,
+                    # and the declaration then almost always spells `Foo`
+                    # (a binder, a `have`, its statement). Keep a withheld
+                    # candidate whose parent's short name the declaration
+                    # names; drop the rest.
+                    dropped -= tgt
+                    comps = {c for t in toks for c in t.lstrip(".").split(".")}
+                    for n in dropped:
+                        par = self.names[self.node_name[n]].rsplit(".", 2)
+                        if len(par) >= 2 and par[-2] in comps:
+                            tgt.add(n)
+                            self.c1_rescued += 1
                 tgt.discard(nid)
+                if dropped:
+                    self.c1_removed += len(dropped - tgt - {nid})
                 if unsup:
                     binders, _c, _p = split_sig(body[hdr:])
                     for t in set(IDENT.findall(binders)) | vtoks:
@@ -713,9 +843,13 @@ def cmd_cone(argv):
                          "NOSUPPLIER.csv) -> fills the `dead` column")
     ap.add_argument("--shadow-locals", action="store_true",
                     help="drop tokens the declaration binds locally (tighter; see local_names)")
+    ap.add_argument("--generic-names", action="store_true",
+                    help="resolve generic dot tails and tactic words by short name "
+                         "(the pre-C1 behaviour; wider, for comparison)")
     args = ap.parse_args(argv)
     uns = read_names(args.unsupplied) if args.unsupplied else None
-    g = Graph(args.root, unsupplied=uns, shadow_locals=args.shadow_locals)
+    g = Graph(args.root, unsupplied=uns, shadow_locals=args.shadow_locals,
+              generic_names=args.generic_names)
     try:
         rows = g.rows(args.seed)
     except KeyError as e:
@@ -728,6 +862,11 @@ def cmd_cone(argv):
     inc = sum(1 for r in rows if r["in_cone"])
     print(f"{tot:,} declarations, {inc:,} in the cone of {len(args.seed)} seed(s) "
           f"({100.0 * inc / tot:.1f}%)")
+    print(f"C1: {g.c1_removed:,} name-level edges NOT added because they came only from "
+          f"a generic dot tail (<4 chars or {' '.join(sorted(GENERIC_TAILS))}) or a bare "
+          f"tactic word" + (" (--generic-names: they were added)" if args.generic_names else
+                              f"; {g.c1_rescued:,} kept because the declaration names the "
+                              f"candidate's parent type"))
     for (kind, on), v in sorted(kinds.items()):
         print(f"  {kind:10} {'in ' if on else 'out'} {v:7,}")
     print(f"\nblind spot: {blind:,} out-of-cone declarations carry an "
@@ -772,6 +911,7 @@ def cmd_route(argv):
     ap.add_argument("-o", "--out", required=True)
     ap.add_argument("--max-depth", type=int, default=None)
     ap.add_argument("--shadow-locals", action="store_true")
+    ap.add_argument("--generic-names", action="store_true")
     args = ap.parse_args(argv)
     if args.cone:
         rows = load_cone_csv(args.cone)
@@ -789,7 +929,8 @@ def cmd_route(argv):
             print("route needs --root ROOT SEED... or --cone CONE.csv", file=sys.stderr)
             return 2
         seeds = args.seeds
-        g = Graph(args.root, shadow_locals=args.shadow_locals)
+        g = Graph(args.root, shadow_locals=args.shadow_locals,
+                  generic_names=args.generic_names)
         try:
             rows = g.rows(seeds)
         except KeyError as e:
@@ -878,6 +1019,8 @@ def cmd_join(argv):
                     help="needed with --unsupplied: the graph is rebuilt to compute `dead`")
     ap.add_argument("--shadow-locals", action="store_true",
                     help="with --root: build the graph as `cone.py --shadow-locals` did")
+    ap.add_argument("--generic-names", action="store_true",
+                    help="with --root: build the graph as `cone.py --generic-names` did")
     args = ap.parse_args(argv)
     rows = load_cone_csv(args.cone_csv)
     need = ("consumers", "consumers_in_cone", "above_seed", "orphan_file")
@@ -892,7 +1035,7 @@ def cmd_join(argv):
                   file=sys.stderr)
             return 2
         g = Graph(args.root, unsupplied=read_names(args.unsupplied),
-                  shadow_locals=args.shadow_locals)
+                  shadow_locals=args.shadow_locals, generic_names=args.generic_names)
         dead_of = {(g.files[g.node_file[n]], g.names[g.node_name[n]]): v
                    for n, v in g.dead().items()}
     elif "dead" in rows[0]:

@@ -9,13 +9,17 @@ wrong. Finding the shape by hand cost a worker each time. This mechanises it.
 
     python3 audits/nosupplier.py /path/to/lean-project [-o OUT.csv]
 
-METHOD. For every declaration the signature is split at the last top-level `:`
-into a BINDER region and a CONCLUSION. A predicate P is then:
+METHOD. For every declaration the signature is split at the FIRST top-level `:`
+into a BINDER region and a CONCLUSION (note N4 below; it was the last `:` until
+2026-09-28), and the conclusion is read by polarity: `∀` binders and `→`
+antecedents inside it are hypotheses too. A predicate P is then:
 
-  * HYPOTHESIS-USED in D  if P appears in D's binder region, or in a `variable`
+  * HYPOTHESIS-USED in D  if P appears in D's binder region or in a hypothesis
+    position of its conclusion, or in a `variable`
     line in scope (section variables are hypotheses too -- missing them was the
     first bug this script had).
-  * SUPPLIED by D          if P appears in D's CONCLUSION and NOT in its binders.
+  * SUPPLIED by D          if P appears in what D's CONCLUSION asserts and NOT in
+    its hypotheses (or by one of the other mechanisms of notes N1-N5).
     The second clause is essential: `AxisymmetricResidualGrouping.lean:142`
     concludes an `ExtractionRegular` while assuming one at `:140`, which supplies
     nothing. Without that clause the script reports the opposite of the truth.
@@ -112,13 +116,112 @@ see. Four additions, each a column:
     as any of them. Every row has a `shape`: predicate (declared `: Prop`),
     class, bundle (a data `structure`/`inductive`, whose hits are only
     interesting if the route needs an instance), prop_inferred.
+
+FIXED 2026-09-28 (second pass). A reader verified 48 differential-geometry
+candidate rows (`audits/dg-intake/workers/nosupplier-verify-1.md`) and found 44
+false positives with named causes; that report was the test oracle. Each fix
+has a regression shape in `tests/test_audit_tools.py` (`InstrumentFixesTest`,
+all eight of which fail on the previous version). Agreement with the reader
+went 4/48 -> 45/48 (the 4 true negatives stay unsupplied); rows by status
+(--cone, --all) went supplied 1,186 / no_supplier 157 / conditional 146 /
+no_supplier_in_cone 142 -> supplied 1,429 / no_supplier 49 / conditional 35 /
+no_supplier_in_cone 97 (the cone itself also changed, C1 in `cone.py`).
+
+  N4  `split_sig` cut at the LAST depth-0 `:`, so `∃ σ : P, ∀ v : D, …` read
+      `P` as a hypothesis site and `D` as supplied (the reader counted 7,987 of
+      145,545 signatures with more than one top-level colon). The binder
+      region now ends at the FIRST depth-0 `:`, and the conclusion is read by
+      POLARITY (`polarize`): `∀` binders and `→` antecedents are hypotheses
+      (sites, and the Horn body of what they scope over), `∃` witnesses and
+      conjuncts are supplied. Connectives are split only in front of the first
+      binder, whose scope runs to the end of its bracket. `split_sig` is shared
+      with `cone.py` (`dead`) and `junkvalue.py`, which read the true binder
+      region now too. Row flipped by it alone: #23.
+  N4b A `let`/`have` in a statement owns the next `:=`; `split_sig` used to cut
+      the signature there and lose the conclusion (#33).
+  N2  Dot notation: `(solutions p).IsSolutionOn`, `(c.X).SmoothOn`,
+      `T.str.SplitData` are looked up in the namespace of the RECEIVER'S TYPE
+      (Lean's generalized field notation), never the enclosing namespace.
+      Receiver types come from binders, `∀/∃/have` locals, `variable` lines,
+      structure fields, `extends` parents and declaration result types
+      (pass 1 now records those for every declaration). An unreadable receiver
+      falls back to the in-scope `*.Name` candidates; if more than one, the
+      use is AMBIGUOUS: counted in `hypothesis_sites_ambiguous` for each,
+      credited to none. A receiver of a library type (`Set`, `ℝ`, a type
+      variable) resolves only in that namespace. On DG: 8,949 dot uses typed, 62,418 on a library type,
+      3,492 untyped with one candidate, 392 untyped and ambiguous.
+  N6  The same rule stops twins sharing sites or credit: an ambiguous BARE
+      token is now also a site of none of its candidates (it keeps a row
+      listed, so no finding is dropped), and `c.projection.ImmersedOn` is no
+      longer credited to `ProductCurve.ImmersedOn` because the enclosing
+      namespace is `ProductCurve` (#15).
+  N3  Statement defs: `def S : Prop := ∀ …, ∃ a : P, …` yields the clause
+      `P <= S ∧ (hypotheses in P's scope inside the body)`, one unfolding per
+      def; chains of statement defs compose through the fixpoint. Also for
+      `abbrev`. Rows #3, 4, 17, 20, 34 name it directly.
+  N5  Whole-body match: a declaration whose conclusion contains, as one
+      asserted sub-proposition, the BODY of a Prop `abbrev`/`def` (namespace
+      prefixes dropped, parameters and bound names as consistent wildcards,
+      at least 6 tokens and 3 distinct concrete names) supplies it (#28, #32).
+  N1  In-proof constructions are route-2 SUPPLIERS now, not hints:
+      `have/let/obtain/suffices … : T`, `show T`, `(e : T)` with `e` not a
+      bare binder list, `{ … : T }`, `T.mk`. A construction of a predicate the
+      declaration already assumes (in its binders or statement) is closure,
+      not supply, and stays a `route2?` hint. The clause body is the
+      declaration's hypotheses, so a construction inside a theorem that
+      itself needs an unsupplied predicate stays conditional (#14 stays
+      unsupplied that way). The site line is the construction's own line.
+  N7  Found while checking the above: a conclusion `¬ P` credited P (the old
+      crude reading), and so did `P ↔ Q`. `¬ P` now supplies nothing, and
+      `A ↔ B` supplies A under B's predicates and B under A's -- and nothing
+      when the other side names no project predicate (`P g ↔ ∀ x, …` is an
+      unfolding lemma). `∨` is still credited to both sides.
+  A   The application form of route 2 (a `fun` passed as an argument, a
+      `refine { … }` after `apply T`: #44, #45) is inferred as "the proof
+      applies T, which assumes P, and the proof does not assume P" -- and is
+      a HINT only (`route2-apply?` in `hint`). Crediting it (54,433 clauses)
+      flipped 3 of the 4 reader-confirmed unsupplied predicates to supplied
+      (a structure field's type read as a lemma, `.subseq`, a smart
+      constructor that itself needs the predicate): the hiding direction.
+  P   Two regexes (a nested-quantifier ascription scan and a bound-name scan)
+      backtracked catastrophically on long proofs; both are linear now.
+
+The `hint` column names the mechanism that credited a supply (`supplied via
+route2-have at F.lean:L`, or `suppliers: concl 3, stmt-def 1` for a row that
+is not effective), and `supplied_by` is the clause that fired. Mechanism
+labels in `chain` are in brackets. Clauses on DG by mechanism: concl 22,447, route2-have 11,544,
+route2-let 2,541, stmt-def 2,024, concl-iff 1,030, route2-show 284, def-body
+194, route2-ascription 179, route2-obtain 71, route2-suffices 19, route2-mk 19,
+abbrev-body 9, route2-record 1.
+Suppliers found this way are CANDIDATE credits as much as the old candidates
+were: a `have h : P := sorry` or an `(e : P)` that elaborates to something
+else would be credited. The reader-confirmed negatives are the check that
+they do not over-credit on this artifact; a sample of 16 newly supplied
+predicates outside the 48 read correct.
+
+Remaining disagreements with the reader (3 of 48): #40 is route 4 (a supplied
+structure `extends` it), deliberately not credited; #44 and #45 are the
+application form above, pointed at by the `route2-apply?` hint. Two reader
+details disagree with the source rather than the verdict: #7 is supplied by
+`CurveMap.Field.smoothOn_X` (`Connection.lean:131`), not by
+`ProductCurve.field_smoothOn_X`, which concludes the `ProductCurve.Field`
+twin; and #16's `let X := @SmoothCutCapTransition.mk …` rebuilds a
+`∀ X : SmoothCutCapTransition` hypothesis (closure), the supplier being
+`BufferedSmoothCutCapTransition.lean:45`.
+
+Newly UNSUPPLIED (were supplied before): the `¬`/`↔`/polarity fixes remove
+false credits (`FiniteHorn` was "supplied" by `¬ Nonempty (FiniteHorn g)`;
+`IsCanonicalReturningComponent` only ever appears negated), and C1 in
+`cone.py` moved some suppliers out of the cone (`datumIsometry`'s only
+supplier `datumIsometry.refl` has no use anywhere).
 """
 
 import argparse, collections, csv, os, re, sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from safeverifyagent.extract import blank_comments          # noqa: E402
-from cone import decls_with_ns, IDENT, IMPORT, SKIP_DIRS, closures, module_name  # noqa: E402
+from cone import (decls_with_ns, IDENT, IMPORT, SKIP_DIRS, closures, module_name,  # noqa: E402
+                  binder_names, _SID)
 
 PRED_KINDS = ("structure", "class", "inductive", "def", "abbrev")
 # A `variable` block CONTINUES across indented lines:
@@ -156,10 +259,25 @@ def strip_header(body: str) -> str:
     return body[m.end():] if m else body
 
 
+def _idch(ch):
+    return ch.isalnum() or ch in "_'!?."
+
+
+# `let`/`have` inside a STATEMENT own the next depth-0 `:=` (N4b).
+_KW_LET = re.compile(r"(?<![\w'.!?])(?:letI|haveI|let|have)(?![\w'!?])")
+
+
 def split_sig(body: str):
-    """(binder_region, conclusion, proof) -- by bracket depth, not by regex."""
+    """(binder_region, conclusion, proof) -- by bracket depth, not by regex.
+
+    The binder region ends at the FIRST depth-0 `:` (every binder is
+    bracketed, so the first depth-0 colon is the signature's), and the
+    definition's `:=` is the first depth-0 `:=` after it that no `let`/`have`
+    inside the statement owns. See notes N4 and N4b in the module docstring.
+    """
     depth, i, n = 0, 0, len(body)
-    cut = None
+    colon = cut = None
+    pending = 0
     while i < n:
         c = body[i]
         if c in OPENERS:
@@ -167,27 +285,435 @@ def split_sig(body: str):
         elif c in CLOSERS:
             depth -= 1
         elif depth == 0:
-            if body.startswith(":=", i):
+            if c == ":" and body.startswith(":=", i):
+                if pending:
+                    pending -= 1
+                    i += 2
+                    continue
                 cut = i
                 break
-            if body.startswith("where", i) and (i == 0 or not body[i - 1].isalnum()):
+            if c == ":":
+                if colon is None:
+                    colon = i
+            elif c == "w" and body.startswith("where", i) and (i == 0 or not _idch(body[i - 1])) \
+                    and (i + 5 >= n or not _idch(body[i + 5])):
                 cut = i
                 break
+            elif colon is not None and c in "lh" and _KW_LET.match(body, i):
+                pending += 1
         i += 1
     sig, proof = (body[:cut], body[cut:]) if cut is not None else (body, "")
-    # last top-level ':' separates the conclusion
-    depth, last = 0, None
-    for j, c in enumerate(sig):
+    if colon is None:
+        return sig, "", proof
+    return sig[:colon], sig[colon + 1:], proof
+
+
+def find_top(s, tok, start=0, stop_nl=False):
+    """First index >= start where `tok` occurs at bracket depth 0 relative to
+    `start`; None if the enclosing bracket closes first."""
+    depth, i, n = 0, start, len(s)
+    while i < n:
+        c = s[i]
         if c in OPENERS:
             depth += 1
         elif c in CLOSERS:
             depth -= 1
-        elif c == ":" and depth == 0 and not sig.startswith(":=", j):
-            last = j
-    if last is None:
-        return sig, "", proof
-    return sig[:last], sig[last + 1:], proof
+            if depth < 0:
+                return None
+        elif depth == 0:
+            if s.startswith(tok, i):
+                if not tok[0].isalpha() or ((i == 0 or not _idch(s[i - 1]))
+                                            and (i + len(tok) >= n or not _idch(s[i + len(tok)]))):
+                    return i
+            if stop_nl and c == "\n":
+                return None
+        i += 1
+    return None
 
+
+def split_top(s, sep):
+    out, depth, last, i, n = [], 0, 0, 0, len(s)
+    while i < n:
+        c = s[i]
+        if c in OPENERS:
+            depth += 1
+        elif c in CLOSERS:
+            depth -= 1
+        elif depth == 0 and s.startswith(sep, i):
+            out.append(s[last:i])
+            i += len(sep)
+            last = i
+            continue
+        i += 1
+    out.append(s[last:])
+    return out
+
+
+def binder_start(s):
+    """Index of the first depth-0 binder (`∀ ∃ Π λ fun let have`), or len(s).
+    A binder's scope runs to the end of the enclosing bracket, so `A ∧ ∃ f : X
+    → Y, B ∧ C` is `A ∧ (∃ f : X → Y, (B ∧ C))`: the `→` and the second `∧`
+    are not top-level connectives of the whole."""
+    depth, n = 0, len(s)
+    for i, c in enumerate(s):
+        if c in OPENERS:
+            depth += 1
+        elif c in CLOSERS:
+            depth -= 1
+        elif depth == 0 and i:
+            if c in "\u2200\u2203\u03a0\u03bb":
+                return i
+            if c in "flh" and (not _idch(s[i - 1])) and _BINDER_WORD.match(s, i):
+                return i
+    return n
+
+
+_BINDER_WORD = re.compile(r"(?:fun|letI|let|haveI|have)(?![\w'!?])")
+
+
+def split_scoped(s, sep):
+    """`split_top`, but only among the connectives in front of the first
+    depth-0 binder (see `binder_start`)."""
+    q = binder_start(s)
+    parts = split_top(s[:q], sep)
+    parts[-1] += s[q:]
+    return parts
+
+
+def match_close(s, i):
+    """Index of the bracket closing the opener at `i`, or None."""
+    depth = 0
+    for j in range(i, len(s)):
+        c = s[j]
+        if c in OPENERS:
+            depth += 1
+        elif c in CLOSERS:
+            depth -= 1
+            if depth == 0:
+                return j
+    return None
+
+
+def strip_parens(s):
+    s = s.strip()
+    while s.startswith("(") and match_close(s, 0) == len(s) - 1:
+        s = s[1:-1].strip()
+    return s
+
+
+_QUANT = re.compile(r"(∀ᶠ|∃ᶠ|∀|∃!|∃|Π)")
+
+
+def polarize(s):
+    """Split a proposition into (neg, pos, units, iffs) by POLARITY (note N4).
+
+    `neg`: text in hypothesis position -- `∀`/`Π` binders and the antecedents
+    of `→`. `pos`: `(text, scope)` for what the proposition ASSERTS -- the
+    final consequent, each `∧` conjunct, and `∃` witness binders (an `∃ a : P`
+    builds a `P`) -- where `scope` is the tuple of `neg` texts it sits under:
+    `∃ σ : M, ∀ v : D, Q` supplies M outright and Q only given a D.
+    `units`: every positive sub-proposition met on the way down, outermost
+    first, for whole-statement matching (note N5). `iffs`: `(A, B, scope)` for
+    each asserted `A ↔ B`, which supplies A only given B and B only given A
+    (note N7). A `¬ P` asserts nothing about P and yields nothing. `let`/`have`
+    bindings in a statement are neither. `∨` stays in `pos`, the crude reading
+    the conclusion always had (a disjunction is credited to both)."""
+    neg, pos, units, iffs = [], [], [], []
+    _polarize(s, (), neg, pos, units, iffs, 0)
+    return neg, pos, units, iffs
+
+
+def _polarize(s, scope, neg, pos, units, iffs, lvl):
+    for _ in range(200):
+        s = strip_parens(s)
+        if not s:
+            return
+        units.append(s)
+        m = _QUANT.match(s)
+        if m:
+            k = find_top(s, ",", m.end())
+            if k is None:
+                break
+            q = m.group(1)
+            if q in ("\u2200", "\u03a0"):
+                neg.append(s[m.end():k])
+                scope = scope + (s[m.end():k],)
+            elif q in ("\u2203", "\u2203!"):
+                pos.append((s[m.end():k], scope))
+            s = s[k + 1:]
+            continue
+        m = _KW_LET.match(s)
+        if m:
+            k = find_top(s, ":=", m.end())
+            if k is None:
+                break
+            e = [x for x in (find_top(s, ";", k + 2), find_top(s, "\n", k + 2)) if x is not None]
+            if not e:
+                break
+            s = s[min(e) + 1:]
+            continue
+        if s.startswith("\u00ac"):
+            return
+        parts = split_scoped(s, "\u2194")
+        if len(parts) == 2:
+            iffs.append((parts[0], parts[1], scope))
+            return
+        parts = split_scoped(s, "\u2192")
+        if len(parts) > 1:
+            neg.extend(parts[:-1])
+            scope = scope + tuple(parts[:-1])
+            s = parts[-1]
+            continue
+        parts = split_scoped(s, "\u2227")
+        if len(parts) > 1 and lvl < 32:
+            for p in parts:
+                _polarize(p, scope, neg, pos, units, iffs, lvl + 1)
+            return
+        break
+    pos.append((s, scope))
+
+
+# ---------------------------------------------------------------------------
+# LOCALS AND DOT NOTATION (note N2). `(c.X).SmoothOn J` is generalized field
+# notation: Lean looks `SmoothOn` up in the namespace of the TYPE of `c.X`,
+# never in the enclosing namespace or `open`s. So the receiver's type is
+# computed where that is cheap (a binder, a field, a declaration's result
+# type), and otherwise the use is AMBIGUOUS, which neither pools a site onto
+# every `*.SmoothOn` nor credits one of them as supplied.
+# ---------------------------------------------------------------------------
+_BIND_OPEN = re.compile(r"[(\[{⦃]\s*((?:%s\s+)*%s)\s*:(?!=)" % (_SID, _SID))
+_BIND_Q = re.compile(r"(?:∀|∃!?|Π)\s*((?:%s\s+)*%s)\s*:(?!=)" % (_SID, _SID))
+_BIND_HAVE = re.compile(r"(?<![\w'.])(?:have|haveI|let|letI|obtain|set)\s+(%s)\s*:(?!=)" % _SID)
+
+
+def local_types(text, out=None):
+    """{local name: its type text}, first binding wins."""
+    out = {} if out is None else out
+    for m in _BIND_OPEN.finditer(text):
+        e = match_close(text, m.start())
+        ty = text[m.end():e] if e is not None else text[m.end():m.end() + 300]
+        for nm in m.group(1).split():
+            out.setdefault(nm, ty)
+    for rx, stop in ((_BIND_Q, ","), (_BIND_HAVE, ":=")):
+        for m in rx.finditer(text):
+            k = find_top(text, stop, m.end())
+            ty = text[m.end():k] if k is not None and k - m.end() < 600 else text[m.end():m.end() + 300]
+            for nm in m.group(1).split():
+                out.setdefault(nm, ty)
+    return out
+
+
+def type_head(ty):
+    """The head identifier of a type: after the last top-level `→`, under
+    any leading `∀ … ,`. `ι → ProductCurve Q` has head `ProductCurve`."""
+    if not ty:
+        return None
+    for _ in range(8):
+        t = strip_parens(split_top(ty, "→")[-1])
+        m = _QUANT.match(t)
+        if m:
+            k = find_top(t, ",", m.end())
+            if k is None:
+                return None
+            ty = t[k + 1:]
+            continue
+        t = t.lstrip("@")
+        m = IDENT.match(t)
+        return m.group(0) if m else None
+    return None
+
+
+def dot_uses(text):
+    """[(token, receiver)]: `receiver` is the parenthesised expression text for
+    `(e).Name`, the empty string for an unreadable receiver (`x.1.Name`,
+    leading-dot `.Name`), and None for an ordinary token."""
+    out = []
+    for m in IDENT.finditer(text):
+        s = m.start()
+        if s > 0 and text[s - 1] == ".":
+            recv = ""
+            if s > 1 and text[s - 2] == ")":
+                depth, j = 0, s - 2
+                while j >= 0:
+                    if text[j] in CLOSERS:
+                        depth += 1
+                    elif text[j] in OPENERS:
+                        depth -= 1
+                        if depth == 0:
+                            break
+                    j -= 1
+                if j >= 0:
+                    recv = text[j + 1:s - 2]
+            out.append((m.group(0), recv))
+        else:
+            out.append((m.group(0), None))
+    return out
+
+
+# ---------------------------------------------------------------------------
+# IN-PROOF CONSTRUCTIONS (note N1): route-2 suppliers.
+# ---------------------------------------------------------------------------
+_CONSTRUCT_KW = re.compile(r"(?<![\w'.])(have|haveI|let|letI|obtain|suffices|show)(?![\w'!?])")
+_COLON = re.compile(r"\s:(?![=:])")
+_BARE = re.compile(r"^\s*[^\s.()]+(?:\s+[^\s.()]+)*\s*$")
+# tactic words and generic dot-tails that name a project declaration only by
+# accident (`refine` -> `HasStageSeed.refine`); shared with cone.py's C1 fix
+APPLY_STOP = frozenset("""trans symm mono at mk le lt refl mp mpr cast comp map
+    exact apply refine intro intros constructor use exists show have let obtain
+    rcases cases induction simp rw calc congr ext funext subst unfold change
+    specialize aesop omega linarith positivity norm_num ring field_simp gcongr
+    filter_upwards exfalso contradiction trivial rfl decide by fun from with
+    left right some none of_eq id""".split())
+_MK = re.compile(r"@?(?P<t>%s(?:\.%s)*)\.mk(?![\w'!?])" % (_SID, _SID))
+
+
+def _type_end(s, i, kw):
+    """End of a type that starts at `i`: the depth-0 `:=`, `from`, `by`
+    (for `suffices`/`show`), `;`, `<;>`, or a line that is not indented deeper
+    than the line the construction starts on."""
+    ls = s.rfind("\n", 0, i) + 1
+    ind = len(s[ls:]) - len(s[ls:].lstrip(" "))
+    depth, j, n = 0, i, len(s)
+    while j < n and j - i < 3000:
+        c = s[j]
+        if c in OPENERS:
+            depth += 1
+        elif c in CLOSERS:
+            depth -= 1
+            if depth < 0:
+                return j
+        elif depth == 0:
+            if s.startswith(":=", j) or c == ";" or s.startswith("<;>", j):
+                return j
+            if c == "\n":
+                k = j + 1
+                while k < n and s[k] == " ":
+                    k += 1
+                if k - j - 1 <= ind and k < n and s[k] != "\n":
+                    return j
+            if kw in ("suffices", "show") and c in "fb" and (j == 0 or not _idch(s[j - 1])):
+                for w in ("from", "by"):
+                    if s.startswith(w, j) and (j + len(w) >= n or not _idch(s[j + len(w)])):
+                        return j
+        j += 1
+    return j
+
+
+def constructions(proof):
+    """[(type_text, mechanism, offset)] of every place a proof builds a term
+    AT A WRITTEN TYPE: `have/let/obtain/suffices … : T`, `show T`,
+    `(e : T)` with `e` not a bare binder list, `{ … : T }`, and `T.mk`."""
+    out = []
+    for m in _CONSTRUCT_KW.finditer(proof):
+        kw = m.group(1)
+        if kw == "show":
+            st = m.end()
+        else:
+            k = find_top(proof, ":", m.end(), stop_nl=True)
+            if k is None or proof.startswith(":=", k) or k - m.end() > 200:
+                continue
+            st = k + 1
+        e = _type_end(proof, st, kw)
+        ty = proof[st:e]
+        if ty.strip():
+            out.append((ty, "route2-" + kw.rstrip("I"), m.start()))
+    # `(e : T)`: from each ` : `, back to the bracket that encloses it (a
+    # bounded backward scan; a regex over the whole proof backtracked
+    # catastrophically on long proofs)
+    for m in _COLON.finditer(proof):
+        depth, j = 0, m.start()
+        while j >= 0 and m.start() - j < 400:
+            c = proof[j]
+            if c in CLOSERS:
+                depth += 1
+            elif c in OPENERS:
+                if depth == 0:
+                    break
+                depth -= 1
+            j -= 1
+        if j < 0 or m.start() - j >= 400 or proof[j] != "(":
+            continue
+        e = proof[j + 1:m.start()]
+        if not e.strip() or _BARE.match(e) or "\n" in e.strip():
+            continue
+        pre = proof[max(0, j - 12):j]
+        if re.search(r"(?:fun|\u03bb|\u2200|\u2203|\u03a0)\s*$", pre):
+            continue
+        close = match_close(proof, j)
+        if close is None:
+            continue
+        out.append((proof[m.end():close], "route2-ascription", j))
+    i = proof.find("{")
+    while i >= 0:
+        close = match_close(proof, i)
+        if close is not None and close - i < 6000:
+            body = proof[i + 1:close]
+            k = None
+            parts = split_top(body, ":")
+            if len(parts) > 1:
+                # the last depth-0 `:` that is not part of `:=`
+                acc = 0
+                for p in parts[:-1]:
+                    acc += len(p) + 1
+                    if not body.startswith(":=", acc - 1):
+                        k = acc - 1
+            if k is not None and find_top(body, ":=") is not None and find_top(body, ":=") < k:
+                ty = body[k + 1:]
+                between = body[:k].rsplit(":=", 1)[-1]
+                if ":=" not in ty and not re.search(r"(?:fun|λ|∀|∃)\b|↦|=>", between) \
+                        and "|" not in ty and "//" not in ty:
+                    out.append((ty, "route2-record", i))
+        i = proof.find("{", i + 1)
+    for m in _MK.finditer(proof):
+        out.append((m.group("t"), "route2-mk", m.start()))
+    return out
+
+
+# ---------------------------------------------------------------------------
+# WHOLE-STATEMENT MATCHING (note N5): a Prop `abbrev`/`def` is supplied by a
+# declaration that states its unfolded BODY.
+# ---------------------------------------------------------------------------
+_NTOK = re.compile(r"%s|\d+|\S" % IDENT.pattern)
+_BOUND = re.compile(r"(?:\u2200|\u2203!?|fun|\u03bb|\u03a0)\s*\(?\s*(%s(?:\s+%s)*)" % (_SID, _SID))
+
+
+def norm_tokens(text, wild=()):
+    """Token sequence with namespace prefixes dropped (`Metric.closedBall` ->
+    `closedBall`), dotted locals split (`δ.chart` -> `δ . chart`), and the
+    names in `wild` plus every name bound inside `text` turned into `?name`."""
+    bound = set(wild)
+    for m in _BOUND.finditer(text):
+        bound.update(m.group(1).split())
+    out = []
+    for m in _NTOK.finditer(text):
+        t = m.group(0)
+        if IDENT.fullmatch(t):
+            parts = t.split(".")
+            while len(parts) > 1 and parts[0][:1].isupper() and parts[0] not in bound:
+                parts = parts[1:]
+            for j, p in enumerate(parts):
+                if j:
+                    out.append(".")
+                out.append("?" + p if p in bound else p)
+        else:
+            out.append(t)
+    return out
+
+
+def match_tokens(pat, toks):
+    """Whole-sequence match; `?x` in `pat` binds one identifier consistently."""
+    if len(pat) != len(toks):
+        return False
+    env = {}
+    for a, b in zip(pat, toks):
+        if a.startswith("?") and len(a) > 1:
+            if b == "." or not (b[0].isalpha() or b[0] in "_?"):
+                return False
+            if env.setdefault(a, b) != b:
+                return False
+        elif a != b:
+            return False
+    return True
 
 
 # ---------------------------------------------------------------------------
@@ -218,10 +744,7 @@ def split_sig(body: str):
 # ---------------------------------------------------------------------------
 
 FIELD_LINE = re.compile(r"^[ \t]+(?!--)([A-Za-z_][\w'!?\u2080-\u2089]*)\s*:\s*(.+)$", re.M)
-ASCRIPTION = re.compile(
-    r"\b(?:have|let|show|suffices)\b[^:\n]{0,80}?:(?!=)\s*"
-    r"(?P<ty>(?:(?!:=)[\s\S]){1,250}?):=(?=(?P<rhs>[\s\S]{0,220}))")
-CONSTRUCTS = re.compile(r"\u27e8|\bconstructor\b|\brefine\b|\bmk\b")
+
 
 
 def struct_fields(body: str):
@@ -355,25 +878,56 @@ def main(argv=None) -> int:
         with open(os.path.join(args.root, rel), encoding="utf-8", errors="replace") as fh:
             return blank_comments(fh.read())
 
-    # ---- pass 1: candidate predicates, structure fields, inductive constructors
+    # ---- pass 1: every declaration's name and result-type head (for dot
+    # notation), candidate predicates, structure fields and parents,
+    # inductive constructors, and the bodies of Prop-valued defs
     preds, declared_at, shape = {}, {}, {}
     pred_files = collections.defaultdict(set)
+    all_files = collections.defaultdict(set)
+    decl_ret, field_ret = {}, {}
+    parents_raw = collections.defaultdict(list)
+    fctx = [()] * nf
+    body_pats = collections.defaultdict(list)   # token count -> [(A, pattern)]
     mod_idx = {module_name(rel): i for i, rel in enumerate(files)}
     imports = [[] for _ in files]
     raw_fields = []      # (structure, ctx, [type text])
     raw_ctors = []       # (inductive, ctx, rel, line, [ctor text])
+
+    def ret_entry(h, locs):
+        parts = h.split(".")
+        if len(parts) > 1 and parts[0] in locs:
+            head = type_head(locs[parts[0]])
+            if head:
+                return ("dot", head, tuple(parts[1:]))
+            return None
+        return ("name", h)
+
     for fi, rel in enumerate(files):
         txt = read(rel)
+        fctx[fi] = file_ctx(txt)
         imports[fi] = sorted({mod_idx[m] for m in IMPORT.findall(txt) if m in mod_idx})
+        flocs = {}
+        for m in VARIABLE.finditer(txt):
+            local_types(m.group("rest"), flocs)
         for full, kind, line, body in decls_with_ns(txt):
-            if kind not in PRED_KINDS:
-                continue
+            all_files[full].add(fi)
             hb = strip_header(body)
+            fp = full.split(".")
+            ns = tuple(".".join(fp[:k]) for k in range(len(fp) - 1, 0, -1))
             if kind == "inductive":
                 # the signature ends where the constructors begin; otherwise the
                 # last `:` is a constructor's and the type reads as its result
                 hb = re.split(r"\n[ \t]*\||\bwhere\b", hb, maxsplit=1)[0]
             _b, concl, rest = split_sig(hb)
+            if kind not in ("structure", "class", "inductive") and concl.strip() \
+                    and full not in decl_ret:
+                h = type_head(concl)
+                if h:
+                    e = ret_entry(h, local_types(_b, dict(flocs)))
+                    if e:
+                        decl_ret[full] = (e, fi, ns)
+            if kind not in PRED_KINDS:
+                continue
             is_prop = "Prop" in IDENT.findall(concl)
             sh = None
             if kind == "class":
@@ -393,17 +947,35 @@ def main(argv=None) -> int:
             shape[full] = sh
             declared_at[full] = (rel, line)
             pred_files[full].add(fi)
-            parts = full.split(".")
-            ctx = tuple(".".join(parts[:j + 1]) for j in range(len(parts)))
+            ctx = tuple(".".join(fp[:j + 1]) for j in range(len(fp)))
             if kind in ("structure", "class"):
-                types = [t for _n, t in struct_fields(body)]
+                slocs = local_types(_b, dict(flocs))
+                fields = struct_fields(body)
+                for fname, ftype in fields:
+                    h = type_head(ftype)
+                    e = ret_entry(h, slocs) if h else None
+                    if e:
+                        field_ret.setdefault(f"{full}.{fname}", (e, fi, (full,) + ns))
+                types = [t for _n, t in fields]
                 m = EXTENDS.search(hb.split(":=", 1)[0])
                 if m:
                     types.append(m.group("rest"))
-                raw_fields.append((full, ctx + file_ctx(txt), fi, types))
+                    for par in split_top(m.group("rest"), ","):
+                        h = type_head(par)
+                        if h:
+                            parents_raw[full].append((h, fi, (full,) + ns))
+                raw_fields.append((full, ctx + fctx[fi], fi, types))
             elif kind == "inductive":
                 ctors = [(c.group(1), c.group("rest")) for c in CTOR.finditer(body)]
-                raw_ctors.append((full, ctx + file_ctx(txt), fi, rel, line, ctors))
+                raw_ctors.append((full, ctx + fctx[fi], fi, rel, line, ctors))
+            elif sh in ("predicate", "prop_inferred") and rest.startswith(":="):
+                bt = re.sub(r"^\s*by\s+exact\b", "", rest[2:])
+                if not bt.lstrip().startswith("by"):
+                    wild = binder_names(_b) | set(flocs)
+                    pat = norm_tokens(strip_parens(bt), wild)
+                    conc = [t for t in pat if t[:1].isalpha() and not t.startswith("?")]
+                    if len(pat) >= 6 and len(set(conc)) >= 3:
+                        body_pats[len(pat)].append((full, pat))
         if (fi + 1) % 2000 == 0:
             progress(f"[nosupplier] pass 1: {fi + 1:,}/{nf:,} files")
 
@@ -413,6 +985,11 @@ def main(argv=None) -> int:
         for j in range(len(parts)):
             suffix[".".join(parts[j:])].add(full)
     short_count = collections.Counter(p.rsplit(".", 1)[-1] for p in preds)
+    all_suffix = collections.defaultdict(list)
+    for full in all_files:
+        parts = full.split(".")
+        for j in range(len(parts)):
+            all_suffix[".".join(parts[j:])].append(full)
 
     # RESOLUTION, and why it differs from cone.py's on purpose.
     # cone.py resolves a token to EVERY contiguous run of its components, which
@@ -481,22 +1058,286 @@ def main(argv=None) -> int:
             rcache[key] = r
         return r
 
-    # ---- pass 2: hypothesis sites, suppliers (as clauses), ascription hints
+    # ---- dot notation (note N2): the receiver's TYPE names the namespace.
+    scache = {}
+
+    def sres(tok, fi, ns):
+        """Static (import-scope-free) resolution of a type or function name to
+        one declaration: innermost namespace first, then the root, then the
+        declaring file's `namespace`/`open` context. None unless unique."""
+        key = (tok, fi, ns)
+        if key in scache:
+            return scache[key]
+        cand = all_suffix.get(tok, ())
+        r = None
+        if len(cand) == 1:
+            r = cand[0]
+        elif cand:
+            for p in ns:
+                if f"{p}.{tok}" in all_files:
+                    r = f"{p}.{tok}"
+                    break
+            else:
+                if tok in all_files:
+                    r = tok
+                else:
+                    hit = {c for c in cand if any(c == f"{p}.{tok}" for p in fctx[fi])}
+                    r = next(iter(hit)) if len(hit) == 1 else None
+        scache[key] = r
+        return r
+
+    lcache = {}
+
+    def lineage(T):
+        """T and the structures it `extends`, transitively."""
+        r = lcache.get(T)
+        if r is None:
+            r, seen, q = [], {T}, [T]
+            while q and len(r) < 16:
+                x = q.pop(0)
+                r.append(x)
+                for h, fi2, ns2 in parents_raw.get(x, ()):
+                    y = sres(h, fi2, ns2)
+                    if y and y not in seen:
+                        seen.add(y)
+                        q.append(y)
+            lcache[T] = r
+        return r
+
+    def name_in(T, f):
+        for X in lineage(T):
+            if f"{X}.{f}" in all_files:
+                return f"{X}.{f}"
+        return None
+
+    ecache = {}
+
+    def static_entry(ent, depth=0):
+        if ent is None or depth > 6:
+            return None
+        key = (ent, depth)
+        if key in ecache:
+            return ecache[key]
+        (e, fi2, ns2) = ent
+        if e[0] == "name":
+            r = sres(e[1], fi2, ns2)
+        else:
+            r = sres(e[1], fi2, ns2)
+            for f in e[2][:-1]:
+                r = member(r, f, depth + 1) if r else None
+            r = name_in(r, e[2][-1]) if r else None
+        ecache[key] = r
+        return r
+
+    def member(T, f, depth=0):
+        """Type of `x.f` for `x : T` -- a field or a declaration `T.f`."""
+        if T is None:
+            return None
+        for X in lineage(T):
+            nm = f"{X}.{f}"
+            if nm in field_ret:
+                return static_entry(field_ret[nm], depth + 1)
+            if nm in decl_ret:
+                return static_entry(decl_ret[nm], depth + 1)
+        return None
+
+    class Ctx:
+        """Resolution context of one declaration: file, namespaces, locals."""
+        __slots__ = ("ctx", "fi", "ns", "locs", "memo")
+
+        def __init__(self, ctx, fi, ns, locs):
+            self.ctx, self.fi, self.ns, self.locs, self.memo = ctx, fi, ns, locs, {}
+
+    def rtype(expr, C, depth=0):
+        """Declared type (full name) of a receiver expression, or None."""
+        if depth > 4:
+            return None
+        m = IDENT.match(expr.strip().lstrip("@(↑ "))
+        if not m:
+            return None
+        parts = m.group(0).split(".")
+        if parts[0] in C.locs:
+            T, rest = tfull(C.locs[parts[0]], C, depth + 1), parts[1:]
+        else:
+            T, rest = None, []
+            for k in range(len(parts), 0, -1):
+                g = sres(".".join(parts[:k]), C.fi, C.ns)
+                if g:
+                    T, rest = static_entry(decl_ret.get(g)), parts[k:]
+                    break
+        for f in rest:
+            T = member(T, f) if T and not T.startswith("~") else None
+        return T
+
+    def tfull(ty, C, depth=0):
+        h = type_head(ty)
+        if not h or depth > 4:
+            return None
+        parts = h.split(".")
+        if len(parts) > 1 and parts[0] in C.locs:
+            R = rtype(".".join(parts[:-1]), C, depth + 1)
+            return name_in(R, parts[-1]) if R and not R.startswith("~") else None
+        r = sres(h, C.fi, C.ns)
+        if r is None and h not in all_suffix:
+            # no project declaration has this name at all: a library type
+            # (`Set`, `ℝ`) or a type variable. Marked, so a dot use on it is
+            # looked up in THAT namespace only and never falls back to a
+            # same-named project predicate.
+            return "~" + h
+        return r
+
+    stats = collections.Counter()
+
+    def resolve_text(text, C):
+        """[(candidates, ambiguous, dot)] per distinct token use in `text`.
+        `ambiguous` means more than one candidate survived: such a use is a
+        site of NONE of them (it is counted apart) and supplies none."""
+        out = []
+        for tok, recv in set(dot_uses(text)):
+            key = (tok, recv)
+            got = C.memo.get(key)
+            if got is None:
+                parts = tok.split(".")
+                name, rexpr, mem = None, None, ()
+                if recv is not None:
+                    # `(e).a.b`: `a` is a member of e's type, `b` is looked up in a's
+                    name, rexpr, mem = parts[-1], recv, parts[:-1]
+                elif len(parts) > 1 and parts[0] in C.locs:
+                    name, rexpr = parts[-1], ".".join(parts[:-1])
+                if name is None:
+                    r = resolve(tok, C.ctx, C.fi, C.ns)
+                    got = (r, len(r) > 1, False)
+                else:
+                    T = rtype(rexpr, C) if rexpr else None
+                    for f in mem:
+                        T = member(T, f) if T and not T.startswith("~") else None
+                    r = frozenset()
+                    if T:
+                        for X in ([T[1:]] if T.startswith("~") else lineage(T)):
+                            if f"{X}.{name}" in preds:
+                                r = frozenset([f"{X}.{name}"])
+                                break
+                    if r:
+                        stats["dot_typed"] += 1
+                        got = (r, False, True)
+                    elif T and T.startswith("~"):
+                        stats["dot_library_type"] += 1
+                        got = (frozenset(), False, True)
+                    else:
+                        r = resolve(name, (), C.fi, ())
+                        if r:
+                            stats["dot_untyped_ambiguous" if len(r) > 1 else "dot_untyped_unique"] += 1
+                        got = (r, len(r) > 1, True)
+                C.memo[key] = got
+            out.append(got)
+        return out
+
+    def split_res(res):
+        """(all candidates, unambiguous singletons, ambiguous candidates)"""
+        allc, una, amb = set(), set(), set()
+        for r, a, _d in res:
+            allc |= r
+            if a:
+                amb |= r
+            elif len(r) == 1:
+                una |= r
+        return allc, una, amb
+
+    # ---- pass 2: hypothesis sites, suppliers (as clauses), in-proof
+    # constructions, statement-def unfolding and whole-body matches
     hyp = collections.defaultdict(list)       # P -> [(rel, line, kind, in_cone)]
-    sup = collections.defaultdict(list)       # P -> [(rel, line, kind, in_cone)]
+    hyp_amb = collections.defaultdict(list)   # P -> sites where P was one of several
+    sup = collections.defaultdict(list)       # P -> [(rel, line, mechanism, in_cone)]
     clauses = []                              # (P, body, label, in_cone)
     asc = collections.defaultdict(list)
     unmatched = 0
+    mech_n = collections.Counter()
+
+    def add_supplier(P, body, rel, ln, mech, on):
+        sup[P].append((rel, ln, mech, on))
+        clauses.append((P, frozenset(body - {P}), f"{rel}:{ln} [{mech}]", on))
+        mech_n[mech.split(" ", 1)[0]] += 1
+
+    decl_hyp = {}
+    apps = []
+    sncache = {}
+
+    def scoped_name(t, prefixes, fi):
+        """The declaration `t` names by its full spelling or under one of the
+        declaration's namespaces / the file's `open`s, in import scope."""
+        key = (t, prefixes, fi)
+        if key in sncache:
+            return sncache[key]
+        if fi != cur["fi"]:
+            resolve("", (), fi)            # switch the scope bitset to this file
+        bits = cur["bits"]
+        r = None
+        for c in [t] + [f"{p}.{t}" for p in prefixes]:
+            fs = all_files.get(c)
+            if fs and any(bits[m >> 3] >> (m & 7) & 1 for m in fs):
+                r = c
+                break
+        sncache[key] = r
+        return r
+
+    def iff_clauses(iffs, C, excl, body, rel, ln, mech, on):
+        """`A ↔ B` supplies A under B and B under A (note N7) -- and only when
+        the other side names a project predicate to condition on: `P g ↔ ∀ x,
+        <library statement>` is an unfolding lemma, not a proof that P holds."""
+        for A, B, scope in iffs:
+            ra, rb = split_res(resolve_text(A, C)), split_res(resolve_text(B, C))
+            for x, y in ((ra, rb), (rb, ra)):
+                if not y[1]:
+                    continue
+                for P in x[1]:
+                    if P not in excl and P not in y[0]:
+                        add_supplier(P, body | y[1] | scope_una(scope, C), rel, ln,
+                                     mech + "-iff", on)
+
+    def scope_una(scope, C):
+        """Unambiguous predicates among the hypotheses an asserted item sits
+        under (the `scope` of a `polarize` item)."""
+        if not scope:
+            return frozenset()
+        key = ("\x00scope",) + scope
+        got = C.memo.get(key)
+        if got is None:
+            got = frozenset(split_res(resolve_text("\n".join(scope), C))[1])
+            C.memo[key] = got
+        return got
+
+    def credit_pos(pos, C, excl, body, rel, ln, mech, on, hint=None):
+        """Supplier clauses for the asserted items of a statement: each is
+        credited under `body` plus the hypotheses in its own scope."""
+        for text, scope in pos:
+            for r, a, _d in resolve_text(text, C):
+                for P in r:
+                    if P in excl:
+                        if hint is not None and not a:
+                            hint(P)
+                        continue
+                    if a or len(r) != 1:
+                        if hint is not None:
+                            hint(P)
+                        continue
+                    add_supplier(P, body | scope_una(scope, C), rel, ln, mech, on)
+
     for fi, rel in enumerate(files):
         txt = read(rel)
-        ctx = file_ctx(txt)
+        ctx = fctx[fi]
         file_in_cone = rel in cone_files
-        # section `variable` lines are hypotheses in scope for the whole file
+        flocs = {}
+        vblocks = []
         for m in VARIABLE.finditer(txt):
-            ln = txt.count("\n", 0, m.start()) + 1
-            for t in set(IDENT.findall(m.group("rest"))):
-                for P in resolve(t, ctx, fi):
-                    hyp[P].append((rel, ln, "variable", file_in_cone))
+            local_types(m.group("rest"), flocs)
+            vblocks.append((txt.count("\n", 0, m.start()) + 1, m.group("rest")))
+        # section `variable` lines are hypotheses in scope for the whole file
+        VC = Ctx(ctx, fi, (), flocs)
+        for ln, rest in vblocks:
+            res = resolve_text(rest, VC)
+            for r, a, _d in res:
+                for P in r:
+                    (hyp_amb if a else hyp)[P].append((rel, ln, "variable", file_in_cone))
         for full, kind, line, body in decls_with_ns(txt):
             if args.cone:
                 on = cone_at.get((rel, line))
@@ -505,18 +1346,26 @@ def main(argv=None) -> int:
                     on = False
             else:
                 on = False
-            binders, concl, proof = split_sig(strip_header(body))
+            hb = strip_header(body)
+            binders, concl, proof = split_sig(hb)
+            neg, pos, units, iffs = polarize(concl) if concl.strip() else ([], [], [], [])
             fp = full.split(".")
             ns = tuple(".".join(fp[:k]) for k in range(len(fp) - 1, 0, -1))
-            bres, unamb = set(), set()
-            for t in set(IDENT.findall(binders)):
-                r = resolve(t, ctx, fi, ns)
-                bres |= r
-                if len(r) == 1:
-                    unamb |= r
-            for P in bres:
-                if P != full:
-                    hyp[P].append((rel, line, kind, on))
+            locs = dict(flocs)
+            local_types(binders, locs)
+            local_types(concl, locs)
+            C = Ctx(ctx, fi, ns, locs)
+            # hypotheses: the binder region AND the negative positions of the
+            # statement (`∀ h : P, …`, `P → …`) -- the same thing to Lean
+            hres = resolve_text(binders, C)
+            buna = split_res(hres)[1]
+            if neg:
+                hres = hres + resolve_text("\n".join(neg), C)
+            bres, unamb, _amb = split_res(hres)
+            for r, a, _d in hres:
+                for P in r:
+                    if P != full:
+                        (hyp_amb if a else hyp)[P].append((rel, line, kind, on))
             # AMBIGUOUS RESOLUTION MUST NOT CREDIT A SUPPLIER.
             # 7 predicates in the NSE artifact are named exactly `Budget`, 8
             # `Regular`, 8 `Data`. When a file writes the bare short name and the
@@ -529,23 +1378,80 @@ def main(argv=None) -> int:
             # it. A reader found it instead. Fix: credit a supplier only when the
             # token resolves UNAMBIGUOUSLY. That over-reports candidates, which is
             # the safe direction here.
-            for t in set(IDENT.findall(concl)):
-                r = resolve(t, ctx, fi, ns)
-                if len(r) != 1:
+            credit_pos(pos, C, bres | {full}, buna, rel, line, "concl", on)
+            iff_clauses(iffs, C, bres | {full}, buna, rel, line, "concl", on)
+            # N5: a declaration stating a Prop def/abbrev's BODY supplies it
+            for u in units if body_pats else ():
+                toks = norm_tokens(u)
+                cands = body_pats.get(len(toks))
+                if not cands:
                     continue
-                for P in r - bres:
-                    if P != full:
-                        sup[P].append((rel, line, kind, on))
-                        clauses.append((P, frozenset(unamb - {P}),
-                                        f"{rel}:{line}", on))
-            if proof:
-                for m in ASCRIPTION.finditer(proof):
-                    for t in set(IDENT.findall(m.group("ty"))):
-                        for P in resolve(t, ctx, fi, ns):
-                            if P != full:
-                                asc[P].append(f"{rel}:{line}")
+                for A, pat in cands:
+                    if A != full and A not in bres and match_tokens(pat, toks):
+                        add_supplier(A, unamb, rel, line,
+                                     f"{preds[A]}-body {A.rsplit('.', 1)[-1]}", on)
+            # N3: `def S : Prop := ∀ …, ∃ a : P, …` -- S supplies what its body
+            # asserts, under what its body assumes
+            if full in preds and preds[full] in ("def", "abbrev") \
+                    and shape[full] in ("predicate", "prop_inferred") and proof.startswith(":="):
+                bt = re.sub(r"^\s*by\s+exact\b", "", proof[2:])
+                if not bt.lstrip().startswith("by"):
+                    n2, p2, _u2, i2 = polarize(bt)
+                    local_types(bt, C.locs)
+                    nall = split_res(resolve_text("\n".join(n2), C))[0] if n2 else set()
+                    mech = f"stmt-def {full.rsplit('.', 1)[-1]}"
+                    credit_pos(p2, C, nall | {full}, frozenset([full]), rel, line, mech, on)
+                    iff_clauses(i2, C, nall | {full}, frozenset([full]), rel, line, mech, on)
+            decl_hyp.setdefault(full, frozenset(unamb))
+            # N1 (application form): a proof that APPLIES a theorem T with a
+            # hypothesis P it does not itself assume must have built a P
+            # somewhere -- a `fun` passed as the argument, a `refine { … }`
+            # after `apply T`. Resolved later, once every T's hypotheses are
+            # known; only by full name or namespace/`open` context, never by
+            # bare suffix (the cone's C1 bug), and never a tactic word.
+            if proof and len(proof) > 2:
+                seen_t = set()
+                for m in IDENT.finditer(proof):
+                    t = m.group(0)
+                    if t in seen_t or t in APPLY_STOP or (m.start() and proof[m.start() - 1] == "."):
+                        continue
+                    seen_t.add(t)
+                    if t.split(".", 1)[0] in C.locs:
+                        continue
+                    T = scoped_name(t, ns + ctx, fi)
+                    if T and T != full:
+                        apps.append((T, bres, unamb, rel, line, on, full))
+            # N1: route-2 constructions inside the proof
+            if proof and len(proof) > 2:
+                cons = constructions(proof)
+                if cons:
+                    local_types(proof, C.locs)
+                    base = len(body) - len(proof)
+                for ty, mech, off in cons:
+                    n3, p3, _u3, i3 = polarize(ty)
+                    nall3 = split_res(resolve_text("\n".join(n3), C))[0] if n3 else set()
+                    ln = line + body.count("\n", 0, base + off)
+                    # ambiguous, or closure of something the declaration
+                    # already assumes: a hint only
+                    credit_pos(p3, C, bres | nall3 | {full}, unamb, rel, ln, mech, on,
+                               hint=lambda P, _s=f"{rel}:{ln}": asc[P].append(_s)
+                               if P != full else None)
+                    if i3:
+                        iff_clauses(i3, C, bres | nall3 | {full}, unamb, rel, ln, mech, on)
         if (fi + 1) % 2000 == 0:
             progress(f"[nosupplier] pass 2: {fi + 1:,}/{nf:,} files")
+
+    # A HINT, not a supplier: measured on differential-geometry, crediting it
+    # flipped 3 of the 4 reader-confirmed UNSUPPLIED predicates to supplied
+    # (a structure field's type named as a "theorem", `.subseq`, a smart
+    # constructor that itself needs the predicate), which is the direction
+    # that hides a finding. It still recovered both application-only suppliers
+    # the reader found, so it is kept as a pointer, preferring in-cone sites.
+    apply_hint = collections.defaultdict(list)
+    for T, bres_d, unamb_d, rel, line, on, full in apps:
+        for P in decl_hyp.get(T, ()):
+            if P not in bres_d and P != full:
+                apply_hint[P].append((not on, f"{rel}:{line} via {T.rsplit('.', 1)[-1]}"))
 
     # inductive constructors are suppliers of their own type. A constructor whose
     # arguments include the inductive itself yields a clause `Ind <= Ind /\ ...`,
@@ -573,7 +1479,7 @@ def main(argv=None) -> int:
                 if len(r) == 1:
                     body |= r
             sup[ind].append((rel, line, "constructor", on))
-            clauses.append((ind, frozenset(body), f"{rel}:{line} ctor {cname}", on))
+            clauses.append((ind, frozenset(body), f"{rel}:{line} [ctor {cname}]", on))
 
     # structure containment (route 4), resolved now that `preds` is complete
     field_parent = collections.defaultdict(set)
@@ -586,7 +1492,7 @@ def main(argv=None) -> int:
                     if P != S:
                         field_parent[P].add(S)
 
-    eff, _w = fixpoint([(h, b, l) for h, b, l, _o in clauses], preds)
+    eff, why = fixpoint([(h, b, l) for h, b, l, _o in clauses], preds)
     by_head = collections.defaultdict(list)
     for h, b, l, _o in clauses:
         by_head[h].append((h, b, l))
@@ -594,7 +1500,7 @@ def main(argv=None) -> int:
         by_head[h].sort(key=lambda c: len([x for x in c[1] if x not in eff]))
     if args.cone:
         cl_in = [(h, b, l) for h, b, l, o in clauses if o]
-        eff_in, _w = fixpoint(cl_in, preds)
+        eff_in, why_in = fixpoint(cl_in, preds)
         by_head_in = collections.defaultdict(list)
         for c in cl_in:
             by_head_in[c[0]].append(c)
@@ -625,6 +1531,7 @@ def main(argv=None) -> int:
                                   f" (no supplied container at any level; {len(seen) - 1} walked)")
 
     E = eff_in if args.cone else eff
+    WHY = why_in if args.cone else why
 
     def leaf_note(Q):
         v, _c = route4(Q, E)
@@ -637,9 +1544,12 @@ def main(argv=None) -> int:
     for P, kind in sorted(preds.items()):
         h = hyp.get(P, [])
         s = sup.get(P, [])
+        ha = hyp_amb.get(P, [])
         h_in = sum(1 for x in h if x[3])
+        ha_in = sum(1 for x in ha if x[3])
         s_in = sum(1 for x in s if x[3])
         sites = h_in if args.cone else len(h)
+        sites_amb = ha_in if args.cone else len(ha)
         if P in E:
             status = "supplied"
         elif not s:
@@ -648,7 +1558,9 @@ def main(argv=None) -> int:
             status = "no_supplier_in_cone"
         else:
             status = "conditional"
-        keep = sites >= args.min_hyp and (
+        # an ambiguous use is a site of none of its candidates (note N2) but
+        # still keeps a row listed: dropping it would hide a finding
+        keep = sites + sites_amb >= args.min_hyp and (
             args.all or status in ("no_supplier", "no_supplier_in_cone")
             or (status == "conditional" and named))
         if shape[P] == "prop_inferred" and not named:
@@ -665,6 +1577,17 @@ def main(argv=None) -> int:
         else:
             chain = explain(P, by_head, eff, sup_all, note=leaf_note)
         uniq = short_count[P.rsplit(".", 1)[-1]] == 1
+        # which MECHANISM credited the supply (a reader checks that one first)
+        mechs = collections.Counter(re.sub(r" .*", "", x[2]) for x in s
+                                    if (x[3] or not args.cone))
+        if status == "supplied":
+            fired = WHY.get(P, "")
+            mech_txt = "supplied via " + fired.split(" [", 1)[-1].rstrip("]") + \
+                " at " + fired.split(" [", 1)[0] if " [" in fired else "supplied"
+        elif mechs:
+            mech_txt = "suppliers: " + ", ".join(f"{k} {v}" for k, v in mechs.most_common())
+        else:
+            mech_txt = ""
         rows.append({
             "predicate": P, "kind": kind, "shape": shape[P], "declared": f"{f}:{l}",
             "status": status,
@@ -678,10 +1601,16 @@ def main(argv=None) -> int:
             "hint_supplied_parent": chain4 if verdict == "route4" else "",
             "route4_chain": chain4,
             "hint_in_proof_ascription": "; ".join(hints[:2]),
-            "hint": "; ".join(x for x in (verdict, "route2?" if hints else "") if x),
+            "hint": "; ".join(x for x in (verdict, "route2?" if hints else "", mech_txt,
+                                          ("route2-apply? " + min(apply_hint[P])[1])
+                                          if status != "supplied" and apply_hint.get(P) else "")
+                              if x),
             "example_sites": "; ".join(f"{a}:{b}" for a, b, _k, _o in
                                        (sorted(h, key=lambda x: not x[3]) if args.cone else h)[:4]),
             "example_suppliers": "; ".join(f"{a}:{b}" for a, b, _k, _o in s[:3]),
+            "hypothesis_sites_ambiguous": len(ha),
+            "hypothesis_sites_ambiguous_in_cone": ha_in if args.cone else "",
+            "supplied_by": WHY.get(P, "") if status == "supplied" else "",
         })
     key = "hypothesis_sites_in_cone" if args.cone else "hypothesis_sites"
     rows.sort(key=lambda r: (r["status"] == "supplied", -int(r[key] or 0), r["predicate"]))
@@ -694,6 +1623,8 @@ def main(argv=None) -> int:
               f"CONE.csv row (0 expected: a CONE.csv from a different cone.py parser "
               f"silently drops sites)")
     print("rows by status: " + ", ".join(f"{k} {v:,}" for k, v in by_status.most_common()))
+    print("supplier clauses by mechanism: " + ", ".join(f"{k} {v:,}" for k, v in mech_n.most_common()))
+    print("dot-notation uses: " + ", ".join(f"{k} {v:,}" for k, v in sorted(stats.items())))
     nh = sum(1 for r in rows if {"route4", "route2?"} & set(r["hint"].split("; "))
              and r["status"] != "supplied")
     print(f"{nh:,} non-supplied rows carry a false-positive HINT (route4 supplied "
