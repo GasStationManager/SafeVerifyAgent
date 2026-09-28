@@ -174,9 +174,38 @@ because this part is orthogonal to how the work is decomposed.
 | medium | [Lean4Lean][l4l] | a second kernel, in Lean, re-checks the declarations | **no** — a port of the C++ kernel, by its own README |
 | high | [comparator][cmp] | proves the same statement as an independently authored challenge, within an axiom budget, accepted by the kernel | — |
 | high | [nanoda][nan], via comparator's `external_kernels` | an independent kernel re-checks the export | **yes** — from scratch, in Rust |
+| high | [con-leche][cl] `--verified`, reading a `lean4export` NDJSON stream | an independent checker, proven in Lean to accept no proof of `False`, accepts the stream (scope: see note) | **yes** — own term representation, in Lean; shares nothing with the C++ kernel or nanoda |
+| high-trusted | [con-leche][cl] `--trusted` | the same checker with its certification-only checks off | **yes**, but **outside the proven theorem** — cannot file `formal` |
 
 [l4l]: https://github.com/digama0/lean4lean
 [nan]: https://github.com/ammkrn/nanoda_lib
+[cl]: https://github.com/leanprover/con-leche
+
+**Note on con-leche's scope** (con-leche `OVERVIEW.md` §0 and §9;
+ReadingGroup `papers/con-leche-repo/notes.md`). The theorem
+(`ConLeche.model_exists`) is about the fold `checkDecls .verified` over
+parsed declaration records: every accepted environment has a model in a
+set theory with an ω-chain of Grothendieck universes (a *conditional*
+consistency result). The byte-level corollary (`no_False_declaration`)
+covers one four-line JSON template for a theorem of type `False`. Outside
+the theorem: `--trusted` mode; the frontend's projection rewrite and
+in-process model generation (reviewed, not proven, meaning-preserving);
+fast `Nat` operations on Lean's runtime bignums; the compiled binary, IO
+and compiler. Only exit 0 carries the guarantee: exit 1 (reject) and 2
+(declined) carry none, exit 3 is an error, and the Lean runtime's
+out-of-memory panic also exits 1 — told apart by `INTERNAL PANIC: out of
+memory` on stderr, which is why the adapter parses the verdict line
+(which names its mode) and cross-checks the exit code. Axioms: it accepts
+only `propext`, `Classical.choice`, `Quot.sound`; an unused `sorryAx`
+declaration is ignored and a use declines; the `ofReduce*` and
+`trustCompiler` axioms are replaced by definitions of the same type; any
+other axiom declines — measured on Lean v4.33.0, `native_decide` now
+emits an auxiliary axiom (`<thm>._native.native_decide.ax_1_1`) and the
+run **declines** rather than rejects. A decline is not a vote. The adapter
+records the axioms the stream *declares* (read off the NDJSON, not off
+the checker); export one theorem's cone (`lean4export Mod -- name`) so
+that list means what `#print axioms` means. The exporter must be built at
+the project's toolchain.
 
 Three rules, and each cost somebody something:
 
@@ -197,8 +226,8 @@ while printing "found a problem". Each of those bugs once inverted a
 verdict in the predecessor — two adapters, two opposite errors, one
 lesson.
 
-And one type rule that follows: `error` and `timeout` are **not folded
-into accept or reject**. A member that could not run has not voted.
+And one type rule that follows: `error`, `timeout` and `declined` are
+**not folded into accept or reject**. A member that could not run has not voted.
 Treating infrastructure failure as either is how an ensemble manufactures
 agreement it did not earn — and a resource blow-out is its own signal
 worth keeping, since honest proofs of a given size rarely cost that much.
@@ -230,7 +259,7 @@ cheap tiers:
 
 | evidence | who may file it | why |
 |---|---|---|
-| `formal` accept | the high tier only (comparator + an external kernel, or a human) | permanent — it must not be reachable from anything that might later turn out to be a checker bug |
+| `formal` accept | the high tier only: comparator's statement check **plus** at least one independent kernel (nanoda, or con-leche `--verified`), or a human. con-leche is the independent kernel in that pair, never the statement check: it says the stream type-checks, not that the theorem is the one asked; on a BARE claim there is no statement check and so no `formal` accept from any checker | permanent — it must not be reachable from anything that might later turn out to be a checker bug |
 | `stated` accept | any clean mechanical rung | revocable |
 | `informal` | any coherence judgment, in either direction | a reading, not a certificate |
 | `formal` refutation | a re-executed counterexample | a fact about the statement, not a report from a checker that might be wrong |
@@ -461,6 +490,8 @@ about anything except the fix.
 | component | state |
 |---|---|
 | checker ensemble + adapters | **ported, real.** The quick tier is verified against Lean v4.33.0; the medium and high tiers need their binaries and degrade to "unavailable" rather than to a verdict |
+| con-leche tier (`ConLeche`) | **implemented; run live** against con-leche `ae0c0c4` built at Lean v4.33.0, on real `lean4export` (`15f6055`) streams: accept, custom-axiom decline, `sorry` decline, `native_decide` decline, both modes (`tests/test_conleche.py`, live half skipped without the binary). Not yet run on a real audited artifact |
+| statement rung for a BARE claim (`audits/statement.py`) | **implemented**; source-level resolution without a build, Lean rung optional (`tests/test_statement.py`) |
 | output parsing, verdict types, aggregation, residue | **implemented and unit-tested** (fixtures, no toolchain needed) |
 | lemma extraction through Lean's frontend | **implemented and tested** against Lean v4.33.0 (`tests/test_lean.py`, skipped without a toolchain) |
 | prompts (planner, check, coherence, aggregator) | **written** |
