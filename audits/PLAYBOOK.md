@@ -96,6 +96,16 @@ line, and record which mode ran.
     report" versus "read line by line". State coverage in tiers; a single
     percentage was quotable and misleading.
 
+14. **Budget the build before starting it.** Sum the `.olean` sizes the
+    headline's closure will produce (for a non-module artifact, proof bodies
+    live in the `.olean`, so estimate ~0.75 MB per file) plus Mathlib's
+    `.olean` and `.olean.private`; if that exceeds the machine's RAM, the last
+    modules of the build will thrash the page cache and run tens of times
+    slower than the first ones, and two workers will be slower than one.
+    differential-geometry's closure is ~15 GB and a 16 GB machine could not
+    finish it. Never delete `.ilean`, `.c` or `.setup.json` files to save
+    disk mid-build: `lake` then treats every affected module as out of date.
+
 ## 4. Reporting
 
 14. **An escalation is not an accusation** and is recorded with its trace

@@ -1,10 +1,8 @@
 # Audit: qinz1yang/differential-geometry — the Poincaré conjecture
 
-**Status: DRAFT** — the build-backed rungs (§2) are pending: the headline's
-import closure (about 14,200 modules) is compiling; `#print axioms`, the
-Lean rung of the statement dossier and a con-leche run follow when it
-finishes. Everything else below is complete and its evidence is committed under
-`dg-intake/`.
+**Status: complete except the build-backed rungs**, which this machine could
+not finish (§2). Every reading and mechanical rung is complete and its evidence
+is committed under `dg-intake/`.
 
 **Artifact:** `github.com/qinz1yang/differential-geometry` @ `7a48598d`
 (release v0.1.3, 2026-09-27). Lean and Mathlib `v4.33.1`. 17,555 Lean files,
@@ -40,15 +38,44 @@ undischarged predicate on the route would appear in the headline's type or
 fail elaboration. It can hide one only in a theorem someone reuses, which is
 §5.
 
-## 2. Build-backed rungs (pending)
+## 2. Build-backed rungs (not completed here)
 
 | rung | status |
 |---|---|
-| `lake build` of the headline module's closure with the three standard axioms | running |
-| `#print axioms DifferentialGeometry.Topology.poincare_conjecture` | pending |
-| Lean rung of `statement.py` (`#check`, `#print`, resolved constants) | pending |
-| `lean4export` of the headline's dependencies + con-leche `--verified` | pending |
+| compile of the headline module's import closure (14,196 modules) | **13489 of 14,196 modules compiled without error**; the remaining tail could not be finished on a 16 GB machine (below) |
+| `#print axioms DifferentialGeometry.Topology.poincare_conjecture` | **not run** — needs the full closure |
+| Lean rung of `statement.py` (`#check`, `#print`, resolved constants) | **not run** — same |
+| `lean4export` of the headline's dependencies + con-leche `--verified` | **not run** — same (the con-leche tier itself was built and tested on small exports) |
 | the closing-`rfl`/`decide` defeq workload | not attempted; same instrument gap as NSE |
+
+What happened, so the next attempt does not repeat it. `lake build` of the
+headline module compiled about 12,500 modules in twelve hours on four cores.
+The last ~1,600 modules are the deepest: each Lean process maps the compiled
+form of its whole import closure, about 15 GB (10 GB of this artifact's own
+`.olean` files, which carry proof bodies because the files are not
+module-system modules, plus 5.5 GB of Mathlib including its `.olean.private`
+parts, which Lean requires for a non-module importer). On a 16 GB machine that
+working set does not fit the page cache, and the access pattern is cyclic, so
+every module re-reads most of it from disk: measured, a module with 20 s of
+elaboration spends 60–110 s in page-fault handling, and two workers are slower
+than one. Throughput fell to under thirty modules an hour with about 700 to go.
+Four container restarts during this phase were consistent with memory
+exhaustion and were survived by re-running from the on-disk state. Two
+self-inflicted complications are worth recording: deleting `.ilean`/`.c`/setup
+files to save disk makes `lake` treat every affected module as out of date, so
+the tail had to be compiled with `lean` directly in dependency order (a script
+that reproduces `lake`'s `--setup` invocation is in the audit's scratch
+material); and the `lake setup-file` command triggers a rebuild in that state.
+
+To finish: a machine with at least 32 GB of RAM (so the closure's `.olean`
+set stays cached) builds the headline module with `lake build
++DifferentialGeometry.Topology.ThreeManifold.Poincare` in well under a day
+on four cores, after which `#print axioms`, the `statement.py` Lean rung and
+`lean4export` + con-leche are each minutes. The README's own claim is that the
+result is exactly `propext, Classical.choice, Quot.sound`; this audit neither
+confirmed nor contradicted it. The 13489 modules that did compile here did so
+without error under `autoImplicit false`, which is weak positive evidence about
+the artifact and none about the headline's axioms.
 
 ## 3. The statement (`dg-intake/STATEMENT.md`, `REFERENCE-poincare.md`)
 
