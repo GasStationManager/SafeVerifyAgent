@@ -1,0 +1,692 @@
+[
+ {
+  "title": "Poincar\u00e9 conjecture",
+  "module": "DifferentialGeometry.Topology.ThreeManifold.Poincare",
+  "decl": "DifferentialGeometry.Topology.poincare_conjecture",
+  "kind": "theorem",
+  "line": 12,
+  "source": "README",
+  "closure": 24781,
+  "built": false
+ },
+ {
+  "title": "smooth version",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Surgery.Skeleton.PoincareEndgame",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Surgery.Topology.smoothPoincareConjecture_holds",
+  "kind": "theorem",
+  "line": 103,
+  "source": "README",
+  "closure": 21933,
+  "built": false
+ },
+ {
+  "title": "Finite-time extinction with surgery, simply connected case",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Surgery.Skeleton.PoincareEndgame",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Surgery.Topology.exists_poincare_controlled_extinction",
+  "kind": "theorem",
+  "line": 91,
+  "source": "README",
+  "closure": 21933,
+  "built": false
+ },
+ {
+  "title": "extinction structure",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Surgery.Topology.ControlledExtinction",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Surgery.PoincareControlledExtinction",
+  "kind": "structure",
+  "line": 14,
+  "source": "README",
+  "closure": 5759,
+  "built": true
+ },
+ {
+  "title": "Moise's theorem: compatible smooth structures in dimension three",
+  "module": "DifferentialGeometry.Topology.PiecewiseLinear.Moise352Producer",
+  "decl": "DifferentialGeometry.Topology.PiecewiseLinear.exists_isManifold_three",
+  "kind": "theorem",
+  "line": 33,
+  "source": "README",
+  "closure": 9023,
+  "built": true
+ },
+ {
+  "title": "PL approximation",
+  "module": "DifferentialGeometry.Topology.PiecewiseLinear.Moise352Producer",
+  "decl": "DifferentialGeometry.Topology.PiecewiseLinear.plApproximation_three",
+  "kind": "theorem",
+  "line": 27,
+  "source": "README",
+  "closure": 9023,
+  "built": true
+ },
+ {
+  "title": "compact PL smoothing",
+  "module": "DifferentialGeometry.Topology.PiecewiseLinear.Moise352Producer",
+  "decl": "DifferentialGeometry.Topology.PiecewiseLinear.plSmoothingCompact_three",
+  "kind": "theorem",
+  "line": 30,
+  "source": "README",
+  "closure": 9023,
+  "built": true
+ },
+ {
+  "title": "Perelman's canonical neighborhood theorem",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Perelman.CanonicalNeighborhood.HighCurvatureModelBounds",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Perelman.CanonicalNeighborhood.FiniteHorn.smooth_canonical_neighborhood",
+  "kind": "theorem",
+  "line": 539,
+  "source": "README",
+  "closure": 18212,
+  "built": true
+ },
+ {
+  "title": "curvature-scale bounds for all mixed space-time curvature derivatives",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Perelman.CanonicalNeighborhood.HighCurvatureModelBounds",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Perelman.CanonicalNeighborhood.FiniteHorn.high_curvature_derivatives",
+  "kind": "theorem",
+  "line": 586,
+  "source": "README",
+  "closure": 18212,
+  "built": true
+ },
+ {
+  "title": "Compactness of ancient \u03ba-solutions",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Perelman.CanonicalNeighborhood.HighCurvatureModelBounds",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Perelman.CanonicalNeighborhood.FiniteHorn.fixed_kappa_compactness",
+  "kind": "theorem",
+  "line": 566,
+  "source": "README",
+  "closure": 18212,
+  "built": true
+ },
+ {
+  "title": "universal mixed curvature-derivative estimates",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Perelman.CanonicalNeighborhood.HighCurvatureModelBounds",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Perelman.CanonicalNeighborhood.FiniteHorn.kappa_universal_derivatives",
+  "kind": "theorem",
+  "line": 579,
+  "source": "README",
+  "closure": 18212,
+  "built": true
+ },
+ {
+  "title": "Hamilton's compactness theorem",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Compactness.Limits.Hamilton",
+  "decl": "DifferentialGeometry.CheegerGromovCompactness.compactnessSolution",
+  "kind": "theorem",
+  "line": 27,
+  "source": "README",
+  "closure": 12539,
+  "built": true
+ },
+ {
+  "title": "Hamilton's theorem (1982)",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.DimensionThree.PositiveRicci.Hamilton",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.HamiltonPositiveRicci.hamilton_positive_ricci",
+  "kind": "theorem",
+  "line": 29,
+  "source": "README",
+  "closure": 13635,
+  "built": true
+ },
+ {
+  "title": "Ricci flow short-time existence",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.ShortTime.Existence",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.ricci_flow_short_time_existence",
+  "kind": "theorem",
+  "line": 34,
+  "source": "README",
+  "closure": 12265,
+  "built": true
+ },
+ {
+  "title": "0, T)$ with $g(0) = g_0$, jointly smooth in $(t, x)$ up to and including the initial time. Proved via the DeTurck's trick and a conjugating flow of the DeTurck vector field.\n- [Perelman's reduced-volume monotonicity",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Perelman.LGeometry.ReducedVolume.Basic",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Perelman.redVolume_anti",
+  "kind": "theorem",
+  "line": 384,
+  "source": "README",
+  "closure": 11504,
+  "built": true
+ },
+ {
+  "title": "Perelman's no local collapsing theorem",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Perelman.Noncollapsing.FiniteTime",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Perelman.no_local_collapsing",
+  "kind": "theorem",
+  "line": 33,
+  "source": "README",
+  "closure": 12513,
+  "built": false
+ },
+ {
+  "title": "Perelman's W-entropy monotonicity",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Entropy.W.Variation.Monotonicity",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Entropy.w_rev_antitone",
+  "kind": "theorem",
+  "line": 726,
+  "source": "README",
+  "closure": 12060,
+  "built": true
+ },
+ {
+  "title": "exact integral-square derivative formula",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Entropy.W.Variation.Monotonicity",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Entropy.w_rev_square",
+  "kind": "theorem",
+  "line": 281,
+  "source": "README",
+  "closure": 12060,
+  "built": true
+ },
+ {
+  "title": "Ricci\u2013DeTurck flow short-time existence",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.ShortTime.DeTurck.InitialData",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.deturck_ricci_flow_parabolic_short_time_existence",
+  "kind": "theorem",
+  "line": 143,
+  "source": "README",
+  "closure": 12080,
+  "built": true
+ },
+ {
+  "title": "Ricci-tensor naturality under diffeomorphisms",
+  "module": "DifferentialGeometry.Geometry.Curvature.CurvatureOperator.Ricci.Naturality",
+  "decl": "DifferentialGeometry.Geometry.Curvature.ricciTensor_pullback",
+  "kind": "theorem",
+  "line": 250,
+  "source": "README",
+  "closure": 5302,
+  "built": true
+ },
+ {
+  "title": "Scalar-curvature evolution under Ricci flow",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Evolution.Scalar.IntrinsicDerivation",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.scalar_curvature_evolution",
+  "kind": "theorem",
+  "line": 736,
+  "source": "README",
+  "closure": 5385,
+  "built": true
+ },
+ {
+  "title": "Hamilton\u2013Ivey pinching estimate",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.DimensionThree.HamiltonIvey.MaximumPrinciple",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.hamilton_ivey_pinching",
+  "kind": "theorem",
+  "line": 5324,
+  "source": "README",
+  "closure": 11476,
+  "built": true
+ },
+ {
+  "title": "asymptotic pinching estimate",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.DimensionThree.HamiltonIvey.MaximumPrinciple",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.hamilton_ivey_asymptotic_pinching",
+  "kind": "theorem",
+  "line": 5395,
+  "source": "README",
+  "closure": 11476,
+  "built": true
+ },
+ {
+  "title": "Shi's derivative estimates",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Estimates.Shi.TimeWeighted",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.time_weighted_curvature_derivative_bound_of_complete",
+  "kind": "theorem",
+  "line": 20,
+  "source": "README",
+  "closure": 12091,
+  "built": true
+ },
+ {
+  "title": "Hamilton's matrix Harnack inequality for Ricci flow",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.HamiltonHarnack.MatrixHarnack",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.hamilton_matrix_harnack_of_compact",
+  "kind": "theorem",
+  "line": 10209,
+  "source": "README",
+  "closure": 13129,
+  "built": true
+ },
+ {
+  "title": "nonnegative initial curvature operator suffices",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.HamiltonHarnack.MatrixHarnack",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.hamilton_matrix_harnack_of_compact_of_initial_nonnegative",
+  "kind": "theorem",
+  "line": 10247,
+  "source": "README",
+  "closure": 13129,
+  "built": true
+ },
+ {
+  "title": "Bonnet\u2013Myers diameter bound",
+  "module": "DifferentialGeometry.Geometry.Comparison.BonnetMyers.Diameter",
+  "decl": "DifferentialGeometry.Geometry.Riemannian.BonnetMyers.bonnet_myers_diameter_of_ricci_bound",
+  "kind": "theorem",
+  "line": 506,
+  "source": "README",
+  "closure": 5545,
+  "built": true
+ },
+ {
+  "title": "Bochner formula",
+  "module": "DifferentialGeometry.Analysis.Elliptic.Regularity.Bochner.PolarisedLpSmooth",
+  "decl": "DifferentialGeometry.Analysis.Laplacian.BochnerPolarisedLpSmooth.bochner_polarised_pointwise",
+  "kind": "theorem",
+  "line": 66,
+  "source": "README",
+  "closure": 10999,
+  "built": true
+ },
+ {
+  "title": "Weitzenb\u00f6ck identity",
+  "module": "DifferentialGeometry.Analysis.Elliptic.ConnectionLaplacian.Weitzenbock.IntegratedCovariantTensor",
+  "decl": "DifferentialGeometry.Analysis.Elliptic.weitzenbock_integrated_covGrad_l2_normSq",
+  "kind": "theorem",
+  "line": 98,
+  "source": "README",
+  "closure": 10893,
+  "built": true
+ },
+ {
+  "title": "Lichnerowicz eigenvalue bound",
+  "module": "DifferentialGeometry.Analysis.Elliptic.Lichnerowicz",
+  "decl": "DifferentialGeometry.Analysis.Laplacian.lichnerowicz_eigenvalue_ge_dim_mul_curvature_of_closed",
+  "kind": "theorem",
+  "line": 598,
+  "source": "README",
+  "closure": 5322,
+  "built": true
+ },
+ {
+  "title": "Voss\u2013Weyl divergence formula",
+  "module": "DifferentialGeometry.Analysis.Integration.DivergenceTheorem.Local.ChartInvariance",
+  "decl": "DifferentialGeometry.Integral.DivergenceTheorem.voss_weyl_divergence_formula",
+  "kind": "theorem",
+  "line": 576,
+  "source": "README",
+  "closure": 4555,
+  "built": true
+ },
+ {
+  "title": "de Rham cohomology",
+  "module": "DifferentialGeometry.Tensor.Exterior.Cochain",
+  "decl": "DifferentialGeometry.DifferentialForm.deRhamCohomology",
+  "kind": "def",
+  "line": 72,
+  "source": "README",
+  "closure": 4796,
+  "built": false
+ },
+ {
+  "title": "nilpotent exterior derivative",
+  "module": "DifferentialGeometry.Tensor.Exterior.Basic",
+  "decl": "DifferentialGeometry.DifferentialForm.exteriorDerivative_sq",
+  "kind": "theorem",
+  "line": 607,
+  "source": "README",
+  "closure": 4702,
+  "built": true
+ },
+ {
+  "title": "graded Leibniz rule",
+  "module": "DifferentialGeometry.Tensor.Exterior.Leibniz",
+  "decl": "DifferentialGeometry.DifferentialForm.exteriorDerivative_wedge",
+  "kind": "theorem",
+  "line": 604,
+  "source": "README",
+  "closure": 4703,
+  "built": false
+ },
+ {
+  "title": "functorial pullback maps",
+  "module": "DifferentialGeometry.Tensor.Exterior.Cochain",
+  "decl": "DifferentialGeometry.DifferentialForm.pullbackCohomologyMap_comp",
+  "kind": "theorem",
+  "line": 159,
+  "source": "README",
+  "closure": 4796,
+  "built": false
+ },
+ {
+  "title": "Morse lemma",
+  "module": "DifferentialGeometry.Topology.Morse.NormalForm.Manifold",
+  "decl": "DifferentialGeometry.Topology.Morse.morse_lemma",
+  "kind": "theorem",
+  "line": 950,
+  "source": "README",
+  "closure": 4340,
+  "built": true
+ },
+ {
+  "title": "no-critical-values theorem",
+  "module": "DifferentialGeometry.Topology.Morse.RegularLevel.NoCriticalValues",
+  "decl": "DifferentialGeometry.Topology.Morse.no_critical_values",
+  "kind": "theorem",
+  "line": 187,
+  "source": "README",
+  "closure": 4403,
+  "built": true
+ },
+ {
+  "title": "single-critical-point cell attachment",
+  "module": "DifferentialGeometry.Topology.Morse.Attachment.SmoothHandle",
+  "decl": "DifferentialGeometry.Topology.Morse.ManifoldCellAttachment.one_critical_point_cell_attachment",
+  "kind": "theorem",
+  "line": 932,
+  "source": "README",
+  "closure": 4450,
+  "built": false
+ },
+ {
+  "title": "smooth handle-adjunction diffeomorphisms",
+  "module": "DifferentialGeometry.Topology.Morse.Attachment.SublevelTransport",
+  "decl": "DifferentialGeometry.Topology.Morse.exists_morseHandleAdjunction_diffeomorph_upperSublevel_of_morseChart",
+  "kind": "theorem",
+  "line": 1033,
+  "source": "README",
+  "closure": 4451,
+  "built": false
+ },
+ {
+  "title": "Elliptic variable-coefficient Schauder estimates",
+  "module": "DifferentialGeometry.Analysis.Schauder.Elliptic.VariableCoefficient.Basic",
+  "decl": "DifferentialGeometry.Analysis.Schauder.variable_coefficient_schauder_estimate_of_small_oscillation",
+  "kind": "theorem",
+  "line": 1349,
+  "source": "README",
+  "closure": 4547,
+  "built": false
+ },
+ {
+  "title": "parabolic nondivergence Schauder estimates",
+  "module": "DifferentialGeometry.Analysis.Parabolic.Euclidean.Nondivergence.Schauder",
+  "decl": "DifferentialGeometry.Analysis.Parabolic.Euclidean.exists_parabolic_nondivergence_schauder_estimate",
+  "kind": "theorem",
+  "line": 550,
+  "source": "README",
+  "closure": 4647,
+  "built": false
+ },
+ {
+  "title": "Strong parabolic maximum principles",
+  "module": "DifferentialGeometry.Analysis.Parabolic.MaximumPrinciple.Scalar.Strong",
+  "decl": "DifferentialGeometry.Analysis.Parabolic.scalar_strong_maximum_principle_time_dependent_metric_with_drift_spatial",
+  "kind": "theorem",
+  "line": 2412,
+  "source": "README",
+  "closure": 10832,
+  "built": true
+ },
+ {
+  "title": "parallel proper cones",
+  "module": "DifferentialGeometry.Analysis.Parabolic.MaximumPrinciple.Cone.Parallel.DualStrong",
+  "decl": "DifferentialGeometry.Analysis.Parabolic.parallelProperCone_mem_dualZeroFace_of_terminal_eq_zero",
+  "kind": "theorem",
+  "line": 30,
+  "source": "README",
+  "closure": 10870,
+  "built": false
+ },
+ {
+  "title": "symmetric tensors",
+  "module": "DifferentialGeometry.Analysis.Parabolic.MaximumPrinciple.Tensor.Strong",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.tensor_positive_definite_on_of_null_reaction_lower_bound",
+  "kind": "theorem",
+  "line": 193,
+  "source": "README",
+  "closure": 5194,
+  "built": false
+ },
+ {
+  "title": "Hopf boundary point theorem",
+  "module": "DifferentialGeometry.Analysis.Parabolic.MaximumPrinciple.Scalar.Hopf.ManifoldBoundary",
+  "decl": "DifferentialGeometry.Analysis.Parabolic.scalar_hopf_boundary_point_of_barrier_with_boundary",
+  "kind": "theorem",
+  "line": 168,
+  "source": "README",
+  "closure": 10840,
+  "built": true
+ },
+ {
+  "title": "Li\u2013Yau Harnack inequality",
+  "module": "DifferentialGeometry.Analysis.Parabolic.Harnack.LiYauHarnack",
+  "decl": "DifferentialGeometry.Analysis.Parabolic.Harnack.heat_solution_harnack_of_nonnegative_ricci",
+  "kind": "theorem",
+  "line": 792,
+  "source": "README",
+  "closure": 11035,
+  "built": true
+ },
+ {
+  "title": "Hamilton differential Harnack inequality",
+  "module": "DifferentialGeometry.Analysis.Parabolic.Harnack.HamiltonDifferentialHarnack",
+  "decl": "DifferentialGeometry.Analysis.Parabolic.Harnack.heat_solution_hamilton_differential_harnack_of_ricci_lower_bound",
+  "kind": "theorem",
+  "line": 1483,
+  "source": "README",
+  "closure": 11036,
+  "built": false
+ },
+ {
+  "title": "Quasilinear parabolic local existence",
+  "module": "DifferentialGeometry.Analysis.Parabolic.QuasiLinear.TensorMaximalRegularity.Existence.LocallyLipschitz",
+  "decl": "DifferentialGeometry.Analysis.Parabolic.QuasiLinear.quasilinear_strong_existence_locally_lipschitz",
+  "kind": "theorem",
+  "line": 702,
+  "source": "README",
+  "closure": 11038,
+  "built": true
+ },
+ {
+  "title": "Compact PL triangulations",
+  "module": "DifferentialGeometry.Topology.PiecewiseLinear.TriangulationExistence",
+  "decl": "DifferentialGeometry.Topology.PiecewiseLinear.exists_pLTriangulation",
+  "kind": "theorem",
+  "line": 57,
+  "source": "README",
+  "closure": 3921,
+  "built": true
+ },
+ {
+  "title": "smooth structures on compact topological three-manifolds",
+  "module": "DifferentialGeometry.Topology.PiecewiseLinear.Moise352Producer",
+  "decl": "DifferentialGeometry.Topology.PiecewiseLinear.exists_isManifold_three",
+  "kind": "theorem",
+  "line": 33,
+  "source": "README",
+  "closure": 9023,
+  "built": true
+ },
+ {
+  "title": "fundamental groups of finite connected sums",
+  "module": "DifferentialGeometry.Topology.VanKampen.FiniteConnectedSumFreeProduct",
+  "decl": "DifferentialGeometry.Topology.fundamentalGroup_finiteConnectedSum_freeProduct",
+  "kind": "theorem",
+  "line": 277,
+  "source": "README",
+  "closure": 5694,
+  "built": true
+ },
+ {
+  "title": "Mayer\u2013Vietoris exactness",
+  "module": "DifferentialGeometry.Topology.Homology.MayerVietorisExactness",
+  "decl": "DifferentialGeometry.Homology.singularMayerVietoris_exact_sum",
+  "kind": "theorem",
+  "line": 125,
+  "source": "README",
+  "closure": 3701,
+  "built": true
+ },
+ {
+  "title": "Cut-and-cap reconstruction",
+  "module": "DifferentialGeometry.Topology.ThreeManifold.CutCapConnectedSumTopology",
+  "decl": "DifferentialGeometry.Topology.SphericalCutCapTransition.exists_connectedSum_capComponents",
+  "kind": "theorem",
+  "line": 29,
+  "source": "README",
+  "closure": 6293,
+  "built": false
+ },
+ {
+  "title": "simple connectivity is preserved by capping",
+  "module": "DifferentialGeometry.Topology.ThreeManifold.CutCapConnectedSumTopology",
+  "decl": "DifferentialGeometry.Topology.SphericalCutCapTransition.simplyConnectedSpace_capComponent",
+  "kind": "theorem",
+  "line": 53,
+  "source": "README",
+  "closure": 6293,
+  "built": false
+ },
+ {
+  "title": "pinching delta threshold",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Surgery.StandardCap.NormalizedInsertionPinching",
+  "decl": null,
+  "kind": null,
+  "line": 134,
+  "source": "audit",
+  "closure": 12286,
+  "built": true
+ },
+ {
+  "title": "pinching through surgery",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Surgery.Topology.PinchingThroughSurgery",
+  "decl": null,
+  "kind": null,
+  "line": 17,
+  "source": "audit",
+  "closure": 20767,
+  "built": true
+ },
+ {
+  "title": "surgery step (public wrapper)",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Surgery.Contract.UniformDebitSurgeryStepOfFineCutNeckSupplyStrong",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Surgery.Topology.uniformDebitSurgeryStepStrong_of_strongNecks_of_fineCutNeckSupplyStrong",
+  "kind": "theorem",
+  "line": 21,
+  "source": "audit",
+  "closure": 21605,
+  "built": false
+ },
+ {
+  "title": "invariance of domain (vendored)",
+  "module": "DifferentialGeometry.External.ClassificationOfSurfaces.Topology.InvarianceOfDomain",
+  "decl": "DifferentialGeometry.Topology.invariance_of_domain_open_map",
+  "kind": "theorem",
+  "line": 464,
+  "source": "audit",
+  "closure": 4211,
+  "built": true
+ },
+ {
+  "title": "Brouwer instance (native)",
+  "module": "DifferentialGeometry.Topology.FixedPoint.Brouwer",
+  "decl": null,
+  "kind": null,
+  "line": 30,
+  "source": "audit",
+  "closure": 4766,
+  "built": true
+ },
+ {
+  "title": "no retraction",
+  "module": "DifferentialGeometry.Topology.FixedPoint.NoRetraction",
+  "decl": "DifferentialGeometry.Topology.FixedPoint.not_exists_retraction_closedBall_sphere",
+  "kind": "theorem",
+  "line": 14,
+  "source": "audit",
+  "closure": 4510,
+  "built": true
+ },
+ {
+  "title": "cut-cap reversal is connected sum",
+  "module": "DifferentialGeometry.Topology.ThreeManifold.CutCapPoincareStandard",
+  "decl": "DifferentialGeometry.Topology.SphericalCutCapTransition.componentwise_isPoincareStandard_of_poincareControlled",
+  "kind": "theorem",
+  "line": 15,
+  "source": "audit",
+  "closure": 6631,
+  "built": true
+ },
+ {
+  "title": "trivial space form is S3",
+  "module": "DifferentialGeometry.Topology.ThreeManifold.SphericalSpaceFormTrivial",
+  "decl": "DifferentialGeometry.Topology.exists_orientedDiffeomorph_standardThreeSphere_of_subsingleton_group",
+  "kind": "theorem",
+  "line": 14,
+  "source": "audit",
+  "closure": 4547,
+  "built": true
+ },
+ {
+  "title": "Van Kampen connected sum",
+  "module": "DifferentialGeometry.Topology.VanKampen.FiniteConnectedSumFreeProduct",
+  "decl": "DifferentialGeometry.Topology.fundamentalGroup_finiteConnectedSum_freeProduct",
+  "kind": "theorem",
+  "line": 277,
+  "source": "audit",
+  "closure": 5694,
+  "built": true
+ },
+ {
+  "title": "Section 34 cell diagram",
+  "module": "DifferentialGeometry.Topology.PiecewiseLinear.Section34Terminal",
+  "decl": "DifferentialGeometry.Topology.PiecewiseLinear.section34CellDiagram",
+  "kind": "theorem",
+  "line": 19,
+  "source": "audit",
+  "closure": 8643,
+  "built": true
+ },
+ {
+  "title": "Moise 34.1",
+  "module": "DifferentialGeometry.Topology.PiecewiseLinear.Moise341Producer",
+  "decl": "DifferentialGeometry.Topology.PiecewiseLinear.moise341",
+  "kind": "theorem",
+  "line": 21,
+  "source": "audit",
+  "closure": 7753,
+  "built": true
+ },
+ {
+  "title": "extinction threshold",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Extinction.Families.ScalarThreshold",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Extinction.Families.extinctionThreshold",
+  "kind": "def",
+  "line": 11,
+  "source": "audit",
+  "closure": 4494,
+  "built": true
+ },
+ {
+  "title": "event count bound",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Surgery.Topology.HistoryEventVolumeBound",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Surgery.Topology.ObservedHistory.eventCount_le_card_initial_add_volume_bound",
+  "kind": "theorem",
+  "line": 27,
+  "source": "audit",
+  "closure": 12489,
+  "built": true
+ },
+ {
+  "title": "width decay on a slab",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Extinction.Families.ActualWidth",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Extinction.Families.history_incoming_component_dini",
+  "kind": "theorem",
+  "line": 428,
+  "source": "audit",
+  "closure": 15134,
+  "built": true
+ },
+ {
+  "title": "simple connectivity through surgery",
+  "module": "DifferentialGeometry.Geometry.Flow.RicciFlow.Surgery.Topology.ChildSimplyConnected",
+  "decl": "DifferentialGeometry.PDE.RicciFlow.Surgery.Topology.SmoothCutCapTransition.child_simplyConnected",
+  "kind": "theorem",
+  "line": 35,
+  "source": "audit",
+  "closure": 12865,
+  "built": true
+ }
+]

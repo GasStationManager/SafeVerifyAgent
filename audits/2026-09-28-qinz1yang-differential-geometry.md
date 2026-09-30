@@ -1,7 +1,8 @@
 # Audit: qinz1yang/differential-geometry — the Poincaré conjecture
 
-**Status: complete except the build-backed rungs**, which this machine could
-not finish (§2). Every reading and mechanical rung is complete and its evidence
+**Status: complete except `#print axioms` on the headline**, which needs the full
+closure this machine could not compile (§2); an independent checker accepted 50 of the
+artifact's theorems, including most of the README's list (§2, `dg-intake/CONLECHE.md`). Every reading and mechanical rung is complete and its evidence
 is committed under `dg-intake/`.
 
 **Artifact:** `github.com/qinz1yang/differential-geometry` @ `7a48598d`
@@ -45,7 +46,7 @@ fail elaboration. It can hide one only in a theorem someone reuses, which is
 | compile of the headline module's import closure (14,196 modules) | **13489 of 14,196 modules compiled without error**; the remaining tail could not be finished on a 16 GB machine (below) |
 | `#print axioms DifferentialGeometry.Topology.poincare_conjecture` | **not run** — needs the full closure |
 | Lean rung of `statement.py` (`#check`, `#print`, resolved constants) | **not run** — same |
-| `lean4export` of the headline's dependencies + con-leche `--verified` | **not run** — same (the con-leche tier itself was built and tested on small exports) |
+| `lean4export` + con-leche `--verified` | **run on 50 declarations in 42 streams: all accepted** (`dg-intake/CONLECHE.md`) — the README's theorem list where compiled (Moise, canonical neighbourhoods, κ-solution compactness, Hamilton compactness, Hamilton 1982, short-time existence, reduced volume, W-entropy, Hamilton–Ivey, Shi, matrix Harnack, Bonnet–Myers, Bochner, Weitzenböck, Lichnerowicz, Voss–Weyl, Morse, maximum principles, Li–Yau, Van Kampen, Mayer–Vietoris) plus the audit's own picks (pinching threshold, pinching through surgery, invariance of domain, Brouwer, no-retraction, cut-cap reversal, trivial space form, Section 34, Moise 34.1, extinction threshold, event count, width decay, simple connectivity through surgery). The headline itself is not among them: its closure is not compiled here |
 | the closing-`rfl`/`decide` defeq workload | not attempted; same instrument gap as NSE |
 
 What happened, so the next attempt does not repeat it. `lake build` of the
