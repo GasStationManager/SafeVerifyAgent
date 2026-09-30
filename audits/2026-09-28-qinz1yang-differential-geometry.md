@@ -1,6 +1,6 @@
 # Audit: qinz1yang/differential-geometry — the Poincaré conjecture
 
-**Status: complete except `#print axioms` on the headline**, which needs the full
+**Status: concluded 2026-09-30.** Complete except `#print axioms` on the headline, which needs the full
 closure this machine could not compile (§2); an independent checker accepted 50 of the
 artifact's theorems, including most of the README's list (§2, `dg-intake/CONLECHE.md`). Every reading and mechanical rung is complete and its evidence
 is committed under `dg-intake/`.
