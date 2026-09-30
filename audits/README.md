@@ -18,6 +18,7 @@ the auditor.
 | 2026-09-18 | [openai/NavierStokesAndEuler — final](2026-09-18-openai-NavierStokesAndEuler-FINAL.md) | no defect found | E-A4 closed clean by compile; coverage stated in tiers |
 | 2026-09-28 | [qinz1yang/differential-geometry — Poincaré](2026-09-28-qinz1yang-differential-geometry.md) | no defect found; con-leche accepts 50 theorems incl. most of the README list; headline `#print axioms` not run (memory-bound closure) | route read to the analytic core; 4 unsupplied predicates, all off route |
 | 2026-09-20 | [openai/NavierStokesAndEuler — paper alignment](2026-09-20-openai-NavierStokesAndEuler-paper-alignment.md) | no load-bearing weakening; headline EXACT | 4 open checks, none a defect; docstrings cite a draft numbering |
+| 2026-09-30 | [RBarish-UTokyo/FourColorTheorem-Lean4 — metaprogramming](2026-09-30-RBarish-FourColorTheorem-Lean4-metaprogramming.md) | no defect; engine's "nothing here is trusted" holds by reading and by kernel controls; 2 of 633 certificates accepted by leanchecker, con-leche, con-ron, nanoda | statement rung and route walk not done |
 
 ## How to read one
 
