@@ -8,9 +8,10 @@ README, "essentially all of it" by an AI agent; "no human has reviewed the mathe
 
 Scope of THIS report: the artifact's metaprogramming layer and its kernel-computation
 surface, chosen from the 2026-09-30 target survey as the only AI-written formalization
-found with a nontrivial elaboration-time engine. It is not a full audit: the statement rung
-against `realplane.v` and the route walk (compactness, discretization, unavoidability,
-Birkhoff) were not done. Intake files: `fct-intake/METAPROGRAMMING.md` (the read-through),
+found with a nontrivial elaboration-time engine. It is not a full audit: the statement rung is
+done (`fct-intake/STATEMENT.md`, PAIRED and EXACT up to the declared specialisation to
+Mathlib's `ℝ`); the route walk (compactness, discretization, unavoidability, Birkhoff) was
+not. Intake files: `fct-intake/METAPROGRAMMING.md` (the read-through),
 `fct-intake/CHECKERS.md` (what con-leche's and con-ron's proofs cover),
 `fct-intake/controls/Controls.lean` (the kernel controls).
 
@@ -64,6 +65,19 @@ export targets added):
 
 `#print axioms` on both certificates: `[propext, Classical.choice, Quot.sound]`.
 
+## 3.1 Why `addDecl`, and malformed `Nat`s
+
+The commands add only `defnDecl` data (4 per ring size, `n + 2` per configuration) and
+`thmDecl`s (`2r + 5` per ring size, `n + 6` per configuration): no `opaque`, `axiom` or
+inductive, so the two 2026 `addDecl`-path kernel bugs (#14484, #14576) are out of shape as
+well as out of version. The alternative, literals in source, was measured: a 4 Mbit decimal
+numeral takes 651 s to elaborate on this box, so the engine's reason holds, though chunked
+`nat_lit`s in generated source (the export's own shape) would have worked at the price of a
+~50 MB file per ring size. Malformed `Nat` objects: the emitted values come from safe
+arithmetic, the tree has no `unsafeCast`/`ptrAddrUnsafe`/`implemented_by`/`extern`, and
+`leanexport` serialises every literal as a decimal string the external checkers reparse, so
+only a literal's VALUE reaches them. Details in `fct-intake/METAPROGRAMMING.md` §7–8.
+
 ## 4. On "is con-ron also guaranteed consistent?"
 
 Same headline theorem as con-leche (`model_exists`, `no_False_declaration`), one more
@@ -77,8 +91,10 @@ never the reverse. Neither checks the statement. Table in `fct-intake/CHECKERS.m
 
 ## 5. Not done, and what would close it
 
-- **Statement rung**: `Challenge.lean` against `realplane.v`, by diff, with the port's own
-  deviation list (Mathlib `ℝ` for Coq's axiomatized reals). Unread here.
+- **Statement rung**: DONE. All 20 definitions and the theorem match Coq's one for one; the
+  only deviation is Coq's `∀ Rmodel : Real.model` becoming `ℝ`, a specialisation the
+  statement only uses through `<`. The synced block is byte-identical between
+  `Challenge.lean` and the proof's `RealPlane.lean` (my diff).
 - **Route walk**: `compactness_extension`, `discretize_to_hypermap`, `unavoidability`, the
   Birkhoff replay, `cReducible_of_checks`. Unread here; these are ordinary Lean proofs the
   kernel checks, so they concern faithfulness to Gonthier, not soundness.

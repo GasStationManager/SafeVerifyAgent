@@ -278,3 +278,68 @@ difference the README's design rules were written around.
 
 Files: `scratchpad/fct/cf001/`, `scratchpad/fct/cf110/` (exports not kept in the repo;
 checker logs are one line each and are quoted above).
+
+## 7. Why `addDecl` at all, and what it put into the environment
+
+What the commands ADD, read off the built modules (`controls/Added.lean` lists a module's
+constants from `env.header.moduleData`):
+
+| module | constants | definitions (data) | theorems |
+|---|---|---|---|
+| `Reducibility.Nets6` | 21 | 4: `tauNetC6`, `tauNet6`, `cnvNetC6`, `cnvNet6` | 17: `tauNetOK6`, `cnvNetOK6`, `tauLayers6`, `cnvLayers6`, `tauPart6_0..5`, `cnvPart6_0..4`, `tauSpec6`, `cnvSpec6` |
+| `Reducibility.Nets14` | 37 | 4 | 33 (14 + 13 position parts) |
+| `Reducibility.Cf001` | 10 | 3: `cf001_cpc`, `cf001_H0`, `cf001_H1` | 7: `ctr`, `rc`, `init`, `step0`, `final`, `reach`, `reducible` |
+| `Reducibility.Cf110` | 22 | 9: `cpc`, `H0..H7` | 13: `ctr`, `rc`, `init`, `step0..6`, `final`, `reach`, `reducible` |
+
+So per ring size `r`: 4 definitions and `2r + 5` theorems (13 ring sizes, 2 ≤ r ≤ 14: 52
+definitions, 273 theorems in all); per configuration with `n` checkpoint steps: `n + 2`
+definitions and `n + 6` theorems (`n` = 1 at ring 6, 7 at ring 14, 633 configurations).
+`QuizData/Lit.lean` adds 633 `qzNNN : Quiz`, two block lists, one `QuizTree` and the 14
+drule-fork literals. Nothing else: no `opaque`, no `axiom`, no inductive, no instance — the
+two 2026 kernel bugs reachable through `addDecl` metaprograms (lean4 #14484, an `opaque`
+whose body is a free variable; #14576, a wrong-structure projection inside a nested
+inductive declaration) needed declaration kinds this engine never emits, and both fixes
+predate `v4.35.0-rc2`.
+
+Why not write the literals into Lean source instead? Measured here (`lake env lean` on a
+file with one `def`; the empty-file baseline is 1.9 s):
+
+| numeral size | as a decimal numeral (`OfNat`) | as `nat_lit` |
+|---|---|---|
+| 8 Kbit | 1.8 s | 1.1 s |
+| 64 Kbit | 1.4 s | 1.2 s |
+| 512 Kbit | 9.7 s | 2.8 s |
+| 4 Mbit | **651 s** | not tried |
+
+The docstring's "a 4 MB numeral takes minutes to elaborate" is right (10.9 min for 4 Mbit
+here; the ring-14 masks total 163 Mbit). Chunked 8 Kbit `nat_lit`s in generated source would
+elaborate fine — the export itself is exactly that shape, 2,467-digit `natVal` strings — but
+the ring-14 file would be ~50 MB of decimal digits per network pair, and the checkpoints
+depend on a native run (rounds until the contract traces are covered) that the generator has
+to perform anyway. The port chose in-process generation for the certificates and Python
+generation of source for the presentations (`scripts/present_gen.py`); the first is a
+build-time choice, not a soundness one, and it also gives the generator per-declaration
+kernel options and the one-position-per-declaration split. The user-visible cost is that
+the certificates are not in the repository: they exist only in the built `.olean`s and in
+Palomar's export.
+
+## 8. Malformed `Nat` objects
+
+`mkRawNatLit n` wraps whatever runtime object `n` is, and Lean's in-process kernel then
+operates on that object through its GMP fast paths. A metaprogram that manufactures a
+non-canonical `Nat` object could in principle hand the kernel a literal whose runtime
+representation and mathematical value disagree. Two things bound that here:
+
+1. **Where the objects come from.** Every emitted `Nat` is the result of safe compiled
+   arithmetic (`natOfBytes` via `|||`/`<<<`, `natChunks` via `&&&`/`>>>`, `dpP1`/`round`
+   in `Engine/`), and the tree contains no `unsafeCast`, `ptrAddrUnsafe`, `unsafeBaseIO`,
+   `implemented_by` or `extern` (grep over `FourColor/`, `Solution.lean`, `Challenge.lean`).
+   The one `unsafe` is `evalExpr`, which runs safe code.
+2. **What the checkers see.** `leanexport` writes each literal as a decimal string
+   (`{"ie":…,"natVal":"1043875945…"}`, longest 2,467 digits = 8,190 bits, matching the
+   8 Kbit chunking) produced by the runtime's `Nat.repr`; every external checker parses it
+   back into its own bignum (con-ron's `ron::Nat` is inside its proof; nanoda's is its own).
+   A representation-level malformation therefore cannot reach the external checkers: only
+   the VALUE crosses the export, and a wrong value fails the check (§6.1). What remains
+   shared between the generator and Lean's own kernel is the GMP-backed `Nat` runtime; the
+   external replays are the independent check for exactly that, and both certificates passed.
