@@ -106,6 +106,31 @@ line, and record which mode ran.
     finish it. Never delete `.ilean`, `.c` or `.setup.json` files to save
     disk mid-build: `lake` then treats every affected module as out of date.
 
+15. **Control an engine through its own door.** When an artifact generates
+    declarations at elaboration time, the test of "nothing here is trusted" is
+    not the docstring but a `run_cmd` that calls the engine's own `addThm`/
+    `addDataDef` with a corrupted literal and watches the kernel refuse it,
+    beside the same call with the genuine literal accepted (Four Color port:
+    a flipped checkpoint bit and a dropped network layer, both rejected).
+    Then read what the commands add from the built `.olean`s
+    (`env.header.moduleData`), not from the generator's description, and
+    check the declaration KINDS: data `def`s and `thm`s are out of shape for
+    the kernel bugs that needed an `opaque` or an inductive.
+16. **Only a literal's value crosses the export.** `leanexport` writes every
+    `Nat` literal as a decimal string and each external checker reparses it
+    into its own bignum, so a malformed runtime object cannot reach con-leche,
+    con-ron or nanoda; what the external replays independently check is the
+    shared GMP runtime, which is why they are worth running on exactly the
+    big-literal certificates. Since `v4.35.0-rc2` all four checkers ship in the
+    toolchain's `bin/`; a version bump of the artifact is no longer a reason to
+    skip them.
+17. **Build the slice, not the project.** `lake exe cache get <files>` from
+    inside the Mathlib package fetches only the olean closure of the named
+    files (962 of ~7,000 for the Four Color engine), and a `lake build` of the
+    target modules then compiles only their closure (53 modules, 1 m 40 s).
+    The DG closure (14,196 modules) was the other end of this; decide which
+    end an artifact is on before starting (lesson 14).
+
 ## 4. Reporting
 
 14. **An escalation is not an accusation** and is recorded with its trace

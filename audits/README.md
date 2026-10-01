@@ -2,8 +2,9 @@
 
 Reports from running this agent at real, published artifacts.
 
-Plain-language overviews: [`SUMMARY-openai-NavierStokesAndEuler.md`](SUMMARY-openai-NavierStokesAndEuler.md)
-and [`SUMMARY-qinz1yang-differential-geometry.md`](SUMMARY-qinz1yang-differential-geometry.md).
+Plain-language overviews: [`SUMMARY-openai-NavierStokesAndEuler.md`](SUMMARY-openai-NavierStokesAndEuler.md),
+[`SUMMARY-qinz1yang-differential-geometry.md`](SUMMARY-qinz1yang-differential-geometry.md)
+and [`SUMMARY-RBarish-FourColorTheorem-Lean4.md`](SUMMARY-RBarish-FourColorTheorem-Lean4.md).
 
 They are kept in the repo for one reason: **a verdict whose method is not
 reproducible is an opinion.** Each report states the commit it audited, which

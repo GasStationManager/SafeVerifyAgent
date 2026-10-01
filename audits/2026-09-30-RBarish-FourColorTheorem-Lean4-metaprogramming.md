@@ -1,5 +1,10 @@
 # RBarish-UTokyo/FourColorTheorem-Lean4 — metaprogramming and kernel-computation audit
 
+Status: **concluded 2026-10-01.** Scope as stated below (statement rung, metaprogramming layer,
+kernel controls, independent checkers on two certificates); the route walk and the remaining
+631 certificates were not in scope and are listed in §5. Plain-language summary:
+`SUMMARY-RBarish-FourColorTheorem-Lean4.md`.
+
 Artifact: `RBarish-UTokyo/FourColorTheorem-Lean4` at `20fa34599f5189dd569d96dd22f306c94ab1c446`
 (Palomar PALOMAR-2026-09-27-000005, trust `high`), Lean `v4.35.0-rc2`. Headline:
 `FourColor.RealPlane.four_color : ∀ (m : Map), SimpleMap m → ColorableWith 4 m`, a port of
