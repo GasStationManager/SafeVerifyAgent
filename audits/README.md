@@ -20,6 +20,8 @@ the auditor.
 | 2026-09-28 | [qinz1yang/differential-geometry — Poincaré](2026-09-28-qinz1yang-differential-geometry.md) | no defect found; con-leche accepts 50 theorems incl. most of the README list; headline `#print axioms` not run (memory-bound closure) | route read to the analytic core; 4 unsupplied predicates, all off route |
 | 2026-09-20 | [openai/NavierStokesAndEuler — paper alignment](2026-09-20-openai-NavierStokesAndEuler-paper-alignment.md) | no load-bearing weakening; headline EXACT | 4 open checks, none a defect; docstrings cite a draft numbering |
 | 2026-09-30 | [RBarish-UTokyo/FourColorTheorem-Lean4 — metaprogramming](2026-09-30-RBarish-FourColorTheorem-Lean4-metaprogramming.md) | no defect; headline EXACT vs Gonthier's `realplane.v` (ℝ specialisation declared); engine's "nothing here is trusted" holds by reading and by kernel controls; 2 of 633 certificates accepted by leanchecker, con-leche, con-ron, nanoda | route walk not done |
+| 2026-10-04 | [anthropics/formal-math — percolation, θ(p_c) = 0](2026-10-04-anthropics-formal-math-percolation.md) | no defect at scope; headline PAIRED, EXACT; trust surface empty; not built | route walk and no-supplier pass not done |
+| 2026-10-04 | [nasqret/semibase-order6 — finite bases of order-six semigroups](2026-10-04-nasqret-semibase-order6.md) | no defect at scope; headline BARE, EXACT; `Derives` is exactly equational logic; catalogue recomputed (15,973 tables, pairwise inequivalent); trust surface one tactic macro; not built (220 GB) | axiom rung, checkers and route walk not done |
 
 ## How to read one
 
