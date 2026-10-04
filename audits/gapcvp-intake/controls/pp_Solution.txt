@@ -1,0 +1,973 @@
+def GapCVP.Comparator.gapCVP400Promise : GapCVP.Comparator.PromiseProblem :=
+GapCVP.Comparator.PromiseProblem.mk GapCVP.Comparator.yesLanguage GapCVP.Comparator.noLanguage
+  GapCVP.Comparator.gapCVP400Promise._proof_1
+def GapCVP.Comparator.binaryNearestCodewordPromise : GapCVP.Comparator.PromiseProblem :=
+GapCVP.Comparator.PromiseProblem.mk
+  (fun (bits : List.{0} Bool) =>
+    @Decidable.decide
+      (@Exists.{1} GapCVP.Comparator.BinaryNearestCodewordInstance
+        fun (record : GapCVP.Comparator.BinaryNearestCodewordInstance) =>
+        And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeBinaryNearestCodewordInstance record) bits)
+          (And
+            (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+              (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+            (And
+              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                (GapCVP.Comparator.BinaryNearestCodewordInstance.radius record))
+              (@Exists.{1}
+                (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record) →
+                  ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                fun
+                  (coefficients :
+                    Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record) →
+                      ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) =>
+                @LE.le.{0} Nat instLENat
+                  (@hammingNorm.{0, 0} (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                    (fun (a : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                      ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                    (Fin.fintype (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                    (fun (i : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                      ZMod.decidableEq (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                    (fun (i : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                      @MulZeroClass.toZero.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@instMulZeroClassOfSemiring.{0}
+                          (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@DivisionSemiring.toSemiring.{0}
+                            (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (@Semifield.toDivisionSemiring.{0}
+                              (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@Field.toSemifield.{0}
+                                (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                  Nat.fact_prime_two))))))
+                    (@HSub.hSub.{0, 0, 0}
+                      (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (@instHSub.{0}
+                        (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                          ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@Pi.instSub.{0, 0} (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                          (fun (a : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                            ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          fun (i : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                          @SubNegMonoid.toSub.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (@AddGroup.toSubNegMonoid.{0}
+                              (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@AddGroupWithOne.toAddGroup.{0}
+                                (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                (@Ring.toAddGroupWithOne.{0}
+                                  (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                  (@DivisionRing.toRing.{0}
+                                    (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                    (@Field.toDivisionRing.{0}
+                                      (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                      (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                        Nat.fact_prime_two))))))))
+                      (GapCVP.Comparator.binaryNearestTarget record)
+                      (GapCVP.Comparator.binaryNearestCodeword record coefficients)))
+                  (GapCVP.Comparator.BinaryNearestCodewordInstance.radius record)))))
+      (Classical.propDecidable
+        (@Exists.{1} GapCVP.Comparator.BinaryNearestCodewordInstance
+          fun (record : GapCVP.Comparator.BinaryNearestCodewordInstance) =>
+          And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeBinaryNearestCodewordInstance record) bits)
+            (And
+              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+              (And
+                (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                  (GapCVP.Comparator.BinaryNearestCodewordInstance.radius record))
+                (@Exists.{1}
+                  (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record) →
+                    ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  fun
+                    (coefficients :
+                      Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record) →
+                        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) =>
+                  @LE.le.{0} Nat instLENat
+                    (@hammingNorm.{0, 0} (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                      (fun (a : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (Fin.fintype (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                      (fun (i : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                        ZMod.decidableEq (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (fun (i : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                        @MulZeroClass.toZero.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@instMulZeroClassOfSemiring.{0}
+                            (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (@DivisionSemiring.toSemiring.{0}
+                              (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@Semifield.toDivisionSemiring.{0}
+                                (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                (@Field.toSemifield.{0}
+                                  (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                  (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                    Nat.fact_prime_two))))))
+                      (@HSub.hSub.{0, 0, 0}
+                        (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                          ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                          ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                          ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@instHSub.{0}
+                          (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                            ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@Pi.instSub.{0, 0} (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                            (fun (a : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                              ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            fun (i : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                            @SubNegMonoid.toSub.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@AddGroup.toSubNegMonoid.{0}
+                                (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                (@AddGroupWithOne.toAddGroup.{0}
+                                  (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                  (@Ring.toAddGroupWithOne.{0}
+                                    (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                    (@DivisionRing.toRing.{0}
+                                      (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                      (@Field.toDivisionRing.{0}
+                                        (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                        (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                          Nat.fact_prime_two))))))))
+                        (GapCVP.Comparator.binaryNearestTarget record)
+                        (GapCVP.Comparator.binaryNearestCodeword record coefficients)))
+                    (GapCVP.Comparator.BinaryNearestCodewordInstance.radius record)))))))
+  (fun (bits : List.{0} Bool) =>
+    @Decidable.decide
+      (@Exists.{1} GapCVP.Comparator.BinaryNearestCodewordInstance
+        fun (record : GapCVP.Comparator.BinaryNearestCodewordInstance) =>
+        And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeBinaryNearestCodewordInstance record) bits)
+          (And
+            (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+              (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+            (And
+              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                (GapCVP.Comparator.BinaryNearestCodewordInstance.radius record))
+              (∀
+                (coefficients :
+                  Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record) →
+                    ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))),
+                @LT.lt.{0} Real Real.instLT
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (GapCVP.Comparator.binaryCodeGapFactor
+                      (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                    (@Nat.cast.{0} Real Real.instNatCast
+                      (GapCVP.Comparator.BinaryNearestCodewordInstance.radius record)))
+                  (@Nat.cast.{0} Real Real.instNatCast
+                    (@hammingNorm.{0, 0} (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                      (fun (a : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (Fin.fintype (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                      (fun (i : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                        ZMod.decidableEq (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (fun (i : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                        @MulZeroClass.toZero.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@instMulZeroClassOfSemiring.{0}
+                            (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (@DivisionSemiring.toSemiring.{0}
+                              (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@Semifield.toDivisionSemiring.{0}
+                                (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                (@Field.toSemifield.{0}
+                                  (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                  (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                    Nat.fact_prime_two))))))
+                      (@HSub.hSub.{0, 0, 0}
+                        (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                          ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                          ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                          ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (@instHSub.{0}
+                          (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                            ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@Pi.instSub.{0, 0} (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                            (fun (a : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                              ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            fun (i : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                            @SubNegMonoid.toSub.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@AddGroup.toSubNegMonoid.{0}
+                                (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                (@AddGroupWithOne.toAddGroup.{0}
+                                  (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                  (@Ring.toAddGroupWithOne.{0}
+                                    (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                    (@DivisionRing.toRing.{0}
+                                      (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                      (@Field.toDivisionRing.{0}
+                                        (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                        (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                          Nat.fact_prime_two))))))))
+                        (GapCVP.Comparator.binaryNearestTarget record)
+                        (GapCVP.Comparator.binaryNearestCodeword record coefficients))))))))
+      (Classical.propDecidable
+        (@Exists.{1} GapCVP.Comparator.BinaryNearestCodewordInstance
+          fun (record : GapCVP.Comparator.BinaryNearestCodewordInstance) =>
+          And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeBinaryNearestCodewordInstance record) bits)
+            (And
+              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+              (And
+                (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                  (GapCVP.Comparator.BinaryNearestCodewordInstance.radius record))
+                (∀
+                  (coefficients :
+                    Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record) →
+                      ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))),
+                  @LT.lt.{0} Real Real.instLT
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (GapCVP.Comparator.binaryCodeGapFactor
+                        (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                      (@Nat.cast.{0} Real Real.instNatCast
+                        (GapCVP.Comparator.BinaryNearestCodewordInstance.radius record)))
+                    (@Nat.cast.{0} Real Real.instNatCast
+                      (@hammingNorm.{0, 0} (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                        (fun (a : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                          ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (Fin.fintype (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                        (fun (i : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                          ZMod.decidableEq (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (fun (i : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                          @MulZeroClass.toZero.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (@instMulZeroClassOfSemiring.{0}
+                              (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@DivisionSemiring.toSemiring.{0}
+                                (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                (@Semifield.toDivisionSemiring.{0}
+                                  (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                  (@Field.toSemifield.{0}
+                                    (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                    (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                      Nat.fact_prime_two))))))
+                        (@HSub.hSub.{0, 0, 0}
+                          (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                            ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                            ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                            ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@instHSub.{0}
+                            (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+                              ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (@Pi.instSub.{0, 0}
+                              (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+                              (fun (a : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                                ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              fun (i : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+                              @SubNegMonoid.toSub.{0}
+                                (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                (@AddGroup.toSubNegMonoid.{0}
+                                  (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                  (@AddGroupWithOne.toAddGroup.{0}
+                                    (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                    (@Ring.toAddGroupWithOne.{0}
+                                      (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                      (@DivisionRing.toRing.{0}
+                                        (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                        (@Field.toDivisionRing.{0}
+                                          (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                          (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                            Nat.fact_prime_two))))))))
+                          (GapCVP.Comparator.binaryNearestTarget record)
+                          (GapCVP.Comparator.binaryNearestCodeword record coefficients))))))))))
+  GapCVP.Comparator.binaryNearestCodewordPromise._proof_1
+def GapCVP.Comparator.binarySyndromeDecodingPromise : GapCVP.Comparator.PromiseProblem :=
+GapCVP.Comparator.PromiseProblem.mk
+  (fun (bits : List.{0} Bool) =>
+    @Decidable.decide
+      (@Exists.{1} GapCVP.Comparator.BinarySyndromeDecodingInstance
+        fun (record : GapCVP.Comparator.BinarySyndromeDecodingInstance) =>
+        And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeBinarySyndromeDecodingInstance record) bits)
+          (And
+            (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+              (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+            (And
+              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                (GapCVP.Comparator.BinarySyndromeDecodingInstance.radius record))
+              (@Exists.{1}
+                (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record) →
+                  ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                fun
+                  (word :
+                    Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record) →
+                      ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) =>
+                And
+                  (@Eq.{1}
+                    (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.checkCount record) →
+                      ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                    (GapCVP.Comparator.binarySyndromeProduct record word)
+                    (GapCVP.Comparator.binarySyndromeTarget record))
+                  (@LE.le.{0} Nat instLENat
+                    (@hammingNorm.{0, 0} (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+                      (fun (i : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+                        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (Fin.fintype (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+                      (fun (i : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+                        ZMod.decidableEq (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (fun (i : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+                        @MulZeroClass.toZero.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (@instMulZeroClassOfSemiring.{0}
+                            (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (@DivisionSemiring.toSemiring.{0}
+                              (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@Semifield.toDivisionSemiring.{0}
+                                (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                (@Field.toSemifield.{0}
+                                  (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                  (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                    Nat.fact_prime_two))))))
+                      word)
+                    (GapCVP.Comparator.BinarySyndromeDecodingInstance.radius record))))))
+      (Classical.propDecidable
+        (@Exists.{1} GapCVP.Comparator.BinarySyndromeDecodingInstance
+          fun (record : GapCVP.Comparator.BinarySyndromeDecodingInstance) =>
+          And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeBinarySyndromeDecodingInstance record) bits)
+            (And
+              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+              (And
+                (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                  (GapCVP.Comparator.BinarySyndromeDecodingInstance.radius record))
+                (@Exists.{1}
+                  (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record) →
+                    ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  fun
+                    (word :
+                      Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record) →
+                        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) =>
+                  And
+                    (@Eq.{1}
+                      (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.checkCount record) →
+                        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (GapCVP.Comparator.binarySyndromeProduct record word)
+                      (GapCVP.Comparator.binarySyndromeTarget record))
+                    (@LE.le.{0} Nat instLENat
+                      (@hammingNorm.{0, 0} (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+                        (fun (i : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+                          ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (Fin.fintype (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+                        (fun (i : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+                          ZMod.decidableEq (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (fun (i : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+                          @MulZeroClass.toZero.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (@instMulZeroClassOfSemiring.{0}
+                              (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@DivisionSemiring.toSemiring.{0}
+                                (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                (@Semifield.toDivisionSemiring.{0}
+                                  (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                  (@Field.toSemifield.{0}
+                                    (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                    (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                      Nat.fact_prime_two))))))
+                        word)
+                      (GapCVP.Comparator.BinarySyndromeDecodingInstance.radius record))))))))
+  (fun (bits : List.{0} Bool) =>
+    @Decidable.decide
+      (@Exists.{1} GapCVP.Comparator.BinarySyndromeDecodingInstance
+        fun (record : GapCVP.Comparator.BinarySyndromeDecodingInstance) =>
+        And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeBinarySyndromeDecodingInstance record) bits)
+          (And
+            (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+              (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+            (And
+              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                (GapCVP.Comparator.BinarySyndromeDecodingInstance.radius record))
+              (And
+                (@Exists.{1}
+                  (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record) →
+                    ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  fun
+                    (word :
+                      Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record) →
+                        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) =>
+                  @Eq.{1}
+                    (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.checkCount record) →
+                      ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                    (GapCVP.Comparator.binarySyndromeProduct record word)
+                    (GapCVP.Comparator.binarySyndromeTarget record))
+                (∀
+                  (word :
+                    Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record) →
+                      ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))),
+                  @Eq.{1}
+                      (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.checkCount record) →
+                        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (GapCVP.Comparator.binarySyndromeProduct record word)
+                      (GapCVP.Comparator.binarySyndromeTarget record) →
+                    @LT.lt.{0} Real Real.instLT
+                      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                        (GapCVP.Comparator.binaryCodeGapFactor
+                          (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+                        (@Nat.cast.{0} Real Real.instNatCast
+                          (GapCVP.Comparator.BinarySyndromeDecodingInstance.radius record)))
+                      (@Nat.cast.{0} Real Real.instNatCast
+                        (@hammingNorm.{0, 0} (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+                          (fun (i : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+                            ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (Fin.fintype (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+                          (fun (i : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+                            ZMod.decidableEq (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (fun (i : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+                            @MulZeroClass.toZero.{0}
+                              (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (@instMulZeroClassOfSemiring.{0}
+                                (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                (@DivisionSemiring.toSemiring.{0}
+                                  (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                  (@Semifield.toDivisionSemiring.{0}
+                                    (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                    (@Field.toSemifield.{0}
+                                      (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                      (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                        Nat.fact_prime_two))))))
+                          word)))))))
+      (Classical.propDecidable
+        (@Exists.{1} GapCVP.Comparator.BinarySyndromeDecodingInstance
+          fun (record : GapCVP.Comparator.BinarySyndromeDecodingInstance) =>
+          And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeBinarySyndromeDecodingInstance record) bits)
+            (And
+              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+              (And
+                (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                  (GapCVP.Comparator.BinarySyndromeDecodingInstance.radius record))
+                (And
+                  (@Exists.{1}
+                    (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record) →
+                      ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                    fun
+                      (word :
+                        Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record) →
+                          ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) =>
+                    @Eq.{1}
+                      (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.checkCount record) →
+                        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                      (GapCVP.Comparator.binarySyndromeProduct record word)
+                      (GapCVP.Comparator.binarySyndromeTarget record))
+                  (∀
+                    (word :
+                      Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record) →
+                        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))),
+                    @Eq.{1}
+                        (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.checkCount record) →
+                          ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                        (GapCVP.Comparator.binarySyndromeProduct record word)
+                        (GapCVP.Comparator.binarySyndromeTarget record) →
+                      @LT.lt.{0} Real Real.instLT
+                        (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                          (GapCVP.Comparator.binaryCodeGapFactor
+                            (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+                          (@Nat.cast.{0} Real Real.instNatCast
+                            (GapCVP.Comparator.BinarySyndromeDecodingInstance.radius record)))
+                        (@Nat.cast.{0} Real Real.instNatCast
+                          (@hammingNorm.{0, 0}
+                            (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+                            (fun (i : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+                              ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (Fin.fintype (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+                            (fun (i : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+                              ZMod.decidableEq (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                            (fun (i : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+                              @MulZeroClass.toZero.{0}
+                                (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                (@instMulZeroClassOfSemiring.{0}
+                                  (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                  (@DivisionSemiring.toSemiring.{0}
+                                    (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                    (@Semifield.toDivisionSemiring.{0}
+                                      (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                      (@Field.toSemifield.{0}
+                                        (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                                        (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                          Nat.fact_prime_two))))))
+                            word)))))))))
+  GapCVP.Comparator.binarySyndromeDecodingPromise._proof_1
+def GapCVP.Comparator.finitePGapCVPPromise : (p : Rat) →
+  (hp : @LE.le.{0} Rat Rat.instLE (@OfNat.ofNat.{0} Rat (nat_lit 1) (@Rat.instOfNat (nat_lit 1))) p) →
+    GapCVP.Comparator.PromiseProblem :=
+fun (p : Rat) (hp : @LE.le.{0} Rat Rat.instLE (@OfNat.ofNat.{0} Rat (nat_lit 1) (@Rat.instOfNat (nat_lit 1))) p) =>
+  GapCVP.Comparator.PromiseProblem.mk
+    (fun (bits : List.{0} Bool) =>
+      @Decidable.decide
+        (@Exists.{1} GapCVP.Comparator.Instance fun (I : GapCVP.Comparator.Instance) =>
+          And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeInstance I) bits)
+            (And (@Eq.{1} Bool (GapCVP.Comparator.wellFormed I) Bool.true)
+              (@Exists.{1} (Fin (GapCVP.Comparator.Instance.dimension I) → Int)
+                fun (vector : Fin (GapCVP.Comparator.Instance.dimension I) → Int) =>
+                @LE.le.{0} Real Real.instLE (GapCVP.Comparator.finitePLatticeDistance p I vector)
+                  (@Rat.cast.{0} Real Real.instRatCast (GapCVP.Comparator.Instance.radius I)))))
+        (Classical.propDecidable
+          (@Exists.{1} GapCVP.Comparator.Instance fun (I : GapCVP.Comparator.Instance) =>
+            And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeInstance I) bits)
+              (And (@Eq.{1} Bool (GapCVP.Comparator.wellFormed I) Bool.true)
+                (@Exists.{1} (Fin (GapCVP.Comparator.Instance.dimension I) → Int)
+                  fun (vector : Fin (GapCVP.Comparator.Instance.dimension I) → Int) =>
+                  @LE.le.{0} Real Real.instLE (GapCVP.Comparator.finitePLatticeDistance p I vector)
+                    (@Rat.cast.{0} Real Real.instRatCast (GapCVP.Comparator.Instance.radius I)))))))
+    (fun (bits : List.{0} Bool) =>
+      @Decidable.decide
+        (@Exists.{1} GapCVP.Comparator.Instance fun (I : GapCVP.Comparator.Instance) =>
+          And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeInstance I) bits)
+            (And (@Eq.{1} Bool (GapCVP.Comparator.wellFormed I) Bool.true)
+              (∀ (vector : Fin (GapCVP.Comparator.Instance.dimension I) → Int),
+                @LT.lt.{0} Real Real.instLT
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (GapCVP.Comparator.finitePGapFactor p I)
+                    (@Rat.cast.{0} Real Real.instRatCast (GapCVP.Comparator.Instance.radius I)))
+                  (GapCVP.Comparator.finitePLatticeDistance p I vector))))
+        (Classical.propDecidable
+          (@Exists.{1} GapCVP.Comparator.Instance fun (I : GapCVP.Comparator.Instance) =>
+            And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeInstance I) bits)
+              (And (@Eq.{1} Bool (GapCVP.Comparator.wellFormed I) Bool.true)
+                (∀ (vector : Fin (GapCVP.Comparator.Instance.dimension I) → Int),
+                  @LT.lt.{0} Real Real.instLT
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (GapCVP.Comparator.finitePGapFactor p I)
+                      (@Rat.cast.{0} Real Real.instRatCast (GapCVP.Comparator.Instance.radius I)))
+                    (GapCVP.Comparator.finitePLatticeDistance p I vector))))))
+    ⋯
+def GapCVP.Comparator.yesLanguage : (bits : List.{0} Bool) → Bool :=
+fun (bits : List.{0} Bool) =>
+  @Decidable.decide
+    (@Exists.{1} GapCVP.Comparator.Instance fun (record : GapCVP.Comparator.Instance) =>
+      And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeInstance record) bits)
+        (And (@Eq.{1} Bool (GapCVP.Comparator.hasIntegerTarget record) Bool.true)
+          (@Eq.{1} Bool (GapCVP.Comparator.gapYES400 record) Bool.true)))
+    (Classical.propDecidable
+      (@Exists.{1} GapCVP.Comparator.Instance fun (record : GapCVP.Comparator.Instance) =>
+        And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeInstance record) bits)
+          (And (@Eq.{1} Bool (GapCVP.Comparator.hasIntegerTarget record) Bool.true)
+            (@Eq.{1} Bool (GapCVP.Comparator.gapYES400 record) Bool.true))))
+def GapCVP.Comparator.noLanguage : (bits : List.{0} Bool) → Bool :=
+fun (bits : List.{0} Bool) =>
+  @Decidable.decide
+    (@Exists.{1} GapCVP.Comparator.Instance fun (record : GapCVP.Comparator.Instance) =>
+      And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeInstance record) bits)
+        (And (@Eq.{1} Bool (GapCVP.Comparator.hasIntegerTarget record) Bool.true)
+          (@Eq.{1} Bool (GapCVP.Comparator.gapNO400 record) Bool.true)))
+    (Classical.propDecidable
+      (@Exists.{1} GapCVP.Comparator.Instance fun (record : GapCVP.Comparator.Instance) =>
+        And (@Eq.{1} (List.{0} Bool) (GapCVP.Comparator.encodeInstance record) bits)
+          (And (@Eq.{1} Bool (GapCVP.Comparator.hasIntegerTarget record) Bool.true)
+            (@Eq.{1} Bool (GapCVP.Comparator.gapNO400 record) Bool.true))))
+def GapCVP.Comparator.gapYES400 : (record : GapCVP.Comparator.Instance) → Bool :=
+fun (record : GapCVP.Comparator.Instance) =>
+  @Decidable.decide
+    (And (@Eq.{1} Bool (GapCVP.Comparator.wellFormed record) Bool.true)
+      (@Exists.{1} (Fin (GapCVP.Comparator.Instance.dimension record) → Int)
+        fun (vector : Fin (GapCVP.Comparator.Instance.dimension record) → Int) =>
+        @LE.le.{0} Real Real.instLE (GapCVP.Comparator.distanceSquared record vector)
+          (@HPow.hPow.{0, 0, 0} Real Nat Real
+            (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))
+            (@Rat.cast.{0} Real Real.instRatCast (GapCVP.Comparator.Instance.radius record))
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+    (Classical.propDecidable
+      (And (@Eq.{1} Bool (GapCVP.Comparator.wellFormed record) Bool.true)
+        (@Exists.{1} (Fin (GapCVP.Comparator.Instance.dimension record) → Int)
+          fun (vector : Fin (GapCVP.Comparator.Instance.dimension record) → Int) =>
+          @LE.le.{0} Real Real.instLE (GapCVP.Comparator.distanceSquared record vector)
+            (@HPow.hPow.{0, 0, 0} Real Nat Real
+              (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))
+              (@Rat.cast.{0} Real Real.instRatCast (GapCVP.Comparator.Instance.radius record))
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))
+def GapCVP.Comparator.gapNO400 : (record : GapCVP.Comparator.Instance) → Bool :=
+fun (record : GapCVP.Comparator.Instance) =>
+  @Decidable.decide
+    (And (@Eq.{1} Bool (GapCVP.Comparator.wellFormed record) Bool.true)
+      (∀ (vector : Fin (GapCVP.Comparator.Instance.dimension record) → Int),
+        @LT.lt.{0} Real Real.instLT
+          (@HPow.hPow.{0, 0, 0} Real Nat Real
+            (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (GapCVP.Comparator.gapFactor400 record)
+              (@Rat.cast.{0} Real Real.instRatCast (GapCVP.Comparator.Instance.radius record)))
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (GapCVP.Comparator.distanceSquared record vector)))
+    (Classical.propDecidable
+      (And (@Eq.{1} Bool (GapCVP.Comparator.wellFormed record) Bool.true)
+        (∀ (vector : Fin (GapCVP.Comparator.Instance.dimension record) → Int),
+          @LT.lt.{0} Real Real.instLT
+            (@HPow.hPow.{0, 0, 0} Real Nat Real
+              (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (GapCVP.Comparator.gapFactor400 record)
+                (@Rat.cast.{0} Real Real.instRatCast (GapCVP.Comparator.Instance.radius record)))
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (GapCVP.Comparator.distanceSquared record vector))))
+def GapCVP.Comparator.gapFactor400 : (I : GapCVP.Comparator.Instance) → Real :=
+fun (I : GapCVP.Comparator.Instance) =>
+  @HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow)
+    (@Nat.cast.{0} Real Real.instNatCast (GapCVP.Comparator.Instance.dimension I))
+    (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+      (@OfNat.ofNat.{0} Real (nat_lit 400)
+        (@instOfNatAtLeastTwo.{0} Real (nat_lit 400) Real.instNatCast GapCVP.gapFactor400._proof_1)))
+def GapCVP.Comparator.distanceSquared : (I : GapCVP.Comparator.Instance) →
+  (vector : Fin (GapCVP.Comparator.Instance.dimension I) → Int) → Real :=
+fun (I : GapCVP.Comparator.Instance) (vector : Fin (GapCVP.Comparator.Instance.dimension I) → Int) =>
+  @Finset.sum.{0, 0} (Fin (GapCVP.Comparator.Instance.dimension I)) Real Real.instAddCommMonoid
+    (@Finset.univ.{0} (Fin (GapCVP.Comparator.Instance.dimension I))
+      (Fin.fintype (GapCVP.Comparator.Instance.dimension I)))
+    fun (i : Fin (GapCVP.Comparator.Instance.dimension I)) =>
+    @HPow.hPow.{0, 0, 0} Real Nat Real
+      (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))
+      (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+        (@Finset.sum.{0, 0} (Fin (GapCVP.Comparator.Instance.dimension I)) Real Real.instAddCommMonoid
+          (@Finset.univ.{0} (Fin (GapCVP.Comparator.Instance.dimension I))
+            (Fin.fintype (GapCVP.Comparator.Instance.dimension I)))
+          fun (j : Fin (GapCVP.Comparator.Instance.dimension I)) =>
+          @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@Int.cast.{0} Real Real.instIntCast (GapCVP.Comparator.Instance.basis I i j))
+            (@Int.cast.{0} Real Real.instIntCast (vector j)))
+        (@Rat.cast.{0} Real Real.instRatCast (GapCVP.Comparator.Instance.target I i)))
+      (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+def GapCVP.Comparator.wellFormed : (record : GapCVP.Comparator.Instance) → Bool :=
+fun (record : GapCVP.Comparator.Instance) =>
+  @Decidable.decide
+    (And
+      (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+        (GapCVP.Comparator.Instance.dimension record))
+      (And
+        (@Ne.{1} Int
+          (@Matrix.det.{0, 0} (Fin (GapCVP.Comparator.Instance.dimension record))
+            (instDecidableEqFin (GapCVP.Comparator.Instance.dimension record))
+            (Fin.fintype (GapCVP.Comparator.Instance.dimension record)) Int Int.instCommRing
+            (GapCVP.Comparator.Instance.basis record))
+          (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))
+        (@LT.lt.{0} Rat Rat.instLT (@OfNat.ofNat.{0} Rat (nat_lit 0) (@Rat.instOfNat (nat_lit 0)))
+          (GapCVP.Comparator.Instance.radius record))))
+    (Classical.propDecidable
+      (And
+        (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+          (GapCVP.Comparator.Instance.dimension record))
+        (And
+          (@Ne.{1} Int
+            (@Matrix.det.{0, 0} (Fin (GapCVP.Comparator.Instance.dimension record))
+              (instDecidableEqFin (GapCVP.Comparator.Instance.dimension record))
+              (Fin.fintype (GapCVP.Comparator.Instance.dimension record)) Int Int.instCommRing
+              (GapCVP.Comparator.Instance.basis record))
+            (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))
+          (@LT.lt.{0} Rat Rat.instLT (@OfNat.ofNat.{0} Rat (nat_lit 0) (@Rat.instOfNat (nat_lit 0)))
+            (GapCVP.Comparator.Instance.radius record)))))
+def GapCVP.Comparator.hasIntegerTarget : (record : GapCVP.Comparator.Instance) → Bool :=
+fun (record : GapCVP.Comparator.Instance) =>
+  @Decidable.decide
+    (∀ (index : Fin (GapCVP.Comparator.Instance.dimension record)),
+      @Exists.{1} Int fun (value : Int) =>
+        @Eq.{1} Rat (GapCVP.Comparator.Instance.target record index) (@Int.cast.{0} Rat Rat.instIntCast value))
+    (Classical.propDecidable
+      (∀ (index : Fin (GapCVP.Comparator.Instance.dimension record)),
+        @Exists.{1} Int fun (value : Int) =>
+          @Eq.{1} Rat (GapCVP.Comparator.Instance.target record index) (@Int.cast.{0} Rat Rat.instIntCast value)))
+def GapCVP.Comparator.encodeInstance : (I : GapCVP.Comparator.Instance) → List.{0} Bool :=
+fun (I : GapCVP.Comparator.Instance) =>
+  @HAppend.hAppend.{0, 0, 0} (List.{0} Bool) (List.{0} Bool) (List.{0} Bool)
+    (@instHAppendOfAppend.{0} (List.{0} Bool) (@List.instAppend.{0} Bool))
+    (@HAppend.hAppend.{0, 0, 0} (List.{0} Bool) (List.{0} Bool) (List.{0} Bool)
+      (@instHAppendOfAppend.{0} (List.{0} Bool) (@List.instAppend.{0} Bool))
+      (@HAppend.hAppend.{0, 0, 0} (List.{0} Bool) (List.{0} Bool) (List.{0} Bool)
+        (@instHAppendOfAppend.{0} (List.{0} Bool) (@List.instAppend.{0} Bool))
+        (@GapCVP.BinaryEncoding.encodeAtomic.{0} Nat Nat.encodable (GapCVP.Comparator.Instance.dimension I))
+        (@GapCVP.BinaryEncoding.encodeAtomic.{0} Rat Rat.instEncodable (GapCVP.Comparator.Instance.radius I)))
+      (@GapCVP.BinaryEncoding.encodeFinValues.{0} Rat Rat.instEncodable (GapCVP.Comparator.Instance.dimension I)
+        (GapCVP.Comparator.Instance.target I)))
+    (GapCVP.BinaryEncoding.encodeMatrixRows (GapCVP.Comparator.Instance.dimension I)
+      (GapCVP.Comparator.Instance.dimension I) (GapCVP.Comparator.Instance.basis I))
+structure GapCVP.Comparator.Instance : Type
+number of parameters: 0
+fields:
+  GapCVP.Comparator.Instance.dimension : Nat
+  GapCVP.Comparator.Instance.basis : Matrix.{0, 0, 0} (Fin (GapCVP.Comparator.Instance.dimension self))
+      (Fin (GapCVP.Comparator.Instance.dimension self)) Int
+  GapCVP.Comparator.Instance.target : Fin (GapCVP.Comparator.Instance.dimension self) → Rat
+  GapCVP.Comparator.Instance.radius : Rat
+constructor:
+  GapCVP.Comparator.Instance.mk (dimension : Nat) (basis : Matrix.{0, 0, 0} (Fin dimension) (Fin dimension) Int)
+    (target : Fin dimension → Rat) (radius : Rat) : GapCVP.Comparator.Instance
+def GapCVP.Comparator.IsNPHardPromise : (problem : GapCVP.Comparator.PromiseProblem) → Bool :=
+fun (problem : GapCVP.Comparator.PromiseProblem) =>
+  @Decidable.decide
+    (∀ (language : GapCVP.BitLanguage),
+      @Eq.{1} Bool (GapCVP.IsNP language) Bool.true →
+        Nonempty.{1} (GapCVP.Comparator.PromiseReduction language problem))
+    (Classical.propDecidable
+      (∀ (language : GapCVP.BitLanguage),
+        @Eq.{1} Bool (GapCVP.IsNP language) Bool.true →
+          Nonempty.{1} (GapCVP.Comparator.PromiseReduction language problem)))
+structure GapCVP.Comparator.PromiseReduction (language : GapCVP.BitLanguage)
+  (problem : GapCVP.Comparator.PromiseProblem) : Type
+number of parameters: 2
+fields:
+  GapCVP.Comparator.PromiseReduction.map : List.{0} Bool → List.{0} Bool
+  GapCVP.Comparator.PromiseReduction.polynomial_time : Nonempty.{2}
+      (GapCVP.BitTM (@GapCVP.Comparator.PromiseReduction.map language problem self))
+  GapCVP.Comparator.PromiseReduction.completeness : ∀ (input : List.{0} Bool),
+      @Eq.{1} Bool (language input) Bool.true →
+        @Eq.{1} Bool
+          (GapCVP.Comparator.PromiseProblem.yes problem
+            (@GapCVP.Comparator.PromiseReduction.map language problem self input))
+          Bool.true
+  GapCVP.Comparator.PromiseReduction.soundness : ∀ (input : List.{0} Bool),
+      Not (@Eq.{1} Bool (language input) Bool.true) →
+        @Eq.{1} Bool
+          (GapCVP.Comparator.PromiseProblem.no problem
+            (@GapCVP.Comparator.PromiseReduction.map language problem self input))
+          Bool.true
+constructor:
+  GapCVP.Comparator.PromiseReduction.mk {language : GapCVP.BitLanguage} {problem : GapCVP.Comparator.PromiseProblem}
+    (map : List.{0} Bool → List.{0} Bool) (polynomial_time : Nonempty.{2} (GapCVP.BitTM map))
+    (completeness :
+      ∀ (input : List.{0} Bool),
+        @Eq.{1} Bool (language input) Bool.true →
+          @Eq.{1} Bool (GapCVP.Comparator.PromiseProblem.yes problem (map input)) Bool.true)
+    (soundness :
+      ∀ (input : List.{0} Bool),
+        Not (@Eq.{1} Bool (language input) Bool.true) →
+          @Eq.{1} Bool (GapCVP.Comparator.PromiseProblem.no problem (map input)) Bool.true) :
+    GapCVP.Comparator.PromiseReduction language problem
+structure GapCVP.Comparator.PromiseProblem : Type
+number of parameters: 0
+fields:
+  GapCVP.Comparator.PromiseProblem.yes : GapCVP.BitLanguage
+  GapCVP.Comparator.PromiseProblem.no : GapCVP.BitLanguage
+  GapCVP.Comparator.PromiseProblem.disjoint : ∀ (bits : List.{0} Bool),
+      @Eq.{1} Bool (GapCVP.Comparator.PromiseProblem.yes self bits) Bool.true →
+        @Eq.{1} Bool (GapCVP.Comparator.PromiseProblem.no self bits) Bool.true → False
+constructor:
+  GapCVP.Comparator.PromiseProblem.mk (yes no : GapCVP.BitLanguage)
+    (disjoint :
+      ∀ (bits : List.{0} Bool), @Eq.{1} Bool (yes bits) Bool.true → @Eq.{1} Bool (no bits) Bool.true → False) :
+    GapCVP.Comparator.PromiseProblem
+def GapCVP.Comparator.binaryCodeGapFactor : (blockLength : Nat) → Real :=
+fun (blockLength : Nat) =>
+  @HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow)
+    (@Nat.cast.{0} Real Real.instNatCast blockLength)
+    (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+      (@OfNat.ofNat.{0} Real (nat_lit 200)
+        (@instOfNatAtLeastTwo.{0} Real (nat_lit 200) Real.instNatCast
+          GapCVP.Factor400FinitePNormCorollary.finitePGapFactor._proof_1)))
+def GapCVP.Comparator.finitePGapFactor : (p : Rat) → (I : GapCVP.Comparator.Instance) → Real :=
+fun (p : Rat) (I : GapCVP.Comparator.Instance) =>
+  @HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow)
+    (@Nat.cast.{0} Real Real.instNatCast (GapCVP.Comparator.Instance.dimension I))
+    (@Inv.inv.{0} Real Real.instInv
+      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+        (@OfNat.ofNat.{0} Real (nat_lit 200)
+          (@instOfNatAtLeastTwo.{0} Real (nat_lit 200) Real.instNatCast
+            GapCVP.Factor400FinitePNormCorollary.finitePGapFactor._proof_1))
+        (@Rat.cast.{0} Real Real.instRatCast p)))
+def GapCVP.Comparator.finitePNorm : (p : Rat) → {n : Nat} → (vector : Fin n → Real) → Real :=
+fun (p : Rat) {n : Nat} (vector : Fin n → Real) =>
+  @HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow)
+    (@Finset.sum.{0, 0} (Fin n) Real Real.instAddCommMonoid (@Finset.univ.{0} (Fin n) (Fin.fintype n))
+      fun (i : Fin n) =>
+      @HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow)
+        (@abs.{0} Real Real.lattice Real.instAddGroup (vector i)) (@Rat.cast.{0} Real Real.instRatCast p))
+    (@Inv.inv.{0} Real Real.instInv (@Rat.cast.{0} Real Real.instRatCast p))
+def GapCVP.Comparator.finitePLatticeDistance : (p : Rat) →
+  (I : GapCVP.Comparator.Instance) → (vector : Fin (GapCVP.Comparator.Instance.dimension I) → Int) → Real :=
+fun (p : Rat) (I : GapCVP.Comparator.Instance) (vector : Fin (GapCVP.Comparator.Instance.dimension I) → Int) =>
+  @GapCVP.Comparator.finitePNorm p (GapCVP.Comparator.Instance.dimension I)
+    (GapCVP.Comparator.finitePLatticeDiscrepancy I vector)
+def GapCVP.Comparator.finitePLatticeDiscrepancy : (I : GapCVP.Comparator.Instance) →
+  (vector : Fin (GapCVP.Comparator.Instance.dimension I) → Int) → Fin (GapCVP.Comparator.Instance.dimension I) → Real :=
+fun (I : GapCVP.Comparator.Instance) (vector : Fin (GapCVP.Comparator.Instance.dimension I) → Int)
+    (i : Fin (GapCVP.Comparator.Instance.dimension I)) =>
+  @HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+    (@Rat.cast.{0} Real Real.instRatCast (GapCVP.Comparator.Instance.target I i))
+    (@Finset.sum.{0, 0} (Fin (GapCVP.Comparator.Instance.dimension I)) Real Real.instAddCommMonoid
+      (@Finset.univ.{0} (Fin (GapCVP.Comparator.Instance.dimension I))
+        (Fin.fintype (GapCVP.Comparator.Instance.dimension I)))
+      fun (j : Fin (GapCVP.Comparator.Instance.dimension I)) =>
+      @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+        (@Int.cast.{0} Real Real.instIntCast (GapCVP.Comparator.Instance.basis I i j))
+        (@Int.cast.{0} Real Real.instIntCast (vector j)))
+def GapCVP.Comparator.binaryNearestCodeword : (record : GapCVP.Comparator.BinaryNearestCodewordInstance) →
+  (coefficients :
+      Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record) →
+        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) →
+    Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record) →
+      ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) :=
+fun (record : GapCVP.Comparator.BinaryNearestCodewordInstance)
+    (coefficients :
+      Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record) →
+        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+    (index : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+  @Finset.sum.{0, 0} (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record))
+    (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+    (@Semiring.toAddCommMonoid.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+      (@DivisionSemiring.toSemiring.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        (@Semifield.toDivisionSemiring.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (@Field.toSemifield.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) Nat.fact_prime_two)))))
+    (@Finset.univ.{0} (Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record))
+      (Fin.fintype (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record)))
+    fun (column : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record)) =>
+    @HMul.hMul.{0, 0, 0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+      (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+      (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+      (@instHMul.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        (@Distrib.toMul.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (@instDistribOfSemiring.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@DivisionSemiring.toSemiring.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@Semifield.toDivisionSemiring.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (@Field.toSemifield.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    Nat.fact_prime_two)))))))
+      (GapCVP.Comparator.BinaryNearestCodewordInstance.generator record index column) (coefficients column)
+def GapCVP.Comparator.binarySyndromeProduct : (record : GapCVP.Comparator.BinarySyndromeDecodingInstance) →
+  (word :
+      Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record) →
+        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) →
+    Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.checkCount record) →
+      ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) :=
+fun (record : GapCVP.Comparator.BinarySyndromeDecodingInstance)
+    (word :
+      Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record) →
+        ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+    (row : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.checkCount record)) =>
+  @Finset.sum.{0, 0} (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+    (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+    (@Semiring.toAddCommMonoid.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+      (@DivisionSemiring.toSemiring.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        (@Semifield.toDivisionSemiring.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (@Field.toSemifield.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) Nat.fact_prime_two)))))
+    (@Finset.univ.{0} (Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record))
+      (Fin.fintype (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)))
+    fun (column : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+    @HMul.hMul.{0, 0, 0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+      (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+      (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+      (@instHMul.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        (@Distrib.toMul.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (@instDistribOfSemiring.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@DivisionSemiring.toSemiring.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@Semifield.toDivisionSemiring.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (@Field.toSemifield.{0} (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (@ZMod.instField (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    Nat.fact_prime_two)))))))
+      (GapCVP.Comparator.BinarySyndromeDecodingInstance.parityCheck record row column) (word column)
+def GapCVP.Comparator.encodeBinaryNearestCodewordInstance : (record : GapCVP.Comparator.BinaryNearestCodewordInstance) →
+  List.{0} Bool :=
+fun (record : GapCVP.Comparator.BinaryNearestCodewordInstance) =>
+  @HAppend.hAppend.{0, 0, 0} (List.{0} Bool) (List.{0} Bool) (List.{0} Bool)
+    (@instHAppendOfAppend.{0} (List.{0} Bool) (@List.instAppend.{0} Bool))
+    (@HAppend.hAppend.{0, 0, 0} (List.{0} Bool) (List.{0} Bool) (List.{0} Bool)
+      (@instHAppendOfAppend.{0} (List.{0} Bool) (@List.instAppend.{0} Bool))
+      (@HAppend.hAppend.{0, 0, 0} (List.{0} Bool) (List.{0} Bool) (List.{0} Bool)
+        (@instHAppendOfAppend.{0} (List.{0} Bool) (@List.instAppend.{0} Bool))
+        (@HAppend.hAppend.{0, 0, 0} (List.{0} Bool) (List.{0} Bool) (List.{0} Bool)
+          (@instHAppendOfAppend.{0} (List.{0} Bool) (@List.instAppend.{0} Bool))
+          (@GapCVP.BinaryEncoding.encodeAtomic.{0} Nat Nat.encodable
+            (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+          (@GapCVP.BinaryEncoding.encodeAtomic.{0} Nat Nat.encodable
+            (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record)))
+        (@GapCVP.BinaryEncoding.encodeAtomic.{0} Nat Nat.encodable
+          (GapCVP.Comparator.BinaryNearestCodewordInstance.radius record)))
+      (@GapCVP.BinaryEncoding.encodeFinValues.{0} Int Int.encodable
+        (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)
+        fun (index : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)) =>
+        @Nat.cast.{0} Int instNatCastInt
+          (@ZMod.val (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+            (GapCVP.Comparator.BinaryNearestCodewordInstance.target record index))))
+    (GapCVP.BinaryEncoding.encodeMatrixRows (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record)
+      (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record)
+      fun (row : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.blockLength record))
+        (column : Fin (GapCVP.Comparator.BinaryNearestCodewordInstance.generatorRank record)) =>
+      @Nat.cast.{0} Int instNatCastInt
+        (@ZMod.val (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+          (GapCVP.Comparator.BinaryNearestCodewordInstance.generator record row column)))
+def GapCVP.Comparator.encodeBinarySyndromeDecodingInstance : (record :
+    GapCVP.Comparator.BinarySyndromeDecodingInstance) →
+  List.{0} Bool :=
+fun (record : GapCVP.Comparator.BinarySyndromeDecodingInstance) =>
+  @HAppend.hAppend.{0, 0, 0} (List.{0} Bool) (List.{0} Bool) (List.{0} Bool)
+    (@instHAppendOfAppend.{0} (List.{0} Bool) (@List.instAppend.{0} Bool))
+    (@HAppend.hAppend.{0, 0, 0} (List.{0} Bool) (List.{0} Bool) (List.{0} Bool)
+      (@instHAppendOfAppend.{0} (List.{0} Bool) (@List.instAppend.{0} Bool))
+      (@HAppend.hAppend.{0, 0, 0} (List.{0} Bool) (List.{0} Bool) (List.{0} Bool)
+        (@instHAppendOfAppend.{0} (List.{0} Bool) (@List.instAppend.{0} Bool))
+        (@HAppend.hAppend.{0, 0, 0} (List.{0} Bool) (List.{0} Bool) (List.{0} Bool)
+          (@instHAppendOfAppend.{0} (List.{0} Bool) (@List.instAppend.{0} Bool))
+          (@GapCVP.BinaryEncoding.encodeAtomic.{0} Nat Nat.encodable
+            (GapCVP.Comparator.BinarySyndromeDecodingInstance.checkCount record))
+          (@GapCVP.BinaryEncoding.encodeAtomic.{0} Nat Nat.encodable
+            (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)))
+        (@GapCVP.BinaryEncoding.encodeAtomic.{0} Nat Nat.encodable
+          (GapCVP.Comparator.BinarySyndromeDecodingInstance.radius record)))
+      (@GapCVP.BinaryEncoding.encodeFinValues.{0} Int Int.encodable
+        (GapCVP.Comparator.BinarySyndromeDecodingInstance.checkCount record)
+        fun (row : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.checkCount record)) =>
+        @Nat.cast.{0} Int instNatCastInt
+          (@ZMod.val (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+            (GapCVP.Comparator.BinarySyndromeDecodingInstance.syndrome record row))))
+    (GapCVP.BinaryEncoding.encodeMatrixRows (GapCVP.Comparator.BinarySyndromeDecodingInstance.checkCount record)
+      (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)
+      fun (row : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.checkCount record))
+        (column : Fin (GapCVP.Comparator.BinarySyndromeDecodingInstance.blockLength record)) =>
+      @Nat.cast.{0} Int instNatCastInt
+        (@ZMod.val (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+          (GapCVP.Comparator.BinarySyndromeDecodingInstance.parityCheck record row column)))
+def GapCVP.IsNP : (L : GapCVP.BitLanguage) → Bool :=
+fun (L : GapCVP.BitLanguage) =>
+  @Decidable.decide
+    (@Exists.{1} (@Polynomial.{0} Nat Nat.instSemiring) fun (bound : @Polynomial.{0} Nat Nat.instSemiring) =>
+      @Exists.{1} (Prod.{0, 0} (List.{0} Bool) (List.{0} Bool) → Bool)
+        fun (verifier : Prod.{0, 0} (List.{0} Bool) (List.{0} Bool) → Bool) =>
+        And (Nonempty.{2} (GapCVP.VerifierTM verifier))
+          (∀ (x : List.{0} Bool),
+            Iff (@Eq.{1} Bool (L x) Bool.true)
+              (@Exists.{1} (List.{0} Bool) fun (certificate : List.{0} Bool) =>
+                And
+                  (@LE.le.{0} Nat instLENat (@List.length.{0} Bool certificate)
+                    (@Polynomial.eval.{0} Nat Nat.instSemiring (@List.length.{0} Bool x) bound))
+                  (@Eq.{1} Bool (verifier (@Prod.mk.{0, 0} (List.{0} Bool) (List.{0} Bool) x certificate)) Bool.true))))
+    (Classical.propDecidable
+      (@Exists.{1} (@Polynomial.{0} Nat Nat.instSemiring) fun (bound : @Polynomial.{0} Nat Nat.instSemiring) =>
+        @Exists.{1} (Prod.{0, 0} (List.{0} Bool) (List.{0} Bool) → Bool)
+          fun (verifier : Prod.{0, 0} (List.{0} Bool) (List.{0} Bool) → Bool) =>
+          And (Nonempty.{2} (GapCVP.VerifierTM verifier))
+            (∀ (x : List.{0} Bool),
+              Iff (@Eq.{1} Bool (L x) Bool.true)
+                (@Exists.{1} (List.{0} Bool) fun (certificate : List.{0} Bool) =>
+                  And
+                    (@LE.le.{0} Nat instLENat (@List.length.{0} Bool certificate)
+                      (@Polynomial.eval.{0} Nat Nat.instSemiring (@List.length.{0} Bool x) bound))
+                    (@Eq.{1} Bool (verifier (@Prod.mk.{0, 0} (List.{0} Bool) (List.{0} Bool) x certificate))
+                      Bool.true)))))
+@[reducible] def GapCVP.VerifierTM : (verifier : Prod.{0, 0} (List.{0} Bool) (List.{0} Bool) → Bool) → Type 1 :=
+fun (verifier : Prod.{0, 0} (List.{0} Bool) (List.{0} Bool) → Bool) =>
+  @Turing.TM2ComputableInPolyTime (Prod.{0, 0} (List.{0} Bool) (List.{0} Bool)) Bool (Sum.{0, 0} Bool Bool) Bool
+    GapCVP.pairBitEncoding Computability.encodeBool verifier
+@[reducible] def GapCVP.BitTM : (f : List.{0} Bool → List.{0} Bool) → Type 1 :=
+fun (f : List.{0} Bool → List.{0} Bool) =>
+  @Turing.TM2ComputableInPolyTime (List.{0} Bool) (List.{0} Bool) Bool Bool GapCVP.bitEncoding GapCVP.bitEncoding f
+def GapCVP.pairBitEncoding : Prod.{0, 0} (List.{0} Bool) (List.{0} Bool) → List.{0} (Sum.{0, 0} Bool Bool) :=
+@Computability.Encoding.encode.{0, 0} (Prod.{0, 0} (List.{0} Bool) (List.{0} Bool)) (Sum.{0, 0} Bool Bool)
+  (@Computability.encodingProd.{0, 0, 0, 0} (List.{0} Bool) (List.{0} Bool) Bool Bool (Computability.encodingList Bool)
+    (Computability.encodingList Bool))
+def GapCVP.BinaryEncoding.encodeAtomic.{u_1} : {α : Type u_1} → [Encodable.{u_1} α] → (a : α) → List.{0} Bool :=
+fun {α : Type u_1} [inst : Encodable.{u_1} α] (a : α) =>
+  GapCVP.BinaryEncoding.lengthPrefixedWord (Computability.encodeNat (@Encodable.encode.{u_1} α inst a))
+def GapCVP.BinaryEncoding.encodeFinValues.{u_1} : {α : Type u_1} →
+  [Encodable.{u_1} α] → (n : Nat) → (Fin n → α) → List.{0} Bool :=
+fun {α : Type u_1} [inst : Encodable.{u_1} α] (x : Nat) (x_1 : Fin x → α) =>
+  @Nat.brecOn.{u_1 + 1} (fun (x : Nat) => (Fin x → α) → List.{0} Bool) x
+    (@GapCVP.BinaryEncoding.encodeFinValues._f.{u_1} α inst) x_1
+def GapCVP.BinaryEncoding.encodeMatrixRows : (m n : Nat) → (Fin m → Fin n → Int) → List.{0} Bool :=
+fun (x x_1 : Nat) (x_2 : Fin x → Fin x_1 → Int) =>
+  @Nat.brecOn.{1} (fun (x : Nat) => (x_3 : Nat) → (Fin x → Fin x_3 → Int) → List.{0} Bool) x
+    GapCVP.BinaryEncoding.encodeMatrixRows._f x_1 x_2
+def GapCVP.BinaryEncoding.lengthPrefixedWord : (word : List.{0} Bool) → List.{0} Bool :=
+fun (word : List.{0} Bool) =>
+  @HAppend.hAppend.{0, 0, 0} (List.{0} Bool) (List.{0} Bool) (List.{0} Bool)
+    (@instHAppendOfAppend.{0} (List.{0} Bool) (@List.instAppend.{0} Bool))
+    (@List.replicate.{0} Bool (@List.length.{0} Bool word) Bool.true) (@List.cons.{0} Bool Bool.false word)

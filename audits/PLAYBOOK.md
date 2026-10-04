@@ -138,8 +138,11 @@ line, and record which mode ran.
     promise problems carry `by sorry` fields has to list them as holes, so the
     pass then certifies the hardness scaffolding and nothing about what the
     problem IS. Read `comparator.json` before crediting the pass, and diff the
-    hole bodies against the proof file by hand (GapCVP: byte-identical after
-    whitespace, but that is a text check, by the same author).
+    hole bodies against the proof file: `#print` with `pp.all` from both
+    modules and diff the elaborated terms (GapCVP: identical up to auxiliary
+    proof names and binder names). Prove the gap with a negative control: a
+    challenge with the approximation factor changed still passed the
+    comparator, because the factor lives inside a hole.
 19. **An "NP-hard" statement is vacuous if nothing is in NP.** When NP is
     defined through a machine model (Mathlib's `TM2ComputableInPolyTime`),
     check that some language is PROVED to be in it, or build one against the

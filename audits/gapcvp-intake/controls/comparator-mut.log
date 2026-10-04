@@ -1,0 +1,25 @@
+Building H_GapCVP_mut
+WARNING: THIS IS NOT REAL LANDRUN! UNSAFELY RUNNING exec lake build H_GapCVP_mut
+⚠ [8655/8655] Built H_GapCVP_mut (10s)
+warning: ComparatorChallenges/H_GapCVP_mut.lean:135:4: declaration uses `sorry`
+warning: ComparatorChallenges/H_GapCVP_mut.lean:153:8: declaration uses `sorry`
+warning: ComparatorChallenges/H_GapCVP_mut.lean:187:18: declaration uses `sorry`
+warning: ComparatorChallenges/H_GapCVP_mut.lean:212:8: declaration uses `sorry`
+warning: ComparatorChallenges/H_GapCVP_mut.lean:244:18: declaration uses `sorry`
+warning: ComparatorChallenges/H_GapCVP_mut.lean:268:8: declaration uses `sorry`
+warning: ComparatorChallenges/H_GapCVP_mut.lean:287:18: declaration uses `sorry`
+warning: ComparatorChallenges/H_GapCVP_mut.lean:307:8: declaration uses `sorry`
+Build completed successfully (8655 jobs).
+WARNING: THIS IS NOT REAL LANDRUN! UNSAFELY RUNNING exec lean4export H_GapCVP_mut -- Nat String String.mk Char Char.ofNat List Quot Quot.mk Quot.lift Quot.ind GapCVP.Comparator.gapCVP400IsNPHard GapCVP.Comparator.binaryNearestCodewordIsNPHard GapCVP.Comparator.binarySyndromeDecodingIsNPHard GapCVP.Comparator.finitePNormGapCVPIsNPHard propext Quot.sound Classical.choice Nat.add Nat.sub Nat.mul Nat.pow Nat.gcd Nat.div Nat.mod Nat.beq Nat.ble Nat.land Nat.lor Nat.xor Nat.shiftLeft Nat.shiftRight String.ofList GapCVP.Comparator.gapCVP400Promise GapCVP.Comparator.binaryNearestCodewordPromise GapCVP.Comparator.binarySyndromeDecodingPromise GapCVP.Comparator.finitePGapCVPPromise
+Exporting #[Nat, String, String.mk, Char, Char.ofNat, List, Quot, Quot.mk, Quot.lift, Quot.ind, GapCVP.Comparator.gapCVP400IsNPHard, GapCVP.Comparator.binaryNearestCodewordIsNPHard, GapCVP.Comparator.binarySyndromeDecodingIsNPHard, GapCVP.Comparator.finitePNormGapCVPIsNPHard, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, GapCVP.Comparator.gapCVP400Promise, GapCVP.Comparator.binaryNearestCodewordPromise, GapCVP.Comparator.binarySyndromeDecodingPromise, GapCVP.Comparator.finitePGapCVPPromise] from H_GapCVP_mut
+Building GapCVP
+WARNING: THIS IS NOT REAL LANDRUN! UNSAFELY RUNNING exec lake build GapCVP
+Build completed successfully (8656 jobs).
+WARNING: THIS IS NOT REAL LANDRUN! UNSAFELY RUNNING exec lean4export GapCVP -- Nat String String.mk Char Char.ofNat List Quot Quot.mk Quot.lift Quot.ind GapCVP.Comparator.gapCVP400IsNPHard GapCVP.Comparator.binaryNearestCodewordIsNPHard GapCVP.Comparator.binarySyndromeDecodingIsNPHard GapCVP.Comparator.finitePNormGapCVPIsNPHard propext Quot.sound Classical.choice Nat.add Nat.sub Nat.mul Nat.pow Nat.gcd Nat.div Nat.mod Nat.beq Nat.ble Nat.land Nat.lor Nat.xor Nat.shiftLeft Nat.shiftRight String.ofList GapCVP.Comparator.gapCVP400Promise GapCVP.Comparator.binaryNearestCodewordPromise GapCVP.Comparator.binarySyndromeDecodingPromise GapCVP.Comparator.finitePGapCVPPromise
+WARNING: THIS IS NOT REAL LANDRUN! UNSAFELY RUNNING exec nanoda_bin /tmp/tmp.XXcslOzc
+Exporting #[Nat, String, String.mk, Char, Char.ofNat, List, Quot, Quot.mk, Quot.lift, Quot.ind, GapCVP.Comparator.gapCVP400IsNPHard, GapCVP.Comparator.binaryNearestCodewordIsNPHard, GapCVP.Comparator.binarySyndromeDecodingIsNPHard, GapCVP.Comparator.finitePNormGapCVPIsNPHard, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, GapCVP.Comparator.gapCVP400Promise, GapCVP.Comparator.binaryNearestCodewordPromise, GapCVP.Comparator.binarySyndromeDecodingPromise, GapCVP.Comparator.finitePGapCVPPromise] from GapCVP
+Running nanoda kernel on solution
+Nanoda kernel accepts the solution
+Running Lean default kernel on solution.
+Lean default kernel accepts the solution
+Your solution is okay!

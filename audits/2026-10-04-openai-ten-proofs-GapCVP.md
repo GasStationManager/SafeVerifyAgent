@@ -1,6 +1,7 @@
 # openai/ten-proofs `GapCVP.lean` — statement rung, route walk, trust surface
 
-Status: **concluded 2026-10-04.** Statement rung (PAIRED, same author), route walk at three
+Status: **concluded 2026-10-04.** Plain-language summary:
+`SUMMARY-openai-ten-proofs-GapCVP.md`. Statement rung (PAIRED, same author), route walk at three
 places plus a no-supplier pass over the whole route, the metaprogramming / trust-surface
 read, and — after freeing disk — the build-side rungs: the module built here, `#print
 axioms` on the headline, an elaborated positive control that `IsNP` is inhabited, the
@@ -40,13 +41,18 @@ by a construction in the file. The trust surface is 23 simp-based tactic macros 
   verifier"). The holes exist because the challenge's `disjoint` fields are `by sorry`. So
   the authors' comparator pass certifies the scaffolding (`IsNPHardPromise`,
   `PromiseReduction`, `IsNP`, `BitTM`, `VerifierTM`, the encodings) and says nothing about
-  the YES/NO languages, the instance encodings, the distance or the gap factors. This audit
-  did that check BY TEXT: every `yes`/`no` field and every definition they reach is
-  byte-identical after whitespace normalisation between `H_GapCVP.lean` and
-  `GapCVP.lean:129737–130428`, three definitions differ only in bound-variable names, the
-  promises differ only in `disjoint` (real proofs in `GapCVP.lean`), and no identifier
-  resolves differently. Text-level, not elaborated terms; and the challenge and the proof
-  have the same author.
+  the YES/NO languages, the instance encodings, the distance or the gap factors. **Shown
+  live (negative control):** a scratch challenge identical to `H_GapCVP.lean` except for the
+  gap exponent (`dimension ^ (1/4)` in place of `dimension ^ (1/400)`), run through the same
+  comparator configuration, is also "Your solution is okay!" (`controls/H_GapCVP_mut.json`,
+  `controls/comparator-mut.log`). So a comparator pass on this configuration certifies the
+  hardness scaffolding and says nothing about the approximation factor the theorem is about.
+  This audit did the missing check at the level of ELABORATED TERMS: `#print` with
+  `pp.all` of the four promises and the 30 definitions they reach, from the challenge module
+  and from the solution module, is identical after normalising auxiliary `_proof_n` names,
+  the challenge's hidden `sorry`s and four bound-variable names (`controls/PP.lean`,
+  `controls/pp_Challenge.txt`, `controls/pp_Solution.txt`). The remaining caveat is that the
+  challenge and the proof have the same author.
 - **P2. `IsNP` is satisfiable, and the artifact never shows it — closed by an elaborated
   control.** Every NP-hardness claim is "for every language in NP there is a reduction"; if
   nothing were in NP the claims would be vacuous. All 539 occurrences of `VerifierTM` in
@@ -126,9 +132,12 @@ machine, time `first.time + second.time ∘ (X + maxPush·first.time)`).
 | `con-ron` | "accepted 57683 declarations", 3 min 20 s |
 | `nanoda_bin` (Palomar config, 4 threads) | rc 0, 33 s |
 | `NPControl.isNP_true` | elaborates; 3 axioms (§1, P2) |
+| negative control: challenge with gap exponent 1/4 instead of 1/400, same `definition_names` | comparator: "Your solution is okay!" (P1 demonstrated) |
+| elaborated-term diff of the four promises and the 30 definitions they reach (challenge vs solution, `pp.all`) | identical up to auxiliary proof names, hidden `sorry`s and binder names |
 
 The comparator pass still has the P1 limitation (holes), which is a property of the
-configuration, not of the run; the text diff of the hole bodies is the complement.
+configuration, not of the run, and the mutant run above shows it concretely; the
+elaborated-term diff of the hole bodies is the complement.
 
 ## 4. Trust surface (`TRUST.md`)
 
