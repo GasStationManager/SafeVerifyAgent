@@ -131,6 +131,21 @@ line, and record which mode ran.
     The DG closure (14,196 modules) was the other end of this; decide which
     end an artifact is on before starting (lesson 14).
 
+18. **A comparator pass is only as wide as its `definition_names`.** A definition
+    listed there is a "hole": the comparator checks its name, type, universes
+    and safety and walks only its TYPE, never its body, and the comparator's
+    own README says hole values need another verifier. A challenge file whose
+    promise problems carry `by sorry` fields has to list them as holes, so the
+    pass then certifies the hardness scaffolding and nothing about what the
+    problem IS. Read `comparator.json` before crediting the pass, and diff the
+    hole bodies against the proof file by hand (GapCVP: byte-identical after
+    whitespace, but that is a text check, by the same author).
+19. **An "NP-hard" statement is vacuous if nothing is in NP.** When NP is
+    defined through a machine model (Mathlib's `TM2ComputableInPolyTime`),
+    check that some language is PROVED to be in it, or build one against the
+    model's definitions yourself; an artifact that only ever consumes verifier
+    machines as hypotheses has not shown its class is inhabited.
+
 ## 4. Reporting
 
 14. **An escalation is not an accusation** and is recorded with its trace

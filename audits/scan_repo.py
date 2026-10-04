@@ -44,13 +44,17 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
-from safeverifyagent.extract import TRUST_SURFACE, blank_comments, strip_comments   # noqa: E402
+from safeverifyagent.extract import TRUST_SURFACE, _TRUST_RE, blank_comments, strip_comments   # noqa: E402
 
 MANIFEST = ("sorry", "admit", "sorryAx")
 SKIP_DIRS = (".lake", ".git", "build", ".venv")
 
 
 def lean_files(root):
+    if os.path.isfile(root):          # a single .lean file is a valid target
+        if root.endswith(".lean"):
+            yield root
+        return
     for base, dirs, files in os.walk(root):
         dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
         for f in files:
@@ -161,7 +165,7 @@ def main(argv=None) -> int:
         stripped = strip_comments(src)
         rel = os.path.relpath(path, root)
         for marker in TRUST_SURFACE:
-            n = stripped.count(marker)
+            n = len(_TRUST_RE[marker].findall(stripped))
             if n:
                 trust[marker] += n
                 where[marker].add(rel)

@@ -286,11 +286,15 @@ class TestWords(unittest.TestCase):
 @unittest.skipUnless(lean_available(), "needs a Lean toolchain (elan)")
 class TestLeanRungLive(unittest.TestCase):
     def test_check_print_axioms(self):
+        from safeverifyagent.extract import lean_available, _elan
+        if not lean_available():
+            self.skipTest("no runnable lean")
+        lean_bin = _elan("lean")
         import subprocess
         d = tempfile.mkdtemp(prefix="sva-stmt-live-")
         write(d, "lakefile.toml",
               'name = "Live"\n\n[[lean_lib]]\nname = "Live"\n')
-        tc = subprocess.run(["lean", "--version"], capture_output=True,
+        tc = subprocess.run([lean_bin, "--version"], capture_output=True,
                             text=True).stdout
         import re
         m = re.search(r"version (\d+\.\d+\.\d+)", tc)

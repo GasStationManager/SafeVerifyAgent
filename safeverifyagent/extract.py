@@ -43,9 +43,24 @@ LEAN_EXTRACTOR = os.path.join(
 # facts about the source, and they never decide what gets audited.
 TRUST_SURFACE = (
     "native_decide", "addDecl", "mkProj", "Expr.proj", "unsafe",
+    "unsafeCast", "ptrAddrUnsafe",
     "implemented_by", "macro_rules", "elab ", "Expr.hash", "approxDepth",
     "@[implemented_by]", "partial def",
 )
+
+# One regex per marker. Identifiers match on WORD BOUNDARIES (`mkProj` must not
+# fire on `mkProjIso`), and `unsafe` must be the Lean keyword, not an aesop rule
+# phase (`aesop (add unsafe 50% apply foo)`) — both measured false positives on
+# Tau Ceti, 2026-09-30.
+_TRUST_RE = {
+    m: re.compile(
+        r"(?<!add\s)(?<!add\s\s)\bunsafe\b(?!\s*\d+%)(?!\s+(?:apply|forward|constructors|cases|simp|destruct|tactic|unfold)\b)"
+        if m == "unsafe" else
+        r"\b" + re.escape(m.strip()) + (r"\b" if m[-1].isalnum() else r"(?=\s)")
+        if m[0].isalnum() else re.escape(m)
+    )
+    for m in TRUST_SURFACE
+}
 
 _HAVE_RE = re.compile(r"^\s*(have|obtain|suffices)\s+([A-Za-z_][\w']*)\s*:")
 _DECL_RE = re.compile(r"^\s*(theorem|lemma|example)\s+([A-Za-z_][\w'.]*)")
@@ -91,7 +106,7 @@ def blank_comments(src: str) -> str:
 
 def scan_trust_surface(text: str) -> List[str]:
     stripped = strip_comments(text)
-    return sorted({m for m in TRUST_SURFACE if m in stripped})
+    return sorted({m for m, rx in _TRUST_RE.items() if rx.search(stripped)})
 
 
 _LEAN_OK: Optional[bool] = None
