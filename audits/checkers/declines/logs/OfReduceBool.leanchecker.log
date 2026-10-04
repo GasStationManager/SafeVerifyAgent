@@ -1,0 +1,7 @@
+Lean default kernel rejects the solution: while replaying declaration 't':
+(kernel) application type mismatch
+  Lean.ofReduceBool b Bool.true (Eq.refl (Lean.reduceBool b))
+argument has type
+  Eq (Lean.reduceBool b) (Lean.reduceBool b)
+but function has type
+  Eq (Lean.reduceBool b) Bool.true → Eq b Bool.true

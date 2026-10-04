@@ -1,0 +1,11 @@
+
+thread 'main' (1669) panicked at src/tc.rs:230:13:
+declaration not found in infer_const, sorryAx
+stack backtrace:
+   0: __rustc::rust_begin_unwind
+   1: core::panicking::panic_fmt
+   2: nanoda_lib::tc::TypeChecker::infer
+   3: nanoda_lib::tc::TypeChecker::infer
+   4: nanoda_lib::tc::<impl nanoda_lib::util::ExportFile>::check_declar
+   5: nanoda_bin::main
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.

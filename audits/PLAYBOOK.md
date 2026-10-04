@@ -149,6 +149,14 @@ line, and record which mode ran.
     model's definitions yourself; an artifact that only ever consumes verifier
     machines as hypotheses has not shown its class is inhabited.
 
+20. **A checker's exit code is not its verdict, and "accepts" is not "axiom-clean".**
+    Measured (`checkers/DECLINE-CORPUS.md`): `leanchecker --from-export` accepts
+    exports resting on `sorryAx`, a user axiom or `native_decide`'s per-proof
+    axiom; nanoda panics on them (exit 101, no verdict); only con-leche and
+    con-ron decline them by name. Read every verdict with `#print axioms` or an
+    axiom scan of the export beside it, classify a panic as "no verdict", and
+    never let a decline count as a vote either way.
+
 ## 4. Reporting
 
 14. **An escalation is not an accusation** and is recorded with its trace

@@ -1,0 +1,5 @@
+name = "declines"
+defaultTargets = ["Fix"]
+[[lean_lib]]
+name = "Fix"
+roots = ["Fix.NativeDecide", "Fix.Axiom", "Fix.Sorry", "Fix.Nested", "Fix.Mutual", "Fix.BigLit", "Fix.Str", "Fix.Quot", "Fix.ProofIrrel", "Fix.BvDecide", "Fix.ImplBy", "Fix.Partial", "Fix.Unsafe", "Fix.Control", "Fix.StructEta", "Fix.OfReduceBool"]
