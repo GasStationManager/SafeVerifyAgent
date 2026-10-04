@@ -1,9 +1,11 @@
 # openai/ten-proofs `GapCVP.lean` — statement rung, route walk, trust surface
 
-Status: **concluded 2026-10-04** at the scope below: statement rung (PAIRED, same author),
-route walk at three places plus a no-supplier pass over the whole route, and the
-metaprogramming / trust-surface read. Nothing built, no `#print axioms`, no comparator or
-independent checker run here (disk).
+Status: **concluded 2026-10-04.** Statement rung (PAIRED, same author), route walk at three
+places plus a no-supplier pass over the whole route, the metaprogramming / trust-surface
+read, and — after freeing disk — the build-side rungs: the module built here, `#print
+axioms` on the headline, an elaborated positive control that `IsNP` is inhabited, the
+authors' comparator configuration re-run, and the export replayed by leanchecker,
+con-leche, con-ron and nanoda (§3.2).
 
 Artifact: `openai/ten-proofs` at `94bc0feb6a9ff12c7d31d6de640a725c9d43d2b6` (2026-08-01), Lean
 v4.32.0, Mathlib v4.32.0; the formalization is the single file `GapCVP.lean` (130,430 lines,
@@ -45,15 +47,16 @@ by a construction in the file. The trust surface is 23 simp-based tactic macros 
   promises differ only in `disjoint` (real proofs in `GapCVP.lean`), and no identifier
   resolves differently. Text-level, not elaborated terms; and the challenge and the proof
   have the same author.
-- **P2. `IsNP` is satisfiable, but the artifact never shows it.** Every NP-hardness claim is
-  "for every language in NP there is a reduction"; if nothing were in NP the claims would be
-  vacuous. The statement agent built, by hand against the pinned Mathlib's `TM2.stepAux`,
-  `haltList` and `TM2OutputsInTime`, a verifier machine accepting everything, which gives
-  `IsNP (fun _ => true)`, so the statements are not vacuous. But all 539 occurrences of
-  `VerifierTM` in `GapCVP.lean` are hypotheses, no value of that type is ever constructed, and
-  no `IsNP L` is proved for any concrete `L`. A one-line positive control (`IsNP (fun _ =>
-  true)` or 3SAT ∈ NP, elaborated) is the cheapest thing that would close this; it needs the
-  build.
+- **P2. `IsNP` is satisfiable, and the artifact never shows it — closed by an elaborated
+  control.** Every NP-hardness claim is "for every language in NP there is a reduction"; if
+  nothing were in NP the claims would be vacuous. All 539 occurrences of `VerifierTM` in
+  `GapCVP.lean` are hypotheses, no value of that type is ever constructed, and no `IsNP L` is
+  proved for any concrete `L`. `gapcvp-intake/controls/NPControl.lean` builds the verifier
+  machine that accepts everything against Mathlib's `FinTM2` (one input stack over `Bool ⊕
+  Bool`, one output stack over `Bool`, pop until empty, push `true`, halt; time `X + 1`) and
+  proves `NPControl.isNP_true : GapCVP.IsNP (fun _ => true) = true`, axioms `[propext,
+  Classical.choice, Quot.sound]`, elaborated against the built artifact. So the hypothesis of
+  every `IsNPHardPromise` theorem is inhabited, and the theorems are not vacuous.
 
 ## 2. Statement rung (`gapcvp-intake/STATEMENT.md`, `REFERENCE-gapcvp.md`)
 
@@ -109,6 +112,24 @@ machine, time `first.time + second.time ∘ (X + maxPush·first.time)`).
   headline: at most 7,019 of 8,029 declarations (name-level, upper bound; 47 ambiguous short
   names).
 
+### 3.2 Build-side rungs (run 2026-10-04 after freeing 17 GB of disk)
+
+| rung | result |
+|---|---|
+| `lake build GapCVP` (Lean v4.32.0, Mathlib cache 8,275 oleans) | 11 min 38 s wall, peak lean RSS ≈ 8.7 GB, 120 MB olean |
+| `#print axioms` on the four headline theorems and `polynomialTimeClosedUnderComposition` | each exactly `[propext, Classical.choice, Quot.sound]` (`controls/Axioms.lean`) |
+| `ComparatorChallenges.H_GapCVP` | builds; its only warnings are the eight deliberate `sorry` placeholders |
+| the authors' comparator (`H_GapCVP.json`), comparator at its own `v4.32.0` tag, lean4export from the artifact's manifest, nanoda from the v4.35.0-rc2 toolchain | "Nanoda kernel accepts the solution. Lean default kernel accepts the solution. Your solution is okay!" in 6 min 17 s (`controls/comparator-run.log`). Caveats: run through `lake env` with the comparator's development `fake-landrun` shim (patched to keep `--env`; no sandboxing, which is irrelevant to the verdict on our own box), and the pinned `Lean4Checker` dependency in the artifact's manifest does not compile against v4.32.0 (`Replay.lean:66` type mismatch), so the comparator could not be built from inside the artifact |
+| `lean4export GapCVP -- <33 Palomar targets> <4 theorems>` | 42 s, 449 MB, 57,683 declaration records, 3 axiom records |
+| `leanchecker --from-export` (v4.35.0-rc2 binary; the v4.32.0 one lacks the flag) | "Lean default kernel accepts the solution", 3 min 20 s |
+| `con-leche --verified` | "accepted 57683 declarations", 2 min 55 s |
+| `con-ron` | "accepted 57683 declarations", 3 min 20 s |
+| `nanoda_bin` (Palomar config, 4 threads) | rc 0, 33 s |
+| `NPControl.isNP_true` | elaborates; 3 axioms (§1, P2) |
+
+The comparator pass still has the P1 limitation (holes), which is a property of the
+configuration, not of the run; the text diff of the hole bodies is the complement.
+
 ## 4. Trust surface (`TRUST.md`)
 
 Zero each: `axiom`, `sorry`, `opaque`, `native_decide`, `ofReduceBool`, `unsafe`,
@@ -124,9 +145,9 @@ in the file is 2000 (an instance priority). Nothing is kernel-computation-heavy.
 
 ## 5. What this audit does not say
 
-- Nothing was built; the authors' comparator pass, `sorry_count: 0` and the three-axiom list
-  are taken from `formalization.yaml`. The build needs full Mathlib (~8 GB of disk this box
-  did not have).
+- The comparator was run with the development landrun shim, not the real sandbox; the
+  sandbox guards a hostile `Solution.lean` on a shared runner and does not bear on the
+  kernel verdicts here.
 - Two blocks carry most of the proof's mass and were read only at their interfaces: the
   algebraic reconstruction (paper §§4–5, Lean ≈ 66,000–74,400) and the TM2 machine layer
   (the `BitTM` constructions, ≈ 17,000–62,000 and 93,000–126,000; only the kernel can
@@ -135,8 +156,6 @@ in the file is 2000 (an instance priority). Nothing is kernel-computation-heavy.
 - Mathlib's computability files were read at the pinned commit `81a5d257` for the statement
   rung (identical to v4.33.1 apart from `set_option` lines); the route walk read them at
   v4.33.1 and asks for a diff (E1, low).
-- The positive control for P2 (`IsNP` inhabited inside the artifact) was done by hand against
-  the Mathlib definitions, not elaborated.
 
 ## 6. Reproduce
 
@@ -144,5 +163,10 @@ in the file is 2000 (an instance priority). Nothing is kernel-computation-heavy.
 git clone https://github.com/openai/ten-proofs && cd ten-proofs && git checkout 94bc0feb
 python3 <SafeVerifyAgent>/audits/scan_repo.py GapCVP.lean          # single-file mode, added 2026-10-04
 python3 <SafeVerifyAgent>/audits/gapcvp-intake/cone-gapcvp.py       # name-level cone of the headline
-lake exe cache get && lake build GapCVP ComparatorChallenges        # then the comparator per ComparatorChallenges/README.md
+lake exe cache get && lake build GapCVP ComparatorChallenges.H_GapCVP
+lake env lean <SafeVerifyAgent>/audits/gapcvp-intake/controls/Axioms.lean
+lake env lean <SafeVerifyAgent>/audits/gapcvp-intake/controls/NPControl.lean   # IsNP inhabited
+bash <SafeVerifyAgent>/audits/gapcvp-intake/controls/check.sh                  # export + 4 checkers (edit paths)
+# comparator: clone leanprover/comparator at v4.32.0, lake build, then from the artifact root
+#   PATH=<lean4export>:<nanoda_bin>:<landrun> lake env <comparator> ComparatorChallenges/H_GapCVP.json
 ```
