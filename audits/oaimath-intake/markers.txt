@@ -1,0 +1,20 @@
+native_decide                                 files:      0
+bv_decide                                     files:      0
+^\s*axiom\s                                   files:      3
+ofReduceBool|ofReduceNat                      files:      0
+implemented_by                                files:      0
+@\[extern                                     files:      0
+\bunsafe\b                                    files:      0
+run_cmd                                       files:     11
+^\s*(scoped |local )?elab\b                   files:      5
+^\s*(scoped |local )?macro\b                  files:     11
+macro_rules                                   files:     11
+^\s*(scoped |local )?syntax\b                 files:     16
+simproc                                       files:      0
+addDecl                                       files:      0
+decide \+kernel                               files:   5848
+\bsorry\b                                     files:      0
+set_option maxRecDepth                        files:      0
+set_option maxHeartbeats                      files:      0
+partial def                                   files:      1
+opaque                                        files:    213
