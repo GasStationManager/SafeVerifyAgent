@@ -167,7 +167,7 @@ behaviour, reproduced on v4.34.1 oleans.
 |---|---|---|---|---|---|
 | `OAI.FourRow.robust_permanent` | 80.9 MB, 1,526,030 lines, 35 s | rc 0, 17 s | **accepted** 16,819 decls, 15 s | accepted 16,819, 20 s | rc 0, 4 s |
 | `OAI.Problem160.properColoring_seven` | 81.3 MB, 1,528,020 lines, 25 s | rc 0, 18 s | **accepted** 17,456 decls, 19 s | accepted 17,456, 25 s | rc 0, 7 s |
-| `OAI.DimensionTen.main_pair` (634-digit literals) | 1.85 GB | rc 0 | DIMTEN_LECHE | DIMTEN_RON | DIMTEN_NANODA |
+| `OAI.DimensionTen.main_pair` (634-digit literals) | 1.85 GB, 35,164,592 lines, 5 m 07 s | rc 0, 15 m 30 s | **accepted** 78,634 decls, 5 m 57 s | accepted 78,634, 6 m 59 s | rc 0, 3 m 27 s |
 | `OAI.LaughlinGap.thm_main` (2,297 `decide +kernel`) | 610 MB, 11,405,089 lines | LG_LC | LG_LECHE | LG_RON | LG_NANODA |
 
 
