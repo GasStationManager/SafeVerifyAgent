@@ -138,7 +138,38 @@ accepts the DimensionTen theorem therefore exercises both routes on 600-digit op
 
 ## 4. Build and checker replay
 
-(in progress: the four solution modules are building; the export-and-replay table is filled in once they finish)
+Built here from the sparse checkout (`lake update` with the repo's 23 patches, Mathlib cache
+restored; 16 GB container, 4 cores). The four-way default build of `DimensionTen.Main` was
+killed by the memory cgroup after 29 min (exit 137, one Lean process per file at 4–7 GB RSS);
+`LEAN_NUM_THREADS=2` finished the remainder in 404 s. That is a property of this container,
+not of the artifact.
+
+| solution module | OAI modules | build | headline |
+|---|---|---|---|
+| `OAI.Combinatorics.Permanent.Main` | 5 | 1 m 43 s | `OAI.FourRow.robust_permanent` |
+| `OAI.Geometry.PlaneColoring.Main` | 9 | 1 m 08 s | `OAI.Problem160.properColoring_seven` |
+| `OAI.Analysis.Quantum.DimensionTen.Main` | 129 | 29 m (OOM) + 6 m 44 s | `OAI.DimensionTen.main_pair` |
+| `OAI.Analysis.LaughlinGap.Main` | 106 | 44 m 50 s | `OAI.LaughlinGap.thm_main` |
+
+Export: lean4export at tag v4.34.0 built under toolchain v4.34.1 (the v4.34.1 toolchain
+bundles `leanchecker` but no exporter), one headline theorem per file with the usual
+`Quot`/`Nat`/`String` targets, so each export is the theorem's whole Mathlib closure.
+Checkers: the v4.35.0-rc2 toolchain's bundled `leanchecker`, `con-leche --verified`,
+`con-ron --verified`, `nanoda_bin` (standard three axioms permitted), as in
+`checkers/DECLINE-CORPUS.md`. Control: the `sorry`-carrying PlaneColoring CHALLENGE module
+exported and replayed first — leanchecker accepted it (it accepts `sorryAx`), con-leche and
+con-ron declined it ("1 via sorryAx; first skipped: `OAI.Problem160.properColoring_seven`",
+15,631 Mathlib declarations checked with no toolchain-pin complaint), nanoda panicked
+(exit 101, "declaration not found in infer_const, sorryAx") — the decline corpus's
+behaviour, reproduced on v4.34.1 oleans.
+
+| theorem | export | leanchecker | con-leche `--verified` | con-ron | nanoda |
+|---|---|---|---|---|---|
+| `OAI.FourRow.robust_permanent` | 80.9 MB, 1,526,030 lines, 35 s | rc 0, 17 s | **accepted** 16,819 decls, 15 s | accepted 16,819, 20 s | rc 0, 4 s |
+| `OAI.Problem160.properColoring_seven` | 81.3 MB, 1,528,020 lines, 25 s | rc 0, 18 s | **accepted** 17,456 decls, 19 s | accepted 17,456, 25 s | rc 0, 7 s |
+| `OAI.DimensionTen.main_pair` (634-digit literals) | 1.85 GB | rc 0 | DIMTEN_LECHE | DIMTEN_RON | DIMTEN_NANODA |
+| `OAI.LaughlinGap.thm_main` (2,297 `decide +kernel`) | 610 MB, 11,405,089 lines | LG_LC | LG_LECHE | LG_RON | LG_NANODA |
+
 
 ## 5. What this look does not say
 
