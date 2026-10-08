@@ -1,0 +1,1464 @@
+509 Lean file(s), 83,302 lines
+
+=== MANIFEST (holes / declared axioms) ===
+  NONE — no sorry, no admit, no `axiom` declaration
+
+=== TRUST SURFACE (comment-stripped) ===
+  NONE of the scanned markers
+
+=== METAPROGRAMMING SITES (comment-blanked; listed in full with --sites/--md) ===
+  run_cmd                 0 site(s) in 0 file(s)
+  macro                   0 site(s) in 0 file(s)
+  macro_rules             0 site(s) in 0 file(s)
+  elab                    0 site(s) in 0 file(s)
+  syntax                  0 site(s) in 0 file(s)
+  notation                0 site(s) in 0 file(s)
+  set_option              0 site(s) in 0 file(s)
+  attribute             229 site(s) in 186 file(s)
+  #eval                   0 site(s) in 0 file(s)
+  initialize              0 site(s) in 0 file(s)
+  simproc                 0 site(s) in 0 file(s)
+  implicit-use def        0 site(s) in 0 file(s)
+
+Neither scan sees specification drift. A clean report here is a beginning, not a verdict.
+
+## Metaprogramming sites
+
+Every site, not a count: `file:line` and the first lines of the comment-stripped statement, for an auditor to classify.
+
+| category | sites | files |
+|---|---|---|
+| run_cmd | 0 | 0 |
+| macro | 0 | 0 |
+| macro_rules | 0 | 0 |
+| elab | 0 | 0 |
+| syntax | 0 | 0 |
+| notation | 0 | 0 |
+| set_option | 0 | 0 |
+| attribute | 229 | 186 |
+| #eval | 0 | 0 |
+| initialize | 0 | 0 |
+| simproc | 0 | 0 |
+| implicit-use def | 0 | 0 |
+
+### run_cmd (0)
+
+none
+
+### macro (0)
+
+none
+
+### macro_rules (0)
+
+none
+
+### elab (0)
+
+none
+
+### syntax (0)
+
+none
+
+### notation (0)
+
+none
+
+### set_option (0)
+
+none
+
+### attribute (229)
+
+- `Completion/Cardinality.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  universe uCoord
+  ```
+- `Completion/CenterLaw.lean:16`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Completion/CenterLaw.lean:17`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {X Y Z : Type uCoord} [Fintype X] [Fintype Y] [Fintype Z]
+  ```
+- `Completion/ColorEntropy.lean:15`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Completion/ColorEntropy.lean:16`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  theorem finiteEntropy_scale {A : Type*} [Fintype A] (p : FiniteLaw A) (r : ℝ) :
+  ```
+- `Completion/ColorLaws.lean:18`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Completion/ColorLaws.lean:19`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {X Y Z : Type uCoord} [Fintype X] [Fintype Y] [Fintype Z]
+  ```
+- `Completion/Conditioning.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {A X : Type*} [Fintype A] [Fintype X]
+  ```
+- `Completion/Entropy.lean:13`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  
+  variable {A : Type*} [Fintype A]
+  ```
+- `Completion/Execution.lean:79`
+  ```lean
+  attribute [instance] Bundle.finitePX Bundle.finitePY Bundle.finitePZ
+  attribute [instance] Bundle.finiteAX Bundle.finiteAY Bundle.finiteAZ
+  
+  ```
+- `Completion/Execution.lean:80`
+  ```lean
+  attribute [instance] Bundle.finiteAX Bundle.finiteAY Bundle.finiteAZ
+  
+  theorem position_card (counts : A → ℕ) (t : ℕ) :
+  ```
+- `Completion/HierarchyWords.lean:46`
+  ```lean
+  attribute [instance] ReadableHierarchy.fintypeLabel
+  
+  variable {A : Type u} {X : Type x} {Y : Type y} {Z : Type z}
+  ```
+- `Completion/Labels.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {X Y Z : Type uCoord}
+  ```
+- `Completion/Labels.lean:458`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {X Y Z : Type uCoord}
+  ```
+- `Completion/Labels.lean:522`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  universe u v w z u' v' w'
+  ```
+- `Completion/Labels.lean:810`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {X Y Z : Type uCoord}
+  ```
+- `Completion/Labels.lean:1117`
+  ```lean
+  attribute [instance] ReadableTensor.finiteCode ReadableTensor.inhabitedCode
+  
+  namespace ReadableTensor
+  ```
+- `Completion/Labels.lean:1142`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  universe u
+  ```
+- `Completion/Partitions.lean:14`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Completion/Partitions.lean:15`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {X Y Z : Type*} [Fintype X]
+  ```
+- `Completion/ProductLaws.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {I : Type*} [Fintype I] [DecidableEq I] {A : I → Type*} [∀ i, Fintype (A i)]
+  ```
+- `Completion/ProgramPrefixes.lean:139`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  universe uCoord
+  ```
+- `Completion/RecursiveCompletion.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  inductive Color where
+  ```
+- `Completion/Termination.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  universe uCoord
+  ```
+- `Completion/TerminationLaw.lean:15`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Completion/TerminationLaw.lean:16`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  universe u
+  ```
+- `ComplexBounds/CW75ReorderedExecution.lean:22`
+  ```lean
+  attribute [local irreducible] CW75LabelHierarchy.retainedWords
+  
+  abbrev Position (counts : Scalar → ℕ) (t : ℕ) := BlockPosition counts t
+  ```
+- `ComplexBounds/CW75ReorderedExecution.lean:80`
+  ```lean
+  attribute [instance] Bundle.finitePX Bundle.finitePY Bundle.finitePZ
+  attribute [instance] Bundle.finiteAX Bundle.finiteAY Bundle.finiteAZ
+  
+  ```
+- `ComplexBounds/CW75ReorderedExecution.lean:81`
+  ```lean
+  attribute [instance] Bundle.finiteAX Bundle.finiteAY Bundle.finiteAZ
+  
+  theorem position_card (counts : Scalar → ℕ) (t : ℕ) :
+  ```
+- `ComplexBounds/CW75ReorderedFinite.lean:16`
+  ```lean
+  attribute [local irreducible] CW75LabelHierarchy.retainedWords
+  
+  def blocks (counts : Scalar → ℕ) (t : ℕ) : ℕ := t * ∑ a, counts a
+  ```
+- `ComplexBounds/SquareCounts.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  universe uCoord
+  ```
+- `ComplexBounds/SquareCounts.lean:27`
+  ```lean
+  attribute [local simp] colorBA colorBC colorAB colorAC colorCB colorCA
+  
+  def baseLeaf (i : Fin 5) : CompletionLabels.Leaf BaseThree.flagged :=
+  ```
+- `CoppersmithWinograd/CWCompleteStatistics.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  def pairEquiv : Raw 2 ≃ (Fin 7 × Fin 7) where
+  ```
+- `CoppersmithWinograd/CWOrientedZero.lean:12`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable (F : Type*) [Field F]
+  ```
+- `CoppersmithWinograd/CWStageCProductRates.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  theorem card_positions (counts : Fin 4 → ℕ) :
+  ```
+- `CoppersmithWinograd/CWStageCStatistics.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def branchStatistic (s : Fin 3) (b : Fin 4) (i : Fin 3) : Fin 6 :=
+  ```
+- `CoppersmithWinograd/CWWindowedLeaves.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  abbrev Raw (n : ℕ) := Fin n → Fin 7
+  ```
+- `CoppersmithWinograd/CWWordDimensions.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  def sitePolynomial : Polynomial ℕ := 1 + Polynomial.C 5 * Polynomial.X + Polynomial.X ^ 2
+  ```
+- `Duality/CompletionIndependence.lean:20`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/CompletionIndependence.lean:21`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {X Y Z : Type u} {Code : Type w} [Fintype X] [Fintype Y] [Fintype Z]
+  ```
+- `Duality/CompletionLaws.lean:14`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/CompletionLaws.lean:15`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  open MatrixMultiplication.Foundation RecursiveCompletion CompletionLabels CompletionColorLaws
+  ```
+- `Duality/HiddenCounts.lean:12`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/HiddenCounts.lean:13`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {X Y Z : Type*} [Fintype X]
+  ```
+- `Duality/HiddenInstances.lean:15`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/HiddenInstances.lean:16`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  private theorem coord_nonempty (s : Script) : Nonempty (Script.Coord (Fin 2) s) := by
+  ```
+- `Duality/HiddenInstances.lean:24`
+  ```lean
+  attribute [local instance] coord_nonempty
+  
+  theorem base_hidden : HiddenInvariant BaseTwo.flagged baseLaws DualWitness.initial := by
+  ```
+- `Duality/HiddenRates.lean:18`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/HiddenRates.lean:19`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {X Y Z : Type u} [Fintype X] [Fintype Y] [Fintype Z]
+  ```
+- `Duality/Information.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  universe u v w
+  ```
+- `Duality/InformationConditioning.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {A R L X : Type*} [Fintype A] [Fintype R] [Fintype L] [Fintype X]
+  ```
+- `Duality/InformationLabelConditioning.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {A L X : Type*} [Fintype A] [Fintype L] [Fintype X]
+  ```
+- `Duality/LawEntropy.lean:17`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/LawEntropy.lean:18`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  universe u
+  ```
+- `Duality/ProgramIndependence.lean:19`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/ProgramIndependence.lean:20`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {I : Type*} [Fintype I] [DecidableEq I]
+  ```
+- `Duality/RootIndependence.lean:37`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/RootIndependence.lean:38`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {X Y Z : Type u} {Code : Type w} [Fintype X] [Fintype Y] [Fintype Z]
+  ```
+- `Duality/ScriptIndependence.lean:18`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/ScriptIndependence.lean:19`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {X Y Z : Type u} {Code : Type w} [Fintype X] [Fintype Y] [Fintype Z]
+  ```
+- `Duality/TerminationIndependence.lean:16`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/TerminationIndependence.lean:17`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  universe u w
+  ```
+- `Duality/Uniform.lean:18`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/Uniform.lean:19`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {X Y Z : Type uCoord} [Fintype X] [Fintype Y] [Fintype Z]
+  ```
+- `Duality/UniformConditioning.lean:16`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/UniformConditioning.lean:17`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {A : Type*} {X Y Z : Type uCoord} [Fintype A] [Fintype X] [Fintype Y] [Fintype Z]
+  ```
+- `Duality/UniformInstances.lean:12`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/UniformInstances.lean:13`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  private theorem coord_nonempty (s : Script) : Nonempty (Script.Coord (Fin 2) s) := by
+  ```
+- `Duality/UniformInstances.lean:21`
+  ```lean
+  attribute [local instance] coord_nonempty
+  
+  theorem base_activeFraction : activeFraction BaseTwo.flagged = (1/2 : ℝ) := by
+  ```
+- `Duality/UniformMixtures.lean:18`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/UniformMixtures.lean:19`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {X Y Z : Type uCoord} {U A : Type*} [Fintype X] [Fintype Y] [Fintype Z]
+  ```
+- `Duality/UniformProducts.lean:14`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/UniformProducts.lean:15`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {I : Type*} [Fintype I] [DecidableEq I]
+  ```
+- `Duality/UniformUpdates.lean:15`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/UniformUpdates.lean:16`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  variable {X Y Z : Type uCoord} [Fintype X] [Fintype Y] [Fintype Z]
+  ```
+- `Duality/Witness.lean:14`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/Witness.lean:15`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  open MatrixMultiplication.Foundation RecursiveCompletion CompletionLabels
+  ```
+- `Duality/WitnessEntropy.lean:12`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/WitnessEntropy.lean:13`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  open MatrixMultiplication.Foundation RecursiveCompletion CompletionLabels
+  ```
+- `Duality/WitnessProgram.lean:11`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/WitnessProgram.lean:12`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  open MatrixMultiplication.Foundation RecursiveCompletion CompletionLabels
+  ```
+- `Duality/WitnessRates.lean:14`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  attribute [local instance 11000] instDecidableEqFin
+  
+  ```
+- `Duality/WitnessRates.lean:15`
+  ```lean
+  attribute [local instance 11000] instDecidableEqFin
+  
+  open MatrixMultiplication.Foundation CompletionLabels CompletionLabels.TopologicalFlatten
+  ```
+- `Entropy/IndependentConditioning.lean:13`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  
+  variable {A B X : Type*} [Fintype A] [Fintype B] [Fintype X]
+  ```
+- `FieldConstruction/ActiveCapacity.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def canonicalSideMass {K : ℕ} (w : Work K) (s : Fin 3) (k : Fin 17) : ℝ :=
+  ```
+- `FieldConstruction/ActiveGibbs.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def splitCoordinateWeight (parents : List Shape) (data : List ℤ)
+  ```
+- `FieldConstruction/ActiveLaws.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def branchProbability {K : ℕ} (w : Work K) (b : w.Branch) : ℚ :=
+  ```
+- `FieldConstruction/ActiveSums.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  private def aRelot {K L : ℕ} (lot : Fin L) (h : AfterA K) : AfterA L :=
+  ```
+- `FieldConstruction/ConstructionData.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K : ℕ}
+  ```
+- `FieldConstruction/ConstructionFamily.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K : ℕ}
+  ```
+- `FieldConstruction/FinalState.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  abbrev InitialIndex (K : ℕ) := AllFieldInitialLeafRates.PopulationHistory K
+  ```
+- `FieldConstruction/FinishedWitness.lean:19`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  private def localMapWithFintypes {F : Type*} [Field F]
+  ```
+- `FieldConstruction/FiniteFamily.lean:185`
+  ```lean
+  attribute [instance] Execution.copies_finite
+  
+  namespace Execution
+  ```
+- `FieldConstruction/InitialExact.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  private def assignedDeletion {F X Y Z A B C : Type*} [CommSemiring F]
+  ```
+- `FieldConstruction/InitialFamily.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {K : ℕ} (allocation : Allocation)
+  ```
+- `FieldConstruction/InitialHistories.lean:12`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  theorem shapeCounts_fiber {I : Type*} [Fintype I] (code : I → JointPopulation.Shape)
+  ```
+- `FieldConstruction/InitialLeafRates.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  abbrev InitialZero (K : ℕ) :=
+  ```
+- `FieldConstruction/NativeCapacity.lean:19`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {A : Type*} [Fintype A]
+  ```
+- `FieldConstruction/NativeGroupedRates.lean:18`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  section Reindex
+  ```
+- `FieldConstruction/PairMarginals.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  theorem statistic_weight_mass {A : Type*} [Fintype A]
+  ```
+- `FieldConstruction/ScheduledPositivity.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  theorem nativeH0_pos : 0 < nativeH0 := by
+  ```
+- `FieldConstruction/StageCFinish.lean:19`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  private def localMapWithFintypes {F : Type*} [Field F]
+  ```
+- `FieldConstruction/StageCFinish.lean:193`
+  ```lean
+  attribute [local irreducible] AllFieldHistory.population
+  
+  def pairMap (F : Type*) [Field F] :
+  ```
+- `FieldConstruction/StageCGibbs.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def distinguishedSide {K : ℕ} (h : PartC K) (phi : Placement) : Fin 3 :=
+  ```
+- `FieldConstruction/StageCRegroup.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {H B W F : Type*}
+  ```
+- `FieldConstruction/StageCTerminalRates.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  theorem sum_populationHistory_rate {K : ℕ} (allocation : Allocation) :
+  ```
+- `FieldConstruction/TerminalPopulations.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K : ℕ} {H : Type*} [Fintype H]
+  ```
+- `FieldConstruction/TerminalRateFormulas.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def initialRate (g : Shape) : ℝ :=
+  ```
+- `FieldConstruction/TerminalRates.lean:18`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {K : ℕ}
+  ```
+- `FieldConstruction/TerminalStatisticLaws.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  abbrev AZero (K : ℕ) :=
+  ```
+- `FieldConstruction/ZeroFinish.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  variable {K : ℕ}
+  
+  ```
+- `FieldConstruction/ZeroHistorySums.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def zeroRate {K : ℕ} : TerminalZero K → ℝ
+  ```
+- `FieldConstruction/ZeroLeafRates.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  abbrev fourWords (t : Shape) (counts : PairSlot → ℕ) (m : ℕ) :=
+  ```
+- `FieldConstruction/ZeroWords.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  variable {K : ℕ}
+  
+  ```
+- `FieldGroups/AdmissibilityCore.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/Admissible.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/AmbientDegree.lean:19`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def potential {K : ℕ} (w : PlacedWork K) (s : Fin 3) (k : Fin 17) : ℝ :=
+  ```
+- `FieldGroups/AssignmentCore.lean:12`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  variable {K tick : ℕ}
+  
+  ```
+- `FieldGroups/AssignmentLoss.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  variable {K tick : ℕ}
+  
+  ```
+- `FieldGroups/AssignmentRetention.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/Assignments.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/BranchDesignation.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def nativeBranchDesignated {K : ℕ} (w : Work K) (right : Bool)
+  ```
+- `FieldGroups/BranchLaws.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  theorem jointCounts_branch_pos {K dilation : ℕ} (allocation : Allocation)
+  ```
+- `FieldGroups/Compatibility.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/CompatibilityTransfer.lean:19`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {K tick : ℕ} {sigma : Placement}
+  ```
+- `FieldGroups/CountRate.lean:20`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/DegreeEnvelope.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/DegreeLaws.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/Degrees.lean:19`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/NativeDegreeBound.lean:19`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/NativeLaws.lean:19`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def statisticComplement {K : ℕ} (w : Work K) : w.Statistic ≃ w.Statistic :=
+  ```
+- `FieldGroups/OrbitCount.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  abbrev GroupClasses (K tick : ℕ) (sigma : Placement) :=
+  ```
+- `FieldGroups/OrbitData.lean:20`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/OrbitTransport.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/PairEntropy.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  theorem sum_conditionalCenter_entropy {A B : Type*} [Fintype A] [Fintype B]
+  ```
+- `FieldGroups/PairWindows.lean:23`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/ProjectedEntropy.lean:25`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  section Kernel
+  ```
+- `FieldGroups/Selection.lean:18`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/SelectionCore.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/SelectionParameters.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/SourceSupport.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldGroups/TargetRate.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ} {sigma : Placement}
+  ```
+- `FieldHistory/Bounds.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  theorem work_source_amount_pos {K : ℕ} (allocation : Allocation) (w : PlacedWork K) :
+  ```
+- `FieldHistory/BranchWeights.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  theorem stageB_branchPopulation_rat {K : ℕ} (allocation : Allocation) (dilation : ℕ)
+  ```
+- `FieldHistory/ChildLaws.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def Work.Statistic {K : ℕ} : Work K → Type
+  ```
+- `FieldHistory/Counts.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def shapeCounts {I : Type*} [Fintype I] (code : I → JointPopulation.Shape)
+  ```
+- `FieldHistory/Geometry.lean:11`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def currentShape {K : ℕ} : CanonicalHistory K → Shape
+  ```
+- `FieldHistory/GroupAssignment.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def activeEquivOrders (K tick : ℕ) :
+  ```
+- `FieldHistory/GroupCore.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/GroupMasks.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/GroupedRecovery.lean:18`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/IncomingCore.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/IncomingMasks.lean:19`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/IncomingMasks.lean:147`
+  ```lean
+  attribute [local irreducible] activeCounts population
+  
+  theorem incoming_stageA (allocation : Allocation) (m : ℕ) (ε : ℝ)
+  ```
+- `FieldHistory/Iteration.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  section Presentation
+  ```
+- `FieldHistory/MaskCore.lean:18`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/MaskLaws.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/Masks.lean:20`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/Masks.lean:91`
+  ```lean
+  attribute [local irreducible] activeCounts
+  
+  theorem full_filter_loss_le (allocation : Allocation) {m : ℕ} (hm : 2 ≤ m)
+  ```
+- `FieldHistory/OrbitCount.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  abbrev Classes (K tick : ℕ) := ActiveClass K tick
+  ```
+- `FieldHistory/Populations.lean:20`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  structure Allocation where
+  ```
+- `FieldHistory/Positions.lean:11`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  abbrev ProducedPositions {K tick : ℕ} (allocation : Allocation) (dilation : ℕ) :=
+  ```
+- `FieldHistory/Produced.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ} (allocation : Allocation) (m : ℕ)
+  ```
+- `FieldHistory/ProducedBase.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ} (allocation : Allocation) (dilation : ℕ)
+  ```
+- `FieldHistory/ProducedMaskCore.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/ProducedMasks.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/RawMasks.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/Recovery.lean:22`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/RecoveryBudget.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/RecoveryCore.lean:20`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/Regrouping.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ} (allocation : Allocation) (m : ℕ)
+  ```
+- `FieldHistory/Schedule.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def initialAncestor {K : ℕ} : CanonicalHistory K → Initial K
+  ```
+- `FieldHistory/Source.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  private def deleteWithPred {F : Type*} [Field F] {X Y Z : Type}
+  ```
+- `FieldHistory/SourceAssignment.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ} (allocation : Allocation) (m : ℕ)
+  ```
+- `FieldHistory/StageCIncoming.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ}
+  ```
+- `FieldHistory/Sums.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def secondMass (t : Shape) : ℚ :=
+  ```
+- `FieldHistory/Support.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  theorem population_dilation {K : ℕ} (allocation : Allocation) (m : ℕ) (h : History K) :
+  ```
+- `FieldHistory/Tick.lean:19`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {K tick : ℕ} (allocation : Allocation) (m : ℕ) (ε slack : ℝ)
+  ```
+- `FieldHistory/TickCarry.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  section Distribution
+  ```
+- `FieldHistory/Transitions.lean:12`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def due {K : ℕ} (tick : ℕ) : CanonicalHistory K → Prop
+  ```
+- `JointExtraction/AmbientDegree.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {H : Type*} [Fintype H] [DecidableEq H]
+  ```
+- `JointExtraction/AmbientRateLimit.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  theorem tendsto_log_succ_div_nat_of_ratio {n : ℕ → ℕ} {mass : ℝ}
+  ```
+- `JointExtraction/AssignmentLoss.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {A B C I V Ω : Type*}
+  ```
+- `JointExtraction/CanonicalCW.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {H F : Type*} [Fintype H] [DecidableEq H] [CommRing F]
+  ```
+- `JointExtraction/CanonicalInitial.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {H F : Type*} [Fintype H] [DecidableEq H] [CommRing F]
+  ```
+- `JointExtraction/CanonicalMixed.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {H F : Type*} [Fintype H] [DecidableEq H] [CommRing F]
+  ```
+- `JointExtraction/CanonicalSymmetry.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {H F : Type*} [Fintype H] [DecidableEq H] [CommRing F]
+  ```
+- `JointExtraction/Canonicalization.lean:18`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {H : Type*} (counts : H → Shape → ℕ)
+  ```
+- `JointExtraction/CoarseAssignment.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {F X Y Z A B C I V : Type*} [CommSemiring F]
+  ```
+- `JointExtraction/CoarseHashing.lean:12`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  abbrev Word (P : Type*) := P → Fin 17
+  ```
+- `JointExtraction/CoarseReorder.lean:12`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  def tripleSide {P : Type*} (s : Fin 3) (t : Triple P) : Word P :=
+  ```
+- `JointExtraction/CompatibilityControls.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  private theorem exists_pos_le_family {K : Type*} [Fintype K]
+  ```
+- `JointExtraction/CompatibilityCountProducer.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  private theorem exists_pos_le_family {K : Type*} [Fintype K]
+  ```
+- `JointExtraction/CompatibilityEntropyBound.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  section ClassCounts
+  ```
+- `JointExtraction/CompatibilityIncidence.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  section Actions
+  ```
+- `JointExtraction/CompatibilityIncidence.lean:49`
+  ```lean
+  attribute [local instance] fixedWordsMulAction
+  
+  omit [Fintype C] [DecidableEq C] [∀ c, DecidableEq (Pos c)] [∀ c, Fintype (A c)] in
+  ```
+- `JointExtraction/CompatibilityIncidence.lean:62`
+  ```lean
+  attribute [local instance] fixedWordsPretransitive
+  
+  end Actions
+  ```
+- `JointExtraction/CompatibilityIncidence.lean:66`
+  ```lean
+  attribute [local instance] fixedWordsMulAction fixedWordsPretransitive
+  
+  section Counts
+  ```
+- `JointExtraction/CompatibilityRateLimit.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  private theorem exists_pos_le_family {K : Type*} [Fintype K]
+  ```
+- `JointExtraction/CompatibilityScaling.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {C : Type*} [Fintype C] [DecidableEq C]
+  ```
+- `JointExtraction/ConditionalCountEntropy.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  def classCounts (n : U → ℕ) (f : U → A) (a : A) (u : U) : ℕ :=
+  ```
+- `JointExtraction/GroupedEntropyEmbedding.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {U V K L A : Type*}
+  ```
+- `JointExtraction/GroupedEntropyPartition.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  section FiniteGroups
+  ```
+- `JointExtraction/Hashing.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {P R : Type*} [Fintype P] [CommRing R]
+  ```
+- `JointExtraction/IdealBranches.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {F X Y Z A B C : Type*} [CommSemiring F]
+  ```
+- `JointExtraction/LossCounts.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {Ω V I : Type*}
+  ```
+- `JointExtraction/MarginalSupport.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {H : Type*} [Fintype H] [DecidableEq H]
+  ```
+- `JointExtraction/MaskedAssignment.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {P E O V : Type*} [Fintype P] [Fintype E]
+  ```
+- `JointExtraction/MaskedGoodSelection.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  theorem eventually_exists_good_selection
+  ```
+- `JointExtraction/MaskedGoodSelection.lean:77`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {P E O V : Type*} [Fintype P] [Fintype E]
+  ```
+- `JointExtraction/MaskedRates.lean:16`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  def errorBound (degree : ℕ → ℕ) (B p : ℕ) (H : ℝ) (N : ℕ) : ℝ :=
+  ```
+- `JointExtraction/MaskedSelection.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {P E O V : Type*}
+  ```
+- `JointExtraction/NativeGroupedEntropy.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  section FiniteGroups
+  ```
+- `JointExtraction/OrbitFibers.lean:9`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {G X Y : Type*} [Group G] [MulAction G X] [Fintype X]
+  ```
+- `JointExtraction/OrdinaryPopulationSelection.lean:19`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {Hist : Type*} [Fintype Hist] [DecidableEq Hist]
+  ```
+- `JointExtraction/OrdinarySelection.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {P E : Type*}
+  ```
+- `JointExtraction/PairClassWindows.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {I A C : Type*} [Fintype I] [Fintype A] [Fintype C]
+  ```
+- `JointExtraction/PairMixtureControls.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {C : Type*} [Fintype C] [DecidableEq C]
+  ```
+- `JointExtraction/Population.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  structure HistoryKey where
+  ```
+- `JointExtraction/PopulationCWNonzero.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {H F : Type*} [Fintype H] [DecidableEq H] [Field F]
+  ```
+- `JointExtraction/PopulationCompatibility.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {H : Type*} [Fintype H] [DecidableEq H]
+  ```
+- `JointExtraction/PopulationMixedCompatibility.lean:18`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  def sharingDesignated {H : Type*} (sharing : H → Bool)
+  ```
+- `JointExtraction/PopulationMixedNonzero.lean:15`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {H F : Type*} [Fintype H] [DecidableEq H] [Field F]
+  ```
+- `JointExtraction/ProjectedGroupEntropy.lean:18`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  section FiniteGroups
+  ```
+- `JointExtraction/ScalarOrbitAdmissibility.lean:13`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  variable {H : Type*}
+  ```
+- `Recovery/GroupOrbitProjection.lean:20`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  section UniformRestriction
+  ```
+- `Recovery/InheritedMaskOrbitFilter.lean:14`
+  ```lean
+  attribute [local instance] Classical.propDecidable Classical.decEq
+  
+  def fullOrbitFilter (G : Type*) {V : Type*} [SMul G V] [Fintype V]
+  ```
+- `Tensor/Subdivision.lean:17`
+  ```lean
+  attribute [local instance] Classical.propDecidable
+  
+  variable {I : Type*} [Fintype I] [DecidableEq I]
+  ```
+- `Tensor/UniformCoordinate.lean:13`
+  ```lean
+  attribute [local instance 10000] Classical.propDecidable Classical.decEq
+  
+  variable {A X : Type*} [Fintype A] [Fintype X]
+  ```
+
+### #eval (0)
+
+none
+
+### initialize (0)
+
+none
+
+### simproc (0)
+
+none
+
+### implicit-use def (0)
+
+none
+wrote audits/mm94-intake/SCAN-solution.md
