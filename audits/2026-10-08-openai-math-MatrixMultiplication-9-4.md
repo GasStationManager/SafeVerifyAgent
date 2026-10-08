@@ -11,9 +11,9 @@ the result, if the mathematics community accepts the paper, moves ω from 2.3712
 
 ## 0. What did not run / caveats, first
 
-- **Authors' comparator config** (`MatrixMultiplication.json`, three theorems): needs the full
-  504-module `Main`; see §6 for the result. The 9/4 theorem's own statement was compared by hand
-  (§2) and by an auditor-written comparator challenge (§6).
+- **Authors' comparator config** ran and passes (§6); the auditor-written challenge in
+  `mm94-intake/AuditChallenge.lean` was NOT run (lake refuses modules outside its root), and was
+  made unnecessary by the official run.
 - **One model family.** Coordinator and all six readers are Claude models (Fable 5.1 coordinator,
   Opus readers). Independence is between passes and against the paper, not between model
   families. Nothing in this audit is a mathematical referee's judgement of the PAPER; it is a
@@ -195,7 +195,16 @@ is tight, so 9/4 is the most this method yields (F).
 
 ## 6. Comparator
 
-COMPARATOR_PLACEHOLDER
+The authors' configuration `ComparatorChallenges/MatrixMultiplication.json` was re-run here after
+building the full 504-module `Main` (851 s): comparator at its `v4.34.0` tag built under the
+artifact's `v4.34.1` toolchain, lean4export from the earlier pass, the development landrun shim
+(not the real sandbox — it affects only isolation, not the kernel verdicts). Result, 226 s:
+"Lean default kernel accepts the solution. Your solution is okay!" for all three theorems
+(`mm94-intake/comparator-official.log`). With `definition_names: []` this pass compares EVERY
+definition the three statements reach, so unlike the GapCVP and definition-hole configs it is a
+full statement check: the challenge's model (which §2 diffed against the reference) is exactly
+what the solution proves against. `enable_nanoda` is false in the config; nanoda was run
+separately on the 9/4 export (§4).
 
 ## 7. Coverage
 
