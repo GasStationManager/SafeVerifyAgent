@@ -322,7 +322,7 @@ E8 (minor, checked). `Character` takes `value` with explicit `Fintype` instances
 
 ## 5. Independent computation
 
-Script `/tmp/claude-0/-home-user/69126eca-8d7d-5969-ab6e-745654c8c3a5/scratchpad/readB/flat.py`
+Script `<scratch>/readB/flat.py`
 (`python3 -I`, exact rank over ℚ by Fraction Gaussian elimination; tensors built to mirror the Lean
 definitions: `matrixMultiplication` guard, `dotPairing`, `cyclic`).
 
