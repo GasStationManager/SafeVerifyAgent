@@ -1,0 +1,7 @@
+all constants 49693 {'quot': 4, 'axiom': 3, 'def': 10540, 'thm': 39108, 'opaque': 38}
+axioms: ['propext', 'Quot.sound', 'Classical.choice']
+OAI constants reached from the headline: 1403 {'def': 405, 'thm': 998}
+   919 OAI.MatrixMultiplication.AuxiliarySeparation
+   333 OAI.MatrixMultiplication.Foundation
+   150 OAI.MatrixMultiplication.Arithmetic
+     1 OAI.MatrixMultiplication.ConditionalLabels

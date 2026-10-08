@@ -1,0 +1,8 @@
+{
+  "challenge_module": "AuditChallenge",
+  "solution_module": "OAI.LinearAlgebra.MatrixMultiplication.AuxiliarySeparation.Main",
+  "theorem_names": ["OAI.MatrixMultiplication.AuxiliarySeparation.omega_le_nine_quarters"],
+  "definition_names": [],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "enable_nanoda": false
+}

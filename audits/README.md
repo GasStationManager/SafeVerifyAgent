@@ -5,7 +5,8 @@ Reports from running this agent at real, published artifacts.
 Plain-language overviews: [`SUMMARY-openai-NavierStokesAndEuler.md`](SUMMARY-openai-NavierStokesAndEuler.md),
 [`SUMMARY-qinz1yang-differential-geometry.md`](SUMMARY-qinz1yang-differential-geometry.md),
 [`SUMMARY-RBarish-FourColorTheorem-Lean4.md`](SUMMARY-RBarish-FourColorTheorem-Lean4.md)
-and [`SUMMARY-openai-ten-proofs-GapCVP.md`](SUMMARY-openai-ten-proofs-GapCVP.md).
+[`SUMMARY-openai-ten-proofs-GapCVP.md`](SUMMARY-openai-ten-proofs-GapCVP.md)
+and [`SUMMARY-openai-math-MatrixMultiplication-9-4.md`](SUMMARY-openai-math-MatrixMultiplication-9-4.md).
 
 They are kept in the repo for one reason: **a verdict whose method is not
 reproducible is an opinion.** Each report states the commit it audited, which
@@ -25,6 +26,7 @@ the auditor.
 | 2026-10-04 | [nasqret/semibase-order6 — finite bases of order-six semigroups](2026-10-04-nasqret-semibase-order6.md) | no defect at scope; headline BARE, EXACT; `Derives` is exactly equational logic; catalogue recomputed (15,973 tables, pairwise inequivalent); trust surface one tactic macro; not built (220 GB) | axiom rung, checkers and route walk not done |
 | 2026-10-04 | [openai/ten-proofs — GapCVP, n^{1/400}-hardness of CVP](2026-10-04-openai-ten-proofs-GapCVP.md) | no defect; statement EXACT (three deviations, all stronger); Cook–Levin, gap core and transfers EXACT; no-supplier clean; built here: 3 axioms, comparator "okay", export accepted by leanchecker, con-leche, con-ron, nanoda; `IsNP` inhabited by an elaborated control | comparator pass covers scaffolding only (`definition_names` holes — shown by a mutated-factor challenge that still passes); hole bodies matched at elaborated-term level; the artifact itself never exhibits a language in NP |
 | 2026-10-07 | [openai/math — corpus look (405 challenges)](2026-10-07-openai-math-corpus-look.md) | no defect at scope; four statements PAIRED, EXACT (DimensionTenPair, LaughlinGap, FourRowPermanent, PlaneColoring), each a stated subset of its paper; trust surface empty across 25.9 M lines (one harmless `axiom` in a challenge file); con-leche never tried by the authors (nanoda off in 402/405 configs, review "unchecked"); built and replayed here: con-leche and con-ron accept all four headlines incl. 634-digit `decide +kernel` literals; leanchecker and nanoda accept three | 401 statements unread; the nine definition-hole configs diffed at the elaborated level (eight closed, DefocusingNLS textual only); 227/405 challenges absent from the yaml's `main_results`; LaughlinGap's 2,297 kernel decisions exceed a 101-min leanchecker budget |
+| 2026-10-08 | [openai/math — result 107, ω ≤ 9/4 over ℂ](2026-10-08-openai-math-MatrixMultiplication-9-4.md) | no defect; headline PAIRED, EXACT; six-reader reconstruction of the paper's argument, every construction executed in Lean, nine numeric reproductions incl. negative controls; route built here (129 modules, 16 min): 3 axioms; export (49,693 decls) accepted by leanchecker, con-leche, con-ron, nanoda; Brouwer from a patched external package, scanned clean | one model family; companion theorems unread; algorithm non-constructive as in the paper |
 
 ## How to read one
 
