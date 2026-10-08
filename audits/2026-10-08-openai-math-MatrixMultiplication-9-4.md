@@ -228,3 +228,9 @@ by the kernel, and the question "does the kernel check the right statement?" by 
 It does not say: that the algorithm is explicit (it is not — the decomposition is chosen
 classically, as in the paper, and no competitive finite size is given); anything about the two
 companion theorems; or anything a second model family would say.
+
+Postscript (same day, outside the audit): `mm94-intake/primal/PRIMAL.md` argues that the
+paper's growth lemma is a linear program in the logarithms of character values, and that its
+dual solution IS an explicit primal construction from the paper's own degenerations, giving
+ω ≤ 3·log(2a−1)/log D*(a) for every block size a. That is a proposal with LP evidence, not a
+reviewed result; see its §6.
