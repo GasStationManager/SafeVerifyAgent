@@ -1,0 +1,56 @@
+== (i) elementary inequality and product bound (exact rationals)
+m=1..10^6 violations of (1+1/(3m))^3 >= 1+1/m: 0
+identity (3m+1)^3 - 27m^2(m+1) == 9m+1 for m<=1000: True
+a=1..2000 violations of (prod_{m<a}(1+1/(3m)))^3 >= a: 0 ; H_2000^3/2000 = 1.4041164642751998
+(3a-1)/2 >= a for all a>=1: trivially 3a-1>=2a <=> a>=1
+
+== (ii) profiles on [1..N]^2, N=60
+sqrt(ab(a+b-1)): positive=True symmetric=True P(1,b)=b=True concave(4.6)=True tripling(4.9)=True
+   min_a P(a,a)/a^(4/3) over a=1..60: 1.000000 at a=1; over a>=2: 1.374730 at a=2; paper-argument steps hold where hyps hold: True []
+a*b: positive=True symmetric=True P(1,b)=b=True concave(4.6)=True tripling(4.9)=True
+   min_a P(a,a)/a^(4/3) over a=1..60: 1.000000 at a=1; over a>=2: 1.587401 at a=2; paper-argument steps hold where hyps hold: True []
+a+b-1+(a-1)(b-1)/3: positive=True symmetric=True P(1,b)=b=True concave(4.6)=True tripling(4.9)=True
+   min_a P(a,a)/a^(4/3) over a=1..60: 1.000000 at a=1; over a>=2: 1.322834 at a=2; paper-argument steps hold where hyps hold: True []
+a+b-1: positive=True symmetric=True P(1,b)=b=True concave(4.6)=True tripling(4.9)=False [first violations [(2, 1), (2, 2), (2, 3)], total 570]
+   min_a P(a,a)/a^(4/3) over a=1..60: 0.506616 at a=60; over a>=2: 0.506616 at a=60; paper-argument steps hold where hyps hold: n/a (hyps fail) []
+
+== (iii) minimum possible P(a,a) under the hypotheses (truncated tables)
+N=12 (converged after 10 sweeps, least point feasible=True):
+  a= 1 minP(a,a)=   1.0000  a^(4/3)=  1.0000  ratio=1.0000  proof bound (3a-1)/2*prod=  1.0000  a^2=1
+  a= 2 minP(a,a)=   3.3333  a^(4/3)=  2.5198  ratio=1.3228  proof bound (3a-1)/2*prod=  3.3333  a^2=4
+  a= 3 minP(a,a)=   6.2222  a^(4/3)=  4.3267  ratio=1.4381  proof bound (3a-1)/2*prod=  6.2222  a^2=9
+  a= 4 minP(a,a)=   9.5062  a^(4/3)=  6.3496  ratio=1.4971  proof bound (3a-1)/2*prod=  9.5062  a^2=16
+  a= 5 minP(a,a)=  13.0300  a^(4/3)=  8.5499  ratio=1.5240  proof bound (3a-1)/2*prod= 13.1070  a^2=25
+  a= 6 minP(a,a)=  16.6878  a^(4/3)= 10.9027  ratio=1.5306  proof bound (3a-1)/2*prod= 16.9767  a^2=36
+  a= 7 minP(a,a)=  20.4586  a^(4/3)= 13.3905  ratio=1.5278  proof bound (3a-1)/2*prod= 21.0822  a^2=49
+  a= 8 minP(a,a)=  23.8935  a^(4/3)= 16.0000  ratio=1.4933  proof bound (3a-1)/2*prod= 25.3990  a^2=64
+  a= 9 minP(a,a)=  26.5651  a^(4/3)= 18.7208  ratio=1.4190  proof bound (3a-1)/2*prod= 29.9082  a^2=81
+  a=10 minP(a,a)=  28.4734  a^(4/3)= 21.5443  ratio=1.3216  proof bound (3a-1)/2*prod= 34.5947  a^2=100
+  a=11 minP(a,a)=  22.1183  a^(4/3)= 24.4638  ratio=0.9041  proof bound (3a-1)/2*prod= 39.4459  a^2=121
+  a=12 minP(a,a)=   0.0000  a^(4/3)= 27.4731  ratio=0.0000  proof bound (3a-1)/2*prod= 44.4513  a^2=144
+N=48 (converged after 39 sweeps, least point feasible=True):
+  a= 1 minP(a,a)=   1.0000  a^(4/3)=  1.0000  ratio=1.0000  proof bound (3a-1)/2*prod=  1.0000  a^2=1
+  a= 2 minP(a,a)=   3.3333  a^(4/3)=  2.5198  ratio=1.3228  proof bound (3a-1)/2*prod=  3.3333  a^2=4
+  a= 3 minP(a,a)=   6.2222  a^(4/3)=  4.3267  ratio=1.4381  proof bound (3a-1)/2*prod=  6.2222  a^2=9
+  a= 4 minP(a,a)=   9.5062  a^(4/3)=  6.3496  ratio=1.4971  proof bound (3a-1)/2*prod=  9.5062  a^2=16
+  a= 5 minP(a,a)=  13.1070  a^(4/3)=  8.5499  ratio=1.5330  proof bound (3a-1)/2*prod= 13.1070  a^2=25
+  a= 6 minP(a,a)=  16.9767  a^(4/3)= 10.9027  ratio=1.5571  proof bound (3a-1)/2*prod= 16.9767  a^2=36
+  a= 7 minP(a,a)=  21.0822  a^(4/3)= 13.3905  ratio=1.5744  proof bound (3a-1)/2*prod= 21.0822  a^2=49
+  a= 8 minP(a,a)=  25.3990  a^(4/3)= 16.0000  ratio=1.5874  proof bound (3a-1)/2*prod= 25.3990  a^2=64
+  a= 9 minP(a,a)=  29.9082  a^(4/3)= 18.7208  ratio=1.5976  proof bound (3a-1)/2*prod= 29.9082  a^2=81
+  a=10 minP(a,a)=  34.5947  a^(4/3)= 21.5443  ratio=1.6057  proof bound (3a-1)/2*prod= 34.5947  a^2=100
+  a=11 minP(a,a)=  39.4459  a^(4/3)= 24.4638  ratio=1.6124  proof bound (3a-1)/2*prod= 39.4459  a^2=121
+  a=12 minP(a,a)=  44.4513  a^(4/3)= 27.4731  ratio=1.6180  proof bound (3a-1)/2*prod= 44.4513  a^2=144
+N=120 (converged after 83 sweeps, least point feasible=True):
+  a= 1 minP(a,a)=   1.0000  a^(4/3)=  1.0000  ratio=1.0000  proof bound (3a-1)/2*prod=  1.0000  a^2=1
+  a= 2 minP(a,a)=   3.3333  a^(4/3)=  2.5198  ratio=1.3228  proof bound (3a-1)/2*prod=  3.3333  a^2=4
+  a= 3 minP(a,a)=   6.2222  a^(4/3)=  4.3267  ratio=1.4381  proof bound (3a-1)/2*prod=  6.2222  a^2=9
+  a= 4 minP(a,a)=   9.5062  a^(4/3)=  6.3496  ratio=1.4971  proof bound (3a-1)/2*prod=  9.5062  a^2=16
+  a= 5 minP(a,a)=  13.1070  a^(4/3)=  8.5499  ratio=1.5330  proof bound (3a-1)/2*prod= 13.1070  a^2=25
+  a= 6 minP(a,a)=  16.9767  a^(4/3)= 10.9027  ratio=1.5571  proof bound (3a-1)/2*prod= 16.9767  a^2=36
+  a= 7 minP(a,a)=  21.0822  a^(4/3)= 13.3905  ratio=1.5744  proof bound (3a-1)/2*prod= 21.0822  a^2=49
+  a= 8 minP(a,a)=  25.3990  a^(4/3)= 16.0000  ratio=1.5874  proof bound (3a-1)/2*prod= 25.3990  a^2=64
+  a= 9 minP(a,a)=  29.9082  a^(4/3)= 18.7208  ratio=1.5976  proof bound (3a-1)/2*prod= 29.9082  a^2=81
+  a=10 minP(a,a)=  34.5947  a^(4/3)= 21.5443  ratio=1.6057  proof bound (3a-1)/2*prod= 34.5947  a^2=100
+  a=11 minP(a,a)=  39.4459  a^(4/3)= 24.4638  ratio=1.6124  proof bound (3a-1)/2*prod= 39.4459  a^2=121
+  a=12 minP(a,a)=  44.4513  a^(4/3)= 27.4731  ratio=1.6180  proof bound (3a-1)/2*prod= 44.4513  a^2=144
