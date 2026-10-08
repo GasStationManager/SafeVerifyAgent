@@ -1,0 +1,17 @@
+OAI.Rokhlin.timeMap: kind def/def
+  type: ALPHA-EQUAL (115 vs 115 chars; binderInfo equal)
+  value: ALPHA-EQUAL (843 vs 843 chars; binderInfo equal)
+OAI.Rokhlin.IsMixing: kind def/def
+  type: ALPHA-EQUAL (144 vs 144 chars; binderInfo equal)
+  value: ALPHA-EQUAL (1539 vs 1539 chars; binderInfo equal)
+OAI.Rokhlin.layoutTime: kind def/def
+  type: ALPHA-EQUAL (233 vs 233 chars; binderInfo equal)
+  value: ALPHA-EQUAL (1675 vs 1675 chars; binderInfo equal)
+OAI.Rokhlin.MixingOfOrder: kind def/def
+  type: ALPHA-EQUAL (155 vs 155 chars; binderInfo equal)
+  value: ALPHA-EQUAL (2689 vs 2689 chars; binderInfo equal)
+OAI.Rokhlin.mixing_all_finite_orders: kind thm/thm
+  type: ALPHA-EQUAL (810 vs 810 chars; binderInfo equal)
+  value: DIFFERENT (1937 vs 975 chars; binderInfo differ)
+    challenge: ...rableEquiv.instEquivLike{p:13,p:13}) #4) #4) #3) #3))) #0)) #2) #2)]λ[((((C(OAI.Rokhlin.IsMixing{p:13}) #5) #4) #3) #1)](((C(sorryAx{z}) Π[C(Lean.Name{})]Π[C(Nat{})]Π[((((C(LE.le{z}) C(Nat{})) C(instLENat{})) (((C(OfNat.ofNat{z}) C(Nat{})) L("3")) (C(instOfNatNat{}) L("3")))) #0)](((((C(OAI.Rokhlin.MixingOfOrder{p:13})
+    solution : ...rableEquiv.instEquivLike{p:13,p:13}) #4) #4) #3) #3))) #0)) #2) #2)]λ[((((C(OAI.Rokhlin.IsMixing{p:13}) #5) #4) #3) #1)]λ[C(Nat{})]λ[((((C(LE.le{z}) C(Nat{})) C(instLENat{})) (((C(OfNat.ofNat{z}) C(Nat{})) L("3")) (C(instOfNatNat{}) L("3")))) #0)]((((((C(OAI.Rokhlin.mixingOfOrder_of_sequential{p:13}) #8) #7) #6) #4) #1

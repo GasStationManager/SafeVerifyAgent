@@ -1,0 +1,46 @@
+OAI.Problem358.E: kind def/def
+  type: ALPHA-EQUAL (18 vs 18 chars; binderInfo equal)
+  value: ALPHA-EQUAL (61 vs 61 chars; binderInfo equal)
+OAI.Problem358.uniformMeasure: kind def/def
+  type: ALPHA-EQUAL (593 vs 593 chars; binderInfo equal)
+  value: ALPHA-EQUAL (14329 vs 14329 chars; binderInfo equal)
+OAI.Problem358.IsSupported: kind def/def
+  type: ALPHA-EQUAL (600 vs 600 chars; binderInfo equal)
+  value: ALPHA-EQUAL (2080 vs 2080 chars; binderInfo equal)
+OAI.Problem358.IsCoupling: kind def/def
+  type: ALPHA-EQUAL (2269 vs 2269 chars; binderInfo equal)
+  value: ALPHA-EQUAL (8130 vs 8130 chars; binderInfo equal)
+OAI.Problem358.quadraticPlanCost: kind def/def
+  type: ALPHA-EQUAL (1189 vs 1189 chars; binderInfo equal)
+  value: ALPHA-EQUAL (4139 vs 4139 chars; binderInfo equal)
+OAI.Problem358.wasserstein2: kind def/def
+  type: ALPHA-EQUAL (1108 vs 1108 chars; binderInfo equal)
+  value: ALPHA-EQUAL (4271 vs 4271 chars; binderInfo equal)
+OAI.Problem358.graphPlan: kind def/def
+  type: ALPHA-EQUAL (1776 vs 1776 chars; binderInfo equal)
+  value: ALPHA-EQUAL (2421 vs 2421 chars; binderInfo equal)
+OAI.Problem358.IsQuadraticOptimalMap: kind def/def
+  type: ALPHA-EQUAL (1161 vs 1161 chars; binderInfo equal)
+  value: ALPHA-EQUAL (5279 vs 5279 chars; binderInfo equal)
+OAI.Problem358.IsUniqueQuadraticOptimalMap: kind def/def
+  type: ALPHA-EQUAL (1161 vs 1161 chars; binderInfo equal)
+  value: ALPHA-EQUAL (3873 vs 3873 chars; binderInfo equal)
+OAI.Problem358.mapL2Dist: kind def/def
+  type: ALPHA-EQUAL (680 vs 680 chars; binderInfo equal)
+  value: ALPHA-EQUAL (3120 vs 3120 chars; binderInfo equal)
+OAI.Problem358.cube: kind def/def
+  type: ALPHA-EQUAL (49 vs 49 chars; binderInfo equal)
+  value: ALPHA-EQUAL (760 vs 760 chars; binderInfo equal)
+OAI.Problem358.HasExactlyThreeAtoms: kind def/def
+  type: ALPHA-EQUAL (600 vs 600 chars; binderInfo equal)
+  value: ALPHA-EQUAL (7503 vs 7503 chars; binderInfo equal)
+OAI.Problem358.one_third_stability: kind thm/thm
+  type: ALPHA-EQUAL (7112 vs 7112 chars; binderInfo equal)
+  value: DIFFERENT (8241 vs 62009 chars; binderInfo differ)
+    challenge: ...(((C(sorryAx{z}) Π[C(Lean.Name{})]Π[C(Nat{})]Π[(C(Set{z}) (C(OAI.Problem358.E{}) #0))]Π[(C(Set{z}) (C(OAI.Problem358.E{}) #1))]Π[((((C(LE.le{z}) C(Nat{})) C(instLENat{})) (((C(OfNat.ofNat{z}) C(Nat{})
+    solution : ...λ[C(Nat{})]λ[(C(Set{z}) (C(OAI.Problem358.E{}) #0))]λ[(C(Set{z}) (C(OAI.Problem358.E{}) #1))]λ[((((C(LE.le{z}) C(Nat{})) C(instLENat{})) (((C(OfNat.ofNat{z}) C(Nat{})) L("2")) (C(instOfNatNat{}) L("2"
+OAI.Problem358.one_third_exponent_is_sharp: kind thm/thm
+  type: ALPHA-EQUAL (6332 vs 6332 chars; binderInfo equal)
+  value: DIFFERENT (7465 vs 61 chars; binderInfo differ)
+    challenge: ...(((C(sorryAx{z}) Π[C(Lean.Name{})]Π[C(Nat{})]Π[((((C(LE.le{z}) C(Nat{})) C(instLENat{})) (((C(OfNat.ofNat{z}) C(Nat{})) L("2")) (C(instOfNatNat{}) L("2")))) #0)]Π[C(Real{})]Π[((((C(LT.lt{z}) C(Real{})
+    solution : ...C(OAI.Problem358.one_third_exponent_is_sharp_via_rectangle{})

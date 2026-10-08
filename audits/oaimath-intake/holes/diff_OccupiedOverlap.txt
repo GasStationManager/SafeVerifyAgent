@@ -1,0 +1,27 @@
+OAI.CubeShuffle.UnitaryFinite.IsUnitary: kind def/def
+  type: ALPHA-EQUAL (801 vs 801 chars; binderInfo equal)
+  value: ALPHA-EQUAL (23388 vs 23388 chars; binderInfo equal)
+OAI.CubeShuffle.Specht.hilbertSpace: kind def/def
+  type: ALPHA-EQUAL (1922 vs 1922 chars; binderInfo equal)
+  value: ALPHA-EQUAL (5572 vs 5572 chars; binderInfo equal)
+OAI.CubeShuffle.Specht.unitaryRepresentation: kind def/def
+  type: ALPHA-EQUAL (10749 vs 10749 chars; binderInfo equal)
+  value: ALPHA-EQUAL (185739 vs 185739 chars; binderInfo equal)
+OAI.CubeShuffle.Specht.relabelledUnitary: kind def/def
+  type: ALPHA-EQUAL (10704 vs 10704 chars; binderInfo equal)
+  value: ALPHA-EQUAL (95957 vs 95957 chars; binderInfo equal)
+OAI.RowColumn.OccupiedOverlapEndpoint: kind def/def
+  type: ALPHA-EQUAL (4 vs 4 chars; binderInfo equal)
+  value: DIFFERENT (355638 vs 355640 chars; binderInfo equal)
+    challenge: ...) (((C(OfNat.ofNat{z}) C(Real{})) L("2")) ((((C(instOfNatAtLeastTwo{z}) C(Real{})) L("2")) C(Real.instNatCast{})) C(OAI.CubeShuffle.Specht.hilbertEquiv._proof_1{}))))))) (((C(Nat.cast{z}) C(Real{})) C(Real.instNatCast{})) ((((((C(HSub.hSub{z,z,z}) C(Nat{})) C(Nat{})) C(Nat{})) ((C(instHSub{z}) C(Nat{})) C(instSubNat{})
+    solution : ...) (((C(OfNat.ofNat{z}) C(Real{})) L("2")) ((((C(instOfNatAtLeastTwo{z}) C(Real{})) L("2")) C(Real.instNatCast{})) C(OAI.RowColumn.OccupiedOverlapEndpoint._proof_4{}))))))) (((C(Nat.cast{z}) C(Real{})) C(Real.instNatCast{})) ((((((C(HSub.hSub{z,z,z}) C(Nat{})) C(Nat{})) C(Nat{})) ((C(instHSub{z}) C(Nat{})) C(instSubNat{
+OAI.RowColumn.occupied_overlap_endpoint: kind thm/thm
+  type: ALPHA-EQUAL (42 vs 42 chars; binderInfo equal)
+  value: DIFFERENT (1187 vs 5131927 chars; binderInfo differ)
+    challenge: ...(((C(sorryAx{z}) Π[C(Lean.Name{})]C(OAI.RowColumn.OccupiedOverlapEndpoint{})) C(Bool.false{})) ((C(Lean.Name.num{}) ((C(Lean.Name.str{}) ((C(Lean.Name.str{}) ((C(Lean.Name.num{}) ((C(Lean.Name.str{}) ((C
+    solution : ...((((C(Exists.intro{s(z)}) C(Real{})) λ[C(Real{})]((C(And{}) ((((C(LT.lt{z}) C(Real{})) C(Real.instLT{})) (((C(OfNat.ofNat{z}) C(Real{})) L("0")) ((C(Zero.toOfNat0{z}) C(Real{})) C(Real.instZero{})))) #0)
+OAI.RowColumn.occupied_overlap: kind thm/thm
+  type: ALPHA-EQUAL (42 vs 42 chars; binderInfo equal)
+  value: DIFFERENT (1187 vs 44 chars; binderInfo differ)
+    challenge: ...(((C(sorryAx{z}) Π[C(Lean.Name{})]C(OAI.RowColumn.OccupiedOverlapEndpoint{})) C(Bool.false{})) ((C(Lean.Name.num{}) ((C(Lean.Name.str{}) ((C(Lean.Name.str{}) ((C(Lean.Name.num{}) ((C(Lean.Name.str{}) 
+    solution : ...C(OAI.RowColumn.occupied_overlap_endpoint{})

@@ -1,0 +1,32 @@
+OAI.KServer.Configuration: kind def/def
+  type: ALPHA-EQUAL (32 vs 32 chars; binderInfo equal)
+  value: ALPHA-EQUAL (41 vs 41 chars; binderInfo equal)
+OAI.KServer.LabelDistribution: kind def/def
+  type: ALPHA-EQUAL (18 vs 18 chars; binderInfo equal)
+  value: ALPHA-EQUAL (546 vs 546 chars; binderInfo equal)
+OAI.KServer.Policy: kind def/def
+  type: ALPHA-EQUAL (32 vs 32 chars; binderInfo equal)
+  value: ALPHA-EQUAL (120 vs 120 chars; binderInfo equal)
+OAI.KServer.serve: kind def/def
+  type: ALPHA-EQUAL (133 vs 133 chars; binderInfo equal)
+  value: ALPHA-EQUAL (204 vs 204 chars; binderInfo equal)
+OAI.KServer.serviceCost: kind def/def
+  type: ALPHA-EQUAL (184 vs 184 chars; binderInfo equal)
+  value: ALPHA-EQUAL (410 vs 410 chars; binderInfo equal)
+OAI.KServer.pathProbability: kind def/def
+  type: ALPHA-EQUAL (203 vs 203 chars; binderInfo equal)
+  value: ALPHA-EQUAL (440 vs 440 chars; binderInfo equal)
+OAI.KServer.expectedCost: kind def/def
+  type: ALPHA-EQUAL (164 vs 164 chars; binderInfo equal)
+  value: ALPHA-EQUAL (1006 vs 1006 chars; binderInfo equal)
+OAI.KServer.optimalCost: kind def/def
+  type: ALPHA-EQUAL (125 vs 125 chars; binderInfo equal)
+  value: ALPHA-EQUAL (321 vs 321 chars; binderInfo equal)
+OAI.KServer.MainStatement: kind def/def
+  type: ALPHA-EQUAL (4 vs 4 chars; binderInfo equal)
+  value: ALPHA-EQUAL (2592 vs 2592 chars; binderInfo equal)
+OAI.KServer.main_theorem: kind thm/thm
+  type: ALPHA-EQUAL (33 vs 33 chars; binderInfo equal)
+  value: DIFFERENT (1158 vs 41 chars; binderInfo differ)
+    challenge: ...(((C(sorryAx{z}) Π[C(Lean.Name{})]C(OAI.KServer.MainStatement{p:6})) C(Bool.false{})) ((C(Lean.Name.num{}) ((C(Lean.Name.str{}) ((C(Lean.Name.str{}) ((C(Lean.Name.num{}) ((C(Lean.Name.str{}) ((C(Lean.
+    solution : ...C(OAI.KServer.fully_quantified_main{p:6})

@@ -92,8 +92,15 @@ to the stability paper).
   type only, playbook lesson 18): Brenier (12 defs), DefocusingNLS (3), ElementaryPositivity
   (1 def, **0** `theorem_names`), EuclideanFiveColor (1), KServer (9), Naimark (7),
   OccupiedOverlap (5), Rokhlin (4), SpinAngle (3). A comparator "okay" on these covers the
-  scaffolding, not the hole bodies; the elaborated-term diff done for GapCVP was not done
-  here. ElementaryPositivity with no theorem at all is a config that checks nothing.
+  scaffolding, not the hole bodies. DONE 2026-10-08 (`oaimath-intake/holes/RESULTS.md`): each
+  pair built, both sides exported, every hole's type and value compared as de Bruijn terms up
+  to alpha-equivalence. Eight of nine close with no body difference (OccupiedOverlap differs
+  in one auxiliary proof constant of the same `Nat.AtLeastTwo` type — proof irrelevance);
+  DefocusingNLS (2,415-module closure, not built) matches textually in its data components,
+  its holes being subtype elements whose membership proofs the challenge leaves as `sorry`.
+  ElementaryPositivity's hole IS its statement (inhabit a Σ-type), so the config checks the
+  hole's type, which is the content; its binder info differs between the two sides, which
+  the comparator cannot see. No statement-level discrepancy.
 - **Coverage record.** `formalization.yaml` `main_results` lists 178 configs; 227 challenge
   configs (with scope notes) are unreferenced there. The yaml's own `scope` is "Partial
   progress."; nothing says which 178 were selected or why.
@@ -175,8 +182,8 @@ behaviour, reproduced on v4.34.1 oleans.
 
 ## 5. What this look does not say
 
-401 of 405 statements unread; no route walk on any result; no elaborated-term diff of the
-nine definition-hole configs; the 23 dependency patches unread (they cannot touch a
+401 of 405 statements unread; no route walk on any result; DefocusingNLS's three holes
+compared only textually; the 23 dependency patches unread (they cannot touch a
 statement, §3.2, but they are compiled into every solution that imports the patched
 library); no whole-corpus replay (the cost of 1.35 M kernel decisions through an external
 checker is unmeasured); con-leche's own four accept-more-than-Lean cases

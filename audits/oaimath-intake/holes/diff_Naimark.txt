@@ -1,0 +1,26 @@
+OAI.NaimarkZFC.IsSimpleCStar: kind def/def
+  type: ALPHA-EQUAL (44 vs 44 chars; binderInfo equal)
+  value: ALPHA-EQUAL (2235 vs 2235 chars; binderInfo equal)
+OAI.NaimarkZFC.IsState: kind def/def
+  type: ALPHA-EQUAL (1597 vs 1597 chars; binderInfo equal)
+  value: ALPHA-EQUAL (13365 vs 13365 chars; binderInfo equal)
+OAI.NaimarkZFC.IsFaithfulTracialState: kind def/def
+  type: ALPHA-EQUAL (1597 vs 1597 chars; binderInfo equal)
+  value: ALPHA-EQUAL (13198 vs 13198 chars; binderInfo equal)
+OAI.NaimarkZFC.IsIrreducible: kind def/def
+  type: ALPHA-EQUAL (16813 vs 16813 chars; binderInfo equal)
+  value: ALPHA-EQUAL (97397 vs 97397 chars; binderInfo equal)
+OAI.NaimarkZFC.UnitarilyEquivalent: kind def/def
+  type: ALPHA-EQUAL (33616 vs 33616 chars; binderInfo equal)
+  value: ALPHA-EQUAL (87880 vs 87880 chars; binderInfo equal)
+OAI.NaimarkZFC.HasUniqueIrreducibleRepresentation: kind def/def
+  type: ALPHA-EQUAL (44 vs 44 chars; binderInfo equal)
+  value: ALPHA-EQUAL (23296 vs 23296 chars; binderInfo equal)
+OAI.NaimarkZFC.IsIsomorphicToCompacts: kind def/def
+  type: ALPHA-EQUAL (437 vs 437 chars; binderInfo equal)
+  value: ALPHA-EQUAL (78674 vs 78674 chars; binderInfo equal)
+OAI.NaimarkZFC.main: kind thm/thm
+  type: ALPHA-EQUAL (4646 vs 4646 chars; binderInfo equal)
+  value: DIFFERENT (5771 vs 3636947 chars; binderInfo differ)
+    challenge: ...(((C(sorryAx{z}) Π[C(Lean.Name{})]((C(Exists{s(s(p:2))}) S(s(p:2))) λ[S(s(p:2))]((C(Exists{s(p:2)}) (C(CStarAlgebra{p:2}) #0)) λ[(C(CStarAlgebra{p:2}) #0)]((C(And{}) ((C(OAI.NaimarkZFC.IsSimpleCStar{p:2}
+    solution : ...(((((C(Exists.casesOn{s(z)}) Π[((C(Prod{z,z}) (C(Ordinal.ToType{z}) (C(Cardinal.ord{z}) C(OAI.NaimarkZFC.constructionCardinal{z})))) (C(Ordinal.ToType{z}) (C(Cardinal.ord{z}) C(OAI.NaimarkZFC.constructio
