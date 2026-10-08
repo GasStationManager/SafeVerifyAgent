@@ -157,6 +157,18 @@ line, and record which mode ran.
     axiom scan of the export beside it, classify a panic as "no verdict", and
     never let a decline count as a vote either way.
 
+21. **Replay cost is the number of kernel decisions, not the export's bytes.**
+    One headline theorem's Mathlib closure exports to 0.6–1.9 GB of NDJSON
+    whatever the theorem; what sets the checker's clock is `decide +kernel`
+    on big operands. A 1.85 GB export with 441 six-hundred-digit literals
+    took con-leche 6 min; a 610 MB export with 2,297 kernel decisions took it
+    62 min on two workers and leanchecker did not finish in 101. Budget per
+    theorem from its `decide +kernel` count, run con-leche with `--jobs`, and
+    build heavy closures with `LEAN_NUM_THREADS` capped — a four-way `lake
+    build` of a file family at 4–7 GB RSS each is killed by a 16 GB cgroup
+    and the exit code 137 looks like an artifact failure until `dmesg` is
+    read. Lake 4.34 has no jobs flag of its own.
+
 ## 4. Reporting
 
 14. **An escalation is not an accusation** and is recorded with its trace
