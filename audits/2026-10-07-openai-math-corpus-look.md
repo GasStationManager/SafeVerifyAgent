@@ -1,6 +1,6 @@
 # openai/math `lean/` — corpus look: statement rung on four challenges, trust surface, big numbers, checker replay
 
-Status: **in progress 2026-10-07** (statement rung and scans done; §4 replay pending) at the scope below. This is a LOOK at a 405-statement corpus,
+Status: **concluded 2026-10-08** at the scope below. This is a LOOK at a 405-statement corpus,
 not an audit of any one result: four challenge statements paired against their papers, a
 corpus-wide trust-surface and metaprogramming scan, a big-number and `decide +kernel`
 inventory, and an export-and-replay of the built headline theorems through the four
@@ -23,9 +23,11 @@ The trust surface is as clean as any corpus scanned so far: no `native_decide`, 
 `ofReduceBool`, `implemented_by`, `extern`, `unsafe`, `sorry`, `set_option`, `simproc`,
 `addDecl` or `#eval` anywhere in 25.9 M lines; one real `axiom` (in a challenge file, §3.3).
 All 405 challenge files import only `Mathlib`, so no statement depends on a patched
-third-party library. The headline theorems built here replay under leanchecker, con-leche
-(`--verified`), con-ron and nanoda — see §4 for the table, including the 634-digit
-literals.
+third-party library. The four headline theorems built here are ACCEPTED by con-leche (`--verified`) and con-ron,
+and three of the four by leanchecker and nanoda as well (the fourth, LaughlinGap, exceeded
+leanchecker's 101-minute budget and nanoda was not run) — §4, including the 634-digit
+literals. So the answer to "would con-leche behave differently here" is measured: no
+decline anywhere, at a cost set by the kernel-decision count, not the export size.
 
 Two things to keep in view, neither a defect: the docs notes formalise a SUBSET of each
 paper's claims and say so (§3.1), and 227 of the 405 challenges are not listed in the yaml's
@@ -168,7 +170,7 @@ behaviour, reproduced on v4.34.1 oleans.
 | `OAI.FourRow.robust_permanent` | 80.9 MB, 1,526,030 lines, 35 s | rc 0, 17 s | **accepted** 16,819 decls, 15 s | accepted 16,819, 20 s | rc 0, 4 s |
 | `OAI.Problem160.properColoring_seven` | 81.3 MB, 1,528,020 lines, 25 s | rc 0, 18 s | **accepted** 17,456 decls, 19 s | accepted 17,456, 25 s | rc 0, 7 s |
 | `OAI.DimensionTen.main_pair` (634-digit literals) | 1.85 GB, 35,164,592 lines, 5 m 07 s | rc 0, 15 m 30 s | **accepted** 78,634 decls, 5 m 57 s | accepted 78,634, 6 m 59 s | rc 0, 3 m 27 s |
-| `OAI.LaughlinGap.thm_main` (2,297 `decide +kernel`) | 610 MB, 11,405,089 lines | NOT FINISHED in 101 min (stopped at the task budget) | **accepted** 76,294 decls, 62 m 36 s with `--jobs=2` (check 61.9 min, parse 10 s, install 32 s) | LG_RON | unmeasured (budget) |
+| `OAI.LaughlinGap.thm_main` (2,297 `decide +kernel`) | 610 MB, 11,405,089 lines | NOT FINISHED in 101 min (stopped at the task budget) | **accepted** 76,294 decls, 62 m 36 s with `--jobs=2` (check 61.9 min, parse 10 s, install 32 s) | accepted 76,294, 77 m 36 s with `--jobs=2` | unmeasured (budget) |
 
 
 ## 5. What this look does not say
