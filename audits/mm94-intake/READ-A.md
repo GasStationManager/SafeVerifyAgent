@@ -97,7 +97,7 @@ in the legacy model and transported by `Compatibility.lean`.
     `AuxiliarySeparation/Arithmetic/Exponent.lean:194` `omega_le_exactRankExponent` by
     `le_csInf` over the set. Paper (2.2) + §5 final paragraph.
 13. **ν ≤ 9/4** `CharacterRounding.lean:111` from `detect` (Lemma 2.2) and `bound`
-    (λ(T_d) ≤ d^{9/4}); discharged in `RankBound.lean:11–20` by `exists_detecting_character`
+    (λ(T_d) ≤ d^{9/4}); discharged in `RankBound.lean:18–25` by `exists_detecting_character`
     and `χ.value_matrixMultiplication` + `exponent_sum_le_nine_quarters` (other readers).
 14. **Headline** `AuxiliarySeparation/Main.lean:21` `matrix_multiplication_cost_le` (explicit
     ε–C–n–P form, from `Exponent.lean:209`), `:28` `omega_le_nine_quarters`; `Main.lean:14`
