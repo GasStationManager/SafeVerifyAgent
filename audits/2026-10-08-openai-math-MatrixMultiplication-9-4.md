@@ -229,25 +229,9 @@ It does not say: that the algorithm is explicit (it is not — the decomposition
 classically, as in the paper, and no competitive finite size is given); anything about the two
 companion theorems; or anything a second model family would say.
 
-Postscript (same day, outside the audit): `mm94-intake/primal/PRIMAL.md` argues that the
-paper's growth lemma is a linear program in the logarithms of character values, and that its
-dual solution IS an explicit primal construction from the paper's own degenerations, giving
-ω ≤ 3·log(2a−1)/log D*(a) for every block size a. That is a proposal with LP evidence, not a
-reviewed result; see its §6.
-
-### Postscript 2 (2026-10-09): the a₀ = 2 primal chain, formalised
-
-The construction of `mm94-intake/primal/PRIMAL.md` §4 is now a Lean development on top of the
-artifact (`mm94-intake/primal/lean/`, five files, added under `lean/Audit/Primal/` of the
-checkout; no artifact file modified). `two_cat_degeneration` states the catalytic degeneration
-`⟨5^258⟩ ⊗ Cat ⊗ S(2,2)^{15N} ⊗ T_{2^{68N}} ⇝ Cat ⊗ T_{B_N}` in the artifact's tensor-class
-semiring, with the artifact's own `DeterminantFiltration.degeneration`, `Sector.restriction`
-and `separationPolynomial` as the maps (the last turned into a degree-tracked
-`PolynomialRestrictionDegeneration` by shifting its integer weights), and `exponent_le_logb`
-turns it into `exactRankExponent ≤ log_{B_N}(rank L_N)` for every N. The closed-form limit
-`exactRankExponent ≤ 90 log 3 / (β − 68 log 2)` (≈ 2.7375, Schönhage bootstrap on the matrix
-factor plus the artifact's multinomial entropy bounds) is `exactRankExponent_le_primal_two`.
-All of it checks with `[propext, Classical.choice, Quot.sound]` (`mm94-intake/primal/AXIOMS.txt`;
-status table in `mm94-intake/primal/PLAN-LEAN.md`). This does not change the audit's verdict and improves on
-nothing in the paper; it establishes that the paper's a₀ = 2 bound has an explicit primal
-witness inside its own formal development.
+Postscript (2026-10-09, outside the audit): the follow-up research on this paper, an LP-dual reading
+of the growth lemma as an explicit construction, its a₀ = 2 instance formalised on top of the
+artifact (standard axioms, no artifact file modified), an independent review, and the plans that
+came out of it, lives in ReadingGroup: `papers/openai-math-matrix-multiplication-nine-fourths/`,
+`brainstorms/mm94-*.md` and `experiments/mm94-primal-lean/`. None of it changes this audit's
+verdict.
