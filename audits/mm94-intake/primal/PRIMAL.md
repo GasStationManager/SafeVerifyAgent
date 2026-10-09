@@ -169,3 +169,28 @@ in n for fixed N) into a rank decomposition. No choice is made anywhere.
    tensor, the sector weights); a second theorem turning it into an explicit border-rank
    bound on T_{B_N^n} is the Schönhage/Bini step. Independent review by a different model
    family of §2's three facts and of §4's bookkeeping is the cheap first step.
+
+## 7. Corrections and additions (2026-10-09, after an independent review)
+
+An independent review (ReadingGroup, `brainstorms/mm94-primal-review-and-general-certificates.md`)
+found three errors in the exposition and supplied the missing general argument. Nothing in §4's
+construction or in the Lean development changes.
+
+1. §1's sentence "hence R̃(S(a,a)) ≥ a^8" is false (R̃ ≤ R ≤ (2a−1)^6). The correct chain is, per
+   character, 8t·log a ≤ log λ(S(a,a)) ≤ 6 log(2a−1), hence t ≤ 3/4.
+2. §5's "3.7% margin at a = 2 against the quantum functional" evaluated the support functional at
+   the uniform distribution, a lower bound. Its maximum at uniform θ is attained by a distribution
+   with uniform marginals ((1/3,1/6,1/6,1/3) at a = 2; one exists for every a ≤ 30 by LP
+   feasibility), equals the flattening value a⁴(2a−1)², and gives a 16.6% margin at a = 2 growing to
+   5× at a = 30. `spectral_check.py` now reports both numbers.
+3. §6.3's "no explicit coefficient set" stands, but §6's item 3 (certificates exist only numerically
+   for a₀ > 3) is superseded: the dual weights are the expected visit counts of an absorbing Markov
+   chain on the tight rows (E at q* for a ≤ b ≤ 4a−5, F at h = a−1), the profile
+   P*(a,b) = ((a+2b−1)/2)·∏_{m<a}(1+1/(3m)) is feasible for the full system, and so the LP optimum is
+   exactly 6 log D*(a₀) at every a₀ with an exact rational certificate. `chain_certificate.py`
+   computes it row by row (O(a₀²)): a₀ = 2 and 3 reproduce §3's certificates; a₀ = 190 gives 53,865
+   rows in one second with a 186-digit common denominator. The bound ω(a₀) crosses 2.371339 at
+   a₀ = 188 and 2.371177 at a₀ = 190.
+4. The LP improvement direction in any search: adding a valid constraint can only RAISE the minimum
+   v = min L(a₀,a₀), and the bound is 18 log(2a₀−1)/v, so a larger optimum is better; a nonzero dual
+   multiplier is not an improvement criterion.

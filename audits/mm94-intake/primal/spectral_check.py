@@ -2,13 +2,18 @@
 For any character, lambda(S(a,a)) >= lambda(T_{D*^2}) = D*^{2(pX+pY+pZ)}.  Known characters have pX+pY+pZ = 2:
   flattening:  lambda(C(a,b)) = (a, b, a+b-1) ranks -> lambda(S(a,a)) = a^4 (2a-1)^2
   quantum functional F^theta (= support functional, C(a,a) is tight): F^theta(C) = max_P 2^{sum theta_i H(P_i)},
-  and prod over the six leg permutations is prod_pi F^{pi theta}(C).  We use the uniform P on the support as a
-  LOWER bound on F (max over P), so a pass here is a genuine pass.
+  and prod over the six leg permutations is prod_pi F^{pi theta}(C).
+CORRECTION 2026-10-09 (ReadingGroup review): the uniform P on the support is only a LOWER bound on F.  The
+  maximum of H(i)+H(j)+H(i+j) over distributions on the support is 2 log a + log(2a-1), attained because a
+  distribution with uniform marginals on i, j and i+j exists for every a tested (LP feasibility, a <= 30;
+  at a = 2 it is (1/3,1/6,1/6,1/3)).  So F^theta(S(a,a)) at uniform theta equals the flattening value
+  a^4 (2a-1)^2, and the two "known spectral points" below are the same number.  The margin at a = 2 is
+  144/123.5 = 1.166, not the 1.037 the uniform-P lower bound gave.
 Need: value >= D*(a)^4."""
 import math
 from lp_cert import Dstar
 def Hbits(p): return -sum(x*math.log2(x) for x in p if x > 0)
-print(" a   D*^4        flattening   QF(uniform-P, theta=(1/3,1/3,1/3)) ratio_flat ratio_QF")
+print(" a   D*^4        flattening=QF(opt P)  QF(uniform-P lower bound)  ratio_opt  ratio_unif")
 for a in range(2, 31):
     D4 = float(Dstar(a))**4
     flat = a**4 * (2*a-1)**2
