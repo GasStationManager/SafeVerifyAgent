@@ -1,9 +1,17 @@
-# Interim #print axioms (2026-10-09, before the entropy/limit group of Two.lean landed).
-# Command: a copy of Audit/Primal/Two.lean with the lines below appended, compiled with
-#   lake env lean Audit/Primal/AxTwo.lean   (openai/math at adc7f1241, Lean 4.34.1)
+# Final #print axioms (2026-10-09). All five files compile with no `sorry`; the .olean files of
+# Deg, Classes, Separation, Steps were regenerated from the final sources and Two.lean was compiled
+# against them with the lines below appended (openai/math at adc7f1241, Lean 4.34.1, the
+# artifact's Mathlib).  Command: lake env lean Audit/Primal/AxTwo.lean
+'OAI.Primal.Deg.trans' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OAI.Primal.Approx.rank_power' depends on axioms: [propext, Classical.choice, Quot.sound]
 'OAI.Primal.deg_separation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OAI.Primal.degClass_sym6_round' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OAI.Primal.deg_filtration' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OAI.Primal.deg_sector' depends on axioms: [propext, Classical.choice, Quot.sound]
 'OAI.Primal.Estep' depends on axioms: [propext, Classical.choice, Quot.sound]
 'OAI.Primal.Fstep' depends on axioms: [propext, Classical.choice, Quot.sound]
 'OAI.Primal.Two.two_cat_degeneration' depends on axioms: [propext, Classical.choice, Quot.sound]
 'OAI.Primal.exactRankExponent_le_of_catalytic' depends on axioms: [propext, Classical.choice, Quot.sound]
 'OAI.Primal.Two.exponent_le_logb' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OAI.Primal.Two.exponent_mul_beta_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'OAI.Primal.Two.exactRankExponent_le_primal_two' depends on axioms: [propext, Classical.choice, Quot.sound]

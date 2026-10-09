@@ -43,8 +43,8 @@ Dependencies: M1 → M2, M3, M4 → M5. M2 and M3 are independent of each other.
 
 Built and checked on the artifact checkout (`openai/math` at `adc7f1241`, Lean 4.34.1, the
 artifact's own Mathlib), as files added under `lean/Audit/Primal/` (copies in `lean/` here);
-no artifact file is modified. Every statement compiles; proofs were written by six Opus
-workers per file on private copies and merged. `#print axioms` on each headline theorem:
+no artifact file is modified. Every statement compiles; proofs were written by twelve Opus
+workers (two or three per file, on private copies) and merged. `#print axioms` on each headline theorem:
 `[propext, Classical.choice, Quot.sound]` — no `sorryAx`.
 
 | file | lines | content | status |
@@ -53,7 +53,7 @@ workers per file on private copies and merged. `#print axioms` on each headline 
 | `Classes.lean` | 428 | `DegClass`/`ApproxClass` on `TensorClass`; `sym6class`, `S a b`, `dotX`; permutation invariance, product/power/copies, `sym6class_dot`, `S_one`, `S_comm`, `rank_S_le`, monotonicity, `DegClass.sym6` | proved |
 | `Separation.lean` | 260 | Prop 3.1 as a `PolynomialRestrictionDegeneration` of order `2M² − M` (shifted weight maps, identity with `X^c · separationPolynomial` by agreement at all `t ≠ 0`); `deg_separation` | proved |
 | `Steps.lean` | 418 | shared-first sums, word tensors of an exact type, the separated target as a class, the symmetrised separation round; Lemma 4.1 (`deg_filtration`) and Lemma 4.2 (`deg_sector`) as single-leg degenerations; `Estep`, `Fstep` | proved |
-| `Two.lean` | — | `two_cat_degeneration` (the a₀ = 2 certificate as a catalytic degeneration), `exactRankExponent_le_of_catalytic` (Bini + catalyst removal), `exponent_le_logb` (ν ≤ log_{B_m} rank L_m for every m ≥ 1), rank monotonicity, the slack lemma; multinomial entropy bounds and the bootstrap limit `exactRankExponent_le_primal_two` | see below |
+| `Two.lean` | 553 | `two_cat_degeneration` (the a₀ = 2 certificate as a catalytic degeneration), `exactRankExponent_le_of_catalytic` (Bini + catalyst removal), `exponent_le_logb` (ν ≤ log_{B_m} rank L_m for every m ≥ 1), rank monotonicity, the slack lemma; multinomial entropy bounds and the bootstrap limit `exactRankExponent_le_primal_two` | proved |
 
 The two statements that matter, as they stand in `Two.lean` (`N = 210 m`):
 
@@ -68,7 +68,7 @@ theorem exponent_le_logb {m : ℕ} (hm : 1 ≤ m) :
     exactRankExponent ≤ Real.logb (B m) (rank (L m))
 ```
 
-Both check with the standard axioms only (interim `#print axioms` output in `AXIOMS.txt`).
+Both check with the standard axioms only (`#print axioms` output in `AXIOMS.txt`).
 The bootstrap on the `matrixClass 2^(68N)` factor (Schönhage: for every τ > ν there is a
 fixed `u` with `R(n) ≤ (u n)^τ`), the entropy lower bounds on `M₁, M₂, M₃` from the
 artifact's `abs_log_multinomial_sub_entropy_le`, and the limit `m → ∞` give
@@ -79,9 +79,9 @@ theorem exactRankExponent_le_primal_two :
   -- β = 30 log 2 + 40 H(7/10) + 28 H(9/14) + 18 log 3;  numerically 2.7375
 ```
 
-Status of this last theorem: proofs of the three entropy bounds, `log_B_ge`, `beta_sub_pos`,
-`exponent_mul_beta_le` and the final division are IN PROGRESS at the time of this commit; the
-statements compile. This paragraph is replaced when they land.
+All of it is proved: `exactRankExponent_le_primal_two` depends on `[propext, Classical.choice,
+Quot.sound]` only (`AXIOMS.txt`, final section). Numerically the right-hand side is 2.7375
+(β = 83.252, β − 68 log 2 = 36.118, 90 log 3 = 98.875).
 
 ### Rebuilding
 

@@ -244,9 +244,10 @@ checkout; no artifact file modified). `two_cat_degeneration` states the catalyti
 semiring, with the artifact's own `DeterminantFiltration.degeneration`, `Sector.restriction`
 and `separationPolynomial` as the maps (the last turned into a degree-tracked
 `PolynomialRestrictionDegeneration` by shifting its integer weights), and `exponent_le_logb`
-turns it into `exactRankExponent ≤ log_{B_N}(rank L_N)` for every N. Both check with
-`[propext, Classical.choice, Quot.sound]`. Status of the closed-form limit
-`exactRankExponent ≤ 90 log 3 / (β − 68 log 2)` (≈ 2.7375) is in
-`mm94-intake/primal/PLAN-LEAN.md`. This does not change the audit's verdict and improves on
+turns it into `exactRankExponent ≤ log_{B_N}(rank L_N)` for every N. The closed-form limit
+`exactRankExponent ≤ 90 log 3 / (β − 68 log 2)` (≈ 2.7375, Schönhage bootstrap on the matrix
+factor plus the artifact's multinomial entropy bounds) is `exactRankExponent_le_primal_two`.
+All of it checks with `[propext, Classical.choice, Quot.sound]` (`mm94-intake/primal/AXIOMS.txt`;
+status table in `mm94-intake/primal/PLAN-LEAN.md`). This does not change the audit's verdict and improves on
 nothing in the paper; it establishes that the paper's a₀ = 2 bound has an explicit primal
 witness inside its own formal development.

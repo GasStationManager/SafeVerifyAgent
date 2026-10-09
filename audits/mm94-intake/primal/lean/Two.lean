@@ -255,25 +255,133 @@ def Hb (p : ℝ) : ℝ := -(p * Real.log p) - (1 - p) * Real.log (1 - p)
 
 theorem log_M₁_ge {m : ℕ} (hm : 1 ≤ m) :
     (210 * m : ℝ) * Hb (7 / 10) - 3 * (1 + Real.log (210 * m + 1)) ≤ Real.log (M₁ m) := by
-  sorry
+  have h := abs_log_multinomial_sub_entropy_le ![147 * m, 63 * m]
+  have hM : M₁ m = Nat.multinomial Finset.univ ![147 * m, 63 * m] := by
+    unfold M₁
+    convert exactWords_card ![147 * m, 63 * m]
+  have hs : (∑ a, ![147 * m, 63 * m] a) = 210 * m := by
+    simp [Fin.sum_univ_two]; ring
+  have hc : (Fintype.card (Fin 2) : ℝ) = 2 := by simp
+  have hm0 : (m : ℝ) ≠ 0 := by positivity
+  have hH : (finiteEntropy fun a => ((![147 * m, 63 * m] a : ℕ) : ℝ) / ((210 * m : ℕ) : ℝ)) =
+      Hb (7 / 10) := by
+    unfold finiteEntropy
+    rw [Fin.sum_univ_two]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one]
+    have e1 : ((147 * m : ℕ) : ℝ) / ((210 * m : ℕ) : ℝ) = 7 / 10 := by
+      push_cast; field_simp; ring
+    have e2 : ((63 * m : ℕ) : ℝ) / ((210 * m : ℕ) : ℝ) = 3 / 10 := by
+      push_cast; field_simp; ring
+    rw [e1, e2]
+    unfold Hb entropyTerm
+    rw [show (1 : ℝ) - 7 / 10 = 3 / 10 by norm_num]
+    ring
+  rw [hs, hc, hH] at h
+  rw [hM]
+  push_cast at h
+  have h' := (abs_le.mp h).1
+  linarith
 
 theorem log_M₂_ge {m : ℕ} (hm : 1 ≤ m) :
     (210 * m : ℝ) * Hb (9 / 14) - 3 * (1 + Real.log (210 * m + 1)) ≤ Real.log (M₂ m) := by
-  sorry
+  have h := abs_log_multinomial_sub_entropy_le ![135 * m, 75 * m]
+  have hM : M₂ m = Nat.multinomial Finset.univ ![135 * m, 75 * m] := by
+    unfold M₂
+    convert exactWords_card ![135 * m, 75 * m]
+  have hs : (∑ a, ![135 * m, 75 * m] a) = 210 * m := by
+    simp [Fin.sum_univ_two]; ring
+  have hc : (Fintype.card (Fin 2) : ℝ) = 2 := by simp
+  have hm0 : (m : ℝ) ≠ 0 := by positivity
+  have hH : (finiteEntropy fun a => ((![135 * m, 75 * m] a : ℕ) : ℝ) / ((210 * m : ℕ) : ℝ)) =
+      Hb (9 / 14) := by
+    unfold finiteEntropy
+    rw [Fin.sum_univ_two]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one]
+    have e1 : ((135 * m : ℕ) : ℝ) / ((210 * m : ℕ) : ℝ) = 9 / 14 := by
+      push_cast; field_simp; ring
+    have e2 : ((75 * m : ℕ) : ℝ) / ((210 * m : ℕ) : ℝ) = 5 / 14 := by
+      push_cast; field_simp; ring
+    rw [e1, e2]
+    unfold Hb entropyTerm
+    rw [show (1 : ℝ) - 9 / 14 = 5 / 14 by norm_num]
+    ring
+  rw [hs, hc, hH] at h
+  rw [hM]
+  push_cast at h
+  have h' := (abs_le.mp h).1
+  linarith
 
 theorem log_M₃_ge {m : ℕ} (hm : 1 ≤ m) :
     (210 * m : ℝ) * Real.log 3 - 4 * (1 + Real.log (210 * m + 1)) ≤ Real.log (M₃ m) := by
-  sorry
+  have h := abs_log_multinomial_sub_entropy_le ![70 * m, 70 * m, 70 * m]
+  have hM : M₃ m = Nat.multinomial Finset.univ ![70 * m, 70 * m, 70 * m] := by
+    unfold M₃
+    convert exactWords_card ![70 * m, 70 * m, 70 * m]
+  have hs : (∑ a, ![70 * m, 70 * m, 70 * m] a) = 210 * m := by
+    simp [Fin.sum_univ_three]; ring
+  have hc : (Fintype.card (Fin 3) : ℝ) = 3 := by simp
+  have hm0 : (m : ℝ) ≠ 0 := by positivity
+  have hH : (finiteEntropy fun a => ((![70 * m, 70 * m, 70 * m] a : ℕ) : ℝ) / ((210 * m : ℕ) : ℝ)) =
+      Real.log 3 := by
+    have hv : ∀ a, (![70 * m, 70 * m, 70 * m] a) = 70 * m := by
+      intro a; fin_cases a <;> rfl
+    simp only [hv]
+    unfold finiteEntropy
+    rw [Fin.sum_univ_three]
+    have e1 : ((70 * m : ℕ) : ℝ) / ((210 * m : ℕ) : ℝ) = 3⁻¹ := by
+      push_cast; field_simp; ring
+    rw [e1]
+    unfold entropyTerm
+    rw [Real.log_inv]
+    ring
+  rw [hs, hc, hH] at h
+  rw [hM]
+  push_cast at h
+  have h' := (abs_le.mp h).1
+  linarith
 
 /-- The growth rate of `log B_N / N`. -/
 def β : ℝ := 30 * Real.log 2 + 40 * Hb (7 / 10) + 28 * Hb (9 / 14) + 18 * Real.log 3
 
 theorem log_B_ge {m : ℕ} (hm : 1 ≤ m) :
     (210 * m : ℝ) * β - 276 * (1 + Real.log (210 * m + 1)) ≤ Real.log (B m) := by
-  sorry
+  have h1 := log_M₁_ge hm
+  have h2 := log_M₂_ge hm
+  have h3 := log_M₃_ge hm
+  have p1 : (0 : ℝ) < M₁ m := by
+    have : 0 < M₁ m := by unfold M₁; exact Fintype.card_pos_iff.2 (exactWords_nonempty _)
+    exact_mod_cast this
+  have p2 : (0 : ℝ) < M₂ m := by
+    have : 0 < M₂ m := by unfold M₂; exact Fintype.card_pos_iff.2 (exactWords_nonempty _)
+    exact_mod_cast this
+  have p3 : (0 : ℝ) < M₃ m := by
+    have : 0 < M₃ m := by unfold M₃; exact Fintype.card_pos_iff.2 (exactWords_nonempty _)
+    exact_mod_cast this
+  unfold B
+  push_cast
+  rw [Real.log_mul (by positivity) (by positivity), Real.log_mul (by positivity) (by positivity),
+    Real.log_mul (by positivity) (by positivity), Real.log_pow, Real.log_pow, Real.log_pow,
+    Real.log_pow]
+  push_cast
+  unfold β
+  linarith
+
+private theorem Hb_ge_quadratic {p : ℝ} (hp0 : 0 < p) (hp1 : p < 1) : 2 * p * (1 - p) ≤ Hb p := by
+  have hq0 : 0 < 1 - p := sub_pos.mpr hp1
+  have h1 := Real.log_le_sub_one_of_pos hp0
+  have h2 := Real.log_le_sub_one_of_pos hq0
+  unfold Hb
+  nlinarith [mul_le_mul_of_nonneg_left h1 hp0.le, mul_le_mul_of_nonneg_left h2 hq0.le]
 
 theorem beta_sub_pos : 0 < β - 68 * Real.log 2 := by
-  sorry
+  have h1 := Hb_ge_quadratic (p := 7 / 10) (by norm_num) (by norm_num)
+  have h2 := Hb_ge_quadratic (p := 9 / 14) (by norm_num) (by norm_num)
+  have h3 : Real.log 2 ≤ Real.log 3 := Real.log_le_log (by norm_num) (by norm_num)
+  have h4 : Real.log 2 ≤ 1 := by
+    have := Real.log_le_sub_one_of_pos (x := 2) (by norm_num)
+    linarith
+  unfold β
+  linarith
 
 /-! ### The bootstrap -/
 
@@ -326,13 +434,115 @@ theorem exactMatrixRank_le_of_slack {τ : ℝ} (hτ : exactRankExponent < τ) :
 `exponent_le_logb` with the size bounds). -/
 theorem exponent_mul_beta_le {τ : ℝ} (hτ : exactRankExponent < τ) :
     exactRankExponent * β ≤ 90 * Real.log 3 + 68 * τ * Real.log 2 := by
-  sorry
+  set ν := exactRankExponent
+  have hν : (2 : ℝ) ≤ ν := exactRankExponent_lower
+  obtain ⟨u, hu, hslack⟩ := exactMatrixRank_le_of_slack hτ
+  have hu0 : (0 : ℝ) < u := by
+    have : 0 < u := by omega
+    exact_mod_cast this
+  have key : ∀ m : ℕ, 1 ≤ m →
+      ν * β ≤ 90 * Real.log 3 + 68 * τ * Real.log 2 +
+        ((258 * Real.log 5 + τ * Real.log u + 276 * ν) / (210 * m) +
+          276 * ν * (Real.log (210 * m + 1) / (210 * m))) := by
+    intro m hm
+    have hmpos : (0 : ℝ) < 210 * m := by positivity
+    -- (a) the exponent bound at this unit size
+    have hB2 : (2 : ℝ) ≤ (B m : ℝ) := by exact_mod_cast two_le_B hm
+    have hlogB : 0 < Real.log (B m : ℝ) := Real.log_pos (by linarith)
+    have ha : ν * Real.log (B m : ℝ) ≤ Real.log (rank (L m) : ℝ) := by
+      have h := exponent_le_logb hm
+      rw [Real.logb, le_div_iff₀ hlogB] at h
+      exact h
+    have hr : (0 : ℝ) < (rank (L m) : ℝ) := by
+      have hne : rank (L m) ≠ 0 := by
+        intro h0
+        have h0' : Real.log (rank (L m) : ℝ) = 0 := by rw [h0, Nat.cast_zero, Real.log_zero]
+        have hpos : 0 < ν * Real.log (B m : ℝ) := mul_pos (by linarith) hlogB
+        linarith only [h0', hpos, ha]
+      exact_mod_cast Nat.pos_of_ne_zero hne
+    -- (b) the size of the source
+    have hRpos : 0 < exactMatrixRank (2 ^ (68 * (210 * m))) := exactMatrixRank_pos (by positivity)
+    have hR : (0 : ℝ) < (exactMatrixRank (2 ^ (68 * (210 * m))) : ℝ) := by exact_mod_cast hRpos
+    have hb : Real.log (rank (L m) : ℝ) ≤
+        258 * Real.log 5 + (15 * (210 * m) : ℝ) * (6 * Real.log 3) +
+          Real.log (exactMatrixRank (2 ^ (68 * (210 * m))) : ℝ) := by
+      have h' : (rank (L m) : ℝ) ≤ (5 : ℝ) ^ 258 * (729 : ℝ) ^ (15 * (210 * m)) *
+          (exactMatrixRank (2 ^ (68 * (210 * m))) : ℝ) := by exact_mod_cast rank_L_le m
+      have h729 : Real.log 729 = 6 * Real.log 3 := by
+        rw [show (729 : ℝ) = 3 ^ 6 by norm_num, Real.log_pow]
+        push_cast
+        ring
+      calc Real.log (rank (L m) : ℝ)
+          ≤ Real.log ((5 : ℝ) ^ 258 * (729 : ℝ) ^ (15 * (210 * m)) *
+              (exactMatrixRank (2 ^ (68 * (210 * m))) : ℝ)) := Real.log_le_log hr h'
+        _ = 258 * Real.log 5 + (15 * (210 * m) : ℝ) * (6 * Real.log 3) +
+              Real.log (exactMatrixRank (2 ^ (68 * (210 * m))) : ℝ) := by
+          rw [Real.log_mul (by positivity) hR.ne', Real.log_mul (by positivity) (by positivity),
+            Real.log_pow, Real.log_pow, h729]
+          push_cast
+          ring
+    -- (c) the slack bound on the matrix factor
+    have hc : Real.log (exactMatrixRank (2 ^ (68 * (210 * m))) : ℝ) ≤
+        τ * (Real.log u + (68 * (210 * m) : ℝ) * Real.log 2) := by
+      have h := hslack (2 ^ (68 * (210 * m))) Nat.one_le_two_pow
+      have hx : (0 : ℝ) < (u : ℝ) * ((2 ^ (68 * (210 * m)) : ℕ) : ℝ) := by positivity
+      calc Real.log (exactMatrixRank (2 ^ (68 * (210 * m))) : ℝ)
+          ≤ Real.log (((u : ℝ) * ((2 ^ (68 * (210 * m)) : ℕ) : ℝ)) ^ τ) := Real.log_le_log hR h
+        _ = τ * (Real.log u + (68 * (210 * m) : ℝ) * Real.log 2) := by
+          rw [Real.log_rpow hx, Real.log_mul hu0.ne' (by positivity), Nat.cast_pow, Real.log_pow]
+          push_cast
+          ring
+    -- (d) the size of the target
+    have hd := log_B_ge hm
+    have hmul : ν * ((210 * m : ℝ) * β - 276 * (1 + Real.log (210 * m + 1))) ≤
+        ν * Real.log (B m : ℝ) := mul_le_mul_of_nonneg_left hd (by linarith)
+    have hsum : (ν * β - (90 * Real.log 3 + 68 * τ * Real.log 2)) * (210 * m) ≤
+        (258 * Real.log 5 + τ * Real.log u + 276 * ν) + 276 * ν * Real.log (210 * m + 1) := by
+      linarith [hmul, ha, hb, hc]
+    have hdiv : ν * β - (90 * Real.log 3 + 68 * τ * Real.log 2) ≤
+        ((258 * Real.log 5 + τ * Real.log u + 276 * ν) + 276 * ν * Real.log (210 * m + 1)) /
+          (210 * m) := (le_div_iff₀ hmpos).2 hsum
+    have e : (258 * Real.log 5 + τ * Real.log u + 276 * ν) / (210 * m) +
+        276 * ν * (Real.log (210 * m + 1) / (210 * m)) =
+        ((258 * Real.log 5 + τ * Real.log u + 276 * ν) + 276 * ν * Real.log (210 * m + 1)) /
+          (210 * m) := by
+      field_simp
+    linarith
+  -- the error term tends to zero
+  have h1 : Filter.Tendsto (fun m : ℕ => 210 * (m : ℝ)) Filter.atTop Filter.atTop :=
+    tendsto_natCast_atTop_atTop.const_mul_atTop (by norm_num)
+  have h2 : Filter.Tendsto (fun m : ℕ => (258 * Real.log 5 + τ * Real.log u + 276 * ν) /
+      (210 * (m : ℝ))) Filter.atTop (nhds 0) :=
+    tendsto_const_nhds.div_atTop h1
+  have h3 : Filter.Tendsto (fun m : ℕ => Real.log (210 * m + 1) / (210 * (m : ℝ)))
+      Filter.atTop (nhds 0) := by
+    have h4 : Filter.Tendsto (fun m : ℕ => 210 * (m : ℝ) + 1) Filter.atTop Filter.atTop :=
+      Filter.tendsto_atTop_add_const_right _ 1 h1
+    have h5 := (Real.tendsto_pow_log_div_mul_add_atTop 1 (-1) 1 one_ne_zero).comp h4
+    refine h5.congr (fun m => ?_)
+    simp only [Function.comp_apply, pow_one]
+    congr 1
+    ring
+  have h6 := (h2.add (h3.const_mul (276 * ν))).const_add (90 * Real.log 3 + 68 * τ * Real.log 2)
+  rw [mul_zero, add_zero, add_zero] at h6
+  exact ge_of_tendsto h6 (Filter.eventually_atTop.2 ⟨1, key⟩)
 
 /-- The explicit `a₀ = 2` construction bounds the exact-rank exponent by
 `90 log 3 / (β − 68 log 2) ≈ 2.7375`. -/
 theorem exactRankExponent_le_primal_two :
     exactRankExponent ≤ 90 * Real.log 3 / (β - 68 * Real.log 2) := by
-  sorry
+  have hpos := beta_sub_pos
+  have hlog2 : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  rw [le_div_iff₀ hpos]
+  have h : exactRankExponent * β ≤ 90 * Real.log 3 + 68 * exactRankExponent * Real.log 2 := by
+    refine le_of_forall_pos_le_add (fun ε hε => ?_)
+    have hδ : 0 < ε / (68 * Real.log 2) := by positivity
+    have h := exponent_mul_beta_le (τ := exactRankExponent + ε / (68 * Real.log 2)) (by linarith)
+    have e : 68 * (exactRankExponent + ε / (68 * Real.log 2)) * Real.log 2 =
+        68 * exactRankExponent * Real.log 2 + ε := by
+      field_simp
+    linarith
+  linarith
 
 end Two
 
