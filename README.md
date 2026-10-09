@@ -7,13 +7,20 @@ It never proves anything. A claimed proof is a conjunction — sound only
 if every obligation is sound — so it is unsound if *some* obligation is
 unsound, and the job is to find one or run out of ways to look.
 
-> **Status: early, but it runs.** The pipeline has been driven end to end
-> on a matched pair (`examples/`): a Lean specification that drifts by one
-> token, and its honest twin. Both elaborate clean with identical axioms,
-> so no checker separates them — the coherence rung refuted the drifted
-> one and left the control alone. That is n = 1 per arm, same-family, and
-> eleven lines long. No number here has been measured against a public
-> corpus. See [DESIGN.md §10](DESIGN.md#10-status).
+> **Status (October 2026).** Two tracks. The *pipeline* (`drivers/`)
+> runs end to end on the demonstration pair in `examples/`: a
+> specification that drifts by one token and its honest twin, which no
+> checker separates and the coherence rung does. That is n = 1 per arm
+> and eleven lines long; no detection rate has been measured against a
+> public corpus. The *audit* track has pointed the method at eleven
+> real, published artifacts since September 2026 ([`audits/`](audits/)),
+> from a 641k-line Navier–Stokes formalization to OpenAI's ω ≤ 9/4; every
+> verdict so far is "no defect found", each with its escalations and its
+> stated coverage. The method those audits converged on is written down
+> in [`audits/PLAYBOOK.md`](audits/PLAYBOOK.md), and the external
+> checkers it leans on have a measured decline/reject/accept corpus
+> ([`audits/checkers/`](audits/checkers/DECLINE-CORPUS.md)). Component
+> state: [DESIGN.md §10](DESIGN.md#10-status).
 
 ## Why this exists
 
@@ -36,6 +43,20 @@ finding this agent hunts is therefore not "a checker said no". It is
 **two kinds of evidence disagreeing about the same claim**: the ensemble
 says true, and nobody can say why.
 
+## Two intake shapes
+
+| shape | input | what an ACCEPT can mean |
+|---|---|---|
+| **paired** | an independently authored statement (challenge) + a claimed solution | *this proves the thing that was asked*: comparator compares the declarations the statement mentions across both environments, so specification drift is a mechanical finding |
+| **bare** | a claimed proof, alone | *something was proved, with these axioms*; the statement is the author's. With nothing to drift from, "proves the intended theorem" is not a checkable proposition, and on a bare claim no tier may certify the claim as a whole |
+
+Most proofs arrive bare. For those the first job is the **statement
+rung**: a reference written in words *before* reading the Lean, then a
+clause-by-clause pairing against the headline's binders and conclusion
+(`audits/statement.py`). The shape is recorded in every report because
+the same verdict means different things in the two cases
+([DESIGN.md §1.1](DESIGN.md#11-two-intake-shapes-and-they-are-not-worth-the-same)).
+
 ## How it works
 
 ```
@@ -56,68 +77,92 @@ its own coverage a fact about scheduling. See
 [DESIGN.md §6](DESIGN.md#6-flat-decomposition-what-it-costs-and-why-it-is-still-the-right-default)
 for the honest version of that trade.
 
+On an artifact of thousands of theorems the same idea runs at a
+different grain: the planner becomes a **brief** that cuts the
+headline's dependency cone into parts, each part goes to a reader whose
+job is to reconstruct the argument and escalate any discrepancy with the
+paper or with its own mathematics, and the instruments below supply the
+denominators. That is the playbook, and it is how the audits in
+`audits/` were made.
+
 ## The ensemble
 
 | tier | member | independent of Lean? |
 |---|---|---|
 | quick | `lean` elaboration + axiom scan | — |
 | medium | [Lean4Lean](https://github.com/digama0/lean4lean) | **no** — a port of the C++ kernel, by its own README |
-| high | [comparator](https://github.com/leanprover/comparator) | — |
-| high | [nanoda](https://github.com/ammkrn/nanoda_lib) | **yes** — from scratch, in Rust |
+| high | [comparator](https://github.com/leanprover/comparator) | — (statement comparison + axiom budget + kernel replay) |
+| high | [nanoda](https://github.com/ammkrn/nanoda_lib), via comparator's `external_kernels` | **yes** — from scratch, in Rust |
+| high | [con-leche](https://github.com/leanprover/con-leche) `--verified`, on a `lean4export` stream | **yes** — own term representation, in Lean, proven in Lean to accept no proof of `False` |
+| high-trusted | con-leche `--trusted` | yes, but outside the proven theorem; cannot file a `formal` finding |
 
 `leanchecker` is deliberately not a tier: it is Lean's own kernel running
 twice, so counting it as a second opinion is the exact common-mode
-failure this design exists to avoid.
+failure this design exists to avoid. Members are not equally
+independent, so a verdict count is **not** a diversity measure. And every
+adapter parses what its tool *printed*, never how it *exited* —
+comparator exits non-zero when it merely fails to build, `lean4lean`
+exits **zero** while printing "found a problem", and con-leche's
+out-of-memory panic shares exit code 1 with a reject. `error`, `timeout`
+and `declined` are never folded into accept or reject: a member that
+could not run has not voted.
 
-Members are not equally independent, so a verdict count is **not** a
-diversity measure. And every adapter parses what its tool *printed*,
-never how it *exited* — comparator exits non-zero when it merely fails to
-build, and `lean4lean` exits **zero** while printing "found a problem".
-Both bugs once inverted a verdict; both are now pinned by tests.
+What the four external checkers actually do with a non-standard axiom
+was measured rather than assumed ([`audits/checkers/DECLINE-CORPUS.md`](audits/checkers/DECLINE-CORPUS.md),
+sixteen fixtures): `leanchecker --from-export` **accepts** an export whose
+theorem rests on `sorryAx`, a user axiom, or the per-proof axiom
+`native_decide` now adds; nanoda panics on them rather than voting; only
+con-leche and [con-ron](https://github.com/leanprover/con-ron) turn an
+axiom into a verdict, and they *decline* rather than reject. So
+"accepted by leanchecker" is read together with `#print axioms`, always.
+con-ron has no adapter in the package yet; the audits run it by script,
+beside the other three, from the toolchain bundle that ships all four.
 
 ## Install
 
 ```bash
 git clone https://github.com/GasStationManager/SafeVerifyAgent
 cd SafeVerifyAgent
-python3 -m unittest discover -s tests     # 43 pass, 10 skip — no toolchain needed
+python3 -m unittest discover -s tests     # 136 tests, 15 skipped without a toolchain
 ```
 
-For the Lean-gated half — frontend extraction and the quick tier — install
-a toolchain:
+The core has no dependencies. For the Lean-gated half — frontend
+extraction, the quick tier, the statement rung's `#check`/`#print`
+dossier — install a toolchain (the tests are pinned to v4.33.0):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
   | sh -s -- -y --default-toolchain leanprover/lean4:v4.33.0
 export PATH="$HOME/.elan/bin:$PATH"
-python3 -m unittest discover -s tests     # 53 tests
 ```
 
 `lean_available()` probes that Lean actually *runs* rather than that a
 file called `lean` exists — elan installs a shim that resolves a
-toolchain at call time, so the binary can be present and still fail, and
-the difference between a clean fall back to the regex path and a pile of
-confusing errors is worth one subprocess.
+toolchain at call time, so the binary can be present and still fail.
 
-The core has no dependencies. Checkers are discovered by environment
-variable and every one of them degrades to "unavailable" — never to a
-verdict — when its binary is missing:
+Checkers are discovered by environment variable and every one of them
+degrades to "unavailable" — never to a verdict — when its binary is
+missing:
 
 ```bash
 export SVA_LEAN4LEAN=~/lean4lean      # optional, medium tier
 export SVA_COMPARATOR=~/comparator    # optional, high tier
 export SVA_NANODA=~/nanoda_lib        # optional, the independent kernel
+export CON_LECHE=~/con-leche          # optional; binary or repo, also PATH and ~/.local/bin
+export LEAN4EXPORT=~/lean4export      # built at the audited project's toolchain
 python3 -c "from safeverifyagent import checkers; print(checkers.available())"
 ```
 
 ## Use
+
+A single claimed file, through the driver:
 
 ```bash
 # Each worker is its own `claude -p` agent. No API key needed, and the
 # check rung gets real tools — it actually runs Lean.
 python3 drivers/audit.py Claimed.lean --model claude-cli --json
 
-# Any other one-shot CLI, for a cross-family audit (see DESIGN.md §7)
+# Any other one-shot CLI, for a cross-family audit (DESIGN.md §7)
 python3 drivers/audit.py Claimed.lean --model cli:codex:codex:exec:{prompt}
 
 # The Messages API (needs `pip install anthropic`). Text-only, so the
@@ -127,6 +172,26 @@ python3 drivers/audit.py Claimed.lean --model api:claude-opus-5
 # Or dispatch by hand from an interactive Claude Code session
 python3 drivers/claude_code/render_tasks.py Claimed.lean --rung check
 ```
+
+A whole repository, the way the audits were run (playbook §5 has the
+full order; every instrument is stdlib-only and reads source):
+
+```bash
+R=/path/to/lean-project; SEED=Some.headline_theorem
+python3 audits/scan_repo.py $R --md SCAN.md            # holes, trust surface, every metaprogramming site
+python3 audits/scan_kernel_risk.py $R -o out            # what a kernel bug could fake: recursors, numerals, defeq
+python3 audits/cone.py $R --seed $SEED -o CONE.csv      # the dependency cone: the honest denominator
+python3 audits/cone.py route --cone CONE.csv -o ROUTE.md   # the route a reader walks, by depth
+python3 audits/nosupplier.py $R --cone CONE.csv -o NOSUPPLIER.csv  # predicates nobody ever supplies
+python3 audits/junkvalue.py $R                           # divisions by an unconstrained denominator
+python3 audits/statement.py $R Module theorem --reference REF.md -o STATEMENT.md  # the bare-claim statement rung
+python3 audits/ledger.py CONE.csv reports/ -o LEDGER.md  # coverage, in tiers, computed from what readers declared
+```
+
+Checker replay on a built project goes through `lean4export` and the
+`ConLeche` adapter (`safeverifyagent.checkers.ConLeche`, documented in
+[`audits/README.md`](audits/README.md)), with nanoda through comparator
+and con-ron by script.
 
 ### Who may audit what
 
@@ -168,48 +233,33 @@ a bad day:
 
 ## Audits
 
-[`audits/`](audits/) holds reports from pointing this agent at real, published
-artifacts — kept in the repo because a verdict whose method is not reproducible
-is an opinion.
+[`audits/`](audits/) holds the reports from pointing this method at real,
+published artifacts, kept in the repo because a verdict whose method is
+not reproducible is an opinion. Each report states the commit it
+audited, which rungs ran, what it did not cover, which model family read
+it, and how to re-run the mechanical half; plain-language summaries sit
+beside the long ones, and the index with every verdict and escalation is
+[`audits/README.md`](audits/README.md).
 
-There are two, both on the same artifact. The
-[kernel-trust pass](audits/2026-09-16-openai-NavierStokesAndEuler-kernel-trust.md) is the
-interesting one: the artifact had already passed Comparator, so the question was not "does it
-compile" but *which of its proofs could a bug in the Lean kernel turn into a fake*. Twenty-five
-read-only worker threads later: **no defect found**, and the exposure is enumerated rather than
-asserted — the widest closed `Nat` the kernel is asked to evaluate in 641k lines is 61 bits
-(2.0×10¹⁸, one machine word, never multi-limb GMP), the recursive inductives are reduced one iota
-step on symbolic constructors, metaprogramming is *zero*, and the real defeq workload turned out to
-be 1,717 theorems whose proof involves a `rfl`. Two of those numbers were **measured by elaborating
-the artifact's heavy sites against a built Mathlib and counting the literals in the proof terms the
-tactics emitted** — which is also how the pass learned that "never multi-limb" is a fact about the
-*degree* of the certificates Mathlib's oracle found, not about the size of the artifact's constants:
-a degree-2 route through the same literals reaches 10²⁰. The audit corrected its own published
-numbers three times in this cycle alone. It also ships what an audit of a 38,503-theorem artifact
-needs and rarely has: a **denominator** (`audits/cone.py` — 27,725 of those theorems can actually
-reach a headline theorem) and a coverage ledger that says how little of it any one pass has read.
+| date | artifact | what the pass was |
+|---|---|---|
+| 2026-09-15 … 09-20 | [openai/NavierStokesAndEuler](audits/2026-09-18-openai-NavierStokesAndEuler-FINAL.md) (641k lines), four passes | statement, kernel-trust census, final coverage in tiers, paper alignment |
+| 2026-09-28 | [qinz1yang/differential-geometry](audits/2026-09-28-qinz1yang-differential-geometry.md) | bare-claim statement rung; con-leche accepts 50 declarations |
+| 2026-09-30 | [RBarish/FourColorTheorem-Lean4](audits/2026-09-30-RBarish-FourColorTheorem-Lean4-metaprogramming.md) | metaprogramming and kernel-computation audit; certificates through four checkers |
+| 2026-10-04 | [anthropics/formal-math percolation](audits/2026-10-04-anthropics-formal-math-percolation.md), [nasqret/semibase-order6](audits/2026-10-04-nasqret-semibase-order6.md) | statement rungs at scope, trust surface |
+| 2026-10-04 | [openai/ten-proofs GapCVP](audits/2026-10-04-openai-ten-proofs-GapCVP.md) | statement, route walk, no-supplier, four checkers, a mutated-challenge control on comparator |
+| 2026-10-07 | [openai/math corpus look](audits/2026-10-07-openai-math-corpus-look.md) (405 challenges, 25.9M lines) | trust surface, four statements paired, 634-digit kernel literals replayed |
+| 2026-10-08 | [openai/math ω ≤ 9/4](audits/2026-10-08-openai-math-MatrixMultiplication-9-4.md) | six-reader reconstruction of the paper, nine numeric reproductions, authors' comparator config, four checkers |
 
-The first is [openai/NavierStokesAndEuler](audits/2026-09-15-openai-NavierStokesAndEuler.md)
-(the Lean formalization of OpenAI's claimed Navier–Stokes and Euler blowup
-results): **no defect found, three items escalated for expert review.** The
-mechanical rung was clean — zero trust-surface markers across 641,332 lines, and
-the Navier–Stokes challenge is semantically identical to DeepMind's
-independently authored formal-conjectures statement at a pinned commit. The
-escalations are about *provenance*, which is the thing a checker cannot see: the
-Euler challenge was written by the claimant rather than an independent party, so
-a Comparator ACCEPT there means something weaker than it does for Navier–Stokes.
-
-```bash
-python3 audits/scan_repo.py /path/to/lean-project        # trust surface + holes
-python3 audits/scan_kernel_risk.py /path/to/lean-project -o out   # kernel-risk census + ledger
-python3 audits/cone.py /path/to/lean-project --seed Main.theorem  # the honest denominator
-```
-
-`scan_kernel_risk.py` asks a different question from `scan_repo.py`, for a different adversary:
-not "does this artifact reach outside the ordinary elaboration path" but "**which of its proofs
-would a bug in the kernel be able to fake**" — so it censuses recursive inductives and their
-recursors, well-founded recursion, hand-supplied motives, and every place the kernel must
-*evaluate* a numeral or *decide* a definitional equality.
+Every verdict so far is **no defect found**, which is the expected
+outcome on artifacts that already passed a kernel; what the reports add
+is the enumerated exposure (what a kernel bug could fake, what a
+statement quietly weakens, what nobody read), the escalations for an
+expert, and the controls that show the instruments can fail. The
+playbook's lessons are numbered and each names the incident that paid
+for it. The follow-up research that some audits start — on ω ≤ 9/4, an
+LP-dual reading of the paper and its formalisation — lives in the lab's
+ReadingGroup repository, not here.
 
 ## Corpus
 
@@ -217,7 +267,8 @@ Not in this repo — see [corpus/SPEC.md](corpus/SPEC.md) for the contract
 a benchmark must satisfy, and why controls are mandatory rather than
 nice-to-have. A run that flags everything and a run that flags nothing
 both fail the teeth check, and neither may be reported as a detection
-rate.
+rate. `examples/` is a smoke test published with its answers, never a
+benchmark item.
 
 ## License
 
