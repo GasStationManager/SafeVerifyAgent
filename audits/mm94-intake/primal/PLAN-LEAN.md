@@ -38,3 +38,76 @@ Dependencies: M1 → M2, M3, M4 → M5. M2 and M3 are independent of each other.
 `pairingTriple_matrixCoefficients`, `matrixClass_mul`, `matrixClass_pow`, `classOf_product`,
 `classOf_directSum`, `classOf_reindex`, `rank_mul_le`, `exactRankExponent_le_logb`,
 `convolution` rank ≤ a+b−1, `ComplexTypeEntropy` multinomial bounds.
+
+## Status (2026-10-09)
+
+Built and checked on the artifact checkout (`openai/math` at `adc7f1241`, Lean 4.34.1, the
+artifact's own Mathlib), as files added under `lean/Audit/Primal/` (copies in `lean/` here);
+no artifact file is modified. Every statement compiles; proofs were written by six Opus
+workers per file on private copies and merged. `#print axioms` on each headline theorem:
+`[propext, Classical.choice, Quot.sound]` — no `sorryAx`.
+
+| file | lines | content | status |
+|---|---|---|---|
+| `Deg.lean` | 500 | `Deg`/`Approx`; refl, of_restrict, of_pullback, trans, product, power, cyclic, swapYZ; `toApprox`, `rank_power` | proved |
+| `Classes.lean` | 428 | `DegClass`/`ApproxClass` on `TensorClass`; `sym6class`, `S a b`, `dotX`; permutation invariance, product/power/copies, `sym6class_dot`, `S_one`, `S_comm`, `rank_S_le`, monotonicity, `DegClass.sym6` | proved |
+| `Separation.lean` | 260 | Prop 3.1 as a `PolynomialRestrictionDegeneration` of order `2M² − M` (shifted weight maps, identity with `X^c · separationPolynomial` by agreement at all `t ≠ 0`); `deg_separation` | proved |
+| `Steps.lean` | 418 | shared-first sums, word tensors of an exact type, the separated target as a class, the symmetrised separation round; Lemma 4.1 (`deg_filtration`) and Lemma 4.2 (`deg_sector`) as single-leg degenerations; `Estep`, `Fstep` | proved |
+| `Two.lean` | — | `two_cat_degeneration` (the a₀ = 2 certificate as a catalytic degeneration), `exactRankExponent_le_of_catalytic` (Bini + catalyst removal), `exponent_le_logb` (ν ≤ log_{B_m} rank L_m for every m ≥ 1), rank monotonicity, the slack lemma; multinomial entropy bounds and the bootstrap limit `exactRankExponent_le_primal_two` | see below |
+
+The two statements that matter, as they stand in `Two.lean` (`N = 210 m`):
+
+```
+theorem two_cat_degeneration (m : ℕ) :
+    DegClass (Cat m * L m) (Cat m * matrixClass (B m))
+  -- Cat m = ⟨M₁^120 M₂^84 M₃^54⟩ · S 2 3^(14N) · S 2 4^(9N) · S 2 2^(5N)
+  -- L m   = 5^258 · S 2 2^(15N) · matrixClass 2^(68N)
+  -- B m   = 2^(30N) · M₁^40 · M₂^28 · M₃^18,  M₁ = C(N,.7N), M₂ = C(N,9N/14), M₃ = N!/((N/3)!)³
+
+theorem exponent_le_logb {m : ℕ} (hm : 1 ≤ m) :
+    exactRankExponent ≤ Real.logb (B m) (rank (L m))
+```
+
+Both check with the standard axioms only (interim `#print axioms` output in `AXIOMS.txt`).
+The bootstrap on the `matrixClass 2^(68N)` factor (Schönhage: for every τ > ν there is a
+fixed `u` with `R(n) ≤ (u n)^τ`), the entropy lower bounds on `M₁, M₂, M₃` from the
+artifact's `abs_log_multinomial_sub_entropy_le`, and the limit `m → ∞` give
+
+```
+theorem exactRankExponent_le_primal_two :
+    exactRankExponent ≤ 90 * Real.log 3 / (β - 68 * Real.log 2)
+  -- β = 30 log 2 + 40 H(7/10) + 28 H(9/14) + 18 log 3;  numerically 2.7375
+```
+
+Status of this last theorem: proofs of the three entropy bounds, `log_B_ge`, `beta_sub_pos`,
+`exponent_mul_beta_le` and the final division are IN PROGRESS at the time of this commit; the
+statements compile. This paragraph is replaced when they land.
+
+### Rebuilding
+
+```
+cd <openai-math checkout>/lean && export PATH="$HOME/.elan/bin:$PATH"
+mkdir -p Audit/Primal && cp <this dir>/lean/*.lean Audit/Primal/
+for f in Deg Classes Separation Steps; do
+  lake env lean -o .lake/build/lib/lean/Audit/Primal/$f.olean \
+    -i .lake/build/lib/lean/Audit/Primal/$f.ilean Audit/Primal/$f.lean
+done
+lake env lean Audit/Primal/Two.lean      # ~1 min; then #print axioms as in AXIOMS.txt
+```
+
+(`lake env lean` only accepts files under the lake root; imports need the `.olean`s above.)
+
+### What the formalisation does and does not say
+
+- It proves, inside the artifact's own definitions, that the explicit tensor chain of
+  `PRIMAL.md` §4 exists as a degree-tracked degeneration, and that it bounds the artifact's
+  `exactRankExponent` (the exponent of exact rank of `⟨n,n,n⟩`, which the artifact's
+  `Main.lean` relates to ω). The degenerations are the artifact's (`DeterminantFiltration.
+  degeneration`, `Sector.restriction`, `separationPolynomial`); the shifted leg maps of
+  `Separation.lean`, the class-level symmetrisation and the catalyst/Bini/Schönhage
+  bookkeeping are new.
+- It does NOT improve on the paper: 2.7375 is the paper's own a₀ = 2 intermediate bound,
+  made primal. The a₀ → ∞ limit (9/4) is not formalised; each a₀ would be one more LP
+  certificate assembled the same way (`Estep`/`Fstep` are stated for all `a, b, h, counts`).
+- Numeric evaluation of `90 log 3 / (β − 68 log 2)` to a decimal is not formalised beyond
+  `beta_sub_pos` (positivity of the denominator with crude log bounds).
