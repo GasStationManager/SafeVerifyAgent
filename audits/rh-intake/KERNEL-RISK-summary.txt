@@ -1,0 +1,43 @@
+175187 Lean file(s), 17,374,215 lines, 1,066,087 declarations
+  784,092 theorem, 212,819 def, 34,663 lemma, 13,202 abbrev, 8,286 structure, 8,199 instance, 4,662 example, 121 inductive, 43 class
+
+=== KERNEL-RISK MARKERS (comment-stripped) ===
+     metaprog             26  in 22 file(s): ['src/Development/AbelianVarietyTheory/Definitions/GaloisGeometry/NegOnePowBoundaryTermsCancel.lean', 'src/Developm
+     run_cmd              49  in 22 file(s): ['src/BuildAid/D1.lean', 'src/BuildAid/D2.lean']
+     set_option        88139  in 75197 file(s): ['src/CompanionTheory/AutomorphicTheory/BesselWaveGrids/PowFourLeRpowNineHalves.lean', 'src/CompanionTheory/Auto
+  ZERO skipKernelTC          0  in 0 file(s)
+     attribute         52023  in 47734 file(s): ['src/CompanionTheory/AutomorphicTheory/BesselOrbitBounds/BesselMapUniqueness/BesselMapUniqGap.lean', 'src/Compa
+     local_instance    50672  in 46908 file(s): ['src/CompanionTheory/AutomorphicTheory/BesselOrbitBounds/BesselMapUniqueness/BesselMapUniqGap.lean', 'src/Compa
+  ZERO native_decide         0  in 0 file(s)
+  ZERO unsafe                0  in 0 file(s)
+  ZERO extern                0  in 0 file(s)
+  ZERO implemented_by        0  in 0 file(s)
+  ZERO opaque                0  in 0 file(s)
+  ZERO axiom_decl            0  in 0 file(s)
+  ZERO sorry                 0  in 0 file(s)
+     partial_def           2  in 2 file(s): ['src/Formalism/HermitianCurvature/HermitianCurvatureProofs/CutCptCopy.lean', 'src/Formalism/LocalToGlobal/NumberFie
+     inductive           120  in 103 file(s): ['src/CompanionTheory/SpectralGeometry/LocalGlobalProofs/StableLattices/InNOfMem.lean', 'src/Development/AbelianVa
+     deriving             21  in 17 file(s): ['src/Development/AbelianVarietyTheory/Definitions/Divisors/BasePlaceNotMemChiGridBadPlaces.lean', 'src/Development
+     termination_by       20  in 18 file(s): ['src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/NormSubLeMaxOfUltrametricField.lean', 'src/Dev
+     decreasing_by        19  in 19 file(s): ['src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/NormSubLeMaxOfUltrametricField.lean', 'src/Dev
+     wf_fix               30  in 28 file(s): ['src/CompanionTheory/SpectralGeometry/LocalGlobalProofs/ConvexCones/VoronoiFunctionIntegralPositive.lean', 'src/De
+     explicit_rec        716  in 476 file(s): ['src/CompanionTheory/SpectralGeometry/LocalGlobalProofs/StableLattices/MemFiltOfWords.lean', 'src/Development/Abe
+     motive             1264  in 785 file(s): ['src/CompanionTheory/HarishChandraModules/KFiniteAnalyticVectors/AnalyticIntertwiners/LogNormEstimates.lean', 'sr
+     decide             8185  in 2455 file(s): ['src/CompanionTheory/AutomorphicTheory/PieriRules/ThetaBesselIsometries/CayleyExistsAndAny.lean', 'src/Companion
+     nat_prim            524  in 195 file(s): ['src/Development/AbelianVarietyTheory/BlockTheory/CMModuli/CyclotomicRootsOfUnity.lean', 'src/Development/Abelian
+     bignum7           56673  in 52479 file(s): ['src/CompanionTheory/AutomorphicTheory/BesselWaveGrids/PowFourLeRpowNineHalves.lean', 'src/CompanionTheory/Auto
+     bigpow               26  in 6 file(s): ['src/Development/AbelianVarietyTheory/BlockTheory/PoincareCuspForms/WordDerivativeBlocks.lean', 'src/Development/Au
+     choose_fact       13510  in 2879 file(s): ['src/CompanionTheory/AutomorphicTheory/DiscreteGroupWaves/NFCoreC.lean', 'src/CompanionTheory/HarishChandraModul
+
+=== DEFEQ WORKLOAD ===
+     bare_rfl_proof    20029  theorems proved by `rfl` alone
+     closing_rfl       65833  further theorems whose TACTIC block is closed by `rfl`
+  The kernel must decide these by DEFINITIONAL EQUALITY, which is where structure eta,
+  `Fin`/`Matrix.cons` literal indices, and an iota chain at a closed argument would
+  appear. No computation marker sees them. Sorted sites: SITES_bare_rfl_proof.md,
+  SITES_closing_rfl.md -- and the two are NOT interchangeable: a bare `rfl`'s statement
+  displays exactly what the kernel must decide, while a `rfl` closing a block faces a goal
+  `simp`/`rw` already rewrote, so no statement-level screen bounds its depth.
+
+A marker is a place to LOOK, never a verdict: `decide` over `Fin 4` and `decide` over a 40-digit numeral are the same marker.
+

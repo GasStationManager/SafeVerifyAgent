@@ -1,0 +1,28 @@
+# `metaprog` sites (26)
+
+- `src/ReciprocityTheory/ReductiveGroups/ArithmeticGeometry/ExtensionDescent/Theta1.lean:25` — `macro "ones" : tactic => `(tactic| (repeat (first | erw [map_one] | erw [one_zpow] | erw [one_pow] | erw [inv_one] | erw [_root_.mul_one] | erw [_root_.one_mul]`
+- `src/ReciprocityTheory/ReductiveGroups/ArithmeticGeometry/DiscreteValuationRings/ExistsRosatiGen.lean:34` — `macro "secTac" : tactic => `(tactic| (simp [Sum.forall, Fin.forall_fin_succ, Over.w, Over.w_assoc, eSec, Matrix.cons_val_zero, Matrix.cons_val_succ]))`
+- `src/Formalism/EllipticTorsion/EllipticTorsionProofs/Change.lean:66` — `macro "change_aux_intm" : tactic => `(tactic| (repeat (first`
+- `src/Formalism/PeriodIntegrals/UnitaryGroupMassFormula/GaussianUniqueness/MulMApply.lean:12` — `macro "lvo" : tactic => `(tactic| (intro a b c h1 h2; (try dsimp only at h1 h2 ⊢); omega))`
+- `src/Formalism/PeriodIntegrals/UnitaryGroupMassFormula/DensityLemma/PFibreBoundV.lean:175` — `macro "nbt" : tactic => `(tactic| (simp only [unipotentBlockMatrix, Matrix.of_apply]; split_ifs <;>`
+- `src/Formalism/LocalToGlobal/IndefiniteForms/IndefiniteTree/FunctionalLowerBoundOfConditionsNumeric.lean:231` — `macro "pos_tac" : tactic =>`
+- `src/Formalism/LocalToGlobal/IndefiniteForms/IndefiniteTree/FunctionalLowerBoundOfConditionsNumeric.lean:234` — `macro "onele_tac" : tactic =>`
+- `src/Formalism/LocalToGlobal/NumberFieldFamilies/OwnStruct.lean:53` — `elab "kcopy " t:term : tactic => withMainContext do`
+- `src/Formalism/LocalToGlobal/NumberFieldFamilies/OwnStruct.lean:60` — `elab "#kcopy_probe " t:term " : " ty:term : command => Command.runTermElabM fun _ => do`
+- `src/Formalism/LocalToGlobal/IndefiniteReal/HeckeNonvanishing/Imports.lean:5` — `elab "kexactB " e:term : tactic => withMainContext do`
+- `src/Formalism/LocalToGlobal/TorsionIntegrality/TorsionTranslationPowers/NonsingularJetNorms/NonsingularNorm.lean:70` — `macro "integ" : tactic =>`
+- `src/Formalism/HermitianCurvature/HermitianCurvatureProofs/CutCptCopy.lean:87` — `elab "cpt_copy_thms" : command => do`
+- `src/Formalism/HermitianCurvature/HermitianCurvatureProofs/RttUpperRelationsFromDescent.lean:30` — `macro "distrib_module" : tactic =>`
+- `src/Formalism/SharpRestriction/Divisibility/LocalNonemptiness/SubsingletonRankIndicatorIff.lean:276` — `macro "exists_prescribed_local_data" : tactic => `(tactic| (intros; first | trivial | rfl | exact Subsingleton.elim _ _ | simp))`
+- `src/Formalism/SatakeDualWeyl/AdelicIwasawaHecke/FIwasawaC.lean:7` — `macro "fIwasawa_omega" : tactic =>`
+- `src/Development/EtaleCohomology/EtaleSheaves/ChasePf.lean:105` — `macro "meq" : tactic => `(tactic| first`
+- `src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/Cup1CoboundaryMemBoundaries.lean:96` — `macro "fin_order" : tactic =>`
+- `src/Development/AutomorphicSpectrum/Proofs/BlockDecomposition/ShuffleCup1FormulaPositiveDegree.lean:29` — `macro "fin_order'" : tactic =>`
+- `src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/RigidFrameSymmetricRatioSeries.lean:49` — `macro "jet_tac" : tactic => `(tactic| (`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsProperOfFiniteType.lean:30` — `macro "lbt" : tactic => `(tactic| (repeat (first | assumption | apply pull_isLB)))`
+- `src/Development/AbelianVarietyTheory/Definitions/GaloisGeometry/NegOnePowBoundaryTermsCancel.lean:114` — `macro "fin_index_simp" : tactic => `(tactic| (`
+- `src/Development/WeilBound/CoreStatements/PadicHodgeComparison/EtaleCohomologyComparison/CechPairings/FaceMapCompSuccAboveCastSucc.lean:227` — `macro "fin_tac" : tactic => `(tactic| (funext x; first | (apply Fin.ext; simp only [Function.comp_apply, vsA, vpA, Fin.val_succ, Fin.val_castSucc, Fin.val_zero,`
+- `src/Development/WeilBound/CoreStatements/HodgeTatePoints/CbBase.lean:34` — `macro "zz" : tactic => `(tactic| repeat' with_reducible first`
+- `src/Development/WeilBound/CoreStatements/HodgeTatePoints/CbBase.lean:81` — `macro "evs" loc:(Lean.Parser.Tactic.location)? : tactic => `(tactic|`
+- `src/Development/WeilBound/CoreStatements/HodgeTatePoints/CcBase.lean:42` — `macro "ztac" : tactic => `(tactic| repeat' (first`
+- `src/Development/WeilBound/CoreStatements/HodgeTatePoints/CcBase.lean:81` — `macro "evs" " at " h:ident : tactic => `(tactic| simp (disch := ztac) only [FGLaw.add, ev_mul', ev_one, ev_ev, evV_cons,`

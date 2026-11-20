@@ -1,0 +1,28 @@
+[cone] graph built: 32,677,869 name-level edges (946s)
+1,066,087 declarations, 905,410 in the cone of 1 seed(s) (84.9%)
+C1: 14,347,516 name-level edges NOT added because they came only from a generic dot tail (<4 chars or at cast comp le lt map mk mono mp mpr refl symm trans) or a bare tactic word; 403,148 kept because the declaration names the candidate's parent type
+  abbrev     out   1,650
+  abbrev     in   11,552
+  class      out       7
+  class      in       36
+  def        out  46,293
+  def        in  166,526
+  example    out   4,662
+  inductive  out      19
+  inductive  in      102
+  instance   out   7,518
+  instance   in      681
+  lemma      out   3,850
+  lemma      in   30,813
+  structure  out   1,119
+  structure  in    7,167
+  theorem    out  95,559
+  theorem    in  688,533
+
+blind spot: 3,171 out-of-cone declarations carry an implicit-use attribute (@[simp] and friends), so they can still be used without being named. 'Out of cone' is triage, not dead code.
+
+library roots: no lakefile read; 3 orphan file(s) (imported by nothing, not a root); 0 file(s) outside the default build
+  orphan: Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/HypothesesZ''.lean
+  orphan: Development/AutomorphicArithmetic/AutomorphicVarieties/ModularityArgument/ThresholdArguments/DenseThresholdCases/HypothesesZ'.lean
+  orphan: Main.lean
+exit=0

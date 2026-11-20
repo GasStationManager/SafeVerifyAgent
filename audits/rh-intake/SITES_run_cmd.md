@@ -1,0 +1,51 @@
+# `run_cmd` sites (49)
+
+- `src/Formalism/LocalToGlobal/NumberFieldFamilies/OwnStruct.lean:7` — `def kdefeq (a b : Expr) : MetaM Bool := do`
+- `src/Formalism/LocalToGlobal/NumberFieldFamilies/OwnStruct.lean:18` — `partial def copyAt (probe : Bool) (e tgt : Expr) (path : String) (fuel : Nat) : StateT (Array String) MetaM Expr := do`
+- `src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/ExistsBoundAbsLocalLatticeCompletionEntries.lean:12` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.LocalLatticeBound.exists_bound_latLoc`
+- `src/Development/AbelianVarietyTheory/Proofs/DecoratedLatticeProofs/ExistsBoundAbsLocalLatticeCompletionEntries.lean:13` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.LocalLatticeBound.exists_bound_latLoc`
+- `src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/RelIndexTwoBlockParahoricConjTorusDiagElement.lean:22` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.ParahoricConjugateOpen.relIndex_conj_parahoric`
+- `src/Development/AbelianVarietyTheory/Proofs/TwistedOperators/RelIndexTwoBlockParahoricConjTorusDiagElement.lean:23` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.ParahoricConjugateOpen.relIndex_conj_parahoric`
+- `src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsExtTwistedPlaces.lean:60` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.PrimeBelow.exists_below`
+- `src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsExtTwistedPlaces.lean:61` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.PrimeBelow.exists_below`
+- `src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsGIs.lean:82` — `let m ← Lean.Elab.Tactic.getMainGoal`
+- `src/Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/ExistsGIs.lean:83` — `m.withContext do m.assign (← Lean.Meta.getFVarFromUserName `h)`
+- `src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/BasedFlagPairLatticeContainment.lean:131` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.NatSmulMemOfSpan.exists_nat_smul_mem`
+- `src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/BasedFlagPairLatticeContainment.lean:132` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.NatSmulMemOfSpan.exists_nat_smul_mem`
+- `src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/DetMatrixSandwichLinearMap.lean:14` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.DeterminantRealSandwich.det_real_family`
+- `src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/DetMatrixSandwichLinearMap.lean:15` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.DeterminantRealSandwich.det_real_family`
+- `src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/PowLePowRatio.lean:153` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.InnerSumZeroSpan.main`
+- `src/Development/AbelianVarietyTheory/Proofs/FlagMeasures/PowLePowRatio.lean:154` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.InnerSumZeroSpan.main`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/BoundedPowerSeriesEvaluationDivisibility.lean:24` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.SummableSeriesBounds.main`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/BoundedPowerSeriesEvaluationDivisibility.lean:25` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.SummableSeriesBounds.main`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsJetExtensionSquareZero.lean:22` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.SquareLiftLemmas.exists_hom_jet`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/ExistsJetExtensionSquareZero.lean:23` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.SquareLiftLemmas.exists_hom_jet`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/FramesTildeGammaValues.lean:71` — `let g ← Lean.Elab.Tactic.getMainGoal`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/FramesTildeGammaValues.lean:77` — `let ty ← Lean.Meta.whnf (← Lean.Meta.inferType t.appArg!)`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/FramesTildeGammaValues.lean:77` — `let ty ← Lean.Meta.whnf (← Lean.Meta.inferType t.appArg!)`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/FramesTildeGammaValues.lean:79` — `let pf ← Lean.Meta.mkAppM ``Subsingleton.elim #[fi.toExpr, inst]`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/FramesTildeGammaValues.lean:82` — `Lean.Elab.Tactic.replaceMainGoal [g']`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsRootMapMinpolyIffExistsRingHomExtension.lean:10` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.InjectiveAlgebraHomExistence.exists_ringHom_comp_alge`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/IsRootMapMinpolyIffExistsRingHomExtension.lean:11` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.InjectiveAlgebraHomExistence.exists_ringHom_comp_algeb`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/LocalizationPreservesRingPullbackSquare.lean:38` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.QuotientMapComposition.main`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/LocalizationPreservesRingPullbackSquare.lean:39` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.QuotientMapComposition.main`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/LocalizationPreservesRingPullbackSquare.lean:61` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.QuotientMapComposition.main`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/LocalizationPreservesRingPullbackSquare.lean:62` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.QuotientMapComposition.main`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MatchedDiffsInvariantSubspace.lean:31` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.SpectralLemmaFirst.main`
+- `src/Development/AbelianVarietyTheory/Proofs/DivisorProofs/MatchedDiffsInvariantSubspace.lean:32` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.SpectralLemmaFirst.main`
+- `src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/AdelicLatticeSmulMemOfAgreeAwayFromPlace.lean:70` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.NatMulIsIntegralSatakeParameters.exists_nsmul_mem`
+- `src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/AdelicLatticeSmulMemOfAgreeAwayFromPlace.lean:71` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.NatMulIsIntegralSatakeParameters.exists_nsmul_mem`
+- `src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/UnramifiedWeierstrassCurveTransformCoefficientsW.lean:20` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.WittRootsOfUnity.inWf_of_mem_Kur`
+- `src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/UnramifiedWeierstrassCurveTransformCoefficientsW.lean:21` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.WittRootsOfUnity.inWf_of_mem_Kur`
+- `src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/ValuationRingModel.lean:206` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact @_root_.GlobalTheory.AlgClosedResidueField.isAlgClosed_residueField`
+- `src/Development/AbelianVarietyTheory/Proofs/SatakeParameters/ValuationRingModel.lean:207` — `| (run_tac Lean.Elab.Tactic.liftMetaTactic (fun g => do pure [← g.revertAll])); exact _root_.GlobalTheory.AlgClosedResidueField.isAlgClosed_residueField`
+- `src/BuildAid/D1.lean:2` — `import Lean.Elab.Command`
+- `src/BuildAid/D1.lean:4` — `run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env "CompanionTheory"`
+- `src/BuildAid/D2.lean:2` — `import Lean.Elab.Command`
+- `src/BuildAid/D2.lean:4` — `run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env "CrystallineSemistableComparison"`
+- `src/BuildAid/D3.lean:2` — `import Lean.Elab.Command`
+- `src/BuildAid/D3.lean:4` — `run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env "GlobalTheory"`
+- `src/BuildAid/D4.lean:2` — `import Lean.Elab.Command`
+- `src/BuildAid/D4.lean:4` — `run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env "PositivityTheory"`
+- `src/BuildAid/D5.lean:2` — `import Lean.Elab.Command`
+- `src/BuildAid/D5.lean:4` — `run_cmd Lean.modifyEnv fun env => Lean.LibrarySuggestions.nameDenyListExt.addEntry env "UpperTheory"`
