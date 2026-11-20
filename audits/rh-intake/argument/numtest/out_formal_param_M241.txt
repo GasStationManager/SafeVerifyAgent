@@ -1,0 +1,36 @@
+p=7 (inert):  a : v_p(a![t^a]sigma) | v_p(D^a_z sigma) | v_p(a!)-a/(p^2-1) [claim] | sum floor(a/p^2k)
+      1:     0 |     0 |   -0.02 | 0
+     41:     0 |     0 |    4.15 | 0
+     81:     1 |     1 |   10.31 | 1
+    121:     2 |     2 |   16.48 | 2
+    161:     4 |     4 |   22.65 | 3
+    201:     4 |     4 |   27.81 | 4
+    241:     4 |     4 |   32.98 | 4
+   log_F(t) coefficients: min v_p = -1;  exp_F(z) coefficients: v_p(T_k)+k/(p^2-1) min over k<245 = 0.000
+p=11 (inert):  a : v_p(a![t^a]sigma) | v_p(D^a_z sigma) | v_p(a!)-a/(p^2-1) [claim] | sum floor(a/p^2k)
+      1:     0 |     0 |   -0.01 | 0
+     41:     0 |     0 |    2.66 | 0
+     81:     1 |     1 |    6.33 | 0
+    121:     2 |     2 |   10.99 | 1
+    161:     1 |     1 |   13.66 | 1
+    201:     2 |     2 |   17.32 | 1
+    241:     1 |     1 |   19.99 | 1
+   log_F(t) coefficients: min v_p = -1;  exp_F(z) coefficients: v_p(T_k)+k/(p^2-1) min over k<245 = 0.000
+p=5 (split):  a : v_p(a![t^a]sigma) | v_p(D^a_z sigma) | v_p(a!)-a/(p^2-1) [claim] | sum floor(a/p^2k)
+      1:     0 |     0 |   -0.04 | 0
+     41:     9 |     0 |    7.29 | 1
+     81:    19 |     0 |   15.62 | 3
+    121:    28 |     0 |   22.96 | 4
+    161:    39 |     0 |   32.29 | 6
+    201:    49 |     0 |   40.62 | 8
+    241:    59 |     0 |   47.96 | 9
+   log_F(t) coefficients: min v_p = -3;  exp_F(z) coefficients: v_p(T_k)+k/(p^2-1) min over k<245 = -48.000
+p=13 (split):  a : v_p(a![t^a]sigma) | v_p(D^a_z sigma) | v_p(a!)-a/(p^2-1) [claim] | sum floor(a/p^2k)
+      1:     0 |     0 |   -0.01 | 0
+     41:     4 |     0 |    2.76 | 0
+     81:     7 |     0 |    5.52 | 0
+    121:     9 |     0 |    8.28 | 0
+    161:    12 |     0 |   11.04 | 0
+    201:    16 |     0 |   14.80 | 1
+    241:    19 |     0 |   17.57 | 1
+   log_F(t) coefficients: min v_p = -2;  exp_F(z) coefficients: v_p(T_k)+k/(p^2-1) min over k<245 = -17.595
