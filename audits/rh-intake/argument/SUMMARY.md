@@ -16,10 +16,15 @@ estimates have not been read.**
 
 Take high-order Taylor derivatives of CM theta functions (reduced sigma functions σ* of
 a lattice with Δ = 1, CM by ℚ(√−d)). At a prime p inert in ℚ(√−d) the curve is
-supersingular; in the height-2 Lubin–Tate coordinate σ* is an integral series times a
-Dwork-type exponential, so an a-th derivative is divisible by
-v_p(a!) − a/(p²−1) − (#factors) ≈ γ_p·a, γ_p = p/(p²−1) = Σ_{e odd} p^{−e}. Summed over
-inert primes this is the inert half of Chebyshev's log a! = Σ Λ(n)⌊a/n⌋. At infinity,
+supersingular; in the height-2 Lubin–Tate coordinate the kernel is an integral series
+times Dwork-type Gaussian factors, so a derivative of order a is divisible by
+v_p(a!) − a/(p²−1) − (#Gaussian factors), and the number of Gaussian factors is capped by
+the weight w available in the conjugate variables. That gives γ_p·a − Σ_{e odd}
+min(a/p^e, w), γ_p = p/(p²−1) = Σ_{e odd} p^{−e}. (Checked numerically in the two extreme
+one-variable cases, NODE-NUMTEST: for ℘, no Gaussian factor, the slope is γ_p to three
+decimals at inert p and 0 at split p; for σ itself, all factors present, the gain is only
+a/(p²−1). An earlier version of this paragraph wrongly attributed γ_p·a to σ*.) Summed
+over inert primes the uncapped part is the inert half of Chebyshev's log a! = Σ Λ(n)⌊a/n⌋. At infinity,
 Cauchy estimates in Fock space bound the derivative by ph(a) − a·logΩ, with
 logΩ = γ + log(π/v) − L′/L(1,χ_d) the (averaged) Chowla–Selberg period, which already
 contains the limit of the split half. Caps coming from pluriharmonic column minors turn
@@ -109,7 +114,9 @@ other errors are inside it. √x enters only as the number of lifts.
 - **E11.** §4 row 2, in particular the local lemma giving q_p^{−(k−2r−5)} at non-generic
   places.
 - **E-TWU-1.** The bare claim: m theta-lift steps send every integral weight-a form to
-  periods divisible by Σ_{e odd} max(0, a/p^e − w). Test m = 1, small rank, by computer.
+  periods divisible by Σ_{e odd} max(0, a/p^e − w). One-variable extremes tested and
+  confirmed (NODE-NUMTEST and its addendum); the capped two-variable case
+  (Eisenstein–Kronecker numbers e*_{a,b}, b ≤ w ≪ a) is the test still to run.
 - **E8.** `OneCharU`.
 - **E12.** The colength units question (t in powers of √p, τ in powers of p).
 - **E6 (closed).** `VolumeTheoremX` is weaker than it sounded. **E7 (closed).** No rank
