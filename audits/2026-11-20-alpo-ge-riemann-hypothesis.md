@@ -13,6 +13,9 @@ walk beyond the top three levels; no-supplier and junk-value passes; any reading
 mathematics. The argument was not reconstructed, so nothing here says *why* the
 theorem would be true.
 
+A second pass on metaprogramming, big integers and kernel computation is in
+[`2026-11-20-alpo-ge-riemann-hypothesis-kernel-surface.md`](2026-11-20-alpo-ge-riemann-hypothesis-kernel-surface.md).
+
 Artifact: `https://alpo.ge/lean.tar.gz.part01 … part14`, linked from footnote 1 of
 `https://alpo.ge/remark.pdf`, fetched 2026-11-20. Concatenated archive SHA-256
 `9631b4f020199e580ba86178cb56c6e9b09f690c2369a80dc4334aa93f49c7fc` (per-part sums in

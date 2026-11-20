@@ -1,0 +1,124 @@
+GroundTheory/GlobalFields/ComplexMultiplication/JInvariant.lean:47:  have hb : bernoulli 6 = 1 / 42 := by decide +kernel
+GroundTheory/HeightsAndTheta/Heights/ChowlaSelberg/DeltaQExpansionIntegral.lean:23:  have hb : bernoulli 4 = -1 / 30 := by decide +kernel
+GroundTheory/HeightsAndTheta/Heights/ChowlaSelberg/DeltaQExpansionIntegral.lean:34:  have hb : bernoulli 6 = 1 / 42 := by decide +kernel
+Development/AbelianVarietyTheory/BlockTheory/TwistedDiscreteSeries/LoweredSignatureVanishing.lean:47:example : signCard {((5 : ℚ), true), (3, false), (-4, true)} true = 2 := by decide +kernel
+Development/AbelianVarietyTheory/BlockTheory/TwistedDiscreteSeries/MinorOrderedEntries.lean:359:  order := by decide +kernel
+Development/AbelianVarietyTheory/BlockTheory/TwistedDiscreteSeries/MinorOrderedEntries.lean:362:    exEntries.smallPar = [9, 8, 7, 5, 4, 3, 1, -1, -3, -5, -7] := by decide +kernel
+Development/AutomorphicArithmetic/AutomorphicVarieties/WeakShimuraTheory/CompactIntegralFields/RedList.lean:13:  decide +kernel
+Development/AutomorphicArithmetic/AutomorphicVarieties/WeakShimuraTheory/CompactIntegralFields/RedList.lean:16:  decide +kernel
+Development/AbelianVarietyTheory/Definitions/GlobalTwisting/AuxiliaryPrimeMemAvoidedPrimes.lean:290:        decide +kernel
+Development/AbelianVarietyTheory/Definitions/GlobalTwisting/AuxiliaryPrimeMemAvoidedPrimes.lean:321:  refine ⟨?_, ?_, ?_⟩ <;> decide +kernel
+Development/AbelianVarietyTheory/Definitions/Degenerations/SepticCharacterInjective.lean:557:theorem isCub_cube : IsCub cube := ⟨by decide +kernel, by decide +kernel, by decide +kernel, by decide +kernel⟩
+Development/AbelianVarietyTheory/Definitions/Degenerations/SepticCharacterInjective.lean:559:theorem sym_one : sym 1 = 1 := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Degenerations/SepticCharacterInjective.lean:561:theorem sym_mul : ∀ x y, sym (x * y) * cube x x⁻¹ y⁻¹ = sym x * sym y * cube y y⁻¹ x := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Degenerations/SepticCharacterInjective.lean:565:  decide +kernel
+Development/AbelianVarietyTheory/Definitions/Degenerations/SepticCharacterInjective.lean:606:  MonoidHom.mk' (fun a => (⟨2, 4, by decide, by decide⟩ : (ZMod 7)ˣ) ^ a.toAdd.val) (by decide +kernel)
+Development/AbelianVarietyTheory/Definitions/Degenerations/SepticCharacterInjective.lean:611:  decide +kernel
+Development/AbelianVarietyTheory/Definitions/Degenerations/SepticCharacterInjective.lean:614:  have t : ∀ b : A₃, b ^ 3 = 1 := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/AutomorphicMembership/SecondChernDegreeVanishesTrueSurfaces.lean:385:  exact absurd (Rat.isSquare_ofNat_iff.1 e) (by decide +kernel)⟩
+Development/AbelianVarietyTheory/Definitions/Divisors/KernelNormConstantSpec.lean:357:  have h : ({3 / 2, -1 / 2} : Finset ℚ).card = 2 := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Divisors/KernelNormConstantSpec.lean:363:    descEnum_unique h (f := ![3 / 2, -1 / 2]) (by decide +kernel) (by decide +kernel)]
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1029:    {(53 / 2, true), (37 / 2, false), (21 / 2, true), (3 / 2, true), (1 / 2, true), (-1 / 2, true)} := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1031:theorem example_discrete_parameter : exGrid.parD0 = {(2, true), (1, true), (0, true), (-1, true), (-7, false)} := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1034:    plus {15, 14, 13, 2, 1, 0, -1, -3, -4, -5, -7} := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1037:    (3 / 2, true), (1 / 2, true), (-1 / 2, true)} := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1041:  decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1045:  rw [word_eq (L := [53 / 2, 37 / 2, 21 / 2, 2, 3 / 2, 1, 1 / 2, 0, -1 / 2, -1, -7]) (by decide +kernel)
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1046:    (by decide +kernel)]
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1047:  decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1051:    ¬ StrictInterlace (exGrid.weightX 1) (entries (exGrid.parD 2 2)) := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1056:  decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1059:    ¬ HeInterlace {(5, true), (3, false), (1, false)} {(5 / 2, false), (3 / 2, false)} := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1061:example : highestWeight (n := 2) {5 / 2, -1 / 2} (by decide +kernel) = ![2, 0] := by
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1062:  have h : descEnum (n := 2) {5 / 2, -1 / 2} (by decide +kernel) = ![5 / 2, -1 / 2] :=
+Development/AbelianVarietyTheory/Definitions/Foundations/StrictInterlaceIffDescEnum.lean:1063:    descEnum_unique _ (by decide +kernel) (by decide +kernel)
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:44:  prime_of_cert _ 3 24 5 [2, 571, 599] (by norm_num) (by norm_num) (by norm_num) (by decide +kernel)
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:45:    (by decide +kernel) (by decide +kernel)
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:48:  prime_of_cert _ 13 40 4 [2, 3, 47, 167, 571, 599] (by norm_num) (by norm_num) (by norm_num) (by decide +kernel)
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:49:    (by decide +kernel) (by decide +kernel)
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:52:  prime_of_cert _ 11 32 6 [2, 3, 5, 571, 599] (by norm_num) (by norm_num) (by norm_num) (by decide +kernel)
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:53:    (by decide +kernel) (by decide +kernel)
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:56:  prime_of_cert _ 11 32 4 [2, 3, 5, 17, 571, 599] (by norm_num) (by norm_num) (by norm_num) (by decide +kernel)
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:57:    (by decide +kernel) (by decide +kernel)
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:66:    (by decide +kernel) (by decide +kernel) (by decide +kernel) (by decide +kernel) (by decide +kernel)
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:87:    mem_of_dvd_prod_pow (N := 43) (by norm_num) (by decide +kernel) hl (Nat.dvd_gcd d0 (key _ _ prime_128860109809 h1).2)
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:90:    exact absurd hmem (by decide +kernel)
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:93:      decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:164:    rcases hp with rfl | rfl | rfl | rfl | rfl <;> decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:247:      ⟨level_prime, by decide +kernel⟩]
+Development/AbelianVarietyTheory/Definitions/Foundations/FoundationsPrimeFact.lean:277:    decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/UnitarySixTwoHarishChandraParameter.lean:27:    (∀ j ∈ range 5, (grid4.weightX j).card = grid4.rankX j) := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/UnitarySixTwoHarishChandraParameter.lean:36:    (∀ j ∈ range 4, grid4.parX (j + 1) = liftPlus (-grid4.e (j + 1)) 4 (grid4.parX j)) := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/UnitarySixTwoHarishChandraParameter.lean:42:    ¬ StrictInterlace (entries (grid4.parD 4 4)) (grid4.weightX 4) := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/UnitarySixTwoHarishChandraParameter.lean:46:    (HeInterlace {(5 / 2, false), (-3 / 2, true)} {((z : ℚ), false)} ↔ 3 ≤ z) := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/UnitarySixTwoHarishChandraParameter.lean:50:    (StrictInterlace {5 / 2, -3 / 2} {(z : ℚ)} ↔ -1 ≤ z ∧ z ≤ 2) := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/UnitarySixTwoHarishChandraParameter.lean:54:    ¬ HeInterlace {(1, true), (0, true)} {(0, true)} ∧ ¬ HeInterlace {(1, true), (0, true)} ∅ := by decide +kernel
+Development/AbelianVarietyTheory/Definitions/Foundations/UnitarySixTwoHarishChandraParameter.lean:85:  refine goodPar_iff.2 ⟨⟨by decide +kernel, by decide +kernel, fun x hx => ⟨⌊x - 7 / 2⌋, ?_⟩⟩, by decide +kernel⟩
+Development/AbelianVarietyTheory/Definitions/Foundations/UnitarySixTwoHarishChandraParameter.lean:87:  decide +kernel
+Development/AutomorphicArithmetic/AutomorphicVarieties/GaloisLibrary/FerreroWashingtonIndex/TwSingle.lean:74:example : gc 7 3 1 = 1 := by decide +kernel
+Development/AutomorphicArithmetic/AutomorphicVarieties/FrobeniusSmoothVectors/EpDimb.lean:77:  decide +kernel
+Development/AbelianVarietyTheory/Proofs/HomogeneousIdeals/ExistsVariableChangeEqLatticeCurve.lean:107:    rw [show bernoulli (2 * 3) = 1 / 42 by decide +kernel] at this
+Development/AbelianVarietyTheory/Proofs/HomogeneousIdeals/ExistsPolynomialModularJOfHasQExpansion.lean:65:  rw [EisensteinSeries.E_qExpansion_coeff _ ⟨2, rfl⟩, show bernoulli 4 = -1 / 30 by decide +kernel]
+Development/AbelianVarietyTheory/Proofs/HomogeneousIdeals/ExistsPolynomialModularJOfHasQExpansion.lean:74:  rw [EisensteinSeries.E_qExpansion_coeff _ ⟨3, rfl⟩, show bernoulli 6 = 1 / 42 by decide +kernel]
+Development/AbelianVarietyTheory/Proofs/FoundationProofs/LatticeInvariantsPeriodPairDictionary.lean:135:    rw [show bernoulli (2 * 3) = 1 / 42 by decide +kernel] at this
+Development/AbelianVarietyTheory/Proofs/CharacterTheory/SeparationNumericalIneqCuspidalGL.lean:74:  have e2 : Nat.primeFactors 2 = {2} := by decide +kernel
+Development/AbelianVarietyTheory/Proofs/CharacterTheory/SeparationNumericalIneqCuspidalGL.lean:75:  have e3 : Nat.primeFactors 3 = {3} := by decide +kernel
+Development/AbelianVarietyTheory/Proofs/CharacterTheory/SeparationNumericalIneqCuspidalGL.lean:76:  have e4 : Nat.primeFactors 4 = {2} := by decide +kernel
+Development/AbelianVarietyTheory/Proofs/CharacterTheory/SeparationNumericalIneqCuspidalGL.lean:77:  have e5 : Nat.primeFactors 5 = {5} := by decide +kernel
+Development/AbelianVarietyTheory/Proofs/CharacterTheory/SeparationNumericalIneqCuspidalGL.lean:78:  have e6 : Nat.primeFactors 6 = {2, 3} := by decide +kernel
+Development/AbelianVarietyTheory/Proofs/CharacterTheory/SeparationNumericalIneqCuspidalGL.lean:79:  have e7 : Nat.primeFactors 7 = {7} := by decide +kernel
+Development/AbelianVarietyTheory/Proofs/CharacterTheory/SeparationNumericalIneqCuspidalGL.lean:80:  have e8 : Nat.primeFactors 8 = {2} := by decide +kernel
+Development/AbelianVarietyTheory/Proofs/CharacterTheory/SeparationNumericalIneqCuspidalGL.lean:81:  have e9 : Nat.primeFactors 9 = {3} := by decide +kernel
+Development/AbelianVarietyTheory/Proofs/CharacterTheory/SeparationNumericalIneqCuspidalGL.lean:82:  have e10 : Nat.primeFactors 10 = {2, 5} := by decide +kernel
+Formalism/LocalRingCardinality/SpanPowerMembership.lean:40:      (Or.inr (by show ((751 : ℕ) : ZMod 16) = -1; decide +kernel)),
+Formalism/LocalRingCardinality/SpanPowerMembership.lean:44:      (Or.inr (by show ((991 : ℕ) : ZMod 16) = -1; decide +kernel))⟩
+Formalism/LocalRingCardinality/SpanPowerMembership/Primes.lean:558:  · exact absurd (exc_dvd (by norm_num) h1' h9' h') (by decide +kernel)
+Formalism/LocalRingCardinality/SpanPowerMembership/Primes.lean:560:    exact absurd (exc_dvd (by norm_num) h1 h9 h) (by decide +kernel)
+Formalism/LocalRingCardinality/SpanPowerMembership/Primes.lean:561:  · have hg : Nat.gcd (prodPowSubOne 413718278401) (prodPowSubOne 603339156001) ∣ [2, 3, 5, 7, 11, 13, 37, 571, 599].prod ^ 52 := by decide +kernel
+Formalism/LocalRingCardinality/SpanPowerMembership/Primes.lean:562:    have hm := mem_of_dvd_prod_pow h.1 _ _ (by decide +kernel)
+Formalism/LocalRingCardinality/SpanPowerMembership/Primes.lean:565:        ¬ l ^ (k + 1) ∣ 413718278401 ^ d - 1 ∧ l ^ (4 * k) ≤ 413718278401 ^ d := by decide +kernel
+Formalism/PieriBlockIdeals/PieriColumnMinors/SL2BinomialLattices.lean:303:    decide +kernel
+Formalism/PadicSubsetSums/StableGradedCounts/IRRPrimeRecipSum.lean:117:theorem factorial_ladder_thirteen : ladder 1000000000 (Nat.factorial 13) 13 196 60 100 = true := by decide +kernel
+Formalism/PadicSubsetSums/StableGradedCounts/IRRPrimeRecipSum.lean:118:theorem factorial_ladder_thirty_one : ladder 1000000000 (Nat.factorial 31) 31 1024 60 196 = true := by decide +kernel
+Formalism/PadicSubsetSums/StableGradedCounts/IRRPrimeRecipSum.lean:120:  decide +kernel
+Development/AbelianVarietyTheory/Proofs/IwasawaDecomposition/SumVonMangoldtLeTwoMul.lean:12:  decide +kernel
+Development/AbelianVarietyTheory/Proofs/DivisorProofs/InvFiveLogLeSumInvPrimes.lean:301:theorem table_ok : okAll 100 table 16900 = true := by decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:404:  refine lucas_primality_test toyFirstParameter 5 63 [(2, 10), (3, 4), (571, 2), (599, 3)] (by decide +kernel) ?_ (by decide +kernel) (by decide +kernel)
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:405:    (by decide +kernel) (by decide +kernel)
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:411:  refine lucas_primality_test toySecondParameter 5 74 [(2, 24), (3, 2), (571, 2), (599, 3)] (by decide +kernel) ?_ (by decide +kernel) (by decide +kernel)
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:412:    (by decide +kernel) (by decide +kernel)
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:418:  refine lucas_primality_test nd2T 5 614 [(2, 12), (3, 4), (13, 2), (571, 2), (599, 3), (toyFirstParameter, 4), (toySecondParameter, 4)] (by decide +kernel) ?_
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:419:    (by decide +kernel) (by decide +kernel) (by decide +kernel) (by decide +kernel)
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:432:  refine lucas_primality_test columnDegreeBound 5 616 [(2, 12), (3, 4), (23, 2), (571, 2), (599, 3), (toyFirstParameter, 4), (toySecondParameter, 4)] (by decide +kerne
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:433:    (by decide +kernel) (by decide +kernel) (by decide +kernel) (by decide +kernel)
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:685:theorem example_level_pos : 0 < nd2N := by decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:688:  (condEQ Examples₂.H0).1.trans (cyclotomic_mono_of_dvd (by decide +kernel))
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:692:theorem example_conductor_pos : 0 < Examples₂.H0.condN := by decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:695:  decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:698:  decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:702:  decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:706:  decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:710:  decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:712:theorem columns_num_fact_bis : columnDegreeBound ≡ 1 [MOD Examples₂.H0.condN] := by decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:714:theorem columns_num_fact_ter : columnDegreeBound ≠ toyFirstParameter ∧ columnDegreeBound ≠ toySecondParameter ∧ nd2T ≠ columnDegreeBound := by decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:718:  decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:722:  decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:726:  decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:728:theorem example_first_prime_modEq_one : toyFirstParameter ≡ 1 [MOD Examples₂.H0.condN] := by decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:730:theorem example_second_prime_modEq_one : toySecondParameter ≡ 1 [MOD Examples₂.H0.condN] := by decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:732:theorem num_mT : nd2T ≡ 1 [MOD Examples₂.H0.condN] := by decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:734:theorem example_primes_distinct : toyFirstParameter ≠ toySecondParameter ∧ nd2T ≠ toyFirstParameter ∧ nd2T ≠ toySecondParameter := by decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:783:theorem example_primes_gt_sixteen : 16 < toyFirstParameter ∧ 16 < toySecondParameter := by decide +kernel
+Formalism/LocalToGlobal/Columns/CyclotomicIsCyclotomicExtension.lean:786:  decide +kernel
+Formalism/LocalToGlobal/Columns/ChainInst.lean:1780:  have h4 : toyFirstParameter % 4 = 1 ∧ toySecondParameter % 4 = 1 := by decide +kernel
+Formalism/LocalToGlobal/Columns/ChainInst.lean:1828:  · have h1 : ¬ ((toyFirstParameter : ℕ) : ℤ) ∣ -(((Examples₂.H0.condN : ℕ) : ℤ) * 18) := by decide +kernel
+Formalism/LocalToGlobal/Columns/ChainInst.lean:1829:    have h2 : ¬ ((toySecondParameter : ℕ) : ℤ) ∣ -(((Examples₂.H0.condN : ℕ) : ℤ) * 768) := by decide +kernel
+Formalism/PeriodIntegrals/UnitaryGroupMassFormula/DyadicPrimeIntervals/Run3.lean:6:theorem run3 : run 98304 4388 32768 65536 3030 = true := by decide +kernel
+Formalism/PeriodIntegrals/UnitaryGroupMassFormula/DyadicPrimeIntervals/Run1.lean:6:theorem run1 : run 32768 1612 32766 2 1 = true := by decide +kernel
+Formalism/PeriodIntegrals/UnitaryGroupMassFormula/DyadicPrimeIntervals/Run4.lean:6:theorem run4 : run 131072 5709 32768 98304 4388 = true := by decide +kernel
+Formalism/PeriodIntegrals/UnitaryGroupMassFormula/DyadicPrimeIntervals/Run2.lean:6:theorem run2 : run 65536 3030 32768 32768 1612 = true := by decide +kernel
+ReciprocityTheory/DualLattices/Eisenstein4CoeffBound.lean:17:  · norm_num [E_qExpansion_coeff _ ⟨2, rfl⟩, hn, show bernoulli 4 = -1 / 30 by decide +kernel]
+ReciprocityTheory/DualLattices/Eisenstein4CoeffBound.lean:24:  · norm_num [E_qExpansion_coeff _ ⟨3, rfl⟩, hn, show bernoulli 6 = 1 / 42 by decide +kernel]
+Formalism/PeriodIntegrals/UnitaryGroupMassFormula/ChebyshevPrimeBounds/PsiUpperBoundOfLtThirtyMulSixPow.lean:28:  decide +kernel
+Formalism/PeriodIntegrals/UnitaryGroupMassFormula/ChebyshevPrimeBounds/SmallLoop.lean:24:theorem loop_run : loop 362 131070 2 0 1 = true := by decide +kernel
+Formalism/GL3MeanSquares/HookFormulaTorsion/SquareEqDiagOfQuadraticEven.lean:91:  decide +kernel
