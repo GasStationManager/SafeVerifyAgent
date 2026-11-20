@@ -1,0 +1,411 @@
+# N = 6000, perturb = None, recursion time 53.5s
+
+## Curve A  y^2=4x^3-4x  (CM Z[i]): Delta = 64
+nonzero D^a sigma(0): a in {1, 5, 9, 13, 17, 21, ...}, count 1500
+p= 5 a_p= -2 ordinary      gamma_p=0.20833 1/(p^2-1)=0.04167
+   a<=  100: min[v-gamma_p a]=   -20.21   min[v-a/(p^2-1)]= -4.04 (a=97)   min[v-sum_k floor(a/p^2k)]= -3   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.86   max v=0
+   a<=  250: min[v-gamma_p a]=   -51.88   min[v-a/(p^2-1)]=-10.38 (a=249)   min[v-sum_k floor(a/p^2k)]= -9   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 3.43   max v=0
+   a<=  500: min[v-gamma_p a]=  -103.54   min[v-a/(p^2-1)]=-20.71 (a=497)   min[v-sum_k floor(a/p^2k)]=-19   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 3.86   max v=0
+   a<= 1000: min[v-gamma_p a]=  -207.71   min[v-a/(p^2-1)]=-41.54 (a=997)   min[v-sum_k floor(a/p^2k)]=-40   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 4.29   max v=0
+   a<= 2000: min[v-gamma_p a]=  -416.04   min[v-a/(p^2-1)]=-83.21 (a=1997)   min[v-sum_k floor(a/p^2k)]=-82   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 4.72   max v=0
+   a<= 3000: min[v-gamma_p a]=  -624.38   min[v-a/(p^2-1)]=-124.88 (a=2997)   min[v-sum_k floor(a/p^2k)]=-123   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 4.97   max v=0
+   a<= 4000: min[v-gamma_p a]=  -832.71   min[v-a/(p^2-1)]=-166.54 (a=3997)   min[v-sum_k floor(a/p^2k)]=-165   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 5.15   max v=0
+   a<= 6000: min[v-gamma_p a]= -1249.38   min[v-a/(p^2-1)]=-249.88 (a=5997)   min[v-sum_k floor(a/p^2k)]=-248   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 5.41   max v=0
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=0.00000; #(v=0) 1500/1500; v_p(c_a)=v-v_p(a!): min over all a = -1495
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 312.7 | 62.5 | 374); (3001: 0 | 625.2 | 125.0 | 748); (5997: 0 | 1249.4 | 249.9 | 1495)
+p= 7 a_p= +0 SUPERSINGULAR gamma_p=0.14583 1/(p^2-1)=0.02083
+   a<=  100: min[v-gamma_p a]=   -13.15   min[v-a/(p^2-1)]= -1.02 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.37   max v=2
+   a<=  250: min[v-gamma_p a]=   -31.31   min[v-a/(p^2-1)]= -1.02 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.84   max v=6
+   a<=  500: min[v-gamma_p a]=   -62.31   min[v-a/(p^2-1)]= -1.19 (a=489)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.19   max v=11
+   a<= 1000: min[v-gamma_p a]=  -124.81   min[v-a/(p^2-1)]= -1.35 (a=881)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.55   max v=21
+   a<= 2000: min[v-gamma_p a]=  -250.65   min[v-a/(p^2-1)]= -1.69 (a=1665)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.91   max v=41
+   a<= 3000: min[v-gamma_p a]=  -374.48   min[v-a/(p^2-1)]= -1.85 (a=2057)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 4.11   max v=63
+   a<= 4000: min[v-gamma_p a]=  -500.31   min[v-a/(p^2-1)]= -1.85 (a=2057)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 4.26   max v=83
+   a<= 6000: min[v-gamma_p a]=  -750.56   min[v-a/(p^2-1)]= -2.02 (a=4801)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 4.47   max v=125
+   tail a in (3000,6000]: min v/a=0.02041, LSQ slope dv/da=0.02097; #(v=0) 8/1500; v_p(c_a)=v-v_p(a!): min over all a = -873
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 32 | 218.9 | 31.3 | 248); (3001: 62 | 437.6 | 62.5 | 498); (5997: 124 | 874.6 | 124.9 | 997)
+p=11 a_p= +0 SUPERSINGULAR gamma_p=0.09167 1/(p^2-1)=0.00833
+   a<=  100: min[v-gamma_p a]=    -8.89   min[v-a/(p^2-1)]= -0.81 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.92   max v=1
+   a<=  250: min[v-gamma_p a]=   -21.09   min[v-a/(p^2-1)]= -1.01 (a=241)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.30   max v=3
+   a<=  500: min[v-gamma_p a]=   -41.19   min[v-a/(p^2-1)]= -1.01 (a=241)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.59   max v=5
+   a<= 1000: min[v-gamma_p a]=   -83.39   min[v-a/(p^2-1)]= -1.04 (a=725)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.88   max v=9
+   a<= 2000: min[v-gamma_p a]=  -167.06   min[v-a/(p^2-1)]= -1.11 (a=1693)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.17   max v=17
+   a<= 3000: min[v-gamma_p a]=  -249.99   min[v-a/(p^2-1)]= -1.18 (a=2661)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.34   max v=25
+   a<= 4000: min[v-gamma_p a]=  -333.66   min[v-a/(p^2-1)]= -1.24 (a=3629)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.46   max v=35
+   a<= 6000: min[v-gamma_p a]=  -500.36   min[v-a/(p^2-1)]= -1.34 (a=5081)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.63   max v=50
+   tail a in (3000,6000]: min v/a=0.00795, LSQ slope dv/da=0.00844; #(v=0) 18/1500; v_p(c_a)=v-v_p(a!): min over all a = -548
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 12 | 137.6 | 12.5 | 149); (3001: 24 | 275.1 | 25.0 | 298); (5997: 50 | 549.7 | 50.0 | 598)
+p=13 a_p= +6 ordinary      gamma_p=0.07738 1/(p^2-1)=0.00595
+   a<=  100: min[v-gamma_p a]=    -7.51   min[v-a/(p^2-1)]= -0.58 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 1.80   max v=0
+   a<=  250: min[v-gamma_p a]=   -19.27   min[v-a/(p^2-1)]= -1.48 (a=249)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.15   max v=0
+   a<=  500: min[v-gamma_p a]=   -38.46   min[v-a/(p^2-1)]= -2.96 (a=497)   min[v-sum_k floor(a/p^2k)]= -2   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.42   max v=0
+   a<= 1000: min[v-gamma_p a]=   -77.15   min[v-a/(p^2-1)]= -5.93 (a=997)   min[v-sum_k floor(a/p^2k)]= -5   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.69   max v=0
+   a<= 2000: min[v-gamma_p a]=  -154.53   min[v-a/(p^2-1)]=-11.89 (a=1997)   min[v-sum_k floor(a/p^2k)]=-11   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.96   max v=0
+   a<= 3000: min[v-gamma_p a]=  -231.91   min[v-a/(p^2-1)]=-17.84 (a=2997)   min[v-sum_k floor(a/p^2k)]=-17   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 3.12   max v=0
+   a<= 4000: min[v-gamma_p a]=  -309.29   min[v-a/(p^2-1)]=-23.79 (a=3997)   min[v-sum_k floor(a/p^2k)]=-23   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 3.23   max v=0
+   a<= 6000: min[v-gamma_p a]=  -464.05   min[v-a/(p^2-1)]=-35.70 (a=5997)   min[v-sum_k floor(a/p^2k)]=-35   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 3.39   max v=0
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=0.00000; #(v=0) 1500/1500; v_p(c_a)=v-v_p(a!): min over all a = -498
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 116.1 | 8.9 | 123); (3001: 0 | 232.2 | 17.9 | 248); (5997: 0 | 464.1 | 35.7 | 498)
+p=17 a_p= +2 ordinary      gamma_p=0.05903 1/(p^2-1)=0.00347
+   a<=  100: min[v-gamma_p a]=    -5.73   min[v-a/(p^2-1)]= -0.34 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 1.63   max v=0
+   a<=  250: min[v-gamma_p a]=   -14.70   min[v-a/(p^2-1)]= -0.86 (a=249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 1.95   max v=0
+   a<=  500: min[v-gamma_p a]=   -29.34   min[v-a/(p^2-1)]= -1.73 (a=497)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.19   max v=0
+   a<= 1000: min[v-gamma_p a]=   -58.85   min[v-a/(p^2-1)]= -3.46 (a=997)   min[v-sum_k floor(a/p^2k)]= -3   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.44   max v=0
+   a<= 2000: min[v-gamma_p a]=  -117.88   min[v-a/(p^2-1)]= -6.93 (a=1997)   min[v-sum_k floor(a/p^2k)]= -6   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.68   max v=0
+   a<= 3000: min[v-gamma_p a]=  -176.91   min[v-a/(p^2-1)]=-10.41 (a=2997)   min[v-sum_k floor(a/p^2k)]=-10   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.83   max v=0
+   a<= 4000: min[v-gamma_p a]=  -235.93   min[v-a/(p^2-1)]=-13.88 (a=3997)   min[v-sum_k floor(a/p^2k)]=-13   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.93   max v=0
+   a<= 6000: min[v-gamma_p a]=  -353.99   min[v-a/(p^2-1)]=-20.82 (a=5997)   min[v-sum_k floor(a/p^2k)]=-20   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 3.07   max v=0
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=0.00000; #(v=0) 1500/1500; v_p(c_a)=v-v_p(a!): min over all a = -373
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 88.6 | 5.2 | 93); (3001: 0 | 177.1 | 10.4 | 186); (5997: 0 | 354.0 | 20.8 | 373)
+p=19 a_p= +0 SUPERSINGULAR gamma_p=0.05278 1/(p^2-1)=0.00278
+   a<=  100: min[v-gamma_p a]=    -4.91   min[v-a/(p^2-1)]= -0.26 (a=93)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.56   max v=1
+   a<=  250: min[v-gamma_p a]=   -12.93   min[v-a/(p^2-1)]= -0.68 (a=245)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.88   max v=1
+   a<=  500: min[v-gamma_p a]=   -25.02   min[v-a/(p^2-1)]= -0.95 (a=341)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.11   max v=2
+   a<= 1000: min[v-gamma_p a]=   -49.99   min[v-a/(p^2-1)]= -1.00 (a=721)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.35   max v=3
+   a<= 2000: min[v-gamma_p a]=  -100.19   min[v-a/(p^2-1)]= -1.00 (a=721)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.58   max v=6
+   a<= 3000: min[v-gamma_p a]=  -149.33   min[v-a/(p^2-1)]= -1.01 (a=2165)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.72   max v=9
+   a<= 4000: min[v-gamma_p a]=  -199.53   min[v-a/(p^2-1)]= -1.02 (a=3609)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.82   max v=12
+   a<= 6000: min[v-gamma_p a]=  -299.66   min[v-a/(p^2-1)]= -1.04 (a=5053)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.95   max v=17
+   tail a in (3000,6000]: min v/a=0.00247, LSQ slope dv/da=0.00279; #(v=0) 50/1500; v_p(c_a)=v-v_p(a!): min over all a = -314
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 5 | 79.2 | 4.2 | 83); (3001: 8 | 158.4 | 8.3 | 165); (5997: 17 | 316.5 | 16.7 | 331)
+p=23 a_p= +0 SUPERSINGULAR gamma_p=0.04356 1/(p^2-1)=0.00189
+   a<=  100: min[v-gamma_p a]=    -4.23   min[v-a/(p^2-1)]= -0.18 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.47   max v=2
+   a<=  250: min[v-gamma_p a]=   -10.85   min[v-a/(p^2-1)]= -0.47 (a=249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.76   max v=2
+   a<=  500: min[v-gamma_p a]=   -20.95   min[v-a/(p^2-1)]= -0.91 (a=481)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.98   max v=2
+   a<= 1000: min[v-gamma_p a]=   -41.91   min[v-a/(p^2-1)]= -0.96 (a=505)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.20   max v=3
+   a<= 2000: min[v-gamma_p a]=   -83.99   min[v-a/(p^2-1)]= -1.00 (a=1057)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.42   max v=5
+   a<= 3000: min[v-gamma_p a]=  -125.03   min[v-a/(p^2-1)]= -1.00 (a=1057)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.55   max v=7
+   a<= 4000: min[v-gamma_p a]=  -166.94   min[v-a/(p^2-1)]= -1.01 (a=3173)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.65   max v=9
+   a<= 6000: min[v-gamma_p a]=  -249.36   min[v-a/(p^2-1)]= -1.02 (a=5289)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.77   max v=13
+   tail a in (3000,6000]: min v/a=0.00158, LSQ slope dv/da=0.00191; #(v=0) 60/1500; v_p(c_a)=v-v_p(a!): min over all a = -259
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 4 | 65.4 | 2.8 | 67); (3001: 5 | 130.7 | 5.7 | 135); (5997: 13 | 261.2 | 11.4 | 271)
+p=29 a_p=-10 ordinary      gamma_p=0.03452 1/(p^2-1)=0.00119
+   a<=  100: min[v-gamma_p a]=    -3.35   min[v-a/(p^2-1)]= -0.12 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 1.37   max v=0
+   a<=  250: min[v-gamma_p a]=    -8.60   min[v-a/(p^2-1)]= -0.30 (a=249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 1.64   max v=0
+   a<=  500: min[v-gamma_p a]=   -17.16   min[v-a/(p^2-1)]= -0.59 (a=497)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 1.85   max v=0
+   a<= 1000: min[v-gamma_p a]=   -34.42   min[v-a/(p^2-1)]= -1.19 (a=997)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.05   max v=0
+   a<= 2000: min[v-gamma_p a]=   -68.94   min[v-a/(p^2-1)]= -2.38 (a=1997)   min[v-sum_k floor(a/p^2k)]= -2   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.26   max v=0
+   a<= 3000: min[v-gamma_p a]=  -103.47   min[v-a/(p^2-1)]= -3.57 (a=2997)   min[v-sum_k floor(a/p^2k)]= -3   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.38   max v=0
+   a<= 4000: min[v-gamma_p a]=  -137.99   min[v-a/(p^2-1)]= -4.76 (a=3997)   min[v-sum_k floor(a/p^2k)]= -4   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.46   max v=0
+   a<= 6000: min[v-gamma_p a]=  -207.04   min[v-a/(p^2-1)]= -7.14 (a=5997)   min[v-sum_k floor(a/p^2k)]= -7   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.58   max v=0
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=0.00000; #(v=0) 1500/1500; v_p(c_a)=v-v_p(a!): min over all a = -213
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 51.8 | 1.8 | 52); (3001: 0 | 103.6 | 3.6 | 106); (5997: 0 | 207.0 | 7.1 | 213)
+p=31 a_p= +0 SUPERSINGULAR gamma_p=0.03229 1/(p^2-1)=0.00104
+   a<=  100: min[v-gamma_p a]=    -3.13   min[v-a/(p^2-1)]= -0.10 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.34   max v=1
+   a<=  250: min[v-gamma_p a]=    -7.91   min[v-a/(p^2-1)]= -0.26 (a=245)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.61   max v=1
+   a<=  500: min[v-gamma_p a]=   -15.92   min[v-a/(p^2-1)]= -0.51 (a=493)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.81   max v=1
+   a<= 1000: min[v-gamma_p a]=   -31.19   min[v-a/(p^2-1)]= -0.97 (a=929)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.01   max v=2
+   a<= 2000: min[v-gamma_p a]=   -62.49   min[v-a/(p^2-1)]= -1.00 (a=1921)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.21   max v=3
+   a<= 3000: min[v-gamma_p a]=   -93.78   min[v-a/(p^2-1)]= -1.00 (a=1921)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.33   max v=4
+   a<= 4000: min[v-gamma_p a]=  -125.07   min[v-a/(p^2-1)]= -1.00 (a=1921)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.42   max v=5
+   a<= 6000: min[v-gamma_p a]=  -187.65   min[v-a/(p^2-1)]= -1.01 (a=5765)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.53   max v=7
+   tail a in (3000,6000]: min v/a=0.00078, LSQ slope dv/da=0.00111; #(v=0) 128/1500; v_p(c_a)=v-v_p(a!): min over all a = -193
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 2 | 48.5 | 1.6 | 49); (3001: 3 | 96.9 | 3.1 | 99); (5997: 6 | 193.7 | 6.2 | 199)
+
+## Curve B  y^2=4x^3-4   (CM Z[w]): Delta = -432
+nonzero D^a sigma(0): a in {1, 7, 13, 19, 25, 31, ...}, count 1000
+p= 5 a_p= +0 SUPERSINGULAR gamma_p=0.20833 1/(p^2-1)=0.04167
+   a<=  100: min[v-gamma_p a]=   -17.21   min[v-a/(p^2-1)]= -1.04 (a=49)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.86   max v=4
+   a<=  250: min[v-gamma_p a]=   -42.46   min[v-a/(p^2-1)]= -1.29 (a=199)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.43   max v=10
+   a<=  500: min[v-gamma_p a]=   -84.96   min[v-a/(p^2-1)]= -1.79 (a=499)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.86   max v=20
+   a<= 1000: min[v-gamma_p a]=  -167.71   min[v-a/(p^2-1)]= -1.79 (a=499)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 4.29   max v=41
+   a<= 2000: min[v-gamma_p a]=  -334.46   min[v-a/(p^2-1)]= -2.04 (a=1249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 4.72   max v=83
+   a<= 3000: min[v-gamma_p a]=  -498.96   min[v-a/(p^2-1)]= -2.04 (a=1249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 4.97   max v=125
+   a<= 4000: min[v-gamma_p a]=  -667.71   min[v-a/(p^2-1)]= -2.04 (a=1249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 5.15   max v=166
+   a<= 6000: min[v-gamma_p a]=  -998.96   min[v-a/(p^2-1)]= -2.29 (a=4999)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 5.41   max v=250
+   tail a in (3000,6000]: min v/a=0.04100, LSQ slope dv/da=0.04140; #(v=0) 4/1000; v_p(c_a)=v-v_p(a!): min over all a = -1245
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 62 | 312.7 | 62.5 | 374); (3001: 124 | 625.2 | 125.0 | 748); (5995: 250 | 1249.0 | 249.8 | 1495)
+p= 7 a_p= +4 ordinary      gamma_p=0.14583 1/(p^2-1)=0.02083
+   a<=  100: min[v-gamma_p a]=   -14.15   min[v-a/(p^2-1)]= -2.02 (a=97)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.37   max v=0
+   a<=  250: min[v-gamma_p a]=   -36.02   min[v-a/(p^2-1)]= -5.15 (a=247)   min[v-sum_k floor(a/p^2k)]= -5   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.84   max v=0
+   a<=  500: min[v-gamma_p a]=   -72.77   min[v-a/(p^2-1)]=-10.40 (a=499)   min[v-sum_k floor(a/p^2k)]=-10   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 3.19   max v=0
+   a<= 1000: min[v-gamma_p a]=  -145.40   min[v-a/(p^2-1)]=-20.77 (a=997)   min[v-sum_k floor(a/p^2k)]=-20   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 3.55   max v=0
+   a<= 2000: min[v-gamma_p a]=  -291.52   min[v-a/(p^2-1)]=-41.65 (a=1999)   min[v-sum_k floor(a/p^2k)]=-40   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 3.91   max v=0
+   a<= 3000: min[v-gamma_p a]=  -436.77   min[v-a/(p^2-1)]=-62.40 (a=2995)   min[v-sum_k floor(a/p^2k)]=-62   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 4.11   max v=0
+   a<= 4000: min[v-gamma_p a]=  -582.90   min[v-a/(p^2-1)]=-83.27 (a=3997)   min[v-sum_k floor(a/p^2k)]=-82   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 4.26   max v=0
+   a<= 6000: min[v-gamma_p a]=  -874.27   min[v-a/(p^2-1)]=-124.90 (a=5995)   min[v-sum_k floor(a/p^2k)]=-124   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 4.47   max v=0
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=0.00000; #(v=0) 1000/1000; v_p(c_a)=v-v_p(a!): min over all a = -997
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 218.9 | 31.3 | 248); (3001: 0 | 437.6 | 62.5 | 498); (5995: 0 | 874.3 | 124.9 | 997)
+p=11 a_p= +0 SUPERSINGULAR gamma_p=0.09167 1/(p^2-1)=0.00833
+   a<=  100: min[v-gamma_p a]=    -8.89   min[v-a/(p^2-1)]= -0.81 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.92   max v=1
+   a<=  250: min[v-gamma_p a]=   -21.09   min[v-a/(p^2-1)]= -1.01 (a=241)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.30   max v=3
+   a<=  500: min[v-gamma_p a]=   -41.19   min[v-a/(p^2-1)]= -1.01 (a=241)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.59   max v=5
+   a<= 1000: min[v-gamma_p a]=   -83.39   min[v-a/(p^2-1)]= -1.06 (a=967)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.88   max v=9
+   a<= 2000: min[v-gamma_p a]=  -167.24   min[v-a/(p^2-1)]= -1.11 (a=1693)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.17   max v=17
+   a<= 3000: min[v-gamma_p a]=  -249.99   min[v-a/(p^2-1)]= -1.16 (a=2419)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.34   max v=25
+   a<= 4000: min[v-gamma_p a]=  -333.84   min[v-a/(p^2-1)]= -1.26 (a=3871)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.46   max v=34
+   a<= 6000: min[v-gamma_p a]=  -499.99   min[v-a/(p^2-1)]= -1.36 (a=5323)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.63   max v=50
+   tail a in (3000,6000]: min v/a=0.00795, LSQ slope dv/da=0.00844; #(v=0) 14/1000; v_p(c_a)=v-v_p(a!): min over all a = -548
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 12 | 137.6 | 12.5 | 149); (3001: 24 | 275.1 | 25.0 | 298); (5995: 50 | 549.5 | 50.0 | 598)
+p=13 a_p= +2 ordinary      gamma_p=0.07738 1/(p^2-1)=0.00595
+   a<=  100: min[v-gamma_p a]=    -7.51   min[v-a/(p^2-1)]= -0.58 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 1.80   max v=0
+   a<=  250: min[v-gamma_p a]=   -19.11   min[v-a/(p^2-1)]= -1.47 (a=247)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.15   max v=0
+   a<=  500: min[v-gamma_p a]=   -38.61   min[v-a/(p^2-1)]= -2.97 (a=499)   min[v-sum_k floor(a/p^2k)]= -2   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.42   max v=0
+   a<= 1000: min[v-gamma_p a]=   -77.15   min[v-a/(p^2-1)]= -5.93 (a=997)   min[v-sum_k floor(a/p^2k)]= -5   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.69   max v=0
+   a<= 2000: min[v-gamma_p a]=  -154.68   min[v-a/(p^2-1)]=-11.90 (a=1999)   min[v-sum_k floor(a/p^2k)]=-11   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.96   max v=0
+   a<= 3000: min[v-gamma_p a]=  -231.76   min[v-a/(p^2-1)]=-17.83 (a=2995)   min[v-sum_k floor(a/p^2k)]=-17   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 3.12   max v=0
+   a<= 4000: min[v-gamma_p a]=  -309.29   min[v-a/(p^2-1)]=-23.79 (a=3997)   min[v-sum_k floor(a/p^2k)]=-23   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 3.23   max v=0
+   a<= 6000: min[v-gamma_p a]=  -463.90   min[v-a/(p^2-1)]=-35.68 (a=5995)   min[v-sum_k floor(a/p^2k)]=-35   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 3.39   max v=0
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=0.00000; #(v=0) 1000/1000; v_p(c_a)=v-v_p(a!): min over all a = -498
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 116.1 | 8.9 | 123); (3001: 0 | 232.2 | 17.9 | 248); (5995: 0 | 463.9 | 35.7 | 498)
+p=17 a_p= +0 SUPERSINGULAR gamma_p=0.05903 1/(p^2-1)=0.00347
+   a<=  100: min[v-gamma_p a]=    -5.73   min[v-a/(p^2-1)]= -0.34 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.63   max v=1
+   a<=  250: min[v-gamma_p a]=   -13.87   min[v-a/(p^2-1)]= -0.82 (a=235)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.95   max v=1
+   a<=  500: min[v-gamma_p a]=   -27.75   min[v-a/(p^2-1)]= -0.94 (a=271)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.19   max v=2
+   a<= 1000: min[v-gamma_p a]=   -55.85   min[v-a/(p^2-1)]= -1.00 (a=577)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.44   max v=4
+   a<= 2000: min[v-gamma_p a]=  -112.00   min[v-a/(p^2-1)]= -1.00 (a=577)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.68   max v=7
+   a<= 3000: min[v-gamma_p a]=  -166.43   min[v-a/(p^2-1)]= -1.02 (a=2311)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.83   max v=11
+   a<= 4000: min[v-gamma_p a]=  -222.93   min[v-a/(p^2-1)]= -1.02 (a=2311)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.93   max v=14
+   a<= 6000: min[v-gamma_p a]=  -333.87   min[v-a/(p^2-1)]= -1.07 (a=5779)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.07   max v=21
+   tail a in (3000,6000]: min v/a=0.00315, LSQ slope dv/da=0.00353; #(v=0) 30/1000; v_p(c_a)=v-v_p(a!): min over all a = -353
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 6 | 88.6 | 5.2 | 93); (3001: 11 | 177.1 | 10.4 | 186); (5995: 20 | 353.9 | 20.8 | 373)
+p=19 a_p= -8 ordinary      gamma_p=0.05278 1/(p^2-1)=0.00278
+   a<=  100: min[v-gamma_p a]=    -5.12   min[v-a/(p^2-1)]= -0.27 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 1.56   max v=0
+   a<=  250: min[v-gamma_p a]=   -13.04   min[v-a/(p^2-1)]= -0.69 (a=247)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 1.88   max v=0
+   a<=  500: min[v-gamma_p a]=   -26.34   min[v-a/(p^2-1)]= -1.39 (a=499)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.11   max v=0
+   a<= 1000: min[v-gamma_p a]=   -52.62   min[v-a/(p^2-1)]= -2.77 (a=997)   min[v-sum_k floor(a/p^2k)]= -2   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.35   max v=0
+   a<= 2000: min[v-gamma_p a]=  -105.50   min[v-a/(p^2-1)]= -5.55 (a=1999)   min[v-sum_k floor(a/p^2k)]= -5   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.58   max v=0
+   a<= 3000: min[v-gamma_p a]=  -158.07   min[v-a/(p^2-1)]= -8.32 (a=2995)   min[v-sum_k floor(a/p^2k)]= -8   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.72   max v=0
+   a<= 4000: min[v-gamma_p a]=  -210.95   min[v-a/(p^2-1)]=-11.10 (a=3997)   min[v-sum_k floor(a/p^2k)]=-11   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.82   max v=0
+   a<= 6000: min[v-gamma_p a]=  -316.40   min[v-a/(p^2-1)]=-16.65 (a=5995)   min[v-sum_k floor(a/p^2k)]=-16   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 2.95   max v=0
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=0.00000; #(v=0) 1000/1000; v_p(c_a)=v-v_p(a!): min over all a = -331
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 79.2 | 4.2 | 83); (3001: 0 | 158.4 | 8.3 | 165); (5995: 0 | 316.4 | 16.7 | 331)
+p=23 a_p= +0 SUPERSINGULAR gamma_p=0.04356 1/(p^2-1)=0.00189
+   a<=  100: min[v-gamma_p a]=    -4.23   min[v-a/(p^2-1)]= -0.18 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.47   max v=2
+   a<=  250: min[v-gamma_p a]=   -10.76   min[v-a/(p^2-1)]= -0.47 (a=247)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.76   max v=2
+   a<=  500: min[v-gamma_p a]=   -20.95   min[v-a/(p^2-1)]= -0.91 (a=481)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.98   max v=2
+   a<= 1000: min[v-gamma_p a]=   -41.91   min[v-a/(p^2-1)]= -0.96 (a=505)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.20   max v=3
+   a<= 2000: min[v-gamma_p a]=   -84.08   min[v-a/(p^2-1)]= -1.00 (a=1057)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.42   max v=5
+   a<= 3000: min[v-gamma_p a]=  -125.20   min[v-a/(p^2-1)]= -1.00 (a=1057)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.55   max v=7
+   a<= 4000: min[v-gamma_p a]=  -167.11   min[v-a/(p^2-1)]= -1.00 (a=1057)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.65   max v=9
+   a<= 6000: min[v-gamma_p a]=  -249.36   min[v-a/(p^2-1)]= -1.01 (a=4231)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.77   max v=13
+   tail a in (3000,6000]: min v/a=0.00158, LSQ slope dv/da=0.00191; #(v=0) 48/1000; v_p(c_a)=v-v_p(a!): min over all a = -259
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 3 | 65.4 | 2.8 | 67); (3001: 5 | 130.7 | 5.7 | 135); (5995: 13 | 261.1 | 11.4 | 271)
+p=29 a_p= +0 SUPERSINGULAR gamma_p=0.03452 1/(p^2-1)=0.00119
+   a<=  100: min[v-gamma_p a]=    -3.35   min[v-a/(p^2-1)]= -0.12 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  0   log_p A= 1.37   max v=0
+   a<=  250: min[v-gamma_p a]=    -8.53   min[v-a/(p^2-1)]= -0.29 (a=247)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.64   max v=1
+   a<=  500: min[v-gamma_p a]=   -16.81   min[v-a/(p^2-1)]= -0.58 (a=487)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.85   max v=1
+   a<= 1000: min[v-gamma_p a]=   -33.42   min[v-a/(p^2-1)]= -0.97 (a=811)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.05   max v=2
+   a<= 2000: min[v-gamma_p a]=   -67.01   min[v-a/(p^2-1)]= -1.00 (a=1681)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.26   max v=3
+   a<= 3000: min[v-gamma_p a]=   -99.98   min[v-a/(p^2-1)]= -1.00 (a=1681)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.38   max v=4
+   a<= 4000: min[v-gamma_p a]=  -133.99   min[v-a/(p^2-1)]= -1.00 (a=1681)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.46   max v=5
+   a<= 6000: min[v-gamma_p a]=  -199.14   min[v-a/(p^2-1)]= -1.00 (a=1681)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.58   max v=8
+   tail a in (3000,6000]: min v/a=0.00089, LSQ slope dv/da=0.00121; #(v=0) 80/1000; v_p(c_a)=v-v_p(a!): min over all a = -205
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 1 | 51.8 | 1.8 | 52); (3001: 3 | 103.6 | 3.6 | 106); (5995: 8 | 207.0 | 7.1 | 213)
+p=31 a_p= +4 ordinary      gamma_p=0.03229 1/(p^2-1)=0.00104
+   a<=  100: min[v-gamma_p a]=    -3.13   min[v-a/(p^2-1)]= -0.10 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.34   max v=1
+   a<=  250: min[v-gamma_p a]=    -7.98   min[v-a/(p^2-1)]= -0.26 (a=247)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.61   max v=1
+   a<=  500: min[v-gamma_p a]=   -16.11   min[v-a/(p^2-1)]= -0.52 (a=499)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.81   max v=1
+   a<= 1000: min[v-gamma_p a]=   -32.19   min[v-a/(p^2-1)]= -1.04 (a=997)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.01   max v=2
+   a<= 2000: min[v-gamma_p a]=   -64.55   min[v-a/(p^2-1)]= -2.08 (a=1999)   min[v-sum_k floor(a/p^2k)]= -2   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.21   max v=2
+   a<= 3000: min[v-gamma_p a]=   -96.52   min[v-a/(p^2-1)]= -3.11 (a=2989)   min[v-sum_k floor(a/p^2k)]= -3   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.33   max v=2
+   a<= 4000: min[v-gamma_p a]=  -129.07   min[v-a/(p^2-1)]= -4.16 (a=3997)   min[v-sum_k floor(a/p^2k)]= -4   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.42   max v=2
+   a<= 6000: min[v-gamma_p a]=  -193.39   min[v-a/(p^2-1)]= -6.24 (a=5989)   min[v-sum_k floor(a/p^2k)]= -6   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.53   max v=2
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=0.00000; #(v=0) 800/1000; v_p(c_a)=v-v_p(a!): min over all a = -199
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 48.5 | 1.6 | 49); (3001: 0 | 96.9 | 3.1 | 99); (5995: 1 | 193.6 | 6.2 | 199)
+
+## Curve C  g2=-10,g3=7/2 (non-CM): Delta = -5323/4
+nonzero D^a sigma(0): a in {1, 5, 7, 9, 11, 13, ...}, count 2999
+p= 5 a_p= +0 SUPERSINGULAR gamma_p=0.20833 1/(p^2-1)=0.04167
+   a<=  100: min[v-gamma_p a]=   -17.21   min[v-a/(p^2-1)]= -1.04 (a=49)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 2.86   max v=6
+   a<=  250: min[v-gamma_p a]=   -42.46   min[v-a/(p^2-1)]= -1.29 (a=199)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  4   log_p A= 3.43   max v=12
+   a<=  500: min[v-gamma_p a]=   -84.96   min[v-a/(p^2-1)]= -1.79 (a=499)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  6   log_p A= 3.86   max v=22
+   a<= 1000: min[v-gamma_p a]=  -167.71   min[v-a/(p^2-1)]= -1.79 (a=499)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  6   log_p A= 4.29   max v=43
+   a<= 2000: min[v-gamma_p a]=  -334.46   min[v-a/(p^2-1)]= -2.04 (a=1249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  7   log_p A= 4.72   max v=85
+   a<= 3000: min[v-gamma_p a]=  -499.79   min[v-a/(p^2-1)]= -2.04 (a=1249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  7   log_p A= 4.97   max v=127
+   a<= 4000: min[v-gamma_p a]=  -667.71   min[v-a/(p^2-1)]= -2.04 (a=1249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  7   log_p A= 5.15   max v=168
+   a<= 6000: min[v-gamma_p a]=  -999.79   min[v-a/(p^2-1)]= -2.29 (a=4999)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  7   log_p A= 5.41   max v=252
+   tail a in (3000,6000]: min v/a=0.04100, LSQ slope dv/da=0.04140; #(v=0) 4/2999; v_p(c_a)=v-v_p(a!): min over all a = -1245
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 62 | 312.7 | 62.5 | 374); (3001: 124 | 625.2 | 125.0 | 748); (5999: 250 | 1249.8 | 250.0 | 1495)
+p= 7 a_p= +0 SUPERSINGULAR gamma_p=0.14583 1/(p^2-1)=0.02083
+   a<=  100: min[v-gamma_p a]=   -13.15   min[v-a/(p^2-1)]= -1.02 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 2.37   max v=5
+   a<=  250: min[v-gamma_p a]=   -31.31   min[v-a/(p^2-1)]= -1.02 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 2.84   max v=7
+   a<=  500: min[v-gamma_p a]=   -62.31   min[v-a/(p^2-1)]= -1.19 (a=489)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  5   log_p A= 3.19   max v=13
+   a<= 1000: min[v-gamma_p a]=  -124.81   min[v-a/(p^2-1)]= -1.35 (a=881)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  5   log_p A= 3.55   max v=23
+   a<= 2000: min[v-gamma_p a]=  -250.65   min[v-a/(p^2-1)]= -1.69 (a=1665)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  6   log_p A= 3.91   max v=45
+   a<= 3000: min[v-gamma_p a]=  -374.48   min[v-a/(p^2-1)]= -1.85 (a=2057)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  6   log_p A= 4.11   max v=64
+   a<= 4000: min[v-gamma_p a]=  -500.31   min[v-a/(p^2-1)]= -1.85 (a=2057)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  6   log_p A= 4.26   max v=85
+   a<= 6000: min[v-gamma_p a]=  -750.56   min[v-a/(p^2-1)]= -2.02 (a=4801)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  7   log_p A= 4.47   max v=127
+   tail a in (3000,6000]: min v/a=0.02041, LSQ slope dv/da=0.02097; #(v=0) 8/2999; v_p(c_a)=v-v_p(a!): min over all a = -873
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 32 | 218.9 | 31.3 | 248); (3001: 62 | 437.6 | 62.5 | 498); (5999: 125 | 874.9 | 125.0 | 998)
+p=11 a_p= +3 ordinary      gamma_p=0.09167 1/(p^2-1)=0.00833
+   a<=  100: min[v-gamma_p a]=    -9.07   min[v-a/(p^2-1)]= -0.82 (a=99)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.92   max v=1
+   a<=  250: min[v-gamma_p a]=   -22.82   min[v-a/(p^2-1)]= -2.08 (a=249)   min[v-sum_k floor(a/p^2k)]= -2   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.30   max v=1
+   a<=  500: min[v-gamma_p a]=   -45.74   min[v-a/(p^2-1)]= -4.16 (a=499)   min[v-sum_k floor(a/p^2k)]= -4   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.59   max v=3
+   a<= 1000: min[v-gamma_p a]=   -91.58   min[v-a/(p^2-1)]= -8.32 (a=999)   min[v-sum_k floor(a/p^2k)]= -8   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.88   max v=3
+   a<= 2000: min[v-gamma_p a]=  -183.24   min[v-a/(p^2-1)]=-16.66 (a=1999)   min[v-sum_k floor(a/p^2k)]=-16   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 3.17   max v=3
+   a<= 3000: min[v-gamma_p a]=  -274.91   min[v-a/(p^2-1)]=-24.99 (a=2999)   min[v-sum_k floor(a/p^2k)]=-24   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 3.34   max v=3
+   a<= 4000: min[v-gamma_p a]=  -366.57   min[v-a/(p^2-1)]=-33.33 (a=3999)   min[v-sum_k floor(a/p^2k)]=-33   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 3.46   max v=3
+   a<= 6000: min[v-gamma_p a]=  -549.91   min[v-a/(p^2-1)]=-49.99 (a=5999)   min[v-sum_k floor(a/p^2k)]=-49   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 3.63   max v=3
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=0.00000; #(v=0) 2891/2999; v_p(c_a)=v-v_p(a!): min over all a = -598
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 137.6 | 12.5 | 149); (3001: 0 | 275.1 | 25.0 | 298); (5999: 0 | 549.9 | 50.0 | 598)
+p=13 a_p= +0 SUPERSINGULAR gamma_p=0.07738 1/(p^2-1)=0.00595
+   a<=  100: min[v-gamma_p a]=    -7.66   min[v-a/(p^2-1)]= -0.59 (a=99)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.80   max v=2
+   a<=  250: min[v-gamma_p a]=   -17.96   min[v-a/(p^2-1)]= -0.92 (a=155)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.15   max v=3
+   a<=  500: min[v-gamma_p a]=   -35.99   min[v-a/(p^2-1)]= -1.01 (a=337)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.42   max v=4
+   a<= 1000: min[v-gamma_p a]=   -72.30   min[v-a/(p^2-1)]= -1.01 (a=337)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 2.69   max v=7
+   a<= 2000: min[v-gamma_p a]=  -142.68   min[v-a/(p^2-1)]= -1.05 (a=1689)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 2.96   max v=13
+   a<= 3000: min[v-gamma_p a]=  -214.91   min[v-a/(p^2-1)]= -1.09 (a=2703)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 3.12   max v=19
+   a<= 4000: min[v-gamma_p a]=  -285.45   min[v-a/(p^2-1)]= -1.12 (a=3717)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 3.23   max v=25
+   a<= 6000: min[v-gamma_p a]=  -428.21   min[v-a/(p^2-1)]= -1.20 (a=5745)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 3.39   max v=37
+   tail a in (3000,6000]: min v/a=0.00559, LSQ slope dv/da=0.00594; #(v=0) 32/2999; v_p(c_a)=v-v_p(a!): min over all a = -462
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 9 | 116.1 | 8.9 | 123); (3001: 17 | 232.2 | 17.9 | 248); (5999: 36 | 464.2 | 35.7 | 498)
+p=17 a_p= -3 ordinary      gamma_p=0.05903 1/(p^2-1)=0.00347
+   a<=  100: min[v-gamma_p a]=    -5.73   min[v-a/(p^2-1)]= -0.34 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.63   max v=2
+   a<=  250: min[v-gamma_p a]=   -14.70   min[v-a/(p^2-1)]= -0.86 (a=249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.95   max v=2
+   a<=  500: min[v-gamma_p a]=   -29.34   min[v-a/(p^2-1)]= -1.73 (a=497)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.19   max v=2
+   a<= 1000: min[v-gamma_p a]=   -58.97   min[v-a/(p^2-1)]= -3.47 (a=999)   min[v-sum_k floor(a/p^2k)]= -3   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.44   max v=2
+   a<= 2000: min[v-gamma_p a]=  -118.00   min[v-a/(p^2-1)]= -6.94 (a=1999)   min[v-sum_k floor(a/p^2k)]= -6   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.68   max v=2
+   a<= 3000: min[v-gamma_p a]=  -177.02   min[v-a/(p^2-1)]=-10.41 (a=2999)   min[v-sum_k floor(a/p^2k)]=-10   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.83   max v=5
+   a<= 4000: min[v-gamma_p a]=  -236.05   min[v-a/(p^2-1)]=-13.89 (a=3999)   min[v-sum_k floor(a/p^2k)]=-13   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.93   max v=5
+   a<= 6000: min[v-gamma_p a]=  -354.11   min[v-a/(p^2-1)]=-20.83 (a=5999)   min[v-sum_k floor(a/p^2k)]=-20   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.07   max v=5
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=0.00000; #(v=0) 2250/2999; v_p(c_a)=v-v_p(a!): min over all a = -373
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 1 | 88.6 | 5.2 | 93); (3001: 0 | 177.1 | 10.4 | 186); (5999: 0 | 354.1 | 20.8 | 373)
+p=19 a_p= -7 ordinary      gamma_p=0.05278 1/(p^2-1)=0.00278
+   a<=  100: min[v-gamma_p a]=    -5.22   min[v-a/(p^2-1)]= -0.28 (a=99)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.56   max v=2
+   a<=  250: min[v-gamma_p a]=   -13.14   min[v-a/(p^2-1)]= -0.69 (a=249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.88   max v=2
+   a<=  500: min[v-gamma_p a]=   -26.34   min[v-a/(p^2-1)]= -1.39 (a=499)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.11   max v=2
+   a<= 1000: min[v-gamma_p a]=   -52.73   min[v-a/(p^2-1)]= -2.77 (a=999)   min[v-sum_k floor(a/p^2k)]= -2   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.35   max v=2
+   a<= 2000: min[v-gamma_p a]=  -105.50   min[v-a/(p^2-1)]= -5.55 (a=1999)   min[v-sum_k floor(a/p^2k)]= -5   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.58   max v=2
+   a<= 3000: min[v-gamma_p a]=  -158.28   min[v-a/(p^2-1)]= -8.33 (a=2999)   min[v-sum_k floor(a/p^2k)]= -8   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.72   max v=2
+   a<= 4000: min[v-gamma_p a]=  -211.06   min[v-a/(p^2-1)]=-11.11 (a=3999)   min[v-sum_k floor(a/p^2k)]=-11   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.82   max v=2
+   a<= 6000: min[v-gamma_p a]=  -316.61   min[v-a/(p^2-1)]=-16.66 (a=5999)   min[v-sum_k floor(a/p^2k)]=-16   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.95   max v=2
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=-0.00000; #(v=0) 2737/2999; v_p(c_a)=v-v_p(a!): min over all a = -331
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 79.2 | 4.2 | 83); (3001: 0 | 158.4 | 8.3 | 165); (5999: 0 | 316.6 | 16.7 | 331)
+p=23 a_p= +1 ordinary      gamma_p=0.04356 1/(p^2-1)=0.00189
+   a<=  100: min[v-gamma_p a]=    -4.31   min[v-a/(p^2-1)]= -0.19 (a=99)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.47   max v=1
+   a<=  250: min[v-gamma_p a]=   -10.85   min[v-a/(p^2-1)]= -0.47 (a=249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.76   max v=1
+   a<=  500: min[v-gamma_p a]=   -21.74   min[v-a/(p^2-1)]= -0.95 (a=499)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.98   max v=1
+   a<= 1000: min[v-gamma_p a]=   -43.52   min[v-a/(p^2-1)]= -1.89 (a=999)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.20   max v=2
+   a<= 2000: min[v-gamma_p a]=   -87.08   min[v-a/(p^2-1)]= -3.79 (a=1999)   min[v-sum_k floor(a/p^2k)]= -3   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.42   max v=2
+   a<= 3000: min[v-gamma_p a]=  -130.64   min[v-a/(p^2-1)]= -5.68 (a=2999)   min[v-sum_k floor(a/p^2k)]= -5   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.55   max v=2
+   a<= 4000: min[v-gamma_p a]=  -174.20   min[v-a/(p^2-1)]= -7.57 (a=3999)   min[v-sum_k floor(a/p^2k)]= -7   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.65   max v=2
+   a<= 6000: min[v-gamma_p a]=  -261.23   min[v-a/(p^2-1)]=-11.36 (a=5997)   min[v-sum_k floor(a/p^2k)]=-11   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.77   max v=2
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=-0.00000; #(v=0) 2881/2999; v_p(c_a)=v-v_p(a!): min over all a = -271
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 65.4 | 2.8 | 67); (3001: 0 | 130.7 | 5.7 | 135); (5999: 1 | 261.3 | 11.4 | 271)
+p=29 a_p= +2 ordinary      gamma_p=0.03452 1/(p^2-1)=0.00119
+   a<=  100: min[v-gamma_p a]=    -3.42   min[v-a/(p^2-1)]= -0.12 (a=99)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.37   max v=1
+   a<=  250: min[v-gamma_p a]=    -8.60   min[v-a/(p^2-1)]= -0.30 (a=249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.64   max v=1
+   a<=  500: min[v-gamma_p a]=   -17.23   min[v-a/(p^2-1)]= -0.59 (a=499)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.85   max v=1
+   a<= 1000: min[v-gamma_p a]=   -34.49   min[v-a/(p^2-1)]= -1.19 (a=999)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.05   max v=1
+   a<= 2000: min[v-gamma_p a]=   -69.01   min[v-a/(p^2-1)]= -2.38 (a=1999)   min[v-sum_k floor(a/p^2k)]= -2   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.26   max v=2
+   a<= 3000: min[v-gamma_p a]=  -103.54   min[v-a/(p^2-1)]= -3.57 (a=2999)   min[v-sum_k floor(a/p^2k)]= -3   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.38   max v=2
+   a<= 4000: min[v-gamma_p a]=  -138.06   min[v-a/(p^2-1)]= -4.76 (a=3999)   min[v-sum_k floor(a/p^2k)]= -4   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.46   max v=2
+   a<= 6000: min[v-gamma_p a]=  -207.11   min[v-a/(p^2-1)]= -7.14 (a=5999)   min[v-sum_k floor(a/p^2k)]= -7   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.58   max v=2
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=-0.00000; #(v=0) 2926/2999; v_p(c_a)=v-v_p(a!): min over all a = -213
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 51.8 | 1.8 | 52); (3001: 0 | 103.6 | 3.6 | 106); (5999: 0 | 207.1 | 7.1 | 213)
+p=31 a_p= +7 ordinary      gamma_p=0.03229 1/(p^2-1)=0.00104
+   a<=  100: min[v-gamma_p a]=    -3.20   min[v-a/(p^2-1)]= -0.10 (a=99)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.34   max v=1
+   a<=  250: min[v-gamma_p a]=    -8.04   min[v-a/(p^2-1)]= -0.26 (a=249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.61   max v=1
+   a<=  500: min[v-gamma_p a]=   -16.11   min[v-a/(p^2-1)]= -0.52 (a=499)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.81   max v=1
+   a<= 1000: min[v-gamma_p a]=   -32.26   min[v-a/(p^2-1)]= -1.04 (a=999)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.01   max v=2
+   a<= 2000: min[v-gamma_p a]=   -64.55   min[v-a/(p^2-1)]= -2.08 (a=1999)   min[v-sum_k floor(a/p^2k)]= -2   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.21   max v=2
+   a<= 3000: min[v-gamma_p a]=   -96.84   min[v-a/(p^2-1)]= -3.12 (a=2999)   min[v-sum_k floor(a/p^2k)]= -3   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.33   max v=2
+   a<= 4000: min[v-gamma_p a]=  -129.13   min[v-a/(p^2-1)]= -4.17 (a=3999)   min[v-sum_k floor(a/p^2k)]= -4   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.42   max v=2
+   a<= 6000: min[v-gamma_p a]=  -193.72   min[v-a/(p^2-1)]= -6.25 (a=5999)   min[v-sum_k floor(a/p^2k)]= -6   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.53   max v=2
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=-0.00000; #(v=0) 2924/2999; v_p(c_a)=v-v_p(a!): min over all a = -199
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 48.5 | 1.6 | 49); (3001: 0 | 96.9 | 3.1 | 99); (5999: 0 | 193.7 | 6.2 | 199)
+
+## Curve C2 g2=-4,g3=7/2  (non-CM): Delta = -1579/4
+nonzero D^a sigma(0): a in {1, 5, 7, 9, 11, 13, ...}, count 2999
+p= 5 a_p= -3 ordinary      gamma_p=0.20833 1/(p^2-1)=0.04167
+   a<=  100: min[v-gamma_p a]=   -20.62   min[v-a/(p^2-1)]= -4.12 (a=99)   min[v-sum_k floor(a/p^2k)]= -3   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.86   max v=1
+   a<=  250: min[v-gamma_p a]=   -51.88   min[v-a/(p^2-1)]=-10.38 (a=249)   min[v-sum_k floor(a/p^2k)]= -9   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 3.43   max v=1
+   a<=  500: min[v-gamma_p a]=  -103.96   min[v-a/(p^2-1)]=-20.79 (a=499)   min[v-sum_k floor(a/p^2k)]=-19   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 3.86   max v=1
+   a<= 1000: min[v-gamma_p a]=  -208.12   min[v-a/(p^2-1)]=-41.62 (a=999)   min[v-sum_k floor(a/p^2k)]=-40   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 4.29   max v=1
+   a<= 2000: min[v-gamma_p a]=  -416.46   min[v-a/(p^2-1)]=-83.29 (a=1999)   min[v-sum_k floor(a/p^2k)]=-82   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 4.72   max v=1
+   a<= 3000: min[v-gamma_p a]=  -624.79   min[v-a/(p^2-1)]=-124.96 (a=2999)   min[v-sum_k floor(a/p^2k)]=-123   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 4.97   max v=1
+   a<= 4000: min[v-gamma_p a]=  -833.12   min[v-a/(p^2-1)]=-166.62 (a=3999)   min[v-sum_k floor(a/p^2k)]=-165   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 5.15   max v=1
+   a<= 6000: min[v-gamma_p a]= -1249.79   min[v-a/(p^2-1)]=-249.96 (a=5999)   min[v-sum_k floor(a/p^2k)]=-248   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 5.41   max v=1
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=-0.00000; #(v=0) 2700/2999; v_p(c_a)=v-v_p(a!): min over all a = -1495
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 312.7 | 62.5 | 374); (3001: 0 | 625.2 | 125.0 | 748); (5999: 0 | 1249.8 | 250.0 | 1495)
+p= 7 a_p= +0 SUPERSINGULAR gamma_p=0.14583 1/(p^2-1)=0.02083
+   a<=  100: min[v-gamma_p a]=   -13.15   min[v-a/(p^2-1)]= -1.02 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 2.37   max v=5
+   a<=  250: min[v-gamma_p a]=   -31.31   min[v-a/(p^2-1)]= -1.02 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 2.84   max v=7
+   a<=  500: min[v-gamma_p a]=   -62.31   min[v-a/(p^2-1)]= -1.19 (a=489)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  5   log_p A= 3.19   max v=13
+   a<= 1000: min[v-gamma_p a]=  -124.81   min[v-a/(p^2-1)]= -1.35 (a=881)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  5   log_p A= 3.55   max v=23
+   a<= 2000: min[v-gamma_p a]=  -250.65   min[v-a/(p^2-1)]= -1.69 (a=1665)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  6   log_p A= 3.91   max v=45
+   a<= 3000: min[v-gamma_p a]=  -374.48   min[v-a/(p^2-1)]= -1.85 (a=2057)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  6   log_p A= 4.11   max v=64
+   a<= 4000: min[v-gamma_p a]=  -500.31   min[v-a/(p^2-1)]= -1.85 (a=2057)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  6   log_p A= 4.26   max v=85
+   a<= 6000: min[v-gamma_p a]=  -750.56   min[v-a/(p^2-1)]= -2.02 (a=4801)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  6   log_p A= 4.47   max v=127
+   tail a in (3000,6000]: min v/a=0.02041, LSQ slope dv/da=0.02097; #(v=0) 8/2999; v_p(c_a)=v-v_p(a!): min over all a = -873
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 32 | 218.9 | 31.3 | 248); (3001: 62 | 437.6 | 62.5 | 498); (5999: 125 | 874.9 | 125.0 | 998)
+p=11 a_p= -1 ordinary      gamma_p=0.09167 1/(p^2-1)=0.00833
+   a<=  100: min[v-gamma_p a]=    -9.07   min[v-a/(p^2-1)]= -0.82 (a=99)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.92   max v=2
+   a<=  250: min[v-gamma_p a]=   -22.82   min[v-a/(p^2-1)]= -2.08 (a=249)   min[v-sum_k floor(a/p^2k)]= -2   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.30   max v=2
+   a<=  500: min[v-gamma_p a]=   -45.74   min[v-a/(p^2-1)]= -4.16 (a=499)   min[v-sum_k floor(a/p^2k)]= -4   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.59   max v=2
+   a<= 1000: min[v-gamma_p a]=   -91.58   min[v-a/(p^2-1)]= -8.32 (a=999)   min[v-sum_k floor(a/p^2k)]= -8   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.88   max v=3
+   a<= 2000: min[v-gamma_p a]=  -183.24   min[v-a/(p^2-1)]=-16.66 (a=1999)   min[v-sum_k floor(a/p^2k)]=-16   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.17   max v=5
+   a<= 3000: min[v-gamma_p a]=  -274.91   min[v-a/(p^2-1)]=-24.99 (a=2999)   min[v-sum_k floor(a/p^2k)]=-24   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.34   max v=5
+   a<= 4000: min[v-gamma_p a]=  -366.57   min[v-a/(p^2-1)]=-33.33 (a=3999)   min[v-sum_k floor(a/p^2k)]=-33   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.46   max v=5
+   a<= 6000: min[v-gamma_p a]=  -549.91   min[v-a/(p^2-1)]=-49.99 (a=5999)   min[v-sum_k floor(a/p^2k)]=-49   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 3.63   max v=5
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=0.00000; #(v=0) 2780/2999; v_p(c_a)=v-v_p(a!): min over all a = -598
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 137.6 | 12.5 | 149); (3001: 0 | 275.1 | 25.0 | 298); (5999: 0 | 549.9 | 50.0 | 598)
+p=13 a_p= +0 SUPERSINGULAR gamma_p=0.07738 1/(p^2-1)=0.00595
+   a<=  100: min[v-gamma_p a]=    -7.66   min[v-a/(p^2-1)]= -0.59 (a=99)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.80   max v=2
+   a<=  250: min[v-gamma_p a]=   -17.96   min[v-a/(p^2-1)]= -0.92 (a=155)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.15   max v=3
+   a<=  500: min[v-gamma_p a]=   -35.99   min[v-a/(p^2-1)]= -1.01 (a=337)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.42   max v=4
+   a<= 1000: min[v-gamma_p a]=   -72.30   min[v-a/(p^2-1)]= -1.01 (a=337)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.69   max v=7
+   a<= 2000: min[v-gamma_p a]=  -142.68   min[v-a/(p^2-1)]= -1.05 (a=1689)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 2.96   max v=13
+   a<= 3000: min[v-gamma_p a]=  -214.91   min[v-a/(p^2-1)]= -1.09 (a=2703)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 3.12   max v=19
+   a<= 4000: min[v-gamma_p a]=  -285.45   min[v-a/(p^2-1)]= -1.12 (a=3717)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 3.23   max v=25
+   a<= 6000: min[v-gamma_p a]=  -428.21   min[v-a/(p^2-1)]= -1.20 (a=5745)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  4   log_p A= 3.39   max v=37
+   tail a in (3000,6000]: min v/a=0.00559, LSQ slope dv/da=0.00594; #(v=0) 32/2999; v_p(c_a)=v-v_p(a!): min over all a = -462
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 9 | 116.1 | 8.9 | 123); (3001: 17 | 232.2 | 17.9 | 248); (5999: 36 | 464.2 | 35.7 | 498)
+p=17 a_p= +1 ordinary      gamma_p=0.05903 1/(p^2-1)=0.00347
+   a<=  100: min[v-gamma_p a]=    -5.84   min[v-a/(p^2-1)]= -0.34 (a=99)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.63   max v=1
+   a<=  250: min[v-gamma_p a]=   -14.58   min[v-a/(p^2-1)]= -0.86 (a=247)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.95   max v=1
+   a<=  500: min[v-gamma_p a]=   -29.45   min[v-a/(p^2-1)]= -1.73 (a=499)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.19   max v=1
+   a<= 1000: min[v-gamma_p a]=   -58.97   min[v-a/(p^2-1)]= -3.47 (a=999)   min[v-sum_k floor(a/p^2k)]= -3   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.44   max v=2
+   a<= 2000: min[v-gamma_p a]=  -118.00   min[v-a/(p^2-1)]= -6.94 (a=1999)   min[v-sum_k floor(a/p^2k)]= -6   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.68   max v=3
+   a<= 3000: min[v-gamma_p a]=  -177.02   min[v-a/(p^2-1)]=-10.41 (a=2999)   min[v-sum_k floor(a/p^2k)]=-10   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.83   max v=3
+   a<= 4000: min[v-gamma_p a]=  -236.05   min[v-a/(p^2-1)]=-13.89 (a=3999)   min[v-sum_k floor(a/p^2k)]=-13   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.93   max v=3
+   a<= 6000: min[v-gamma_p a]=  -354.11   min[v-a/(p^2-1)]=-20.83 (a=5999)   min[v-sum_k floor(a/p^2k)]=-20   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 3.07   max v=3
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=-0.00000; #(v=0) 2779/2999; v_p(c_a)=v-v_p(a!): min over all a = -373
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 88.6 | 5.2 | 93); (3001: 0 | 177.1 | 10.4 | 186); (5999: 0 | 354.1 | 20.8 | 373)
+p=19 a_p= +4 ordinary      gamma_p=0.05278 1/(p^2-1)=0.00278
+   a<=  100: min[v-gamma_p a]=    -5.22   min[v-a/(p^2-1)]= -0.28 (a=99)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.56   max v=1
+   a<=  250: min[v-gamma_p a]=   -13.14   min[v-a/(p^2-1)]= -0.69 (a=249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.88   max v=1
+   a<=  500: min[v-gamma_p a]=   -26.34   min[v-a/(p^2-1)]= -1.39 (a=499)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.11   max v=1
+   a<= 1000: min[v-gamma_p a]=   -52.73   min[v-a/(p^2-1)]= -2.77 (a=999)   min[v-sum_k floor(a/p^2k)]= -2   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.35   max v=1
+   a<= 2000: min[v-gamma_p a]=  -105.50   min[v-a/(p^2-1)]= -5.55 (a=1999)   min[v-sum_k floor(a/p^2k)]= -5   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.58   max v=1
+   a<= 3000: min[v-gamma_p a]=  -158.28   min[v-a/(p^2-1)]= -8.33 (a=2999)   min[v-sum_k floor(a/p^2k)]= -8   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.72   max v=2
+   a<= 4000: min[v-gamma_p a]=  -211.06   min[v-a/(p^2-1)]=-11.11 (a=3999)   min[v-sum_k floor(a/p^2k)]=-11   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.82   max v=2
+   a<= 6000: min[v-gamma_p a]=  -316.61   min[v-a/(p^2-1)]=-16.66 (a=5999)   min[v-sum_k floor(a/p^2k)]=-16   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.95   max v=2
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=-0.00000; #(v=0) 2894/2999; v_p(c_a)=v-v_p(a!): min over all a = -331
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 79.2 | 4.2 | 83); (3001: 2 | 158.4 | 8.3 | 165); (5999: 0 | 316.6 | 16.7 | 331)
+p=23 a_p= +0 SUPERSINGULAR gamma_p=0.04356 1/(p^2-1)=0.00189
+   a<=  100: min[v-gamma_p a]=    -4.23   min[v-a/(p^2-1)]= -0.18 (a=97)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.47   max v=2
+   a<=  250: min[v-gamma_p a]=   -10.85   min[v-a/(p^2-1)]= -0.47 (a=249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.76   max v=2
+   a<=  500: min[v-gamma_p a]=   -20.95   min[v-a/(p^2-1)]= -0.91 (a=481)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.98   max v=2
+   a<= 1000: min[v-gamma_p a]=   -41.91   min[v-a/(p^2-1)]= -0.96 (a=505)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.20   max v=3
+   a<= 2000: min[v-gamma_p a]=   -84.08   min[v-a/(p^2-1)]= -1.00 (a=1057)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.42   max v=5
+   a<= 3000: min[v-gamma_p a]=  -125.20   min[v-a/(p^2-1)]= -1.00 (a=1057)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.55   max v=7
+   a<= 4000: min[v-gamma_p a]=  -167.20   min[v-a/(p^2-1)]= -1.01 (a=3173)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.65   max v=9
+   a<= 6000: min[v-gamma_p a]=  -249.36   min[v-a/(p^2-1)]= -1.02 (a=5289)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  3   log_p A= 2.77   max v=13
+   tail a in (3000,6000]: min v/a=0.00158, LSQ slope dv/da=0.00191; #(v=0) 112/2999; v_p(c_a)=v-v_p(a!): min over all a = -259
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 3 | 65.4 | 2.8 | 67); (3001: 5 | 130.7 | 5.7 | 135); (5999: 12 | 261.3 | 11.4 | 271)
+p=29 a_p= +2 ordinary      gamma_p=0.03452 1/(p^2-1)=0.00119
+   a<=  100: min[v-gamma_p a]=    -3.42   min[v-a/(p^2-1)]= -0.12 (a=99)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.37   max v=1
+   a<=  250: min[v-gamma_p a]=    -8.60   min[v-a/(p^2-1)]= -0.30 (a=249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.64   max v=2
+   a<=  500: min[v-gamma_p a]=   -17.23   min[v-a/(p^2-1)]= -0.59 (a=499)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 1.85   max v=2
+   a<= 1000: min[v-gamma_p a]=   -34.49   min[v-a/(p^2-1)]= -1.19 (a=999)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.05   max v=2
+   a<= 2000: min[v-gamma_p a]=   -69.01   min[v-a/(p^2-1)]= -2.38 (a=1999)   min[v-sum_k floor(a/p^2k)]= -2   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.26   max v=2
+   a<= 3000: min[v-gamma_p a]=  -103.54   min[v-a/(p^2-1)]= -3.57 (a=2999)   min[v-sum_k floor(a/p^2k)]= -3   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.38   max v=2
+   a<= 4000: min[v-gamma_p a]=  -138.06   min[v-a/(p^2-1)]= -4.76 (a=3999)   min[v-sum_k floor(a/p^2k)]= -4   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.46   max v=2
+   a<= 6000: min[v-gamma_p a]=  -207.11   min[v-a/(p^2-1)]= -7.14 (a=5999)   min[v-sum_k floor(a/p^2k)]= -7   max[v-sum_k floor(a/p^2k)]=  2   log_p A= 2.58   max v=2
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=0.00000; #(v=0) 2896/2999; v_p(c_a)=v-v_p(a!): min over all a = -213
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 51.8 | 1.8 | 52); (3001: 0 | 103.6 | 3.6 | 106); (5999: 0 | 207.1 | 7.1 | 213)
+p=31 a_p= -9 ordinary      gamma_p=0.03229 1/(p^2-1)=0.00104
+   a<=  100: min[v-gamma_p a]=    -3.20   min[v-a/(p^2-1)]= -0.10 (a=99)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.34   max v=1
+   a<=  250: min[v-gamma_p a]=    -8.04   min[v-a/(p^2-1)]= -0.26 (a=249)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.61   max v=1
+   a<=  500: min[v-gamma_p a]=   -16.11   min[v-a/(p^2-1)]= -0.52 (a=499)   min[v-sum_k floor(a/p^2k)]=  0   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 1.81   max v=1
+   a<= 1000: min[v-gamma_p a]=   -32.26   min[v-a/(p^2-1)]= -1.04 (a=999)   min[v-sum_k floor(a/p^2k)]= -1   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.01   max v=1
+   a<= 2000: min[v-gamma_p a]=   -64.55   min[v-a/(p^2-1)]= -2.08 (a=1999)   min[v-sum_k floor(a/p^2k)]= -2   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.21   max v=2
+   a<= 3000: min[v-gamma_p a]=   -96.84   min[v-a/(p^2-1)]= -3.12 (a=2999)   min[v-sum_k floor(a/p^2k)]= -3   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.33   max v=2
+   a<= 4000: min[v-gamma_p a]=  -129.13   min[v-a/(p^2-1)]= -4.17 (a=3999)   min[v-sum_k floor(a/p^2k)]= -4   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.42   max v=2
+   a<= 6000: min[v-gamma_p a]=  -193.72   min[v-a/(p^2-1)]= -6.25 (a=5999)   min[v-sum_k floor(a/p^2k)]= -6   max[v-sum_k floor(a/p^2k)]=  1   log_p A= 2.53   max v=2
+   tail a in (3000,6000]: min v/a=0.00000, LSQ slope dv/da=0.00000; #(v=0) 2888/2999; v_p(c_a)=v-v_p(a!): min over all a = -199
+   rows (a: v_p(D^a sigma(0)) | claimed gamma_p a | a/(p^2-1) | v_p(a!)): (1501: 0 | 48.5 | 1.6 | 49); (3001: 0 | 96.9 | 3.1 | 99); (5999: 0 | 193.7 | 6.2 | 199)
+
+# total time 84.2s

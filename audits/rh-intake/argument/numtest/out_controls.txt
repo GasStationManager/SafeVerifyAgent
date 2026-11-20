@@ -1,0 +1,8 @@
+vp() agrees with naive division on 2000 random cases
+curve A p=7: #a whose v_p changed after perturbing a_(3,0): 26; #a violating v >= sum floor(a/p^2k) after perturbation: 0
+curve A p=11: #a whose v_p changed after perturbing a_(3,0): 135; #a violating v >= sum floor(a/p^2k) after perturbation: 17
+curve A p=13: #a whose v_p changed after perturbing a_(3,0): 1; #a violating v >= sum floor(a/p^2k) after perturbation: 333
+curve C p=7: #a whose v_p changed after perturbing a_(3,0): 82; #a violating v >= sum floor(a/p^2k) after perturbation: 0
+curve C p=11: #a whose v_p changed after perturbing a_(3,0): 117; #a violating v >= sum floor(a/p^2k) after perturbation: 683
+curve C p=13: #a whose v_p changed after perturbing a_(3,0): 221; #a violating v >= sum floor(a/p^2k) after perturbation: 8
+brief's recursion variant a_{m-1,n+1}: non-integral at ((3, 0), Fraction(-385, 3))
