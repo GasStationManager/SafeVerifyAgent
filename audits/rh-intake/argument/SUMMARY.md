@@ -1,110 +1,126 @@
-# The argument, as reconstructed from the Lean source (checkpoint 1)
+# The argument, as reconstructed from the Lean source (checkpoint 2)
 
-Artifact: alpo.ge `lean.tar.gz`, SHA-256 `9631b4f0…49c7fc`. Method: `PROTOCOL.md`. Fifteen
-explainer nodes and one reviewer, each a separate agent reading source; nothing compiled.
-Every statement below is "the Lean says, as read by one agent" unless marked otherwise.
-Only the root was put through a reviewer; the other nodes were cross-checked only where
-sibling explainers overlapped (five corrections, listed in §4).
+Artifact: alpo.ge `lean.tar.gz`, SHA-256 `9631b4f0…49c7fc`. Method: `PROTOCOL.md`.
+Twenty-seven explainer nodes and two reviewers (`REVIEW-ROOT`, `REVIEW-TWU`), each a
+separate agent reading source; nothing compiled. Every statement is "the Lean says, as
+read by one agent" unless marked *(inferred)*. "Proved" means a proof term exists in the
+tree, not that it was checked to compile. Corrections between nodes are in §5.
 
-**Status: no defect found; the argument has a coherent architecture; its two
-load-bearing theorems have been located and stated but not read to the bottom.**
+**Status: no defect found in any node. The argument is a coherent slope-method proof
+whose mechanism has been identified and whose normalisations match on both sides. Its
+correctness now rests on a short list of in-tree theorems (§4), three of which are
+stronger than anything in the literature known to the readers, and whose decisive
+estimates have not been read.**
 
-## 1. Outline
+## 1. The mechanism in one paragraph *(synthesis)*
 
-Target: L(s, χ) ≠ 0 for Re s > 1/2, every Dirichlet χ (`EveryCharacter`).
+Take high-order Taylor derivatives of CM theta functions (reduced sigma functions σ* of
+a lattice with Δ = 1, CM by ℚ(√−d)). At a prime p inert in ℚ(√−d) the curve is
+supersingular; in the height-2 Lubin–Tate coordinate σ* is an integral series times a
+Dwork-type exponential, so an a-th derivative is divisible by
+v_p(a!) − a/(p²−1) − (#factors) ≈ γ_p·a, γ_p = p/(p²−1) = Σ_{e odd} p^{−e}. Summed over
+inert primes this is the inert half of Chebyshev's log a! = Σ Λ(n)⌊a/n⌋. At infinity,
+Cauchy estimates in Fock space bound the derivative by ph(a) − a·logΩ, with
+logΩ = γ + log(π/v) − L′/L(1,χ_d) the (averaged) Chowla–Selberg period, which already
+contains the limit of the split half. Caps coming from pluriharmonic column minors turn
+the count into Σ Λ(n)(1−χ(n))(a/n − w)₊, a Riesz mean localised at n ≈ x. The comparison
+is made not for one number but for lattices of forms, through Bost's slope inequality,
+along a chain of m ≈ √x theta lifts; the error has the shape x/m + m. The resulting
+one-sided bound Gm(x) ≤ x^{1/2+O(ε)} on windows gives zero-freeness by a windowed
+Landau theorem.
 
-1. **Landau on windows** (NODE-LANDAU). For primitive ψ let
-   Gm(y) = Gz(y) + Σ_{χ ∈ ⟨ψ⟩, χ≠1} (3o+1)⁻¹ Re g_χ(y), with
-   Gz(y) = Σ_{n≤y} Λ(n)(y/n − 1) − y log y + (1+γ)y and
-   g_χ(y) = Σ_{n≤y} Λ(n)χ(n)(y/n − 1) + y·L′/L(1,χ).
-   If Gm(x) ≤ x^θ on windows [Y, Y^{3/2}] for arbitrarily large Y, no character in the
-   level has a zero with Re s > θ. One-sided, windowed, Taylor-coefficient form of
-   Landau's theorem; positivity is of the kernel and of the weights, not of coefficients.
-2. **Reduction to a prime count** (NODE-COREGM). An exact identity turns
-   "Gm(x) ≤ x^{1/2+O(ε)}" into "ASK ≤ MAIN + error", ASK a weighted count of prime powers
-   p^e (e odd) inert in a quadratic subfield of an auxiliary field. The exponent 1/2 is a
-   parameter balance x/m + m at m ≈ √x, m the number of lifts.
-3. **Host fields** (NODE-HOSTS, NODE-PAIRGOOD). For every large window there is an abelian
-   CM field E ⊃ ℚ(√−q, √−d), degree ≍ x^{2+8ε}, with q, d enormous (log q ≈ Y^{ε/5}) chosen
-   by zero-density, mean-square and Markov so that the twists of the level by (·/q), (·/d)
-   satisfy a square-root bound at the single point y = x. Unconditional; no circularity.
-4. **Slope method** (NODE-SLOPE, NODE-FAMILY, NODE-LOSS, NODE-SLOPESN, NODE-DIV). Over E:
-   lattices M_u of p-adic/integral algebraic modular forms on unitary groups, a target
-   lattice RR, Bessel-period pairings B_u. The "gain" at an inert p is *defined* as the
-   prime count (Legendre-type exponent γ_p = p/(p²−1) = Σ_{e odd} p^{−e}); the lattice is
-   *defined* as N_u = ∏ 𝔭^{−gain}·NuLat_u; so its slope is μ(M_u) + gain by construction.
-   A proved slope inequality bounds the mean slope of the N_u by the slope of RR^∨ plus
-   the height of B_u, provided **B_u(N_u) ⊆ RR^∨**. A degree computation bounds that by
-   MAIN. Hence count ≤ MAIN + error.
-5. **The two theorems that carry it.**
-   - **(P) Period divisibility** (NODE-ROWSU, NODE-TWU). B_u(N_u) ⊆ RR^∨ unwinds to: every
-     Bessel period of every form in NuLat_u is divisible by 𝔭^{⌊e·Σ gain⌋} at each inert
-     place. Supplied by: the m-fold chain of theta-lift steps maps the Hecke-generated
-     lattice into ϖ^{Σgain − τ}·Int, from (a) coefficient bounds for theta kernels via a
-     Dwork exponential in a height-2 Lubin–Tate parameter, (b) "kernel commutation": the
-     chain carries a Hecke operator to a Hecke polynomial one level down, each step gaining
-     γ_p·Σa, (c) a proved colength bound showing the lattice is p^τ·M up to rank·x^{−ε}.
-   - **(V) Uniform arithmetic volume** (NODE-COVOL, NODE-HS). (1/D)·log covol of integral
-     cusp forms of given vector weight on unitary Shimura varieties of signature
-     (k+i, m−i−1) is ≤ (p−q)·Σ w·logΩ + error, logΩ = γ + log(π/v) − L′/L(1,χ_d) the
-     Chowla–Selberg period, uniformly over all hosts. Supplied by an in-tree *effective*
-     slope bound at a single tensor power (not the asymptotic Hilbert–Samuel theorem,
-     which is also in the tree but not used here) and a uniform volume theorem
-     `VolumeTheoremX` with one constant for all CM fields, levels and towers.
-6. **Host admissibility needs a Selmer bound** (NODE-VWIN). `VWin`: for the fields E,
-   Σ_l Σ_{k < x^401} log #Ш¹(G_{E,S_l}, ℚ_l/ℤ_l(−k)) ≤ exp(x^ε/2). Minus part by a
-   main-conjecture-shaped bound; plus part by Eisenstein–cusp congruences on U(3), using
-   Galois representations for GL₃ over imaginary quadratic fields (constructed in the tree
-   by a theta lift).
+## 2. The chain, node by node
 
-## 2. How this compares with the author's note
-
-Matches: Stepanov-style multiplicity balance at √x; multiplicity won per theta lift
-between definite unitary groups; Legendre-type divisibility at inert primes; Bessel
-periods; a slope inequality; Chowla–Selberg; a Vandiver-flavoured cohomological input;
-resolution of singularities and Hilbert–Samuel in the positivity package.
-Not located: "Behrend", "Iwasawa tower by pigeonhole", "relative trace formula", the
-"sixfold cover of GL₅". They may sit below the depth reached.
-
-## 3. Open nodes, ranked by how much rests on them
-
-| # | node | why it matters | read so far |
+| # | step | node(s) | reading |
 |---|---|---|---|
-| 1 | `stmt_proved` and the 13-clause `admitted` package, incl. "the chain map is a sum of theta-kernel integrals" (`FormalGroupSystem.lean:566-771`, `PrvAndKernelCommutation…:107`) | the whole of (P) | skeleton only |
-| 2 | `VolumeTheoremX` / `final_theorem_of_inputs_right` (`GoodTowerExistsX.lean:28`) | uniformity in (V); not a published theorem | statement only |
-| 3 | `SlopeBound` / `slopeLowerBound_topLattice_offHypersurface` (`HermSysHypOneLeLambdaZero.lean:243`) | effective Hilbert–Samuel substitute in (V) | statement only |
-| 4 | nonvanishing and near-full rank of B_u on N_u (`LinkS`, `LinkIRR`, `InputSG`) | (P) is satisfied by B_u = 0; the slope inequality must exclude it for the *same* pairing | not opened |
-| 5 | `tuplesHaveLocalModels_of_standardColumnObjects` | ties local chain models to the global chain | not opened |
-| 6 | `OneCharU`, `CongruenceNumberRankThree` | upper bound on Ш⁺ from congruences, uniform in l and k; needs residually reducible R = T for U(3) | statements only |
-| 7 | `ThetaIntegralsAgree` / `theoremK_head2` | a twisted second-term identity with tower relations, not matched to one published theorem | statement only |
-| 8 | `landau_tails`, `meanSqK`/`twistK`, `joint_a_ramified_holds`, `BoundsMu` | believed standard; bodies unread | statements only |
+| 1 | Windowed one-sided Landau ⇒ no zeros Re s > 1/2 | LANDAU, REVIEW-ROOT | correct theorem (reader's judgement); four sub-lemma bodies unread |
+| 2 | Gm ≤ x^{1/2+} ⇔ ASK ≤ MAIN + err; ASK = Σ Λ(n)(1−χ(n))(a/n−w)₊ | COREGM, ACCOUNT | bookkeeping; `ch_balance` body unread |
+| 3 | Hosts E (abelian CM, degree x^{2+8ε}) with q, d by zero-density + mean square | HOSTS, PAIRGOOD | unconditional; no circularity |
+| 4 | gain := count shape; N_u := 𝔭^{−gain}·NuLat_u; 11 clauses of `SizeData₂` | LOSS, FAMILY, SLOPESN, SLOPE | by definition / linear arithmetic |
+| 5 | \|gain − count\| ≤ slack | PAIRING | lower direction in Lean; upper direction by hand; worked at p = 7, 101 |
+| 6 | Slope inequality (Harder–Narasimhan layer cake + Bost) | RANK | correct theorem; no rank/degree error term, genuinely |
+| 7 | Period divisibility at inert places for the m-fold chain | ROWSU, TWU, REVIEW-TWU, LOCALDIV | correct local theorem; tight (hand check p = 7); Hecke part nets to zero |
+| 8 | σ* in LT coordinate = integral × Dwork exponential; scaling constant a unit | KERNELLAW | proved from recognisable mathematics |
+| 9 | Local chain = global chain completed at w; lattices preserved exactly | GLOBALCHAIN | by construction; no free scalar |
+| 10 | Same Θ, same Δ = 1 lattice, same period on p-adic and archimedean sides; no net power of p | SAMETHETA | yes, at the level of definitions and statements |
+| 11 | Archimedean height of the chain | HEIGHT | proved; polynomial losses; averaged Chowla–Selberg exact |
+| 12 | Theta-lift scalars λ_j ≥ hook product − small (Rallis; L-value in convergent range) | L6 | proved; exact hook term; seven premises discharged in-tree |
+| 13 | Degree clause DIV; two x^7·b terms cancel; needs (11) and (14) to relative x^{−4} | DIV, ACCOUNT | closes exactly at x^{1/2+O(ε)}; m-independent error is a parameter choice |
+| 14 | Covolume of cusp-form lattices: (p−q)·logΩ exact from flat sections, error ∝ q ≤ m | COVOL, HS, VOLUME | weak-but-sufficient lower slope bound; Zhang + Chowla–Selberg + Chow forms |
+| 15 | Hecke-image colength | COLENGTH | proved; half by definition (κ is an infimum); hand computation agrees on the a/p scale |
+| 16 | Near-tight frame of Bessel periods ("Theorem S") | THEOREMS, SLEAVES | every hypothesis discharged by a named theorem; decisive estimates unread |
+| 17 | Selmer-size bound `VWin` for host admissibility | VWIN | plausible statement; plus part via U(3) Eisenstein congruences |
+| 18 | Automorphic input record; theta second-term identity | THETA | consumed while building the record; not matched to one published theorem |
 
-## 4. Corrections made between nodes (kept, not smoothed)
+## 3. Sizes (ACCOUNT)
 
-- ROOT said the Landau step uses non-negative averaged coefficients. LANDAU and
-  REVIEW-ROOT: it does not; positivity is of the kernel and the weights.
-- LOSS found the only named divisibility clause instantiated with the zero chain map.
-  SLOPESN and TWU: that is the branch feeding the colength clause, where the chain is
-  irrelevant; the divisibility branch uses the family's own chain.
-- COREGM/THETA/HOSTS suspected the family's numerical data are free witnesses. FAMILY:
-  the datum is built over the host; the selector's `True` predicate is glue. But the 11
-  clauses of `SizeData₂` are empty on their own (`exists_data_completion`).
-- SLOPESN said `twU` is never constructed. ROWSU and TWU traced its supplier
-  (`hServ` ← `ServH` ← `RowTwU` ← `rowTwU_of_models`).
-- COVOL said the lower slope bound is an induction over layers. HS: top layer by
-  `LowDef`, every other layer by a single cover.
+b = e^{x^ε}; n ≈ x^{2+8ε}; m ≈ x^{1/2−ε/16}; k ≈ x^{9/2+10ε}; t ≈ x^{398}; weight a = x·b.
+Budget ≈ x^{3+O(ε)}·b. Two error families sit at the budget and balance at m ≈ √x; all
+other errors are inside it. √x enters only as the number of lifts.
 
-## 5. Escalations for an expert
+## 4. What the proof rests on that has not been read, ranked
 
-- **E5.** (P) as stated holds for the zero pairing. Confirm that the slope inequality's
-  rank/frame hypothesis is about the same B_u on the same N_u (open node 4).
-- **E6.** `VolumeTheoremX`: one constant for all unitary Shimura varieties in the family.
-  If true and proved here it is a major theorem in its own right; read its statement for
-  a quantifier or normalisation that makes it weaker than it looks.
-- **E7.** The slope inequality's error has no rank or field-degree term (NODE-SLOPE).
-- **E8.** `OneCharU`: Selmer upper bounds from Eisenstein congruences, uniform in l.
-- **E9.** Scales: b = exp(x^ε) and every "additive" error carries a factor b. All
-  comparisons are relative to b; an expert should check one chain of inequalities end to
-  end with actual magnitudes.
-- Smaller: `flat_tensor_swap_isIso` ignores its three premises; `entStd` has four zero
-  fields; `th : R.L.Sec := 0` in the geometric data; every `*_of_literature O` ignores `O`.
+| # | statement | why it is load-bearing | status |
+|---|---|---|---|
+| 1 | **Limit multiplicity with exponential precision**: dim of the level/character part of L²(U(k+r,r+1)) for a very regular discrete series equals formal degree × covolume to relative e^{−n f log n/16}, uniformly in rank (`CountingTheorem`; `DecGap`, `NonzeroFlagBound`) | gives near-surjectivity, hence that the comparison is not about a vanishing quantity | beyond the literature known to the readers; method standard (pre-trace formula); estimates unread; whether the family meets the required parameter gap n¹⁹·log b unchecked |
+| 2 | **Near-orthogonality of Bessel periods** to relative b⁻⁶ (`PairBound`; local saving `NGAt`; `NormBound`; `loopRowBounds_along_family_largeGaps`) | same | decisive lemmas unread |
+| 3 | **Per-edge rank bound** on Sym^A⊗Sym^{B∨} (`admB2`, `extendedClosedForm`) and the dropped-prime budget | the colength bound is true by construction; this is where a wrong local index would show | unopened; a factor-2 question on units (powers of √p vs p) unsettled |
+| 4 | **Selmer upper bound from Eisenstein congruences on U(3)**, uniform in l and k < x^401 (`OneCharU`, `CongruenceNumberRankThree`) | host admissibility | needs residually reducible R = T for U(3); unread |
+| 5 | `ThmB` (intersection numbers = vol × flag-variety height polynomial + linear form) and point-height bounds (`cusp_height_upper`); tie of the abstract tower to the Shimura variety | the lower slope bound (V) | unread |
+| 6 | Site identities `serAt_all`, `thetaSeries_scalar_bounded_of_pos_pair` (pays a negative p-power), `Dec.ScalAt` | kernel = Taylor(Θ) at each inert place | statements read, bodies not |
+| 7 | `first_kernel_law` leaves (`FourProd`, `StdStep`), `coboundary_exact`/`RestBeta` | integrality of Θ/∏σ* in higher rank | top level read |
+| 8 | Rallis inner product supplier, `fockVector_matrixCoefficient_formula`, Galois transport of λ to other places | exact hook main term | unread |
+| 9 | In-tree Siegel–Weil, doubling method, global Artin reciprocity, Chebotarev, resolution of singularities | standard, but each is a large formalisation in its own right | not opened |
+
+## 5. Corrections made between nodes (kept, not smoothed)
+
+- ROOT: Landau uses non-negative coefficients. LANDAU, REVIEW-ROOT: no; kernel and weights.
+- LOSS: the only divisibility clause is instantiated with the zero map. SLOPESN, TWU: that
+  is the colength branch; the divisibility branch uses the family's chain.
+- COREGM/THETA/HOSTS: family data may be free witnesses. FAMILY: built over the host;
+  but `SizeData₂` alone is empty (`exists_data_completion`).
+- SLOPESN: `twU` never constructed. ROWSU, TWU: supplier traced.
+- TWU: chain at w is the family's own. REVIEW-TWU: it is an existential model.
+  GLOBALCHAIN: the model is the global chain completed at w, lattices preserved.
+- TWU: τ small. REVIEW-TWU, PAIRING: τ is the size of the gain; paired off exactly.
+- GLOBALCHAIN: groups totally definite. THEOREMS, VOLUME: U(k+r, r+1) at real places;
+  definite only for the Bessel subgroup and the top layer.
+- THEOREMS: weight plays no part in Theorem S. SLEAVES: true for kernel bounds, false for
+  the dimension count, which needs a large Harish-Chandra gap.
+- COVOL: lower slope bound is an induction over layers. HS, VOLUME: per layer.
+- HS: `VolumeTheoremX` is a uniform volume formula. VOLUME: it has no main term; it is a
+  uniform lower bound, weak but sufficient.
+- VOLUME: signal looks smaller than DIV's error. ACCOUNT: closes once normalisations are
+  followed.
+- ACCOUNT: gain − count may be unbounded above. PAIRING: bounded by the slack.
+- ACCOUNT guess that √x comes from caps (it was the brief's): no, only from m.
+- LOCALDIV vs KERNELLAW on p^{expG}. SAMETHETA: cancels exactly; no uncharged division.
+- PAIRING E-PAIR-1 (a wrong index would falsify the colength lemma). COLENGTH: mis-aimed;
+  κ is an infimum, a wrong index would instead drop primes via `admB2`/`Conclusion2`.
+- Three first-draft briefs were wrong and were corrected by the nodes: the "Hodge
+  average a/2" model (COLENGTH: a/q after summing over neighbours), the "class-set"
+  model of Theorem S (SLEAVES), and the caps guess above.
+
+## 6. Escalations for an expert, in order
+
+- **E10.** §4 row 1: is an exponentially precise, rank-uniform limit-multiplicity
+  statement for U(p,q) with q² ≤ n and Harish-Chandra gap ≥ C·n¹⁹f⁵·log(b·rd) true, and
+  does the constructed family have that gap?
+- **E11.** §4 row 2, in particular the local lemma giving q_p^{−(k−2r−5)} at non-generic
+  places.
+- **E-TWU-1.** The bare claim: m theta-lift steps send every integral weight-a form to
+  periods divisible by Σ_{e odd} max(0, a/p^e − w). Test m = 1, small rank, by computer.
+- **E8.** `OneCharU`.
+- **E12.** The colength units question (t in powers of √p, τ in powers of p).
+- **E6 (closed).** `VolumeTheoremX` is weaker than it sounded. **E7 (closed).** No rank
+  term in the slope inequality is correct. **E5 (closed conditionally).** B_u = 0 is
+  excluded by the frame hypothesis, i.e. by rows 1–2. **E9 (closed).** Sizes close.
+- Nonvanishing of the iterated lift is nowhere asserted directly; it follows only from
+  rows 1–2. L6 gives λ_j > 0 only on non-empty type parts.
+
+## 7. What this pass does not show
+
+That the source compiles; that any unread proof body is what its statement suggests;
+that the readers' judgements of "recognisable" and "plausible" are right. Not located
+from the author's note: "Behrend", the pigeonhole Iwasawa tower, the sixfold cover of
+GL₅. Scripts from COLENGTH's hand computation are in `colen/`.
