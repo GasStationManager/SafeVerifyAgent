@@ -1,0 +1,10 @@
+unperturbed     : v-EMP in [  -2.33,    3.25] mean    0.12;  #(v < LB) = 0 of 2200
+Phi_12 += 1     : v-EMP in [  -2.33,    3.58] mean   -0.14;  #(v < LB) = 0 of 2200
+Phi_200 += 1    : v-EMP in [ -82.50,    3.25] mean  -27.52;  #(v < LB) = 1540 of 2200
+Phi_400 += 1    : v-EMP in [ -58.50,    3.25] mean  -19.86;  #(v < LB) = 790 of 2200
+Phi_400 += 7^20 : v-EMP in [ -38.50,    3.25] mean  -12.67;  #(v < LB) = 790 of 2200
+scrambled units : v-EMP in [  -2.33,    3.25] mean    0.06;  #(v < LB) = 0 of 2200
+
+Z[w], p = 5, a < 300, b <= 40: v - EMP by regime (capped: b < a/p; plateau: b >= a/p)
+unperturbed     : capped [-2.25, 3.75] mean -0.25;  plateau [-3.25, 5.50] mean -0.80;  identical v: 1964/1964
+scrambled units : capped [-2.50, 4.25] mean -0.34;  plateau [-3.25, 5.50] mean -0.81;  identical v: 1650/1964

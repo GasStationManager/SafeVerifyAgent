@@ -1,0 +1,29 @@
+== unperturbed
+Z[i] g2=4,g3=0     p= 5 h=2: brute-force mismatches 0/455; symmetry mismatches 0/225
+Z[i] g2=4,g3=0     p= 7 h=0: brute-force mismatches 0/455; symmetry mismatches 0/225
+Z[i] g2=4,g3=0     p=13 h=1: brute-force mismatches 0/455; symmetry mismatches 0/225
+Z[i] g2=4,g3=0     b=1 slice vs zeta(w)-1/w from wp recursion: mismatches 0
+Z[w] g2=0,g3=4     p= 5 h=0: brute-force mismatches 0/455; symmetry mismatches 0/225
+Z[w] g2=0,g3=4     p= 7 h=2: brute-force mismatches 0/455; symmetry mismatches 0/225
+Z[w] g2=0,g3=4     p=13 h=1: brute-force mismatches 0/455; symmetry mismatches 0/225
+Z[w] g2=0,g3=4     b=1 slice vs zeta(w)-1/w from wp recursion: mismatches 0
+C g2=-10,g3=7/2    p= 5 h=0: brute-force mismatches 0/455; symmetry mismatches 0/225
+C g2=-10,g3=7/2    p= 7 h=0: brute-force mismatches 0/455; symmetry mismatches 0/225
+C g2=-10,g3=7/2    p=13 h=0: brute-force mismatches 0/455; symmetry mismatches 0/225
+C g2=-10,g3=7/2    b=1 slice vs zeta(w)-1/w from wp recursion: mismatches 0
+ALL OK
+
+== perturbation control: Phi_12 += 1 in the engine only
+Z[i] g2=4,g3=0     p= 5 h=2: brute-force mismatches 90/455; symmetry mismatches 0/225
+Z[i] g2=4,g3=0     p= 7 h=0: brute-force mismatches 90/455; symmetry mismatches 0/225
+Z[i] g2=4,g3=0     p=13 h=1: brute-force mismatches 90/455; symmetry mismatches 0/225
+Z[i] g2=4,g3=0     b=1 slice vs zeta(w)-1/w from wp recursion: mismatches 0
+Z[w] g2=0,g3=4     p= 5 h=0: brute-force mismatches 64/455; symmetry mismatches 0/225
+Z[w] g2=0,g3=4     p= 7 h=2: brute-force mismatches 64/455; symmetry mismatches 0/225
+Z[w] g2=0,g3=4     p=13 h=1: brute-force mismatches 64/455; symmetry mismatches 0/225
+Z[w] g2=0,g3=4     b=1 slice vs zeta(w)-1/w from wp recursion: mismatches 0
+C g2=-10,g3=7/2    p= 5 h=0: brute-force mismatches 168/455; symmetry mismatches 0/225
+C g2=-10,g3=7/2    p= 7 h=0: brute-force mismatches 168/455; symmetry mismatches 0/225
+C g2=-10,g3=7/2    p=13 h=0: brute-force mismatches 168/455; symmetry mismatches 0/225
+C g2=-10,g3=7/2    b=1 slice vs zeta(w)-1/w from wp recursion: mismatches 0
+failures detected, as they must be

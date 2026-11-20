@@ -115,8 +115,8 @@ other errors are inside it. √x enters only as the number of lifts.
   places.
 - **E-TWU-1.** The bare claim: m theta-lift steps send every integral weight-a form to
   periods divisible by Σ_{e odd} max(0, a/p^e − w). One-variable extremes tested and
-  confirmed (NODE-NUMTEST and its addendum); the capped two-variable case
-  (Eisenstein–Kronecker numbers e*_{a,b}, b ≤ w ≪ a) is the test still to run.
+  confirmed (NODE-NUMTEST and its addendum); the capped two-variable rank-one case
+  confirmed as a lower bound, not tight (NODE-NUMTEST2). Higher rank untested.
 - **E8.** `OneCharU`.
 - **E12.** The colength units question (t in powers of √p, τ in powers of p).
 - **E6 (closed).** `VolumeTheoremX` is weaker than it sounded. **E7 (closed).** No rank
@@ -136,7 +136,8 @@ GL₅. Scripts from COLENGTH's hand computation are in `colen/`.
 
 | node | result |
 |---|---|
-| NUMTEST (+ addendum) | First non-reading evidence. Exact computation to order 6000: for ℘ (no Gaussian factor) v_p of the a-th Laurent derivative has slope γ_p = p/(p²−1) to three decimals at inert p, O(log a) defect, no gain at split/ordinary p. For σ (all Gaussian factors) the gain is only a/(p²−1). Both extremes of the Lean's formula confirmed; the summary's earlier wording was wrong (fixed in §1). Capped two-variable case: NUMTEST2, pending. |
+| NUMTEST (+ addendum) | First non-reading evidence. Exact computation to order 6000: for ℘ (no Gaussian factor) v_p of the a-th Laurent derivative has slope γ_p = p/(p²−1) to three decimals at inert p, O(log a) defect, no gain at split/ordinary p. For σ (all Gaussian factors) the gain is only a/(p²−1). Both extremes of the Lean's formula confirmed; the summary's earlier wording was wrong (fixed in §1). Capped two-variable case: NUMTEST2, next row. |
+| NUMTEST2 | Kronecker theta function σ(z+w)/(σ(z)σ(w)) for both CM curves, exact p-adic arithmetic, a < 2000, b ≤ 40, validated against brute force. At supersingular p: v_p(∂_w^a∂_z^{b−1}) ≈ max(γ_p(a+b) − b, (a+b)/(p²−1)), error in [−3.3, +6.1] not growing with a; no gain at split/ordinary p. The bound the proof uses, gain ≥ Σ_{e odd}(a/p^e − w)₊ − O(1), **holds at every grid point**, cap constant 1. It is not tight: the truth exceeds it by ≈ γ_p·b + Σ_{e≥3 odd} min(a/p^e, b) (the cap bites once, at e = 1). Hand estimate of the excess summed over primes: O(w(x^{1/3} + log x)), below the x^{1/2} scale. Control: replacing each Hurwitz number by a random unit of the same valuation leaves the law intact, so in rank one this follows formally from the ℘ result and is not independent evidence. |
 | COUNT | Dimension count is limit multiplicity on a non-compact quotient via an exact projection onto cusp forms (Schur orthogonality for integrable discrete series), not a trace formula over classes. The family meets the Harish-Chandra gap (needs ≈ x^110, has ≈ x^1300; only opposite-sign pairs count). New expert item: the "compression formula" for lowest-K-type coefficients of non-holomorphic discrete series (`FormulaGap`), not located in the literature; check on U(2,1). |
 | PAIRB | Near-orthogonality is a double unfolding of Poincaré series (no spectral decomposition). Savings are counting (sublattice counts; level factor (2/g)^{(s−1)kf}); Gauss-sum clause is Gelfand–Graev multiplicity one. The tight comparison 2^{−k/2}·e^{C m⁵ f log b} ≤ b^{−14} closes by x^{21ε/16}/128; this fixes k ≈ x^{9/2+10ε}. Unread: local defect-mass counts, `EnergyAbs`, `IdZero` supplier. |
 | ADMB2 | E12 closed: w is a uniformiser of a ramified extension, v(w) = ½v(p), bookkeeping consistent. `admB2` compares true rank with a model rank; `badShare` is an optimum by definition; smallness is in `RemainingCountingStatement` (unopened). Hook-content and exact GL₂ computations agree with the threshold Σ min(b, a/p^d) up to the Lean's O(·) terms. Dropped primes cost ≈ x^{−10}·(budget unit): no main term lost. |
@@ -145,8 +146,8 @@ Further corrections: SLEAVES attributed the corank ≥ 2 saving to a Siegel mass
 mostly the level. The brief to COUNT suspected an unsatisfiable gap hypothesis; it is
 satisfied. The brief to PAIRB had the direction of P_u reversed.
 
-Updated ranking of what is unread and load-bearing: (1) the capped divisibility
-numerically (NUMTEST2); (2) `FormulaGap` and the bodies of the count's near/far/deep/flag
+Updated ranking of what is unread and load-bearing: (1) the capped divisibility in
+higher rank with harmonic minors (rank one now confirmed as a lower bound); (2) `FormulaGap` and the bodies of the count's near/far/deep/flag
 lemmas; (3) `RemainingCountingStatement` and the block-lattice realisation in
 `extendedClosedForm`; (4) local defect-mass counts and `EnergyAbs`; (5) `OneCharU`
 (Selmer bound); (6) `ThmB` and point heights; (7) site identities.
