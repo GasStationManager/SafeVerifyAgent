@@ -5,12 +5,22 @@
   Zw e= 1: identity holds to z^44: True;  T_0..T_10 = [1, 0, -1, 0, -3, 0, 3, 0, -39, 0, 135]
 
 == 2. Gaussian growth of th0 on the real axis (Z[i], e=1):  log|th0(x)| - pi x^2/(2A)
-  half-period w1 = 2.622058, area A = 27.500743
+  period w1 = 2.622058, area A = 6.875186
   x=0.0  th0= 1.00000e+00  log|th0| - pi x^2/(2A) =  0.0000
-Traceback (most recent call last):
-  File "/home/user/SafeVerifyAgent/audits/rh-intake/argument/numtest/kernel3_validate.py", line 52, in <module>
-    v = th0(x)
-  File "/home/user/SafeVerifyAgent/audits/rh-intake/argument/numtest/kernel3_validate.py", line 48, in th0
-    s += math.copysign(math.exp(math.log(abs(T[k])) - math.lgamma(k + 1) + k * math.log(abs(x))), T[k]) if x else (1.0 if k == 0 else 0.0)
-         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-OverflowError: int too large to convert to float
+  x=0.5  th0= 8.72332e-01  log|th0| - pi x^2/(2A) = -0.1937
+  x=1.0  th0= 4.54586e-01  log|th0| - pi x^2/(2A) = -1.0168
+  x=1.5  th0=-3.72697e-01  log|th0| - pi x^2/(2A) = -1.5011
+  x=2.0  th0=-1.82651e+00  log|th0| - pi x^2/(2A) = -0.3115
+  x=2.5  th0=-4.12501e+00  log|th0| - pi x^2/(2A) = -0.0109
+  x=3.0  th0=-7.01883e+00  log|th0| - pi x^2/(2A) = -0.1077
+  x=3.5  th0=-8.09970e+00  log|th0| - pi x^2/(2A) = -0.7070
+  x=4.0  th0= 3.07555e+00  log|th0| - pi x^2/(2A) = -2.5321
+
+== 3. J(a,w) vs brute-force bivariate expansion (Z_{p^2} mod p^K), a+w <= 40
+  g2=4 g3=0 e=1 p=7: 180 entries, mismatches = 0
+  g2=4 g3=0 e=0 p=11: 180 entries, mismatches = 0
+  g2=0 g3=4 e=1 p=5: 180 entries, mismatches = 0
+  g2=0 g3=4 e=1 p=11: 180 entries, mismatches = 0
+
+== 4. perturbation control: T_20 += 1 (Z[i], e=1, p=7, w=0,2)
+  valuations changed at 380 of 802 (a,w) points;  e.g. a=400,w=0: 58 -> 13

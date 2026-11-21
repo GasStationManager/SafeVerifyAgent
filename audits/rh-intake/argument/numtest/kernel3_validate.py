@@ -38,16 +38,16 @@ g2, g3, e = 4, 0, 1
 def agm(a, b):
     for _ in range(60): a, b = (a + b) / 2, math.sqrt(a * b)
     return a
-w1 = math.pi / agm(math.sqrt(2), 1.0)   # real half-period of y^2 = 4x^3 - 4x (roots 1, 0, -1)
-A = 4 * w1 * w1
+w1 = math.pi / agm(math.sqrt(2), 1.0)   # real period of y^2 = 4x^3 - 4x (roots 1, 0, -1); lattice = w1*Z[i]
+A = w1 * w1
 T = th0_jets(g2, g3, e, 400)
 def th0(x):  # Taylor sum with floats via logs to avoid overflow
     s = 0.0
     for k in range(0, 400, 2):
         if T[k]:
-            s += math.copysign(math.exp(math.log(abs(T[k])) - math.lgamma(k + 1) + k * math.log(abs(x))), T[k]) if x else (1.0 if k == 0 else 0.0)
+            s += (1 if T[k] > 0 else -1) * math.exp(math.log(abs(T[k])) - math.lgamma(k + 1) + k * math.log(abs(x))) if x else (1.0 if k == 0 else 0.0)
     return s
-print(f'  half-period w1 = {w1:.6f}, area A = {A:.6f}')
+print(f'  period w1 = {w1:.6f}, area A = {A:.6f}')
 for x in [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0]:
     v = th0(x)
     print(f'  x={x:3.1f}  th0={v: .5e}  log|th0| - pi x^2/(2A) = {math.log(abs(v)) - math.pi*x*x/(2*A) if v else float("nan"): .4f}')
