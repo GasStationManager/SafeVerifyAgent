@@ -1,0 +1,16 @@
+== 1. th0^2 = sigma^2 (wp - e), exact, through z^44
+  Zi e= 0: identity holds to z^44: True;  T_0..T_10 = [1, 0, 0, 0, 2, 0, 0, 0, -4, 0, 0]
+  Zi e= 1: identity holds to z^44: True;  T_0..T_10 = [1, 0, -1, 0, -1, 0, -3, 0, 17, 0, -9]
+  Zi e=-1: identity holds to z^44: True;  T_0..T_10 = [1, 0, 1, 0, -1, 0, 3, 0, 17, 0, 9]
+  Zw e= 1: identity holds to z^44: True;  T_0..T_10 = [1, 0, -1, 0, -3, 0, 3, 0, -39, 0, 135]
+
+== 2. Gaussian growth of th0 on the real axis (Z[i], e=1):  log|th0(x)| - pi x^2/(2A)
+  half-period w1 = 2.622058, area A = 27.500743
+  x=0.0  th0= 1.00000e+00  log|th0| - pi x^2/(2A) =  0.0000
+Traceback (most recent call last):
+  File "/home/user/SafeVerifyAgent/audits/rh-intake/argument/numtest/kernel3_validate.py", line 52, in <module>
+    v = th0(x)
+  File "/home/user/SafeVerifyAgent/audits/rh-intake/argument/numtest/kernel3_validate.py", line 48, in th0
+    s += math.copysign(math.exp(math.log(abs(T[k])) - math.lgamma(k + 1) + k * math.log(abs(x))), T[k]) if x else (1.0 if k == 0 else 0.0)
+         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OverflowError: int too large to convert to float
