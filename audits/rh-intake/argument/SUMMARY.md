@@ -266,3 +266,30 @@ derivation of g² + e ≤ D0; (2) `exists_levelB2_carried_of_levelB1`, `nonempty
 (5) the Wach-module lemmas; (6) Ferrero–Washington, Hida control, the Eichler–Shimura-type
 construction, each a large in-tree formalisation taken at its statement. Purity is used in
 `ConclusionG6` but is not a clause of `Row0b`: source untraced.
+
+## 13. Round 9: synthesis
+
+Aim changed from gap-hunting to understanding the main argument.
+
+| node | result |
+|---|---|
+| ARCH | Three-tower dictionary. Column tower X₀ ⊂ … ⊂ X_m (totally definite; algebraic modular forms; jets of CM theta as step maps; all p-adic divisibility lives here). Row tower Y_m → … → Y₀ (Y₀ of signature (k+r_S, r_S+1), r_S = m/2 − 1; target lattice RR, Poincaré series, Theorem S, dimension count). Layers V_j → W_j (W_j of signature (k+j−1, m−j); covolumes, Rallis scalars, congruence modules). |
+| WHYHALF | The balance is G_m ≲ x^{O(ε)}[x/m + m + k/n²]: one-off errors divided by m lifts, per-lift errors growing like m, and the non-vanishing precision. Stepanov analogy: the m ≈ √x chained lifts play the role of multiplicity. Lists which inputs are exact identities and which are one-sided. |
+| SEESAW | The join of the towers is a genuine m-step seesaw (`MIid`/`MIstar2` ← `mainX_of_lawsX`); the `TieBm` scaffolding is unused. |
+| JOIN | The live record is not a stand-in (nondegenerate); the layer lattice is geometric; the a-sized factorial is counted only in column steps. Did not reach the seesaw supplier from the root's producer (trace ran out below `miAt_of_truePack_alt_alt`). |
+
+`MAIN-ARGUMENT.md` is a continuous exposition written from the nodes. A cold reviewer
+(`REVIEW-MAIN-ARGUMENT.md`) judged it UNDERSTANDABLE WITH GAPS and gave a fifteen-step
+logical skeleton. Holes it named, in the reconstruction, not established defects of the proof:
+
+- H1. det ι = κ^D ∏ det θ_j is a hypothesis of `BoundsMu`; no derivation was read.
+- H2. The seesaw supplier is not traced from the live path.
+- H3. The set of twisted places (integral theta-unimodularity above X″) was not located.
+- H4. The layer signatures (k+j−1, m−j) are stated, not derived; they give Σ(p_j − q_j) = mk.
+- H5. ACCOUNT's satisfiability condition Ga − ASK ≤ budget was not seen proved.
+
+Paper checks that closed in the review: Riesz main terms, the 4:3 identity, each bracket of
+the balance (given |TT| ≈ n), rank and signature counts, the Mertens/Chowla–Selberg
+leading-order match. By-product: non-vanishing forces n ≳ m⁴, matching n ≈ x^{2+8ε}.
+Not checkable from the exposition: thin-cap / high-prime accounting; ThinScales (the draft
+used Y for three scales).
