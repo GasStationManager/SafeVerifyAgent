@@ -327,3 +327,13 @@ unread. Oddity: the root record fills `siegelEisensteinSimplePole` with `True`
 (ECL:505-506, 718) and no conversion to `S0.HypothesesUE` was found, so the producer
 MULTEQ followed (`member_bundles_large_ue`) may not be the root's live one. Untraced: the
 caller-supplied L-value at (1+t)/2 and bad-place integrability.
+
+TWSET (no escalation; corrects CONGMOD, JOIN, KILLAT). There is no "unimodular above X″"
+statement. The `hmt` iff (`ExtraFinal.lean:24-25`) is dead code (`recF_more`, `RecMore`
+unused). Live: `MuDef` (`CutTuples2.lean:188-198`) puts Tw := W1 = places where the
+untwisted index, dual index or F is nonzero; off Tw the index is 0 by definition. Content
+is `ON` at every place of Tw (`on_of_leaves`) with a global remainder budget
+Σ log N(v)·r(v) ≤ rank·f·m·b·de2 (`WeightAlgebra.Concl`; inputs `Heights`/`sumGC4`
+unread). X″ is only where gain and F stop. Cost enters E1 = CE·x^ε(B0+Nc). Consequence:
+twisted-place inputs must hold at unbounded residue characteristic. Reader dispatched
+(LARGETW).
