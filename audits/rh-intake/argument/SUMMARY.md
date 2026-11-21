@@ -221,3 +221,23 @@ only, beyond established results, and on the core route: (1) the OrbitPlaces rou
 delivers the gain at signal primes (the ψ-carrying part) — four unread children;
 (2) residually reducible modularity for U(3) and finiteness of the deformation ring;
 (3) `KillAt` and the local exponents at small l; (4) `NoChiOff`/`GoodR`.
+
+**ORBIT (follow-up to round 7).** The second route bounds the m-fold chain, not single
+entries: `NoOperatorOrbitBound` gives col(x) = a·z with z in the level-m global lattice
+localised at w and v_w(a) ≥ e·(Σ_j g0S_j + lowS). The iteration `chain_ge` (OP:779) is
+a plain induction of the same shape as `main_ind`: after n steps the image is a·z with z
+arbitrary in the localised lattice; one-step bounds hold on the whole lattice; the
+lattice at every level is the one Lean object (T.fm).lat j; no intermediate form is
+assumed to be a theta image. Lattice tie: `KerEnt.lat_S` states the localised lattice
+EQUALS the forms with integral ∇-minor pairings in the adapted bases (proved by
+`kerEntHyp_latS`, leaves unopened), so no index is charged; only v_p(DGam) once per lift.
+The local theorem (`split_bound_eleven_one`: generic frame, products of minors,
+per-monomial shape bound with capped partner rows, Dwork) is the same architecture as the
+Hecke route's, in separate code; at signal places baseTerm = Σ_{e odd}(gap/p^e − row0(s+e))₊
+with row0 = number of minors at the w̄ partner ≤ fillG + cG, matching PAIRING, NUMTEST4
+and the two-tops check. Orbit bounds add with no loss. Needs rank ≥ 2·log_p a + 3.
+Unread: `thmAJetA`, the `latS`/`latT` leaves, `orbitIdentity…` body, `cutKW_holds`,
+`kernelEntries_form_true_chains`. Budget check left open by the node: errF ≈
+|TT|·m·b·log log X″ in total; against the budget U·x^{1/2+ε} with U = |TT|·m·b·δ/2 and
+δ = x^{−O(ε)} (ACCOUNT) this is ≈ U·x^{O(ε)}, inside the budget (orchestrator's
+arithmetic, not checked in the Lean).
