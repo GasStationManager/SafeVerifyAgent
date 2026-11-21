@@ -201,3 +201,23 @@ near-orthogonality); (3) the second-type character-sum cancellation;
 `ThinScales`; (6) how non-served inert primes are excluded or charged in the count.
 Untested numerically: the separate accounting of the coupled overhang direction; any
 composite of two lifts; a genuine host with d ≡ 7 mod 16.
+
+## 11. Round 7
+
+| node | result |
+|---|---|
+| SERVED | Primes inert in K are "signal" (Frob = ((+1,−1),h): inert in K, split in ℚ(√−q); hermitian form always split) or "inertClass" (split iff ord h even; anisotropic density ≤ 2^{−e} ≤ x^{−2}). Dropped buckets (small order, band, second-kind, bad orbits, high, p = d) each ≤ x^{−1+O(ε)}·U, inside the budget; dropped primes are charged their whole ASK with gain 0. `ThinScales` is de la Vallée Poussin with a zero-free region proved in the tree plus host-selected boxes; ell is pinned to the true L′/L(1,χ). |
+| SIGNAL | **The x-scale ("thick") part of ASK, the part that carries ψ, sits entirely on signal primes, and their gain is delivered by a different route from the one audited in rounds 2–6**: `NoOperatorOrbitBound` (OrbitPlaces.lean:423) ← `noOp_of` ← `sum_over_primes_service`, using no GIdx, local chain models, `SiteAdm`, Hecke operators or colength; it works on global kernel entries at every place: Gaussian class via `hostAt_inert` + `hyp_of_stdBases` ("inertClass ∨ signal") + `orbitIdentity_all…`; local Hecke-free orbit theorem `Loc.Cor` (`split_bound_eleven_one`); orbits summed; `kform_of_ker` ties entries to the chain. At signal places VV = ∅, τ = 0, no colength; gain = Σ g0⁺ exactly. NUMTEST3's instance WAS a signal place (NUMTEST4's "correction" was wrong); a new n′ = 4 two-tops check matches the Lean bound to −1.13 over 57 jets (`numtest/signal_twotops.py`). Unread: `split_bound_eleven_one`, `orbitIdentity_all_of_integralClass_hostLog_alt`, `orbit_entry_bounds_hold`, kernel entries/adapted bases at signal places and `kform_of_ker`. |
+| CONGMOD | The Selmer/congruence cost enters the degree clause through the dual index of the target lattice RR, which at twisted places (almost all relevant places) is an orthogonal projection onto a type part; index ≤ Hida congruence module; error C·m(B0+Nc)x^{Cε}, at the budget. Ш part negligible (√b vs x^{2.5}b). |
+| LINKN | The type part is a genuine Hecke-eigen subspace (theta image inside forms with a Speh block μ⊠S_t); Galois representation ρ ⊕ χ₁(1⊕ε⁻¹⊕…⊕ε^{−(t−1)}). Bound by a Wiles-style Fitting-ideal/determinant argument: congruence ≤ Selmer, the Ribet–Wiles half (right direction). Depth: `KillAt` (Bloch–Kato Selmer of ρ⊗χ₁⁻¹ killed by choosing the twist, at every twisted l), local-at-l exponents ≈ weight/l down to l = 2, `NoChiOff`, `GoodR`. Clean version only for l > t. |
+| RT3 | The ring is a universal deformation ring (ordinary Kisin-style at l, minimal elsewhere, HT weights (e,0,−e)), not built from forms. `AutEnd3Alt`: residually reducible modularity for U(3), three characters, all odd l with l ∤ h_K·disc K, l−1 ∤ 2e; Skinner–Wiles scheme, no patching. LemmaM is a multiplicity inequality (Smith form + Rees algebra), right direction, toy cases checked. Look first at: the bridge between the ring's local condition and the theorem's (`exists_ordPt_of_point`), and finiteness of R/λ (`FinEnd`). |
+| THMB | The "rotated uniform" bound feeds only the non-generic clause of `PairBound` (crude precision); block induction with a Paley–Wiener step and Poisson summation; local Bessel multiplicity one proved in-tree. Second-type cancellation is a Gauss sum on a hermitian quadric; model check agrees with margin ≈ q⁵. (Correction: not shared with the lower slope bound.) |
+| LEAVES | `joint_integrality` = integrality of the Kronecker quotient at torsion translates (σ-addition formula, torsion integrality, N-th root, parallelogram law); `NormRel` = distribution relation + density; s₂ p-integral via α = √−d. Exact arithmetic to T^{260}: NormRel integral with the true s₂ and failing at T^{2p} with a wrong one; ph alone non-integral from T^{p+1}. Fourth-power trick confirmed. |
+
+Risk map after round 7. Read down to classical statements and numerically confirmed where
+computable: Landau, bridge to Gm, hosts, slope chain and its signs, Gaussian class and
+its leaves, cap lemma, iteration on the Hecke route, nonvanishing chain. Read in outline
+only, beyond established results, and on the core route: (1) the OrbitPlaces route that
+delivers the gain at signal primes (the ψ-carrying part) — four unread children;
+(2) residually reducible modularity for U(3) and finiteness of the deformation ring;
+(3) `KillAt` and the local exponents at small l; (4) `NoChiOff`/`GoodR`.
