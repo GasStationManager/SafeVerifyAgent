@@ -316,3 +316,14 @@ H is a product of Hecke L-values independent of c and B); tuple-independence is 
 plus Rallis at the conjugate datum. Open: `WeilSiegelFormulaUnitary` is stated for
 2·rank A < rank B, which fails for row steps k ≥ 1; the bridge `heckeForm_of_doubling₂`
 and `SiegelWeilUnitaryConvergent` are unread. Reader dispatched (SWRANGE).
+
+SWRANGE (no escalation). Siegel–Weil is used only in Weil's range (rank B − witt B > rank A);
+`siegelWeilAll_of_hypotheses` splits: rank B > 2 rank A uses the absolutely convergent
+identity (Weil 1965), otherwise `SiegelWeilUnitaryConvergent` (n < m ≤ 2n, m − r > n;
+reader attributes to Ichino 2007, not checked against the paper). Row step 0→1 and layer
+lifts are absolutely convergent; row steps j ≥ 1 are not, witt B ≤ ⌊(m−j−1)/2⌋ < t proved.
+All four leaves are `Published` Props filled at the root by closed in-tree theorems, proofs
+unread. Oddity: the root record fills `siegelEisensteinSimplePole` with `True`
+(ECL:505-506, 718) and no conversion to `S0.HypothesesUE` was found, so the producer
+MULTEQ followed (`member_bundles_large_ue`) may not be the root's live one. Untraced: the
+caller-supplied L-value at (1+t)/2 and bad-place integrability.
