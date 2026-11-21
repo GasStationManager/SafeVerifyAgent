@@ -1,0 +1,40 @@
+
+== Z[i], e_t = 1, p = 7 (served configuration unless stated)
+  reference: N(c) = -1 exactly                         slope 0.1458 (gamma 0.1458, 1/(p^2-1) 0.0208);  min_a[v - LT] =     0.02;  v(J(600,0)) = 87, LT = 85.5
+  C1: N(c) = -1 + p^1*unit                             slope 0.1457 (gamma 0.1458, 1/(p^2-1) 0.0208);  min_a[v - LT] =     0.02;  v(J(600,0)) = 87, LT = 85.5
+  C1: N(c) = -1 + p^2*unit                             slope 0.1458 (gamma 0.1458, 1/(p^2-1) 0.0208);  min_a[v - LT] =     0.02;  v(J(600,0)) = 87, LT = 85.5
+  C1: N(c) = -1 + p^3*unit                             slope 0.1459 (gamma 0.1458, 1/(p^2-1) 0.0208);  min_a[v - LT] =     0.02;  v(J(600,0)) = 87, LT = 85.5
+  C2: wrong s2 = 1                                     slope 0.0845 (gamma 0.1458, 1/(p^2-1) 0.0208);  min_a[v - LT] =   -35.77;  v(J(600,0)) = 50, LT = 85.5
+  C2: wrong s2 = 3                                     slope 0.0847 (gamma 0.1458, 1/(p^2-1) 0.0208);  min_a[v - LT] =   -35.77;  v(J(600,0)) = 50, LT = 85.5
+  C2: wrong s2 = 7                                     slope 0.1460 (gamma 0.1458, 1/(p^2-1) 0.0208);  min_a[v - LT] =     0.02;  v(J(600,0)) = 87, LT = 85.5
+  C3: scrambled T_n (same v_p), trial 0                slope 0.0185 (gamma 0.1458, 1/(p^2-1) 0.0208);  min_a[v - LT] =   -72.69;  v(J(600,0)) = 13, LT = 85.5
+  C3: scrambled T_n (same v_p), trial 1                slope 0.0185 (gamma 0.1458, 1/(p^2-1) 0.0208);  min_a[v - LT] =   -72.69;  v(J(600,0)) = 13, LT = 85.5
+
+== Z[i], e_t = 1, p = 11 (served configuration unless stated)
+  reference: N(c) = -1 exactly                         slope 0.0916 (gamma 0.0917, 1/(p^2-1) 0.0083);  min_a[v - LT] =     0.01;  v(J(600,0)) = 54, LT = 53.0
+  C1: N(c) = -1 + p^1*unit                             slope 0.0910 (gamma 0.0917, 1/(p^2-1) 0.0083);  min_a[v - LT] =     0.01;  v(J(600,0)) = 54, LT = 53.0
+  C1: N(c) = -1 + p^2*unit                             slope 0.0913 (gamma 0.0917, 1/(p^2-1) 0.0083);  min_a[v - LT] =     0.01;  v(J(600,0)) = 54, LT = 53.0
+  C1: N(c) = -1 + p^3*unit                             slope 0.0913 (gamma 0.0917, 1/(p^2-1) 0.0083);  min_a[v - LT] =     0.01;  v(J(600,0)) = 54, LT = 53.0
+  C2: wrong s2 = 1                                     slope 0.0487 (gamma 0.0917, 1/(p^2-1) 0.0083);  min_a[v - LT] =   -24.06;  v(J(600,0)) = 29, LT = 53.0
+  C2: wrong s2 = 3                                     slope 0.0486 (gamma 0.0917, 1/(p^2-1) 0.0083);  min_a[v - LT] =   -24.06;  v(J(600,0)) = 29, LT = 53.0
+  C2: wrong s2 = 11                                    slope 0.0914 (gamma 0.0917, 1/(p^2-1) 0.0083);  min_a[v - LT] =     0.01;  v(J(600,0)) = 54, LT = 53.0
+  C3: scrambled T_n (same v_p), trial 0                slope 0.0075 (gamma 0.0917, 1/(p^2-1) 0.0083);  min_a[v - LT] =   -49.01;  v(J(600,0)) = 4, LT = 53.0
+  C3: scrambled T_n (same v_p), trial 1                slope 0.0074 (gamma 0.0917, 1/(p^2-1) 0.0083);  min_a[v - LT] =   -49.01;  v(J(600,0)) = 4, LT = 53.0
+
+== C4: sigma(z) sigma(c z) (no 2-torsion translate); compare LT shifted by the z^2 zero: v_p(a!) - (a-3)/(p^2-1) - v_p(a(a-1))
+  C4 g2=4 g3=0: sigma(z)sigma(cz), N(c)=-1             slope 0.1456 (gamma 0.1458, 1/(p^2-1) 0.0208);  min_a[v - LT] =     0.02;  v(J(598,0)) = 87, LT = 85.6
+  C4 g2=4 g3=0: sigma(z)sigma(cz), N(c)=+1             slope 0.0184 (gamma 0.1458, 1/(p^2-1) 0.0208);  min_a[v - LT] =   -72.65;  v(J(598,0)) = 14, LT = 85.6
+     (NUMTEST reference) sigma alone                   slope 0.0183
+  C4 g2=0 g3=4: sigma(z)sigma(cz), N(c)=-1             slope 0.2086 (gamma 0.2083, 1/(p^2-1) 0.0417);  min_a[v - LT] =     0.04;  v(J(596,0)) = 124, LT = 120.2
+  C4 g2=0 g3=4: sigma(z)sigma(cz), N(c)=+1             slope 0.0434 (gamma 0.2083, 1/(p^2-1) 0.0417);  min_a[v - LT] =   -95.21;  v(J(596,0)) = 25, LT = 120.2
+     (NUMTEST reference) sigma alone                   slope 0.0432
+  C4 g2=0 g3=4: sigma(z)sigma(cz), N(c)=-1             slope 0.0921 (gamma 0.0917, 1/(p^2-1) 0.0083);  min_a[v - LT] =     0.01;  v(J(596,0)) = 54, LT = 53.0
+  C4 g2=0 g3=4: sigma(z)sigma(cz), N(c)=+1             slope 0.0078 (gamma 0.0917, 1/(p^2-1) 0.0083);  min_a[v - LT] =   -48.09;  v(J(596,0)) = 5, LT = 53.0
+     (NUMTEST reference) sigma alone                   slope 0.0079
+
+== C5: exact global entries (Gaussian integers, kernel3_global.Jstar) vs local p-adic engine with c = -(3-2i)beta/13
+  p = 7: 59/59 entries have identical v_p (global exact vs local engine)
+  p = 11: 59/59 entries have identical v_p (global exact vs local engine)
+  p = 19: 59/59 entries have identical v_p (global exact vs local engine)
+
+elapsed 11.1s

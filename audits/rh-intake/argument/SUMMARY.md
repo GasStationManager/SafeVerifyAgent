@@ -151,3 +151,33 @@ higher rank with harmonic minors (rank one now confirmed as a lower bound); (2) 
 lemmas; (3) `RemainingCountingStatement` and the block-lattice realisation in
 `extendedClosedForm`; (4) local defect-mass counts and `EnergyAbs`; (5) `OneCharU`
 (Selmer bound); (6) `ThmB` and point heights; (7) site identities.
+
+## 9. Round 5
+
+| node | result |
+|---|---|
+| CHAININD | The iteration over the m lifts is an honest induction (`main_ind`, YEPEComm.lean:131): the hypothesis after j steps is only "ϖ^{prev}·(arbitrary element of Int_j)", the next step's bound holds for every integral form, Int_j is one Lean object at every level, and the derivative order a is NOT split among lifts (the level-j weight keeps a_s; each level's kernel differentiates to order a again). Total ≈ m × one-step gain. Hecke operators are not needed to iterate; automorphism denominators charged once per lift via Minkowski's bound; closes only because a ∝ e^{x^ε}. Everything reduces to the single-step statement for every integral form, uniformly in rank up to N(m) ≈ x^{399}. |
+| HIGHERRANK | The Gaussian is exp(−(π/p)hh), hh = Σ_s u_s Σ_{entries} S_s^p S_{s+1}; mod p, one coupling x^{p^e}·y per odd e with y at position t+e. The cap is a genuine lemma: multiplication by a linear form is adjoint to a directional derivative of the operator; two derivatives in one direction kill a column minor. Term-by-term valuation bound and the reduction to rank one (unimodular at p ⇒ locally standard; weak approximation) check out. All arithmetic content is "the kernel lies in the Gaussian class". |
+| WRITEUP | The slope chain written as one proof with the Lean statements; 17 sign/direction checks pass (μ = 2·(−log covol/rk)+const; superlattice raises μ; frame on the target; factor 2 consistent on both sides). Misfits, none a reversal: see file. |
+| LOOSE | Five misfits closed: rescaling identity is proved from covol(𝔞L) = N(𝔞)^{rk}covol(L), slack only from floors; factor 2 in the covolume main term is `degW = rank·μ/2`; Mram index exact; eO ≥ 2, `NumCmp` proved, no off-by-one between operator weight and cap; integrality, height and frame clauses use the same B_u and bases. |
+| FORMULAGAP | The compression formula for lowest-K-type coefficients (non-holomorphic discrete series on the live path) reproduces (cosh t)^{−m} on U(1,1), the classical value on holomorphic U(2,1), and on the middle series of U(2,1) has value 1 at 0, is ≤ 1, has the second derivative given by an independent Schmid/Clebsch–Gordan computation, and a decay rate matching Trombi–Varadarajan. Not Knapp–Wallach; not found published. Unread: `germ_jet_zero` (486 lines). |
+| **NUMTEST3** | **The Lean's own kernel in its smallest instance, both sides computed for the same numbers.** Smallest host E = ℚ(√−d, √−q), n′ = 2; one matrix entry Θ(z₀,z₁) = th0(z₀+z₁)·th0(c(z₀−z₁)), th0 a 2-torsion translate of σ*, c·c^σ = −1 at p; jet J(a,w) = ∂_{z₀}^a∂_{z₁}^wΘ(0). At served inert primes: slope in a equals γ_p to 0.0003 for all w ≤ 30; at w = 0, v ≥ v_p(a!) − (a−1)/(p²−1) exactly; slope in w is γ_p − 1; the proof's bound Σ_{e odd}(a/p^e − w)₊ never short by more than 0.98. Archimedean Fock bound saturated to within 5.3 in log for the same numbers. Split primes: slope 0. Inert primes where the hermitian form is anisotropic (Frob_p = c): only 1/(p²−1). **Mechanism:** Θ(z₀,0) = th0(Az)·th0(Cz) with A·A^σ + C·C^σ = 0 at p but \|A\|² + \|C\|² = 1 at ∞, so the two Gaussians cancel p-adically while the function keeps Gaussian growth at ∞. Scrambling the jets to random units of the same valuation destroys the gain (slope 0.0185): unlike NUMTEST2 this is a genuine arithmetic cancellation. Not modelled: full matrices with minors, non-standard lattices, the chain. |
+
+Consequences for §1: the entire theta kernel obtains the Gaussian-free gain because, in
+the even-position direction at a place where the hermitian form is split, a product of
+two σ*-type factors has cancelling p-adic Gaussians. "Inert" in the prime count means
+inert in K with that splitting condition (the host's Frobenius classes), which is why
+ASK carries (1 − χ_Φ) for the host's characters and MAIN contains the corresponding
+L′/L(1,·) terms.
+
+Further corrections: the brief to FORMULAGAP guessed Knapp–Wallach (no); the brief to
+NUMTEST3 described the odd-position variable as possibly conjugate/dual (it is the other
+CM-type coordinate, holomorphic); WRITEUP corrected SLOPESN (no injectivity hypothesis)
+and the summary's "𝔭^{−gain}".
+
+What is still unread and load-bearing, ranked: (1) `restGc`, `HhDecomp`, the kernel-law
+leaves (`FourProd`, `StdStep`), i.e. that the full higher-rank kernel lies in the Gaussian
+class; (2) `germ_jet_zero`; (3) `RemainingCountingStatement`; (4) local defect-mass counts,
+`EnergyAbs`; (5) `ThmB`, point heights; (6) `OneCharU` (Selmer bound); (7) site
+identities. Untested numerically: rank ≥ 2 with minors, long Frobenius orbits (n′ ≥ 4),
+any composite of two lifts.
