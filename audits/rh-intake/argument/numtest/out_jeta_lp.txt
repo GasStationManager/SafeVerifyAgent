@@ -1,0 +1,2 @@
+trials 4000 violations of assembly inequality 0 None
+p=5 a=125: v(a!)= 31  a*rho= 5.208333333333333  a*gam= 26.041666666666668  topTerm(cap1=3,cap3=0)= 23.041666666666668  v(a!)-a*rho-#factors(3)= 22.791666666666668  Lean bound topTerm-(log5 a+1)= 19.041666666666668
