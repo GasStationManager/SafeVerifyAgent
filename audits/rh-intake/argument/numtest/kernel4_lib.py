@@ -69,15 +69,30 @@ def frob_order(p):
         if x == (0, 1, 0, 0): return n
 
 
+def galois_elt(k):
+    """the element eta -> 2cos(k pi/8) of Gal(F/Q), k odd mod 16."""
+    return cheb(k % 16)
+
+
+def positions(p):
+    """the four CM-type embeddings tau_0..tau_3 (as k mod 16, tau: eta -> 2cos(k pi/8)) in the order used for the
+    variables z_0..z_3, and a label.  z = Frob_p c acts on F as Frob_p (k = p mod 16).
+      n' = 4: tau_s = Frob^s  (one place; positions s = 0..3 of the Lean, posG = orbRep . z^s)
+      n' = 2: (1, Frob | 3, 3 Frob)  (z_0, z_1 = the two positions of place v; z_2, z_3 = the other place)
+      n' = 1: (1, 3, 5, 7)  (four places, no Frobenius partner)"""
+    k = p % 16
+    o = frob_order(p)
+    if o == 4:
+        return [pow(k, s, 16) for s in range(4)], "n'=4: z_s at position s (tau = Frob^s)"
+    if o == 2:
+        return [1, k, 3, (3 * k) % 16], "n'=2: z0,z1 = positions 0,1 of place v; z2,z3 = place v'"
+    return [1, 3, 5, 7], "n'=1 (not served): four places"
+
+
 def coeffs(p, nprime=None):
-    """m[k][s] = sigma^s(f_k), s = 0..3 (sigma = Frob_p on F)."""
-    img = frob_img(p)
-    m = []
-    for f in F_BASIS:
-        row = [tuple(f)]
-        for s in range(3): row.append(zsub(row[-1], img))
-        m.append(row)
-    return m
+    """m[k][s] = tau_s(f_k)."""
+    taus, _ = positions(p)
+    return [[zsub(tuple(f), galois_elt(t)) for t in taus] for f in F_BASIS]
 
 
 def check_global(p):
