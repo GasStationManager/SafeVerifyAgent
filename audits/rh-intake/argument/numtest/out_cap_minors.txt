@@ -1,0 +1,10 @@
+weight (2,1): columns 2,1        C=#minors=2  max order in one generic direction: 2..2  (never > C: True)  mixed directions exceed C: True
+weight (2,2): columns 2,2        C=#minors=2  max order in one generic direction: 2..2  (never > C: True)  mixed directions exceed C: True
+weight (3,2,1): columns 3,2,1    C=#minors=3  max order in one generic direction: 3..3  (never > C: True)  mixed directions exceed C: True
+weight (1,1,1): column 3         C=#minors=1  max order in one generic direction: 1..1  (never > C: True)  mixed directions exceed C: True
+P = (x11 x22 - x12 x21) x11 :
+  d_x11 d_x12 P   nonzero: True
+  d_x11^2 d_x12 P nonzero: False
+  d_x11^3 P       nonzero: False
+  d_x11^2 d_x22 P (mixed dirs) nonzero: True
+  max order in direction e2: 1
