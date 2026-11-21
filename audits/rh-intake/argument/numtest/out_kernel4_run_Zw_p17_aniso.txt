@@ -1,0 +1,51 @@
+NODE-NUMTEST4 run Zw_p17_aniso: curve Zw (g2=0,g3=4,e_t=1), p=17, p mod 16=1, taus(k mod 16)=[1, 3, 5, 7]; n'=1 (not served): four places
+  gamma_p=0.0590  1/(p^2-1)=0.0035  precision p^107  AMAX=600  WMAX=2
+  time: pair tables 9s, pair jets 0s, final 0s
+  (v = K means the jet is 0 mod p^K; jets with a+|n| odd vanish identically and are never sampled)
+
+  slope dv/da at fixed n over the sampled a in [AMAX/2, AMAX]:
+    n=(0, 0, 0): 0.0029
+
+  v - LT at n = 0 (Gaussian-free law, w = 0):  a=300:-14.96  a=360:-19.75  a=420:-22.55  a=480:-25.34  a=540:-29.13  a=600:-31.92
+
+  AXIS n1 (position 1, e=1 partner):  entries  v / [v - v(n=0 at nearest a)] / L_lean / L_shared ;  rows a, columns weight
+    a\w                         0                       1                       2
+    300       2/  +0/ 0.00/  0.0      2/  +0/ 1.00/  1.0      2/  +0/ 2.00/  2.0
+    360       1/  +0/ 0.00/  0.0      2/  +1/ 1.00/  1.0      1/  +0/ 2.00/  2.0
+    420       1/  +0/ 0.00/  0.0      1/  +0/ 1.00/  1.0      1/  +0/ 2.00/  2.0
+    480       2/  +0/ 0.00/  0.0      2/  +0/ 1.00/  1.0      2/  +0/ 2.00/  2.0
+    540       1/  +0/ 0.00/  0.0      2/  +1/ 1.00/  1.0      1/  +0/ 2.00/  2.0
+    600       3/  +0/ 0.00/  0.0      3/  +0/ 1.00/  1.0      3/  +0/ 2.00/  2.0
+
+  AXIS n3 (position 3, e=3 partner):  entries  v / [v - v(n=0 at nearest a)] / L_lean / L_shared ;  rows a, columns weight
+    a\w                         0                       1                       2
+    300       2/  +0/ 0.00/  0.0      3/  +1/ 0.00/  1.0      2/  +0/ 0.00/  2.0
+    360       1/  +0/ 0.00/  0.0      2/  +1/ 0.00/  1.0      1/  +0/ 0.00/  2.0
+    420       1/  +0/ 0.00/  0.0      1/  +0/ 0.00/  1.0      1/  +0/ 0.00/  2.0
+    480       2/  +0/ 0.00/  0.0      3/  +1/ 0.00/  1.0      2/  +0/ 0.00/  2.0
+    540       1/  +0/ 0.00/  0.0      2/  +1/ 0.00/  1.0      1/  +0/ 0.00/  2.0
+    600       3/  +0/ 0.00/  0.0      4/  +1/ 0.00/  1.0      3/  +0/ 0.00/  2.0
+
+  AXIS n2 (position 2, even distance):  entries  v / [v - v(n=0 at nearest a)] / L_lean / L_shared ;  rows a, columns weight
+    a\w                         0                       1                       2
+    300       2/  +0/ 0.00/  0.0      2/  +0/ 0.00/  0.0      2/  +0/ 0.00/  0.0
+    360       1/  +0/ 0.00/  0.0      2/  +1/ 0.00/  0.0      1/  +0/ 0.00/  0.0
+    420       1/  +0/ 0.00/  0.0      1/  +0/ 0.00/  0.0      1/  +0/ 0.00/  0.0
+    480       2/  +0/ 0.00/  0.0      2/  +0/ 0.00/  0.0      2/  +0/ 0.00/  0.0
+    540       1/  +0/ 0.00/  0.0      2/  +1/ 0.00/  0.0      1/  +0/ 0.00/  0.0
+    600       3/  +0/ 0.00/  0.0      3/  +0/ 0.00/  0.0      3/  +0/ 0.00/  0.0
+
+  DECISIVE: drop D(n) = [G(a,n) - v(a,n)] - [G(a,0) - v(a,0)]  (loss relative to the gamma-law, n=0 removed),
+            against L_lean and L_shared.  If a weight costs nothing beyond gamma, D = 0; if each unit costs 1, D = |n|.
+    n=(1, 0, 0)    a=301:D= 0.12|Ll=1.00|Ls= 1.0 a=421:D= 0.12|Ll=1.00|Ls= 1.0 a=541:D=-0.88|Ll=1.00|Ls= 1.0
+    n=(2, 0, 0)    a=300:D= 0.12|Ll=2.00|Ls= 2.0 a=420:D= 0.12|Ll=2.00|Ls= 2.0 a=540:D= 0.12|Ll=2.00|Ls= 2.0
+    n=(0, 0, 1)    a=301:D=-0.88|Ll=0.00|Ls= 1.0 a=421:D= 0.12|Ll=0.00|Ls= 1.0 a=541:D=-0.88|Ll=0.00|Ls= 1.0
+    n=(0, 0, 2)    a=300:D= 0.12|Ll=0.00|Ls= 2.0 a=420:D= 0.12|Ll=0.00|Ls= 2.0 a=540:D= 0.12|Ll=0.00|Ls= 2.0
+    n=(0, 1, 0)    a=301:D= 0.12|Ll=0.00|Ls= 0.0 a=421:D= 0.12|Ll=0.00|Ls= 0.0 a=541:D=-0.88|Ll=0.00|Ls= 0.0
+    n=(0, 2, 0)    a=300:D= 0.12|Ll=0.00|Ls= 0.0 a=420:D= 0.12|Ll=0.00|Ls= 0.0 a=540:D= 0.12|Ll=0.00|Ls= 0.0
+
+  exact zeros (v = K, excluded below): 0 / 42
+
+  points with v < gam*a - L_lean - 3 : 42 / 42   [(300, (0, 0, 0), 2, 17.708333333333332), (360, (0, 0, 0), 1, 21.25), (420, (0, 0, 0), 1, 24.791666666666664), (480, (0, 0, 0), 2, 28.333333333333332), (540, (0, 0, 0), 1, 31.875), (600, (0, 0, 0), 3, 35.416666666666664), (301, (1, 0, 0), 2, 16.76736111111111), (361, (1, 0, 0), 2, 20.30902777777778)]
+  min over grid of v - (gam*a - L_lean) = -32.42;   min of v - (sum_e (a/p^e - cap)_+) is the same up to the e-truncation
+  points with v < gam*(a+|n|) - L_shared - 3 : 42

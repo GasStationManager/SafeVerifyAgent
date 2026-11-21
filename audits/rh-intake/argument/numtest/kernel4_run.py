@@ -78,7 +78,7 @@ for n in [(0, 0, 0), (4, 0, 0), (0, 0, 4), (8, 0, 0), (0, 0, 8), (0, 4, 0), (4, 
         pts = [(a, v) for a, v in row(n) if v < K]
         P(f'    n={n}: {lsq([a for a, _ in pts], [v for _, v in pts]):.4f}')
 
-P('\n  v - LT at n = 0 (Gaussian-free law, w = 0):  ' + '  '.join(f'a={a}:{v - lt(a, (0, 0, 0)):+.2f}' for a, v in row((0, 0, 0))))
+P('\n  v - LT at n = 0 (Gaussian-free law, w = 0):  ' + '  '.join(f'a={a}:{v - lt(a, (0, 0, 0)):+.2f}' if v < K else f'a={a}:zero' for a, v in row((0, 0, 0))))
 
 for name, axis in [('n1 (position 1, e=1 partner)', axis1), ('n3 (position 3, e=3 partner)', axis3), ('n2 (position 2, even distance)', axis2)]:
     P(f'\n  AXIS {name}:  entries  v / [v - v(n=0 at nearest a)] / L_lean / L_shared ;  rows a, columns weight')
@@ -100,10 +100,13 @@ for n in grid:
     ds = []
     for a, v in row(n):
         a_ref = [aa for (aa, nn) in V if nn == (0, 0, 0) and abs(aa - a) <= 1][0]
+        if v >= K or V[(a_ref, (0, 0, 0))] >= K: continue      # exact zeros (Z[i] selection rule) excluded
         D = (g * (a + sum(n)) - v) - (g * a_ref - V[(a_ref, (0, 0, 0))])
         ds.append((a, D, lean4_loss(a, n, p), min(a / p, n[0] + n[2])))
     P(f'    n={str(n):12s} ' + ' '.join(f'a={a}:D={D:5.2f}|Ll={Ll:4.2f}|Ls={Ls:4.1f}' for a, D, Ll, Ls in ds[::2]))
 
+nz = sum(1 for v in V.values() if v >= K)
+P(f'\n  exact zeros (v = K, excluded below): {nz} / {len(V)}')
 viol = [(a, n, v, g * a - lean4_loss(a, n, p)) for (a, n), v in V.items() if v < g * a - lean4_loss(a, n, p) - 3]
 P(f'\n  points with v < gam*a - L_lean - 3 : {len(viol)} / {len(V)}   ' + str(viol[:8]))
 mins = min(v - (g * a - lean4_loss(a, n, p)) for (a, n), v in V.items())

@@ -1,0 +1,88 @@
+NODE-NUMTEST4 (T2) 2x2 block, n'=4 instance, Z[w], p=5, A=320, precision p^131; time 24s for single-entry tables
+Each line: v = v_p(block jet); v0 = v at the same a with the Y-operator removed (Y-degree 0); drop = v0 + gam*degY - v
+  [loss beyond the gamma-law];  Lc = Lean loss sum_e min(a/p^e, cap) with cap = number of minors (nu2 for the
+  (b),(c) shapes = the Lean cap at a top);  Lw = same with cap = the Y-weight |nu| (the rank-one reading, cap = w).
+
+ position s=1 (e=1 partner), a ~ 160, a/p^1=32.00
+   (a) generic xi, det^2                          a=160: v=  31  v0=  33  drop=  2.83  Lc= 2.00  Lw= 4.00   v-(gam*a-Lc)=-0.33  v-(gam*a-Lw)=+1.67
+   (a) generic xi, det^4                          a=160: v=  30  v0=  33  drop=  4.67  Lc= 4.00  Lw= 8.00   v-(gam*a-Lc)=+0.67  v-(gam*a-Lw)=+4.67
+   (a) generic xi, det^6                          a=160: v=  29  v0=  33  drop=  6.50  Lc= 6.00  Lw=12.00   v-(gam*a-Lc)=+1.67  v-(gam*a-Lw)=+7.67
+   (d) generic xi, Y11^2                          a=160: v=  31  v0=  33  drop=  2.42  Lc= 2.00  Lw= 2.00   v-(gam*a-Lc)=-0.33  v-(gam*a-Lw)=-0.33
+   (d) generic xi, Y11^4                          a=160: v=  30  v0=  33  drop=  3.83  Lc= 4.00  Lw= 4.00   v-(gam*a-Lc)=+0.67  v-(gam*a-Lw)=+0.67
+   (d) generic xi, Y11^6                          a=160: v=  28  v0=  33  drop=  6.25  Lc= 6.00  Lw= 6.00   v-(gam*a-Lc)=+0.67  v-(gam*a-Lw)=+0.67
+   (b) xi=e2, Y11^2 det^2 (nu=(4,2))              a=160: v=  31  v0=  33  drop=  3.25  Lc= 2.00  Lw= 6.00   v-(gam*a-Lc)=-0.33  v-(gam*a-Lw)=+3.67
+   (b) xi=e2, Y11^4 det^2 (nu=(6,2))              a=160: v=  31  v0=  33  drop=  3.67  Lc= 2.00  Lw= 8.00   v-(gam*a-Lc)=-0.33  v-(gam*a-Lw)=+5.67
+   (b) xi=e2, Y11^2 det^4 (nu=(6,4))              a=160: v=  31  v0=  33  drop=  4.08  Lc= 4.00  Lw=10.00   v-(gam*a-Lc)=+1.67  v-(gam*a-Lw)=+7.67
+   (b) xi=e2, Y11^4 det^4 (nu=(8,4))              a=160: v=  31  v0=  33  drop=  4.50  Lc= 4.00  Lw=12.00   v-(gam*a-Lc)=+1.67  v-(gam*a-Lw)=+9.67
+   (c) xi=e1, Y11^2 det^2 (nu=(4,2))              a=160: v=  31  v0=  33  drop=  3.25  Lc= 2.00  Lw= 6.00   v-(gam*a-Lc)=-0.33  v-(gam*a-Lw)=+3.67
+   (c) xi=e1, Y11^4 det^2 (nu=(6,2))              a=160: v=  29  v0=  33  drop=  5.67  Lc= 2.00  Lw= 8.00   v-(gam*a-Lc)=-2.33  v-(gam*a-Lw)=+3.67
+   (c) xi=e1, Y11^2 det^4 (nu=(6,4))              a=160: v=  29  v0=  33  drop=  6.08  Lc= 4.00  Lw=10.00   v-(gam*a-Lc)=-0.33  v-(gam*a-Lw)=+5.67
+   (c) xi=e1, Y11^4 det^4 (nu=(8,4))              a=160: v=  27  v0=  33  drop=  8.50  Lc= 4.00  Lw=12.00   v-(gam*a-Lc)=-2.33  v-(gam*a-Lw)=+5.67
+   (e) generic xi, generic zeta overhang, nu=(4,2) a=160: v=  30  v0=  33  drop=  4.25  Lc= 2.00  Lw= 6.00   v-(gam*a-Lc)=-1.33  v-(gam*a-Lw)=+2.67
+   (e) generic xi, generic zeta overhang, nu=(6,2) a=160: v=  28  v0=  33  drop=  6.67  Lc= 2.00  Lw= 8.00   v-(gam*a-Lc)=-3.33  v-(gam*a-Lw)=+2.67
+   (e) generic xi, generic zeta overhang, nu=(6,4) a=160: v=  28  v0=  33  drop=  7.08  Lc= 4.00  Lw=10.00   v-(gam*a-Lc)=-1.33  v-(gam*a-Lw)=+4.67
+
+ position s=1 (e=1 partner), a ~ 320, a/p^1=64.00
+   (a) generic xi, det^2                          a=320: v=  64  v0=  66  drop=  2.83  Lc= 2.00  Lw= 4.00   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=+1.33
+   (a) generic xi, det^4                          a=320: v=  62  v0=  66  drop=  5.67  Lc= 4.00  Lw= 8.00   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=+3.33
+   (a) generic xi, det^6                          a=320: v=  62  v0=  66  drop=  6.50  Lc= 6.00  Lw=12.00   v-(gam*a-Lc)=+1.33  v-(gam*a-Lw)=+7.33
+   (d) generic xi, Y11^2                          a=320: v=  64  v0=  66  drop=  2.42  Lc= 2.00  Lw= 2.00   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=-0.67
+   (d) generic xi, Y11^4                          a=320: v=  62  v0=  66  drop=  4.83  Lc= 4.00  Lw= 4.00   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=-0.67
+   (d) generic xi, Y11^6                          a=320: v=  61  v0=  66  drop=  6.25  Lc= 6.00  Lw= 6.00   v-(gam*a-Lc)=+0.33  v-(gam*a-Lw)=+0.33
+   (b) xi=e2, Y11^2 det^2 (nu=(4,2))              a=320: v=  64  v0=  66  drop=  3.25  Lc= 2.00  Lw= 6.00   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=+3.33
+   (b) xi=e2, Y11^4 det^2 (nu=(6,2))              a=320: v=  64  v0=  66  drop=  3.67  Lc= 2.00  Lw= 8.00   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=+5.33
+   (b) xi=e2, Y11^2 det^4 (nu=(6,4))              a=320: v=  62  v0=  66  drop=  6.08  Lc= 4.00  Lw=10.00   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=+5.33
+   (b) xi=e2, Y11^4 det^4 (nu=(8,4))              a=320: v=  62  v0=  66  drop=  6.50  Lc= 4.00  Lw=12.00   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=+7.33
+   (c) xi=e1, Y11^2 det^2 (nu=(4,2))              a=320: v=  62  v0=  66  drop=  5.25  Lc= 2.00  Lw= 6.00   v-(gam*a-Lc)=-2.67  v-(gam*a-Lw)=+1.33
+   (c) xi=e1, Y11^4 det^2 (nu=(6,2))              a=320: v=  61  v0=  66  drop=  6.67  Lc= 2.00  Lw= 8.00   v-(gam*a-Lc)=-3.67  v-(gam*a-Lw)=+2.33
+   (c) xi=e1, Y11^2 det^4 (nu=(6,4))              a=320: v=  61  v0=  66  drop=  7.08  Lc= 4.00  Lw=10.00   v-(gam*a-Lc)=-1.67  v-(gam*a-Lw)=+4.33
+   (c) xi=e1, Y11^4 det^4 (nu=(8,4))              a=320: v=  60  v0=  66  drop=  8.50  Lc= 4.00  Lw=12.00   v-(gam*a-Lc)=-2.67  v-(gam*a-Lw)=+5.33
+   (e) generic xi, generic zeta overhang, nu=(4,2) a=320: v=  62  v0=  66  drop=  5.25  Lc= 2.00  Lw= 6.00   v-(gam*a-Lc)=-2.67  v-(gam*a-Lw)=+1.33
+   (e) generic xi, generic zeta overhang, nu=(6,2) a=320: v=  61  v0=  66  drop=  6.67  Lc= 2.00  Lw= 8.00   v-(gam*a-Lc)=-3.67  v-(gam*a-Lw)=+2.33
+   (e) generic xi, generic zeta overhang, nu=(6,4) a=320: v=  61  v0=  66  drop=  7.08  Lc= 4.00  Lw=10.00   v-(gam*a-Lc)=-1.67  v-(gam*a-Lw)=+4.33
+
+ position s=3 (e=3 partner), a ~ 160, a/p^3=1.28
+   (a) generic xi, det^2                          a=160: v=  32  v0=  33  drop=  1.83  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+   (a) generic xi, det^4                          a=160: v=  32  v0=  33  drop=  2.67  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+   (a) generic xi, det^6                          a=160: v=  33  v0=  33  drop=  2.50  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=+0.95  v-(gam*a-Lw)=+0.95
+   (d) generic xi, Y11^2                          a=160: v=  32  v0=  33  drop=  1.42  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+   (d) generic xi, Y11^4                          a=160: v=  32  v0=  33  drop=  1.83  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+   (d) generic xi, Y11^6                          a=160: v=  32  v0=  33  drop=  2.25  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+   (b) xi=e2, Y11^2 det^2 (nu=(4,2))              a=160: v=  32  v0=  33  drop=  2.25  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+   (b) xi=e2, Y11^4 det^2 (nu=(6,2))              a=160: v=  32  v0=  33  drop=  2.67  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+   (b) xi=e2, Y11^2 det^4 (nu=(6,4))              a=160: v=  32  v0=  33  drop=  3.08  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+   (b) xi=e2, Y11^4 det^4 (nu=(8,4))              a=160: v=  33  v0=  33  drop=  2.50  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=+0.95  v-(gam*a-Lw)=+0.95
+   (c) xi=e1, Y11^2 det^2 (nu=(4,2))              a=160: v=  32  v0=  33  drop=  2.25  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+   (c) xi=e1, Y11^4 det^2 (nu=(6,2))              a=160: v=  32  v0=  33  drop=  2.67  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+   (c) xi=e1, Y11^2 det^4 (nu=(6,4))              a=160: v=  32  v0=  33  drop=  3.08  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+   (c) xi=e1, Y11^4 det^4 (nu=(8,4))              a=160: v=  33  v0=  33  drop=  2.50  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=+0.95  v-(gam*a-Lw)=+0.95
+   (e) generic xi, generic zeta overhang, nu=(4,2) a=160: v=  32  v0=  33  drop=  2.25  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+   (e) generic xi, generic zeta overhang, nu=(6,2) a=160: v=  32  v0=  33  drop=  2.67  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+   (e) generic xi, generic zeta overhang, nu=(6,4) a=160: v=  32  v0=  33  drop=  3.08  Lc= 1.28  Lw= 1.28   v-(gam*a-Lc)=-0.05  v-(gam*a-Lw)=-0.05
+
+ position s=3 (e=3 partner), a ~ 320, a/p^3=2.56
+   (a) generic xi, det^2                          a=320: v=  64  v0=  66  drop=  2.83  Lc= 2.00  Lw= 2.56   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=-0.11
+   (a) generic xi, det^4                          a=320: v=  64  v0=  66  drop=  3.67  Lc= 2.56  Lw= 2.56   v-(gam*a-Lc)=-0.11  v-(gam*a-Lw)=-0.11
+   (a) generic xi, det^6                          a=320: v=  65  v0=  66  drop=  3.50  Lc= 2.56  Lw= 2.56   v-(gam*a-Lc)=+0.89  v-(gam*a-Lw)=+0.89
+   (d) generic xi, Y11^2                          a=320: v=  64  v0=  66  drop=  2.42  Lc= 2.00  Lw= 2.00   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=-0.67
+   (d) generic xi, Y11^4                          a=320: v=  64  v0=  66  drop=  2.83  Lc= 2.56  Lw= 2.56   v-(gam*a-Lc)=-0.11  v-(gam*a-Lw)=-0.11
+   (d) generic xi, Y11^6                          a=320: v=  65  v0=  66  drop=  2.25  Lc= 2.56  Lw= 2.56   v-(gam*a-Lc)=+0.89  v-(gam*a-Lw)=+0.89
+   (b) xi=e2, Y11^2 det^2 (nu=(4,2))              a=320: v=  64  v0=  66  drop=  3.25  Lc= 2.00  Lw= 2.56   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=-0.11
+   (b) xi=e2, Y11^4 det^2 (nu=(6,2))              a=320: v=  64  v0=  66  drop=  3.67  Lc= 2.00  Lw= 2.56   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=-0.11
+   (b) xi=e2, Y11^2 det^4 (nu=(6,4))              a=320: v=  64  v0=  66  drop=  4.08  Lc= 2.56  Lw= 2.56   v-(gam*a-Lc)=-0.11  v-(gam*a-Lw)=-0.11
+   (b) xi=e2, Y11^4 det^4 (nu=(8,4))              a=320: v=  64  v0=  66  drop=  4.50  Lc= 2.56  Lw= 2.56   v-(gam*a-Lc)=-0.11  v-(gam*a-Lw)=-0.11
+   (c) xi=e1, Y11^2 det^2 (nu=(4,2))              a=320: v=  64  v0=  66  drop=  3.25  Lc= 2.00  Lw= 2.56   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=-0.11
+   (c) xi=e1, Y11^4 det^2 (nu=(6,2))              a=320: v=  64  v0=  66  drop=  3.67  Lc= 2.00  Lw= 2.56   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=-0.11
+   (c) xi=e1, Y11^2 det^4 (nu=(6,4))              a=320: v=  64  v0=  66  drop=  4.08  Lc= 2.56  Lw= 2.56   v-(gam*a-Lc)=-0.11  v-(gam*a-Lw)=-0.11
+   (c) xi=e1, Y11^4 det^4 (nu=(8,4))              a=320: v=  65  v0=  66  drop=  3.50  Lc= 2.56  Lw= 2.56   v-(gam*a-Lc)=+0.89  v-(gam*a-Lw)=+0.89
+   (e) generic xi, generic zeta overhang, nu=(4,2) a=320: v=  64  v0=  66  drop=  3.25  Lc= 2.00  Lw= 2.56   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=-0.11
+   (e) generic xi, generic zeta overhang, nu=(6,2) a=320: v=  64  v0=  66  drop=  3.67  Lc= 2.00  Lw= 2.56   v-(gam*a-Lc)=-0.67  v-(gam*a-Lw)=-0.11
+   (e) generic xi, generic zeta overhang, nu=(6,4) a=320: v=  64  v0=  66  drop=  4.08  Lc= 2.56  Lw= 2.56   v-(gam*a-Lc)=-0.11  v-(gam*a-Lw)=-0.11
+
+(f) two-copy product Psi(z) Psi(c z), c = eta^2 (structure of one place of the Lean host with sqrt(-q); inferred):
+  s=1 a=160: (n: v_two-copy / v_one-copy / Lean loss) 0:33/33/0.00  2:31/31/2.00  4:31/31/4.00  6:29/29/6.00  8:27/27/8.00  10:25/25/10.00  12:23/23/12.00
+  s=1 a=320: (n: v_two-copy / v_one-copy / Lean loss) 0:66/66/0.00  2:64/64/2.00  4:62/62/4.00  6:61/61/6.00  8:60/60/8.00  10:58/58/10.00  12:56/56/12.00
+  s=3 a=160: (n: v_two-copy / v_one-copy / Lean loss) 0:33/33/0.00  2:32/32/1.28  4:32/33/1.28  6:32/32/1.28  8:32/32/1.28  10:33/35/1.28  12:32/32/1.28
+  s=3 a=320: (n: v_two-copy / v_one-copy / Lean loss) 0:66/66/0.00  2:64/64/2.00  4:64/64/2.56  6:65/65/2.56  8:64/64/2.56  10:65/65/2.56  12:64/64/2.56
+
+total time 25s
