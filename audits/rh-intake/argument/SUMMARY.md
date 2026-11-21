@@ -293,3 +293,13 @@ the balance (given |TT| ≈ n), rank and signature counts, the Mertens/Chowla–
 leading-order match. By-product: non-vanishing forces n ≳ m⁴, matching n ≈ x^{2+8ε}.
 Not checkable from the exposition: thin-cap / high-prime accounting; ThinScales (the draft
 used Y for three scales).
+
+Follow-up. `MAIN-ARGUMENT.md` was revised against the review (notation box; one-lift model
+computation §4.6; hook-product cancellation §5.1; holes §9.4). The reviser disputed the
+review on H5: PAIRING §0.1 settles Ga − ASK ≤ budget on paper for Hecke-route tops (τ
+cancels the surplus), though not in the Lean. DETSIG read H1 and H4: the determinant
+identity is supplied on the live route by a proved linear-algebra lemma (`SpecDet`) from
+partwise similitudes (Rallis inner product with the same L-value on both sides) and equal
+part dimensions; the layer signature is a definition forced by `arithAt`. Open below it:
+`AForm`/`BForm` bodies, `MultEq` (equal multiplicities across inner forms; endoscopic case
+to be checked), `GalD` (hypothesis, supplier untraced). Reader dispatched (MULTEQ).
