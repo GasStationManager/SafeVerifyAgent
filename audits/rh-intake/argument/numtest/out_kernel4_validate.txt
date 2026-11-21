@@ -1,0 +1,16 @@
+NODE-NUMTEST4 validation
+  p= 3  p mod 16= 3  ord(Frob_p|F)=4  Gram==I4: True   8*lam*sum_k f_k sigma^j f_k (j=0..3) -> (8, 0, 0, 0) (0, 0, 0, 0) (0, 0, 0, 0) (0, 0, 0, 0)
+  p= 5  p mod 16= 5  ord(Frob_p|F)=4  Gram==I4: True   8*lam*sum_k f_k sigma^j f_k (j=0..3) -> (8, 0, 0, 0) (0, 0, 0, 0) (0, 0, 0, 0) (0, 0, 0, 0)
+  p= 7  p mod 16= 7  ord(Frob_p|F)=2  Gram==I4: True   8*lam*sum_k f_k sigma^j f_k (j=0..3) -> (8, 0, 0, 0) (0, 0, 0, 0) (8, 0, 0, 0) (0, 0, 0, 0)
+  p=11  p mod 16=11  ord(Frob_p|F)=4  Gram==I4: True   8*lam*sum_k f_k sigma^j f_k (j=0..3) -> (8, 0, 0, 0) (0, 0, 0, 0) (0, 0, 0, 0) (0, 0, 0, 0)
+  p=13  p mod 16=13  ord(Frob_p|F)=4  Gram==I4: True   8*lam*sum_k f_k sigma^j f_k (j=0..3) -> (8, 0, 0, 0) (0, 0, 0, 0) (0, 0, 0, 0) (0, 0, 0, 0)
+  p=17  p mod 16= 1  ord(Frob_p|F)=1  Gram==I4: True   8*lam*sum_k f_k sigma^j f_k (j=0..3) -> (8, 0, 0, 0) (8, 0, 0, 0) (8, 0, 0, 0) (8, 0, 0, 0)
+  p=19  p mod 16= 3  ord(Frob_p|F)=4  Gram==I4: True   8*lam*sum_k f_k sigma^j f_k (j=0..3) -> (8, 0, 0, 0) (0, 0, 0, 0) (0, 0, 0, 0) (0, 0, 0, 0)
+  p=23  p mod 16= 7  ord(Frob_p|F)=2  Gram==I4: True   8*lam*sum_k f_k sigma^j f_k (j=0..3) -> (8, 0, 0, 0) (0, 0, 0, 0) (8, 0, 0, 0) (0, 0, 0, 0)
+  p=29  p mod 16=13  ord(Frob_p|F)=4  Gram==I4: True   8*lam*sum_k f_k sigma^j f_k (j=0..3) -> (8, 0, 0, 0) (0, 0, 0, 0) (0, 0, 0, 0) (0, 0, 0, 0)
+  p=31  p mod 16=15  ord(Frob_p|F)=1  Gram==I4: True   8*lam*sum_k f_k sigma^j f_k (j=0..3) -> (8, 0, 0, 0) (8, 0, 0, 0) (8, 0, 0, 0) (8, 0, 0, 0)
+  brute force vs engine, Zw p=5: 0 mismatches / 400 jets (a<=14, |n|<=4; a>9 only |n|<=2)
+  brute force vs engine, Zi p=11: 0 mismatches / 400 jets (a<=14, |n|<=4; a>9 only |n|<=2)
+  pairing (12)(34) vs (13)(24), Zw p=5, a in (100,199,250,300), 5 n: identical 20/20
+    v_p: 100,(0, 0, 0):20 100,(0, 0, 3):90 100,(0, 2, 0):21 100,(2, 0, 2):19 100,(3, 0, 0):90 199,(0, 0, 0):90 199,(0, 0, 3):39 199,(0, 2, 0):90 199,(2, 0, 2):90 199,(3, 0, 0):37 250,(0, 0, 0):52 250,(0, 0, 3):90 250,(0, 2, 0):52 250,(2, 0, 2):51 250,(3, 0, 0):90 300,(0, 0, 0):62 300,(0, 0, 3):90 300,(0, 2, 0):62 300,(2, 0, 2):59 300,(3, 0, 0):90
+time 62.0s
