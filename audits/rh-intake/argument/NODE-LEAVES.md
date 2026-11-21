@@ -237,7 +237,12 @@ The quantities are:
 | d=7, 5 | T^6, min −25 | integral (x(t) = 7, (−7+√−7)/2) | α=ω, 1+ω: integral | s₂=0 or 2: T^10 | integral |
 | d=7, 13 | T^14 | integral | integral | T^26 | integral |
 
-[M130 results: see §2.3.]
+**§2.3, extended to T^260** (`out_leaves_normrel_M130.txt`). Every row is unchanged.
+- At p = 5 this covers T^{126} = T^{p³+1}, past the third Honda level. At p = 7 and 11 it covers past p² + 1.
+- Every true-s₂ NR and every KR series is integral up to T^260.
+- The wrong-s₂ failures are at the same degrees as before.
+- PH minima reach −36 (ℤ[i], p = 7), −52 (p = 5) and −19 (d = 7, p = 13). That is about −(degree)/(p²−1)·…, so it
+  grows linearly, as expected for ph.
 
 How to read the table:
 - PH is non-integral from T^{p+1}. This is ph itself, consistent with NUMTEST's a/(p²−1).
