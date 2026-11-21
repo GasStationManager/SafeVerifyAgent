@@ -303,3 +303,16 @@ partwise similitudes (Rallis inner product with the same L-value on both sides) 
 part dimensions; the layer signature is a definition forced by `arithAt`. Open below it:
 `AForm`/`BForm` bodies, `MultEq` (equal multiplicities across inner forms; endoscopic case
 to be checked), `GalD` (hypothesis, supplier untraced). Reader dispatched (MULTEQ).
+
+MULTEQ (no escalation). `MultEq`: U(Y_0) and U(W_i) have the same odd rank and are
+isomorphic at every finite place; "good" σ carries types with no vector fixed by the
+unipotent radical of any P_{(a,r−a)}, which by depth-zero theory leaves only simple generic
+parameters (multiplicity 1 on every inner form); proof is a simple-trace-formula comparison
+on 14 Published leaves, with only E-irreducible elliptic tori surviving, so no κ-terms.
+Oddity: `RealStable` drops (−1)^{pq}, correct only because the rank is odd. Row-step
+L-value: use of the bottom parameter B is proved (`LFull`, hypothesis-free; the extra factor
+H is a product of Hecke L-values independent of c and B); tuple-independence is `RUnif`.
+`GalD` is supplied: Galois equivariance of the rational theta lift (`ConjRatLift5`, proved)
+plus Rallis at the conjugate datum. Open: `WeilSiegelFormulaUnitary` is stated for
+2·rank A < rank B, which fails for row steps k ≥ 1; the bridge `heckeForm_of_doubling₂`
+and `SiegelWeilUnitaryConvergent` are unread. Reader dispatched (SWRANGE).
