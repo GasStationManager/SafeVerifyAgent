@@ -219,7 +219,7 @@ wEta holds to 1e-12.
 A ratio of −1 is the sign character (semiChar). The function is elliptic up to sign, which is irrelevant for
 integrality: the Lean works with second log-derivatives.
 
-### 2.2 Exact integrality in the Weierstrass formal parameter T = −x/y (to T^128)
+### 2.2 Exact integrality in the Weierstrass formal parameter T = −x/y (to T^128; T^260 in §2.3)
 
 Everything is computed exactly in ℚ(√−d). Since p is inert, v_p(a + b√−d) = min(v_p a, v_p b).
 
