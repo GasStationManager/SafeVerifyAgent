@@ -531,3 +531,25 @@ only over w₀, v′). Root bundle: `⟨h, recTExists, h⟩`; the ECL field name
 `HypothesesBridge.main` not referenced. Purity in `ConclusionG6`: Jacquet–Shalika bound
 plus half-integral exponents force |α| = 1 (`SixthWeightPurity.lean:18-86`); in-tree
 Jacquet–Shalika; no Ramanujan input.
+
+E1LOOSE (no escalation; corrects INDEXBUDGET, WHERECONG). A. The "generic curve" is a
+generic 0-dimensional intersection Z = {s₁ = … = s_d = 0} in D(s₀), d = dimY, s_i generic
+combinations of weight-wL forms over the Gauss-valuation DVR O_λ(T). A weight wF+T·wL form
+maps to its Taylor jet of order < T−d along Z; Hasse derivatives in the generic
+coefficients pick each of the C(T−1,d) coefficients integrally (`TaylorHasse`, `Column`).
+Local: 2·Ila ≤ ord_λ Δ + 2·N_λ(ta′) − t. Global: exact product formula (`disc_product`)
+then Hadamard. Sizes close with slack ≥ a power of x; CM lower bound is paid at weight
+≈ k·f·b by only rz ≤ 44·dimY²·rk/T forms, T ≥ PPv⁴·dimY³·k·f/(m·de2). Live Bx = 0.
+Tightness of E1 is in the 12·f·m·b allocation and the J0 term EJ ≤ 32·x^ε·f·m·b·L.
+B. ON does not use the DIVinN premise (`onto_path_alt` binds it as `_`,
+TPS/OntoPath.lean:23); producers of DIVinN never mention ON/BoundsMu; no circularity. E1
+has Galois input through J0 (`ExponentStatement`: `CuspUAlt`, base change, Bhatt–Scholze,
+Chebotarev), none from the congruence chain. C. Witness: κ kept literally; λ replaced by
+`zeroLam` (differs only on zero eigenspaces), identities re-proved by congruence; `Holds`
+originates in `primRows3_of_parts`; `selB` = (σ).B for the single σ from `classSel`.
+Unread: SameGrp transports (statements only); whether L6/BoundsMu read λ on zero parts.
+
+Round 12 status. No defect. Everything named load-bearing in rounds 10–11 has now been
+read at least to a mechanism with a live supplier. Deepest unread inputs: `CongUW4` /
+`wtLacEx_holds` (congruences with weight varying over two places); `PerS.image`; in-tree
+C_cris and closure theorem bodies; `ThURel`/`ExportTie` suppliers; `J0`/`ExponentStatement`.
