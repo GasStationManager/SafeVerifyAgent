@@ -424,3 +424,22 @@ theory. Twisting buys the inclusion Θ ⊆ θ_j T_j (mirabolic chain; last link 
 a hypothesis at twisted places only), cost ≤ 2/p² per place. Unopened: suppliers of
 LeafTW1/TW2, `QAt`, `ShareRd` (a dimension inequality the budget depends on); bodies
 `localIdx`, `disc_product`, `heights_arith`, `deepCore`; top-layer inputs.
+
+TOPCORE (no escalation). `TopCore` (TL2:193-212) is integral: K unramified, l ≥ 5, ρ
+crystalline with labelled weights U, position hypotheses T1–T3; an extension of
+O/λ^a(χ₁) by T₀⊗X is a subquotient of crystalline lattices of the prescribed weights iff
+its class is in the image of H¹_f(T₀′)⊗X. Cocycle count (proof read in full): Herr cocycles
+(b, g), g ∈ XN, b ∈ X^{−w}N, independent mod coboundaries, number ≤ dsum = Σ#{u < w}.
+Mechanism: reduced Wach modules of any height h have φ-height bounded by X^h, (γ−1)N ⊆ XN,
+Sen weights = HT weights mod l (`SenLat`); for h ≥ l the lattice is not unique but any two
+are within X^σ, σ = Σ h_{i+j+1}/l^{j+1}; T2, T3 give no Sen weight in [0, σ+1] and exactly
+d_i in the polar window [−w, −1]; a gauge step and the polar part of b give the bound.
+Reader's test for K = Q_{l²} against Gee–Liu–Savitt weights (reader's computation, relies
+on an unchecked lifting assumption): consistent; in the mixed case an extra admissible line
+exists exactly when a base-l digit condition holds, which T2 forbids, so T2 is sharp. GL₃
+test unfinished. Integral step (`adm_eq_H1fX`): induction on the power of λ with
+admissibility at every level and saturation of H¹_f as an explicit clause; sound.
+Crystallinity at w | l with automorphic HT weights is a clause `G2a` in `CoreNormFacts.g2`,
+passed down; discharge not found; `G2a` has no "unramified at l" guard for l ≠ g₀, g₁.
+Unread: integral `SenLat`, Herr-complex facts, `Gauge.main`, closeness lemma. Reader
+dispatched (G2A).
