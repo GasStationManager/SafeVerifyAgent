@@ -830,3 +830,26 @@ recorded there: backward charge is not an artefact (NUMTEST5 vs ENGINE2, JETA); 
 ≈ x^{804} closing through η (ADM11 vs ENGINE); signature residual is a booking choice
 (DIVKEY vs WHYHALF); NUMTEST3/4 kernels are GIdx-shaped. Still open: no lemma links the
 Fock-jet norm to the Rallis-hook norm (STEPE/NORMS).
+
+## 18. Round 15
+
+KLAW (no escalation). Kernel law at signal primes is the Hecke-route theorem specialised:
+`normalisedFamily_standardBases_integrality` (NFS:19-30) needs one arithmetic input
+`HostLog` (exp(Σph(X_i))·Θ_orth(ℓ(X)) integral in the LT parameter) ← `hostAt_inert`
+(SP/JacobiOfClass.lean:63-81) ← `IntInert` = `kernels_integral_inert`, whose only use of p
+is (−d/p) = −1. Signal-specific part proved and read: σ∘ρ_z = ρ_{z+1}∘conj
+(`exists_kur_frob_tauEmb_posPl`, `plGG_posPl_one`); with conjugate-dual adapted bases the
+pairing is Σσ(g_z)g_{z′} = δ_{z+1,z′}; each parity block isotropic (`fOf_isotropic`). B3
+holds by construction (be built from even-position x and odd-position y; be₀ = cob(ph);
+torus average kills bidegree (1,1)); content is in the kernel equation, where isotropy is
+used. Slopes (reader's computation): the kernel's CM type is Psi = ker χ_{−d}, lifted from
+K; χ_{−d}(Frob) = −1 gives slope 1/2 at every place above every prime inert in K, signal
+and inertClass alike; A is isogenous to a power of the supersingular CM curve. `lemmaS`
+proved and read to `binomial_coefficient_extraction`: B4 makes additivity defects
+Dwork-integral; torus quantisation lifts weight to 1/(p−1); Lucas: non-l-power exponents
+keep weight 1/(p−1); on l-power bipowers C(l^α, l^{α−1}) has valuation exactly 1, one p
+lost; torus invariance forces s+α ≡ s′+β. Consistent with NUMTEST5 (per-minor cost 0.80 vs
+1 − γ₅ = 0.79). Statement only: `IntInert`, `HypShape_of`/`b0`,
+`BeData.exists_of_curveData`, `Quant`, `LogStep`, leaves of `lat_S`. Hypotheses passed
+down: host field `der.frob`; `StdTie.adapted` (supplier `linkR_stdTie_entry` located,
+unread).
