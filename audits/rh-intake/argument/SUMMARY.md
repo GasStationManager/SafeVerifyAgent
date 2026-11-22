@@ -751,3 +751,25 @@ gain + F − E. `chain_ge` composes linear maps. Numerics: `jeta_lp.py` tested L
 only; `signal_twotops.py` tested real jets at rank 1, p = 5, caps ≤ 8, never in the regime
 cap ≈ a/p. Expert check first: kernel law at signal primes and `lemmaS`. Experiment
 dispatched (NUMTEST5).
+
+STEPE (no escalation; normalisation consistency left open). `stepE_num` (NumbersLink:388)
+proved and read to the bottom, elementary: `young_diagram_step_origin`
+(YoungDiagramTopExact:254) → `young_diagram_step/factorial/period/hook`
+(YoungDiagramHook:250-548). ph(u) = u log u − u; logHook = log of the hook-length product of
+the diagram with rows ⌊a⁺⌋. Three facts: the k-row Fock weight ν and the (k−1)-row hook
+weight a⁺ interlace; hook product ≥ product of row factorials; ph(n) ≤ log n!. One w-sized
+row of ν has no partner in a⁺ (a_t + w at a top); the a_t row is not in the hook, so
+ph(a_t) survives exactly. Reader's model (one top, a ≫ w ≫ k²): at the top
+Σph(ν) − logHook − ph(a) = w·log a − (k²/2)log(w/k) + O(k²); off a top ≈ w·log w; the Lean
+allows 2w·La and w·La; lgamma check agrees. So eE ≈ w·La per (lift, place), total
+≈ m·f·b·La: a genuine per-lift loss in the "m" family. Inputs: (a) Fock jet term
+`BlockBound` (PaddedWittNormSquare:36-49), Fischer norm over the Fock norm of the extremal
+vector, logΩ via |cD·r|² = 1/Ω; (b) hook term = L6 premise, same `Nd.logHook`; (c) covolume
+`topCovolG_alt_alt` (TopCovolG:39-58), conditional on seven bundles, same `Nd.logOm`.
+Consistency of the (a), (b), (c) norms is carried only by the shared logΩ symbol and
+type-shared frames; no identifying lemma found. Chowla–Selberg: proved in-tree from
+Kronecker's first limit formula and the class number formula
+(`mean_log_area`, MeanLogPeriodConjugatesEqChowlaSelberg:141-195): mean over conjugates of
+log(area/π) = γ + log(2π/√d) − L′/L(1, χ_{−d}) for unit-discriminant lattices; reader's hand
+derivation matches sign and constant and reproduces the Faltings-height form; `two_log_brN`
+accounts for rd_E vs √d; d ≡ 3 mod 4 on the D7 host. Reader dispatched (NORMS).
