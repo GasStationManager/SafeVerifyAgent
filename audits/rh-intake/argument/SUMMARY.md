@@ -878,3 +878,25 @@ Bessel-functional space; supplier `closed_linkIRR_of_join_count`. Statement only
 leaves, count leaves, in-tree Siegel–Weil, `rowsTiePT'_of`, `BesselId` supplier,
 `irr_row_closed`, `FrameLA1`, `ramRankF_min`. (L10's live supplier `Loss7.stLoss7` was
 already traced by GATIE.)
+
+REVIEW2 (second cold review, with an adversarial pass; `REVIEW2-MAIN-ARGUMENT.md`).
+Verdict on the exposition: UNDERSTANDABLE WITH GAPS. On paper the analytic shell (windowed
+Landau, host selection, bridge) and the ledger algebra close (9 = 5+3+1, U range, balance,
+Riesz weight; Chowla–Selberg constant checked numerically for d = 3, 4). Reviewer's opinion
+on the argument as described: very unlikely to be correct, failure most likely in steps
+6–8. Governing observation: if every step is true, total actual slack is ≤ U·x^{1/2+9ε}, so
+every inequality must in fact be tight to relative x^{−1/2}; testable in small models.
+Candidate failure points, ranked: (1) sharpness of the Bost step — the frame gives rank
+only; nothing described controls the Hadamard defect, the gap between the norm of the
+m-fold composite and the product of step norms, or the word-dependent seesaw constant a_u;
+(2) nothing is shown to carry the √x barrier — the Fock–hook loss eE totals ≈ B₀ over all
+lifts (B₀ already contains m), not m·B₀ (slip inherited from STEPE), and the other named
+losses are negligible, leaving the covolume q-error, E1, E2; (3) the auxiliary prime T_u
+(Count5): −a_t·log T_u supplies the −a·log w part of the main term, i.e. is where the scale
+x enters, and is unexplained (T^{−deg} scaling, what bounds T from above, product formula);
+(4) leading-coefficient cancellation through a shared logΩ symbol; (5) kernel law at rank
+≈ x^{399} (written before KLAW). Observation: steps 3–11 never use PairGood, so the core
+inequality is itself GRH-strength for χ_{−d}. Part B: "LP duality read in full" overstated;
+eE classification faithful to a wrong node; rank-only frame and T_u understated. Part C:
+H1, H2, H3, H5 resolved; H4's question remains and is now answered wrongly; one-lift worked
+display still missing; new notation clashes in §2.1. Readers dispatched (SHARP, TU).
