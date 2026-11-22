@@ -540,6 +540,21 @@ Conditional suppliers bear on all of these: the seesaw (H2), Theorem S and `Link
 
 ---
 
+### 9.5 Dependency map of the slope chain (after rounds 10–11)
+
+This supersedes the phrase "index and congruence terms" in §5.2 and the placement of the Galois inputs in §8. Sources: NODE-DETSIG, LIVEPATH, LIVEMULT, SWRANGE, TWSET, LARGETW, INDEXBUDGET, MIRABOLIC, BEYONDFL, TOPCORE, G2A, WHERECONG.
+
+| term of the final inequality | supplied by | Galois input |
+|---|---|---|
+| height of the evaluation map | Fock-space estimates, Chowla–Selberg, hook cancellation (§5.1) | none |
+| det ι = κ^D ∏ det θ_j | linear algebra (`SpecDet`) from partwise similitudes: Rallis inner product with the same L-value on both sides, inside Weil's range; equal part dimensions from a simple-trace-formula comparison of two inner forms of odd rank | none |
+| layer covolumes lcv(M_j) | Hilbert–Samuel, flat sections; signature (k+j−1, m−j) is a definition forced by `arithAt` | none |
+| E1: index of the theta image at twisted places | test lattice of products of short forms, index bounded at every place by a discriminant and the product formula (total ≈ m·B0, tight); test lattice inside the theta image through a finite-mirabolic chain and Hecke Euler-factor determinants; integral surjectivity of theta is never proved, congruences are paid for | none |
+| E2: dual index of the type-part projection at twisted places | Hida congruence module ≤ Selmer + Ш + class-number term, no local term at l (new integral comparison `TopCore` for widely spaced weights); Selmer killed by twists chosen index by index; Ш ≤ √b from the U(3) deformation ring | all of it: `CongBound_at`, `KillAt`, `LinkN`, `VWin`, `OneCharU`, `AutEnd3Alt`, `Row0b`, residual irreducibility |
+| near-orthogonality, non-vanishing | Theorem S, Poincaré series, counting (§7) | none |
+
+The twisted set is the support of the untwisted index (no cutoff on residue characteristic; the iff with X″ quoted earlier is dead code). E2 also enters the base-to-column constant and one divisibility error. Within E2 the Ш bound is √b against an allowance of about x^{2.5}·b, so the U(3) branch is wired in with no alternative but numerically nearly idle. One point unconfirmed: the fields carrying the E1 bound are typed with a premise from the Galois side; the visible producers do not use it, but two producers were not opened [WHERECONG Oddity 3].
+
 ## 10. Correspondence with the author's timeline
 
 1. *Stepanov determinant.* Not located as an object; the analogy is structural (§6) [WHYHALF §2].

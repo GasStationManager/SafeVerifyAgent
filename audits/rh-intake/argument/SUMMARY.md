@@ -478,3 +478,19 @@ unramified base-change parameter at non-split w | l even for l ∈ {q, d, small}
 `adm1`; live TopCore call excludes these l); `g4p` is `True` (not on this path); Row0b's
 pst/WD clause for theta-lift and trace-limit representations not verified; sibling bundle
 `HypothesesBridge.main` uses Published `CaraianiLocalGlobal` instead, live one undetermined.
+
+WHERECONG (no escalation; corrects CONGMOD, MIRABOLIC, MAIN-ARGUMENT §5.2/§8). All of
+`CongBound_at`, `KillAt`, `LinkN`, `VWin`, `OneCharU`, `AutEnd3Alt`, `Row0b` and residual
+irreducibility are live and reach the slope chain through one scalar per lift, E2_j, the
+dual index of the type-part projection T_j at twisted places (`jw_le`, TPE:48; SO:67, 70),
+and through nothing else; E2 also sits in the base→column constant Q and DIV error `errB`.
+Trunk: `divClausesR_of` → `IndefSide.boundsMu` → `toDivInputs0R` → `inpAt_of_alt` → DIVinN
+(`topDesWin`, `divinN_of_hypV`). Ш part ≤ √b against ≈ x^{2.5}·b: the U(3) branch is
+nearly idle numerically. `sig_all` is linear algebra on an explicit model, no deformation
+ring. Open: fields carrying ON are typed `DIVinN → …`; `row_rRows_stage0_alt`, `ev_prem`
+unopened. Dependency map added as MAIN-ARGUMENT §9.5.
+
+Round 11 status. No defect. New in-tree mathematics now read to a mechanism: discriminant
+index budget; mirabolic chain; `TopCore`. Unread beneath: integral `SenLat` and Herr facts;
+`localIdx`, `disc_product`, `heights_arith`; `ThURel`, `ExportTie` suppliers; three witness
+links (LIVEMULT); Row0b's pst/WD clause for trace-limit representations.
