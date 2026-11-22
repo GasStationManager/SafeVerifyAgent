@@ -1015,3 +1015,25 @@ level-T coordinates, paid by the mean weight in the source slope (TU, TDIV, TFLO
 log T* matches the main term to O(L) given the Harish-Chandra normalisation of the formal
 degree. Unread and load-bearing: `cdScale`/`cdScaleTie`; `Conclusion5Sharp`,
 `TwistedColumnBoundAtT`; `colsTiedSym_std`; Theorem S and count leaves.
+
+FDEG (no escalation; reopens the question of what carries the barrier). A. One Haar measure
+throughout: dsig, the archimedean part of vol(Y₀) and the measure behind massI all use
+`CDHaar` (compact-dual measure; DataCD:42-61), tied by `cdScaleTie`/`dsigTie`
+(DataTies:10-21), `VolTie` (StandardLattice:241-263); the counting theorem uses `muG` for
+both its formal degree and volume. TFLOOR's open premise is proved in-tree: the live
+supplier `explicit_bound_family` proves dsig = fdegHC = dimV(rowLam) (`hCFdegRGap_holds` →
+`fdCons_cd`, body unread). θ recomputed independently: |θ| ≤ 2L + O(log x). Source is
+definite U(k) at level T, target indefinite U(r), r = k+m−1 (not inner forms of each
+other); massI(r)/massI(k) telescopes Siegel mass ratios, leaving m−1 values L(M, η^M),
+M > k (≈ 1), v/π and factorials that cancel; T* depends on weights, v and g₀g₁. (T^k − 1)
+is the mirabolic index on the source side; `StepLevel` gives index T^k − 1 for
+Lb = N ⊕ O·z0. B. `Conclusion5Sharp`, `TwistedColumnBoundAtT` only CAP the denominator of
+colT at T by m·ET. The step multiplies by det^{sSharp}, applies `unf`, divides by
+det^{sDiv}, sDiv − sSharp = (t+1)/2 (DataKernels:225). Reader's Sym^a model with both
+levels at level-T points: a det^s twist moves the valuation by exactly s on every monomial,
+so the booked sDiv ≈ w cancels against sSharp, leaving (t+1)/2 per place; then the TRUE
+loss per lift is poly(x)·log T, a factor ≈ b/poly below the ≳ U·x^{1/2}/m per lift SHARP
+needs. Unsettled: the sign convention of `ValTied.lat` (TiedStep:118-123) at levels i and
+i+1, and the T-adic content of `unf`. Second candidate carrier: the covolume q-part, sign
+unsettled. If neither carries it, some proved hypothesis must be false. Reader dispatched
+(CARRIER).
