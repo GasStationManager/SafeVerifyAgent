@@ -711,3 +711,24 @@ used: only |pq_j − k| ≤ m, once, in a triangle inequality; p_j − q_j cance
 coefficient leaving (2j−1−m)·w per lift, counted in the "m" family only through a crude
 bound (it would vanish if w were independent of j). m = 1 (reader's inference): the ledger
 gives G ≲ x^{1+O(ε)}, no better than trivial; the tree never allows m = 1.
+
+ADM11 (no escalation; closes NODE-LOSS's zero-chain alarm on the live path). adm11
+(LQP:315-321): per word u and lift j, Σ sz(E) = ΣA·log(g0·g1) up to C·B0, and the part
+away from g0, g1 is ≤ C·B0; B0 = f·m·b·L, L = x^ε. Producer proved down to eight bounds
+(`C2off_of`/`C2atG_of`, WDS:433-671). Split primes and p > X″ carry only v_p(DGam),
+Σ log p·v_p(DGam) ≤ log DGam. At signal and inertClass primes ≤ X″, `sum_eatI`
+(OLS:447-497) gives ≤ 424·B0: kindA 18, errF 36, c6·Σw/p 324 (largest), deLoss ≤ 23,
+EatX ≤ 21. deLoss closes by bounding N(j−1)N(j) by η (etaSz), counting all integers ≤ X″,
+and X″·η ≤ b (SizeEta); `scale_poly_comparison`: x^{ch+1228}·e^{x^{ε/3}} ≤ e^{x^ε/2}.
+Threshold x0 existential, depends on ε, the constant record and exponents, uniform over
+hosts. `nprimeMuR_at` (SLP:694): exact slope formula μ(N_u) − μ(NuH) = Σ 2·lwP·⌊e·sg⌋; floor
+loses ≤ 2·lwP per place, total ≤ C·X″; direction right for Bost; divisibility proved
+unrounded then floored. adm2 on every branch (AGP:214-236): type prime T and g0, g1 have
+exponent ≤ 0 (`UsedTuplesBoundByConstant`); otherwise `Conclusion1` (SRB:25-192): GIdx →
+`kernel_valuation_served`; VV = ∅ signal or inertClass hP ≠ 0 → `OrbitsWithoutOperator`;
+inertClass hP = 0 → `MediumInertPrimeLengthBound`; d → `LossAtDiscriminant`; split and
+p > X″ → exponent ≤ 0 (`IntegralKernelValuation`). `Ties9` is parameter matching only;
+`Conclusion1` concerns the actual column maps; the local chain enters only through
+`CmpLite`, which must intertwine with the actual K_j, so `zeroCh` cannot reach adm2.
+Unread: `DegreeCountBound`, `UsedTuplesBoundByConstant` (carry the ±C·B0 precision against
+ΣA·log g); producers of ModelsOK/twU.
