@@ -575,3 +575,26 @@ host-independent. Order of choices: ψ; (e_D, e_L, ε₁); s; ε with
 (e_D+e_L+7)ε ≤ (Re s − 1/2)/2; family with 3/2-windows; per x a host; Landau parameters.
 ε → 0 pointwise in s. Inputs not rechecked here: `core_gm` at every x of each window;
 `PairGood`.
+
+LEDGER (no escalation; resolves the signal splitting type; H5 not in the Lean). Fifteen
+lines L0–L15 plus D1–D5 for DIV, each a Lean statement, combined by proved linear
+arithmetic. Slope side: Bost (MB:151) → DIV (MB:118) → Slopes, EComp5, Count5 →
+`s_lower5` (LoC:50; the two Fo terms cancel). Main term: `key_identity5` (LoC:105), an
+exact identity turning m·ph(a_t) − m·a_t·logΩ into Main; `Ga_bound5` (LoC:113). Closing:
+LossBounds, ASK − Ga ≤ LoP (QSB:34) → ASK ≤ Main + ErrX5at (LoC:175) → `errX5at_le`
+(PCh:613). Bridge: `ch_top`, `ch_balance`, `th_le`, `core`, `GrowthSizeBound`, `core_gm`
+(CG:12-74). Live call has eD = 2, eL = 0 (TS:52): final statement G_m(x) ≤ x^{1/2+9ε}
+(9 = 5 + 3 + 1); error/U ≤ 20·x^{1/2+2.625ε} from the live record. ε fixed per family
+`FamP ε`; limit only in Landau. The gain Σ_p γ_p·a·log p never appears: the gain is an
+abstract scalar Ga, bounded below by `Loss_at` and above by the slope chain; Main is matched
+to the explicit-formula MAIN by definition (CT:11-35), L′/L constants tied by `Char_at`
+(QLD:226). Precision: archimedean side relative x^{−1/2+O(ε)}; p-adic side
+LoP = c·|TT|·m·b (eL = 0), i.e. relative ≈ x^{−1}, a hypothesis of `LossesSmallShares`,
+producer untraced. Primes: signal = Frobenius ((1,0),h), inert in ℚ(√−d), split in ℚ(√−q)
+(HCl:116-117, 178-179), thick partners, Riesz weight b·(x/p − 1)₊; inertClass =
+((1,1),h), top/thin partners, removed in the bridge by ThinScales (NUMTEST4's "inert in
+both" describes these); split primes not in ASK. H5 (Ga − ASK ≤ budget) is not in the
+Lean; only `ga_le_at`, far too weak; `exists_data_completion` (PCh:306) shows the
+SizeData₂ clauses are satisfiable from ASK ≤ Main + error alone with Ga := ASK − LoP, so
+content lies in the ties to real lattices. Unread: `proposition_size_bound`, `core_ineq`,
+`divIneqRecord`, `windowInequality_of_artinInputs`; hop TS:52 → `linkGLOBAL7_pk` inferred.
