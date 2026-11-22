@@ -368,3 +368,19 @@ live consumer `ResidueKilled.dm_of_two` ignores it, and the live
 the pole statement is removed, not proved, and consumers are typed against the weaker
 version. Other `True` slots: ECL:372 (unused), `TopShapeAlt True True` (unused). Script
 check of 182 root field types: no other Prop defined as `True`. Reader dispatched (LIVEMULT).
+
+BEYONDFL (no escalation; a new in-tree theorem, key link at statement level).
+`CongBound_at`: congruence valuation ≤ Selmer + Ш + v_l(h_E) + epsQ, no local-at-l term.
+Local defect = length of the span of Ribet/GMA cut cocycles at w | l modulo divisible
+H¹_f; `UseLoc.main` proves it 0. Mechanism is a new integral comparison for widely spaced
+weights, not a CM shape: `TopCore` (any crystalline ρ over unramified K) says a class cut
+out by lattices in crystalline representations of the given weights lies in H¹_f, by a
+dimension count (residual H⁰ = H² = 0; H¹_f a summand of rank dsum; a mod-l (φ,Γ)/Herr–Sen
+count of residual admissible classes ≤ dsum). "Position data" is a residual genericity
+condition on base-l digits of the weights (low window of length η with η+4σ+6 < l,
+σ ≈ h/(l−1); cloud weights mod l avoid [−2σ−2, η+2σ+3]); l ∉ Exc gives it. Reader's toy
+check (GL₂(Q_l), l = 101, not in the Lean): the excluded residues are exactly those where
+Breuil–Mézard gives a crystalline lift; consistent. Inputs: `BhattScholzeIntegral` matches
+the literature; `BlochKatoLocal` passed but discarded; no Fontaine–Laffaille. Non-literature
+content, statement level only: `card_cocycles_independent_mod_coboundaries_le`, `realD`.
+Exc budget confirmed (8b < lStar², |Exc| ≤ 388·Ub⁸, charge ≤ b).
