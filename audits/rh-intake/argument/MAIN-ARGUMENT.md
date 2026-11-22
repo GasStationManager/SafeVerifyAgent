@@ -4,7 +4,7 @@
 > 1. This document gives a continuous mathematical account of the argument in the alpo.ge Lean tree (SHA-256 `9631b4f0…49c7fc`). The tree claims RH and GRH for Dirichlet L-functions.
 > 2. It is a reconstruction by reading. Reader agents each read one piece over fifteen rounds (100 nodes), cited in brackets, e.g. [ENGINE], and two cold reviews read the document (§9.7). Nothing was compiled or run in Lean. After round 15 every step of §0 has a mechanism read on the live path, and no defect has been found; what rests on statements only is listed in §9.4.
 > 3. "Proved" means that a proof term exists in the tree. It does not mean the term was checked, or that its leaves were read.
-> 4. Where nodes conflict, the newer node wins; the corrections that change the picture are listed at the end, and SUMMARY §5–§17 records them all. *(inferred)* marks an inference by a node or by the auditors. "Not established by the reading" marks a gap the nodes leave open.
+> 4. Where nodes conflict, the newer node wins; the corrections that change the picture are listed at the end, and SUMMARY §5–§18 records them all. *(inferred)* marks an inference by a node or by the auditors. "Not established by the reading" marks a gap the nodes leave open.
 > 5. This document describes the argument. It does not vouch for it. §9 states what has been read, what rests on statements only, and what is still not understood.
 
 > **Notation** [ACCOUNT §1; CHBALANCE §1; SERVED §1]. The Lean reuses letters; this document does not.
@@ -18,19 +18,19 @@
 > | n; Φ; f; r | n = \|A\| where Gal(E/ℚ) = {±1}² × A and [E:ℚ] = 4n; Φ = Gal(E/K), the "places" ρ; f = \|Φ\| = 2n; r = k + m − 1 (the rank; COUNT, GERMJET write n) |
 > | 2^{e₂}; e; i | the cyclic 2-power quotient of A; an odd distance on a Frobenius orbit; a Tate twist (§8) |
 > | TT; a_t; t | tops, TT ⊂ A, x^{−ε/8}n/2 ≤ \|TT\| ≤ n; the weight of top t; t is a top, or in ranks the odd block length (N(j) = k + j(t+1)), also the Speh length of §8 |
-> | T (= T_u); π_T | the type prime of word u, a rational prime split in E; π_T ∈ O_E with π_T·π̄_T = T (§5.5) |
+> | T (= T_u); π_T | the type prime of word u, a rational prime split in K; π_T ∈ O_E with π_T·π̄_T = T (§5.5) |
 > | η; η_F, e_F | the one polynomial parameter (thick caps w ∈ [b, b+η+1]; η = 2m⌈x^{ch}⌉, §4.7); the frame tightness of §5.3 |
 > | partner(t, g); w_{j,ρ} | the place cconj + g + topPl(t) ∈ Φ met from top t by Frobenius g; the cap at ρ, level j: thick w ∈ [b, b+η+1] (a/w ≈ x), top w ≤ 2b′, thin w ≈ w″ |
 > | X′; b′; w″; X″ | e^{x^{ε/3}}; a/X′; b′/(xn); a/w″ = xnX′ |
 > | δ; δ_p | \|T2\|/n ≥ x^{−ε}, T2 the thick places; ≤ e^{−x^{ε_z/7}}, with dim EE = (1−δ_p)·dim HH |
 > | U; B₀ | \|TT\|·m·b·δ/2 ≈ x^{2.5}b, the signal unit (budget U·x^{1/2+O(ε)}); f·m·b·x^ε, the per-lift error unit |
 > | ph; logΩ | y log y − y; γ + log(π/v) − L′/L(1, χ_{−d}) with v = rd_E/2 |
-> | κ; I, I₁ | the similitude constant of ι; frame-row index sets (§7, RANK's κ, κ₁) |
+> | κ | the similitude constant of ι; also, in §5.3, the frame-row index set (RANK's κ) |
 > | BL; P; HH; H_B | Bost loss (§5.3); Selmer presentation (§8); the L² space (§3.1); the Bost scale x^{C_H}b (§5.3). Φ is only Gal(E/K); the Laplace transform of §2.1 is ℒ, the Schwartz datum of §4.1 is 𝒮, and §2.1's window letters carry a subscript L |
 > | Ga; sg(u, w); LoP | the gain, a defined formula (§5.4); the per-place exponent Σ_j(gain_j + F_j − E_j); the loss allowance C·\|TT\|·m·b |
 > | cc; E1, E2, E3 | the target lattice of the DIV map, whose slope is bounded through μ(RR^∨) by a base-to-column passage (§5.4); the three index errors of the covolume bound (§5.2) |
 >
-> *Sign of Ω.* COVOL writes the proved Chowla–Selberg identity as "−meanLog = γ + log(2π/√d) − L′/L", HEIGHT as "mean_ρ log(area(Λ^ρ)/π) = …". So logΩ = −meanLog in COVOL's sign; √d versus rd_E is a separate proved identity [COVOL §2; HEIGHT child 3].
+> *Sign of Ω.* logΩ = −meanLog in COVOL's sign, = mean_ρ log(area(Λ^ρ)/π) in HEIGHT's; √d versus rd_E is a separate proved identity [COVOL §2; HEIGHT].
 
 ---
 
@@ -43,17 +43,17 @@ Fix a primitive Dirichlet character ψ, of order o, and ε ∈ (0, ε₁). Each 
 3. **The engine: one lift, one signal prime.** At a signal prime (inert in K, split in ℚ(√−q)) the positions form an even orbit, the kernel is exp(−cross Gaussian) × integral, and the self-Gaussians cancel. LP duality gives, per top, v_p ≥ Σ_{e odd}(a_t/p^e − cap)₊ − γ_p·Wc − (logs), cap = number of minors at the partner; at a thick partner the e = 1 term is the Riesz weight b·(a_t/(bp) − 1)₊. The kernel law is the Hecke route's theorem specialised: its one arithmetic input (`IntInert`) uses only (−d/p) = −1, and a Frobenius identity makes the frame hyperbolic [ENGINE2; ADM2; KLAW; §4.2–4.4].
 4. **m lifts.** The one-lift bound holds on the whole global lattice of each level, so gains add along `chain_ge`; the exponent is the ledger's sg symbol for symbol (`liftI_of`) [ENGINE2 §4; GATIE §0.3].
 5. **The gain is tied to a lattice.** Ga is a *defined* piecewise-linear formula, and the source lattice is *defined* as N_u = ∏_w 𝔭_w^{−⌊e_w·sg(u,w)⌋}·NuLat_u, sg = Σ_j(gain + F − E). Step 4 gives Bk_u(N_u) ⊆ cc on every branch: this inclusion *is* the p-adic divisibility of the actual chain maps. An exact slope formula gives μ(N_u) ≥ μ(M_u) + Ga + Fo − Ee − Lo5 [GATIE; LEDGER L2].
-6. **DIV.** μ(cc) + h(u) − Fo ≤ Σ_t[m(ph(a_t) − a_t logΩ) − a_t log T_u] + c·|TT|·a·La + c·m(B₀+Nc)x^{2ε}: the height (Fock norms, Chowla–Selberg, Rallis hooks) meets the covolume bound, whose index errors E1, E2, E3 are per-lift; E2 is the only congruence input, Nc its allowance. The term −a_t·log T_u is where the scale x enters: T_u is the *type prime*, a rational prime split in E, one per word and shared by all m lifts; the source forms live at level T, and the last (Bessel) map reads the heavy last-row component in level-T coordinates, scaling its archimedean norm by T^{−a_t} at no T-adic cost, because divisibility by π̄_T^{nBr} (nBr ≈ a_t) *is* the integral structure at a level-T point (§5.5) [LEDGER L1; DIVKEY; STEPE; TU; TDIV].
+6. **DIV.** μ(cc) + h(u) − Fo ≤ Σ_t[m(ph(a_t) − a_t logΩ) − a_t log T_u] + c·|TT|·a·La + c·m(B₀+Nc)x^{2ε}: the height (Fock norms, Chowla–Selberg, Rallis hooks) meets the covolume bound, whose index errors E1, E2, E3 are per-lift; E2 is the only congruence input, Nc its allowance. The term −a_t·log T_u is where the scale x enters: T_u is the *type prime*, a rational prime split in K, one per word and shared by all m lifts; the source forms live at level T, and the last (Bessel) map reads the heavy last-row component in level-T coordinates, scaling its archimedean norm by T^{−a_t} at no T-adic cost, because divisibility by π̄_T^{nBr} (nBr ≈ a_t) *is* the integral structure at a level-T point (§5.5) [LEDGER L1; DIVKEY; STEPE; TU; TDIV].
 7. **Bost.** s − log|W| − BL ≤ μ(cc), s the mean source slope net of heights: Bost on each Harder–Narasimhan piece, combined by a layer cake. It consumes *robust near-surjectivity* of ⊕B_u at one complex place, the sources overfilling the target by ≥ x^{C_H}; that comes from Theorem S and an explicit dimension count, both proved on the live path by named theorems (§5.3, §7) [RANK; NONVAN].
 8. **Floors and the type prime.** μ(M_u) ≥ −c·|TT|·a·La(1+m/k), whose T-term is the mean weight (a/k)·log T; Ee ≤ m(ΣA·lg + cE·B₀) (adm11), including the loss m·EatT at T; and Count5, log T_u ≥ Σ_j mean_ρ log(w_{jρ}v/π) + m·lg − c(La + m²La/k), an explicit dimension ratio: T is pinned by matching the level-T source dimension to the target [LEDGER L3–L5; TU; TFLOOR].
 9. **Key identity.** Σ_t m(ph(a_t) − a_t logΩ) − ΣA·Lam5 + m·ΣA·lg = Main + ΣA·c(La + m²La/k) exactly, where Main = Σ_j Σ_t a_t(log a_t − 1 − γ + L′/L(1, χ_{−d}) − mean_ρ log w_{jρ}). The split half of log a! is the −L′/L(1, χ_{−d}) inside logΩ [LEDGER L7].
 10. **Upper bound on the gain.** Steps 5–9 add, with Fo and h cancelling, to Ga ≤ Main + log|W| + (errors) (`Ga_bound5`) [LEDGER L9].
-11. **Loss bound, and the main inequality.** ASK − Ga ≤ LoP = C·|TT|·m·b, ASK = Σ_t Σ_j Σ_n Λ(n)(1 − χ_{−d}(n))(a_t/n − w_{j,partner})₊: two explicit formulas with the same caps, no lattice [GATIE §0.2]. With step 10: ASK ≤ Main + ErrX5at, ErrX5at ≤ x^{5ε}·[|TT|·a(1+m²/k) + m(B₀+Nc)] [LEDGER L10–L12].
-12. **Bridge.** ASK − MAIN = De exactly (orthogonality on Gal(E/ℚ)). Top and thin partners are discarded by an effective PNT (`ThinScales`). Only signal primes reach thick places, where the summand is the Riesz weight of step 3. Averaging gives U·[G_m(x) − SigA − 4x^{1/2+ε}] ≤ Σ(ASK − Main) + 2|TT|mb/x, U = |TT|·m·b·δ/2, with SigA ≤ 4o·x^{1/2+ε} by step 2 at y = x [LEDGER L13–L15; ENDGAME §2.3].
+11. **Loss bound, and the main inequality.** ASK − Ga ≤ LoP = C·|TT|·m·b, ASK = Σ_t Σ_j Σ_n Λ(n)(1 − χ_{−d}(n))(a_t/n − w_{j,partner})₊: two explicit formulas, no lattice [GATIE §0.2]. With step 10: ASK ≤ Main + ErrX5at, ErrX5at ≤ x^{5ε}·[|TT|·a(1+m²/k) + m(B₀+Nc)] [LEDGER L10–L12].
+12. **Bridge.** ASK − MAIN = De exactly (orthogonality on Gal(E/ℚ)); top and thin partners are discarded by `ThinScales`; only signal primes reach thick places. Averaging gives U·[G_m(x) − SigA − 4x^{1/2+ε}] ≤ Σ(ASK − Main) + 2|TT|mb/x, U = |TT|·m·b·δ/2, with SigA ≤ 4o·x^{1/2+ε} by step 2 at y = x [LEDGER L13–L15; ENDGAME §2.3].
 13. **Core bound.** Dividing by U: G_m(x) ≤ x^{1/2+9ε}, at every x ≥ x₀ of every window [Y, Y^{3/2}] of the family attached to ε; 9 = (2 + 0 + 3) + 3 + 1 (§6.2) [LEDGER §0.2].
 14. **Landau on windows, and GRH.** A one-sided bound G ≤ C·y^θ on all y of windows [Y, Y^{1+δ_L}], Y → ∞, for a positive combination of g_χ, forces L(s, χ) ≠ 0 on Re s > θ for each χ in it; with ε → 0 separately for each s, L(s, ξ) ≠ 0 for Re s > 1/2 and every ξ ∈ ⟨ψ⟩, ζ included [ENDGAME §1c, §2.1].
 
-**Where 1/2 arises.** Divided by U, the error *budget* of step 11 has three families [LEDGER §2a; SHARP]: one-off boundary terms (≈ |TT|·a·x^ε) give x/m; per-lift allowances (≈ B₀ = f·m·b·x^ε at each of m levels) give m; the E2 congruence allowance m·Nc, not a non-vanishing term, gives k/n² [NONVAN]. At m ≈ x^{1/2} each is x^{1/2+O(ε)}; at m = 1 the result is trivial. Most per-lift allowances far exceed actual use; the identified loss that genuinely grows like m per lift is at the type prime, where every lift is non-integral by about its weight mass (§6.4). Step 2 removes the split primes without producing cancellation. Steps 3–9 must hold to relative x^{−1/2+O(ε)}; step 11 to relative x^{−1}, formula against formula (§6.3).
+**Where 1/2 arises.** Divided by U, the error *budget* of step 11 has three families [LEDGER §2a; SHARP]: one-off boundary terms (≈ |TT|·a·x^ε) give x/m; per-lift allowances (≈ B₀ = f·m·b·x^ε at each of m levels) give m; the E2 congruence allowance m·Nc, not a non-vanishing term, gives k/n² [NONVAN]. At m ≈ x^{1/2} each is x^{1/2+O(ε)}; at m = 1 the result is trivial. Most per-lift allowances far exceed actual use; the identified loss that genuinely grows like m per lift is at the type prime, where every lift is non-integral by about its weight mass (§6.4). Steps 3–9 must hold to relative x^{−1/2+O(ε)}; step 11 to relative x^{−1}, formula against formula (§6.3).
 
 ---
 
@@ -67,7 +67,7 @@ $$G_m(y)=G_z(y)+\frac{1}{3o+1}\sum_{\xi\in\langle\psi\rangle,\ \xi\ne1}\operator
 
 where ξ* is the primitive character inducing ξ [ENDGAME §1b]. The tree proves L(s, ξ) ≠ 0 for Re s > 1/2 and every ξ ∈ ⟨ψ⟩ from the one-sided bound G_m(x) ≤ x^{1/2+9ε} at every point of a sequence of windows [Y, Y^{3/2}] (§0, step 13). All the RH-strength content sits in one inequality between the count ASK of inert prime powers (§0, step 11) and its main term; the rest is character bookkeeping (§2).
 
-**The idea** [WHYHALF §2]. It is a Stepanov-type argument whose auxiliary object is a vector of periods of high-order Taylor jets of CM theta functions. *p-adically*, at p inert in K a jet of order a is divisible by about p^{Σ_{e odd}(a/p^e − w)₊}; summed with weight 2 log p, the uncapped part is the inert part of Chebyshev's log a! = Σ Λ(n)⌊a/n⌋. *Archimedeanly*, the same jet has size a!·Ω^{−a}, and log Ω contains the split part through −L′/L(1, χ_{−d}). One copy is Chebyshev quality. The gain comes from multiplicity: the jets are chained through m ≈ √x theta lifts, so the divisibility recurs m times [CHAININD]. The comparison is made for lattices through Bost's slope inequality, with relative error ≈ 1/m + m/x (§6).
+**The idea** [WHYHALF §2]. A Stepanov-type argument whose auxiliary object is a vector of periods of high-order Taylor jets of CM theta functions. *p-adically*, at p inert in K a jet of order a is divisible by about p^{Σ_{e odd}(a/p^e − w)₊}: the inert part of Chebyshev's log a! = Σ Λ(n)⌊a/n⌋, capped. *Archimedeanly*, it has size a!·Ω^{−a}, and log Ω contains the split part through −L′/L(1, χ_{−d}). One copy is Chebyshev quality; the gain is multiplicity, the jets being chained through m ≈ √x theta lifts [CHAININD]. The comparison is made on lattices through Bost's slope inequality (§5–6).
 
 **Sizes** [LEDGER §2a; ACCOUNT §1; ARCH §6]. The live record assumes 0 < ε < 1/52.
 
@@ -93,24 +93,22 @@ t is fixed by r + t = 8fr + 4 + ⌈x^{377}⌉·nWv [ACCOUNT §1]; no node says w
 
 **Statement** (`zeroFree_of_rpow_window`, called with δ_L = 1/2, C = 1) [ENDGAME §1c]. Let χ_i be finitely many Dirichlet characters with weights a_i > 0, G_F = Σ a_i Re g_{χ_i}, 0 < θ < 1, δ_L > 0. Suppose that for every Y₀ there is Y ≥ Y₀ with G_F(y) ≤ C·y^θ for *all* y ∈ [Y, Y^{1+δ_L}]. Then L(s, χ_i) ≠ 0 for every i and every Re s > θ. Off the windows only the trivial |g_χ(y)| ≤ C·y² is used. The conclusion holds for each L-function separately, ζ included.
 
-**Mechanism** [ENDGAME §2.2]. In u = log y, the Laplace transform ℒ of g(u) = G_F(e^u) is −Σ a_i(L′/L(s, χ_i) − s·L′/L(1, χ_i))/(s(s−1)): the main terms cancel the pole at 1, and ℒ has simple poles at zeros. The residue at ρ is S(ρ)·(−1/(ρ(ρ−1))) with S(ρ) > 0, so positive weights cannot cancel a zero, and a real zero pushes G *up*; positivity of Dirichlet coefficients is never used. The coefficients a_{k_L}(z) = ∫ g(u)u^{k_L} e^{−zu}/k_L! du are bounded from the one-sided bound on a window J_L = [V_L, (1+δ_L)V_L], since |g| + g ≤ 2R there; the extra Re a_{k_L}(σ) is the price of one-sidedness. With k_L ≈ (1+δ_L/2)σV_L the Gamma kernel concentrates on J_L, and σ = 336 (for δ_L = 1/2) makes the tails ≤ C/σ^{k_L}. A zero with Re ρ₀ > θ gives a pole at distance d < σ − θ. Either it is real and its positive residue makes Re a_{k_L}(σ) ≳ d^{−k_L−1}, or an ordinate γ_L is chosen so that one pole is the *unique* nearest singularity to σ + iγ_L. Either way a_{k_L} grows like d^{−k_L}, against (σ−θ)^{−k_L}.
-
-**Why sparse windows suffice.** The radii depend only on σ and the zero set, never on V_L, and each window supplies one k_L. So any windows with V_L → ∞ and fixed log-ratio work, provided the bound holds at *every* y of each window. ENDGAME read every body except the routine `iteratedDeriv_laplace` and judged it a correct theorem with a correct proof.
+**Mechanism** [ENDGAME §2.2]. In u = log y, the Laplace transform ℒ of g(u) = G_F(e^u) is −Σ a_i(L′/L(s, χ_i) − s·L′/L(1, χ_i))/(s(s−1)): the main terms cancel the pole at 1, and ℒ has simple poles at zeros. The residue at ρ is S(ρ)·(−1/(ρ(ρ−1))) with S(ρ) > 0, so positive weights cannot cancel a zero, and a real zero pushes G *up*; positivity of Dirichlet coefficients is never used. The coefficients a_{k_L}(z) = ∫ g(u)u^{k_L} e^{−zu}/k_L! du are bounded from the one-sided bound on a window J_L = [V_L, (1+δ_L)V_L], since |g| + g ≤ 2R there; the extra Re a_{k_L}(σ) is the price of one-sidedness. With k_L ≈ (1+δ_L/2)σV_L the Gamma kernel concentrates on J_L (σ = 336 makes the tails ≤ C/σ^{k_L}). A zero with Re ρ₀ > θ gives a pole at distance d < σ − θ: either it is real and its positive residue makes Re a_{k_L}(σ) ≳ d^{−k_L−1}, or an ordinate γ_L makes one pole the *unique* nearest singularity to σ + iγ_L. Either way a_{k_L} grows like d^{−k_L}, against (σ−θ)^{−k_L}. The radii never depend on V_L and each window supplies one k_L, so sparse windows suffice, provided the bound holds at *every* y of each. ENDGAME read every body but `iteratedDeriv_laplace` and judged the proof correct.
 
 ### 2.2 How ψ enters: the host and the shares
 
-Every hermitian space lives over a CM field E, the host, built for each scale x from a pair (q, d) fixed per window [HOSTS §1(a), §2(c1); HOSTSEL]. E is the fixed field, inside ℚ(ζ_{QS·q·d}), of the kernel {a ≡ ±1 mod 2^{e₂+2}, ψ(a) = 1, (a/q) = (a/d) = 1} of the Artin map [ENDGAME §2.3]. So ψ factors through Gal(E/ℚ) = {±1}² × A, [E:ℚ] = 4n. A₀ = ⟨a₀⟩ embeds in the 2-power quotient, |A/A₀| = o, and every frame character trivial on A₀ is ξ·(·/q)^i(·/d)^j with ξ ∈ ⟨ψ⟩. **ψ(p) is read off as the A/A₀-coset of Frob_p.** Each auxiliary object has one job:
+Every hermitian space lives over a CM field E, the host, built for each scale x from a pair (q, d) fixed per window [HOSTS; HOSTSEL]: the fixed field, inside ℚ(ζ_{QS·q·d}), of {a ≡ ±1 mod 2^{e₂+2}, ψ(a) = 1, (a/q) = (a/d) = 1} [ENDGAME §2.3]. So Gal(E/ℚ) = {±1}² × A, |A/A₀| = o, and every frame character trivial on A₀ is ξ·(·/q)^i(·/d)^j with ξ ∈ ⟨ψ⟩. **ψ(p) is read off as the A/A₀-coset of Frob_p.** Each auxiliary object has one job:
 
-- **K = ℚ(√−d)**, d ≡ 7 mod 16 prime: the CM curve behind every theta kernel, supersingular reduction at inert p, the factor (1 − χ_{−d}), and L′/L(1, χ_{−d}) inside Ω [ARCH §1].
-- **√−q**, q ≡ 3 mod 8, (−d/q) = 1, separates *signal* primes (inert in K, split in ℚ(√−q)) from *inertClass* primes (inert in both) [LEDGER §0.4]. At a signal prime the hermitian space is split.[^n4]
-- **The 2-power layer**, of order 2^{e₂} ≈ x^{2+8ε}: an inertClass prime has a split hermitian form iff h has even order; the anisotropic ones (density ≤ x^{−2}) are dropped [SERVED §0].
-- **The level primes g₀, g₁** give the Poincaré series a level and carry depth-zero types forcing residual irreducibility at every l [PAIRB; TWIST; ORDER]. **T_u**, the type prime, one per word u and shared by all m lifts, sets the level of the source forms and carries the scale x into the archimedean main term (§5.5).
+- **K = ℚ(√−d)**: the CM curve behind every theta kernel, supersingular at inert p, the factor (1 − χ_{−d}), and L′/L(1, χ_{−d}) inside Ω [ARCH §1].
+- **√−q** separates *signal* primes (inert in K, split in ℚ(√−q)) from *inertClass* primes (inert in both); at a signal prime the hermitian space is split [LEDGER §0.4].[^n4]
+- **The 2-power layer**: an inertClass prime has a split hermitian form iff h has even order; the others are dropped [SERVED §0].
+- **The level primes g₀, g₁** give the Poincaré series a level and carry depth-zero types forcing residual irreducibility at every l [PAIRB; TWIST]. **T_u**, the type prime, one per word u and shared by all m lifts, sets the level of the source forms and carries the scale x into the archimedean main term (§5.5).
 
-**The shares.** The tops are distributed over A/A₀ by λ(h) = (3 + 1_{A₀}(h))/(3o+1), with λ̂(ψ^j) = (3o+1)^{−1} for j ≠ 0: the weight in G_m [ENDGAME §2.3; CHBALANCE §2(a)]. Any α + β·1_{A₀} with α ≥ 0, β > 0 would do; uniform shares would leave only ζ. No reason for the 3 was found. ζ has weight 1, so the core bound alone would give RH.
+**The shares.** The tops are distributed over A/A₀ by λ(h) = (3 + 1_{A₀}(h))/(3o+1), with λ̂(ψ^j) = (3o+1)^{−1} for j ≠ 0: the weight in G_m [ENDGAME §2.3; CHBALANCE §2(a)]. Any α + β·1_{A₀} with α ≥ 0, β > 0 would do; no reason for the 3 was found. ζ has weight 1, so the core bound alone would give RH.
 
 ### 2.3 What is counted, and the bridge
 
-**Which primes.** ASK counts n = p^i, p inert in K, i odd, with the cap w at the partner place: Σ Λ(n)(1 − χ_{−d}(n))(a/n − w)₊ [ENDGAME §2.3; LEDGER §2c]. Only signal primes have thick partners (w ≈ b, a/w ≈ x); inertClass partners are top or thin, with Riesz length ≥ X′/2. The thick-class indicator is a combination of the 4o characters (·/d)^α(·/q)^β ψ^j. After averaging, the (α, β) = (0, 0) part is exactly U·G_m(x); the 3o twisted characters make SigA.
+**Which primes.** ASK counts n = p^i, p inert in K, i odd, with the cap w at the partner place: Σ Λ(n)(1 − χ_{−d}(n))(a/n − w)₊ [ENDGAME §2.3; LEDGER §2c]. Only signal primes have thick partners (w ≈ b, a/w ≈ x). The thick-class indicator is a combination of the 4o characters (·/d)^α(·/q)^β ψ^j; after averaging, the (0, 0) part is exactly U·G_m(x), and the 3o twists make SigA.
 
 The bridge (`ch_balance`, `ch_core`) is an exact finite-group computation [CHBALANCE §0–2].
 
@@ -118,17 +116,11 @@ The bridge (`ch_balance`, `ch_core`) is an exact finite-group computation [CHBAL
 
 $$\mathrm{MAIN}=a\Big(\log a-1-\gamma+\frac{L'}{L}(1,\chi_{-d})-\operatorname*{mean}_{\rho\in\Phi}\log w(\rho)\Big)$$
 
-and De = |Φ|^{−1} Σ_g Σ_ψ ψ̄(g)·w·G_ψ(a/w) is an expansion over all characters of the Galois group (G_χ is the g_χ of §1). The identity uses
+and De = |Φ|^{−1} Σ_g Σ_ψ ψ̄(g)·w·G_ψ(a/w) expands over all characters of the Galois group, using Σ_n Λχ(n)(a/n − w)₊ = w·G_χ(a/w) − a·L′/L(1, χ). (The identity holds with any constant in place of L′/L(1, χ); the true value is pinned by `HostAddCharCompatible` [SERVED §0].)
 
-$$\sum_n\Lambda\chi(n)(a/n-w)_+=w\,G_\chi(a/w)-a\,\tfrac{L'}{L}(1,\chi).$$
+**Step 2 (thin and top partners drop).** There the Riesz length is ≥ X′/3, and `ThinScales`, |G_χ(y)| ≤ y·e^{−cx^{ε/8}}, makes them negligible: de la Vallée Poussin with an in-tree zero-free region, real zeros β > 1 − 1/400 excluded by host-selected boxes [ENDGAME §2.1].
 
-The identity holds with an *arbitrary* constant in place of L′/L(1, χ) (CHBALANCE oddity 1); the true value is pinned by the host clause `HostAddCharCompatible` [SERVED §0].
-
-**Step 2 (thin and top partners drop).** There the Riesz length is ≥ X′/3, and `ThinScales`, |G_χ(y)| ≤ y·e^{−cx^{ε/8}} for y ≥ X′/3, makes them negligible: de la Vallée Poussin with an in-tree zero-free region, real zeros β > 1 − 1/400 being excluded by host-selected boxes [ENDGAME §2.1; SERVED Part 2].
-
-**Step 3 (thick partners and averaging).** **The x-scale part of ASK, which carries ψ, sits entirely on signal primes** [SIGNAL §0.5; LEDGER §2c]. Averaging over u₀ ∈ A₀ and the tops turns λ into the weights of G_m.
-
-**Result.** The bridge gives
+**Step 3 (thick partners and averaging).** **The x-scale part of ASK, which carries ψ, sits entirely on signal primes** [SIGNAL §0.5]. Averaging over u₀ ∈ A₀ and the tops turns λ into the weights of G_m:
 
 $$U\cdot\big[G_m(x)-\mathrm{Sig}_A(x)-4x^{1/2+\varepsilon}\big]\ \le\ \sum(\mathrm{ASK}-\mathrm{MAIN})+\frac{2|TT|mb}{x},\qquad U=\tfrac12|TT|\cdot m\cdot b\cdot\delta .$$
 
@@ -138,14 +130,14 @@ Every replacement error is ≈ x^{1/4+ε}·U, far below x^{1/2}·U, and `ch_core
 
 $$\sum\Lambda\psi^j(1-\chi_{-d})(x/n-1)=\sum\Lambda\psi^j(x/n-1)-\sum\Lambda\psi^j\chi_{-d}(x/n-1),$$
 
-this bound lets a count over inert primes stand in for the sum over all primes. **The split half of the primes is paid for by the choice of (q, d)**, so L(s, ψχ_{−d}) never enters ℒ and cannot cancel a zero of L(s, ψ). G_m involves only ζ and ⟨ψ⟩, so the change of host is invisible to Landau.
+this bound lets a count over inert primes stand in for the sum over all primes. **The split half is paid for by the choice of (q, d)**, so L(s, ψχ_{−d}) never enters ℒ, and the change of host is invisible to Landau.
 
 **Host selection** [HOSTSEL] (`PairEx`, closed, read). `winPairs` fixes (q, d) at Y = X^{1/J} *before* quantifying over x; the bound is proved on [X^{1/J}, X], holds for every ξ mod N, and is consumed at y = x plus one Lipschitz step. Every modulus exceeds Z² = Y^{800K}; reciprocity and a Gallagher-type PNT in progressions bound the off-diagonal except at one s = n\* (Landau–Page), the diagonal is C·y log y, and Markov on dyadic blocks gives a bad proportion ≲ Y^{−τ}. Siegel enters only there, making Y₀ ineffective. Moduli with a twist zero in Re s > 1 − 1/400 inside a box are removed by zero density; this box is what the tail bound beyond Z needs, and it gives |L′/L(1, χ_{−d})| ≤ 4 log x. Averaging excludes ≤ ½ of the q, then ≤ ½ of the d.
 
 ### 2.4 The order of quantifiers
 
 [ENDGAME §2.1; LEDGER §0.2]
-ψ; then e_D, e_L, ε₁ from `TopG` (live: 2, 0); then s with Re s > 1/2, θ = 1/2 + min(Re s − 1/2, 1/2)/2 < Re s; then ε ∈ (0, ε₁) with 9ε ≤ θ − 1/2; then a family `FamP ε` with windows [Y, Y^{3/2}] for arbitrarily large Y; then, for each window, one (q, d) at Y_{qd} = X^{1/J}; then, for each scale x of the window, E, the frame, TT and the lattice data; then the core bound at every x ≥ x₀ of every window; then Landau with δ_L = 1/2. Nothing is uniform in ε: each s gets its own ε, family and hosts.
+ψ; e_D, e_L, ε₁ (live: 2, 0); s with Re s > 1/2 and θ < Re s; ε ∈ (0, ε₁) with 9ε ≤ θ − 1/2; a family of windows [Y, Y^{3/2}], Y arbitrarily large; one (q, d) per window; for each x of the window, E, the frame, TT and the lattice data; the core bound at every x ≥ x₀; Landau with δ_L = 1/2. Nothing is uniform in ε: each s gets its own ε, family and hosts.
 
 ---
 
@@ -155,9 +147,9 @@ this bound lets a count over inert primes stand in for the sum over all primes. 
 
 All spaces are hermitian over E. They are unimodular at the base, with ranks fixed by k, m (even), t (odd), r = k + m − 1 and N(j) = k + j(t+1) [ARCH §2].
 
-- **Column tower**, X_0 ⊂ X_1 ⊂ … ⊂ X_m, totally definite of rank N(j), carrying *algebraic modular forms*. The level-j weight at a top is (a_t, small…, −b_t, −w_1^{×(t+1)}, …, −w_j^{×(t+1)}), so **the same large entry a_t sits at every level** and each lift adds a block at the cap weight w_j [CHAININD §1.1]. The p-adic divisibility lives here.
-- **Row tower**, Y_m, …, Y_0, of rank r + jt. Y_m ≅ X_⊥ is the complement of an anisotropic vector in X_m. Y_0 = X_0 ⊕ ⟨z⟩ ⊕ r_S hyperbolic planes, r_S = m/2 − 1, has signature (k + m/2 − 1, m/2) and genuine L² automorphic forms. HH is the discrete-series, level-(g₀g₁) part of L²(U(Y_0)), of dimension D_all; inside it EE, of dimension (1 − δ_p)D_all, carries the target lattice RR.
-- **Layers**, W_1, …, W_m, of rank r and signature (k+j−1, m−j), inner forms of U(Y_0) at every finite place, each paired with a definite V_j of rank r + t. The layer lattices M_j of integral cusp forms supply the covolume of RR through a determinant identity (§5.2).
+- **Column tower**, X_0 ⊂ … ⊂ X_m, totally definite of rank N(j), carrying *algebraic modular forms*. The level-j weight at a top is (a_t, small…, −b_t, −w_1^{×(t+1)}, …, −w_j^{×(t+1)}): **the same large entry a_t sits at every level**, and each lift adds a block at the cap weight w_j [CHAININD §1.1]. The p-adic divisibility lives here.
+- **Row tower**, Y_m, …, Y_0. Y_m ≅ X_⊥ is the complement of an anisotropic vector in X_m; Y_0 = X_0 ⊕ ⟨z⟩ ⊕ (m/2 − 1) hyperbolic planes has signature (k + m/2 − 1, m/2) and genuine L² automorphic forms. HH is the discrete-series, level-(g₀g₁) part of L²(U(Y_0)), of dimension D_all; inside it EE, of dimension (1 − δ_p)D_all, carries the target lattice RR.
+- **Layers** W_j of rank r and signature (k+j−1, m−j), each paired with a definite V_j. The layer lattices M_j of integral cusp forms supply the covolume of RR (§5.2).
 
 ### 3.2 Maps
 
@@ -178,7 +170,7 @@ The top period of the m-fold column lift is the codimension-one Gross–Prasad p
 
 $$\zeta_{u,t}\cdot\mathrm{Pt}_u(\varphi,F)=a_u\cdot\big\langle \mathrm{sEE}(V\,\Theta_t F),\,P_u(U_u\varphi)\big\rangle_{HH},$$
 
-with V and U_u isometries, a_u ≠ 0, and ζ a unit at twisted tuples. Its live supplier is an honest m-step seesaw done two levels at a time, conditional on its own hypotheses [SEESAW §0.3; LIVEPATH].[^tiebm] It is stated as **transport of linear relations**, so a_u is never computed. B_u is *defined* as the period pulled back along ι, and RR as ι(Λ), so B_u(N_u) ⊆ RR^∨ is literally integrality of the column period [SEESAW §4]. a_u is used only in the frame (§7).
+with V and U_u isometries, a_u ≠ 0, and ζ a unit at twisted tuples. Its live supplier is an m-step seesaw done two levels at a time, conditional on its own hypotheses [SEESAW §0.3; LIVEPATH].[^tiebm] It is stated as **transport of linear relations**, so a_u is never computed. B_u is *defined* as the period pulled back along ι, and RR as ι(Λ), so B_u(N_u) ⊆ RR^∨ is integrality of the column period [SEESAW §4].
 
 ```
  COLUMN (definite; p-adic side)          ROW (descent)                       LAYERS (covolume side)
@@ -222,7 +214,7 @@ Since v_p(a!) ≈ Σ_{e≥1} a/p^e and a/(p²−1) = Σ_{e even ≥ 2} a/p^e, wh
 
 [ENGINE §2; ENGINE2 §0, §2.1; ADM2 §0–§1]
 1. **Kernel law.** At a served place the kernel is exp(−Ph)·U, with U integral (bounded coefficients, no growth) in the height-two LT parameter X, and Ph ≃ Σ_e be(x_e, y_e) a cross Gaussian between the two halves of the orbit, with no diagonal terms (≃: up to a factor whose exponential is integral). It does *not* claim σ* integral. The content is the class be ≃ G_ser(c, σc), with 1/p part c(xy^p − x^p y)/p (Dieudonné/Honda), c a unit (NUMTEST's measured a/(p²−1) is attained) [ADM2]. After rescaling positions by ϖ, Dwork gives θ ∈ O[[Z]][hh/p] for an explicit cross form hh: **each power of hh/p costs one p.**
-2. **Even orbit; self-Gaussians cancel.** The orbit has even length on both routes: ord h is even at a served inertClass prime, and nP = 2·ord(2h) at every signal prime. Rotation by one swaps the two isotropic halves of the split hermitian space, and `hyperbolic_plane_split` leaves only the cross pairing: the only use of "split at p". The orbit route's condition B3 (every monomial of be has positive even- and odd-position degree) holds *by construction* of be, so it certifies nothing about the kernel; the cancellation is used in the kernel *equation* Θ = U·exp(−Σbe), through isotropy [KLAW oddity 1]. With odd length the gain would fall to a/(p²−1).
+2. **Even orbit; self-Gaussians cancel.** The orbit has even length on both routes. Rotation by one swaps the two isotropic halves of the split hermitian space, leaving only the cross pairing: the only use of "split at p". The orbit route's condition B3 (every monomial of be has positive even- and odd-position degree) holds *by construction* of be, so it certifies nothing about the kernel; the cancellation is used in the kernel *equation* Θ = U·exp(−Σbe), through isotropy [KLAW oddity 1]. With odd length the gain would fall to a/(p²−1).
 3. **Caps = number of minors.** The jet operator is (top linear forms)^{a_s} times column minors, one per column of the level-(j+1) Young diagram at each position. The cap is the first-row length (ν₂ at a top), **by definition**; its identification with the ledger's w is `LatTied` and `row_le` [PAIRING; ENGINE2].
 4. **Legendre, Dwork, odd e.** The pieces of hh have degree p^{2l+1}, so only odd levels occur. With 1/(p−1) = γ_p + 1/(p²−1), the top variables keep γ_p·a, and **the minor variables pay their own rescaling out of their own factorials**. Each odd-level factor uses p^e top derivatives and costs one p, giving Σ_{e odd}(a/p^e − cap)₊. At split p the gain is 0 [WRITEUP S7].
 
@@ -230,7 +222,7 @@ Since v_p(a!) ≈ Σ_{e≥1} a/p^e and a/(p²−1) = Σ_{e even ≥ 2} a/p^e, wh
 
 [ENGINE2; SIGNAL; ORBIT; JETA]
 
-**Setup.** Frob_p = ((+1, −1), h), and c = ((−1, −1), 1) is not a power of Frob, so every place of F = E^{⟨c⟩} above p splits in E. Positions run along the orbit of z ↦ z·Frob·c. Even positions lie over w (tops or thin), odd ones over w̄ (thick or thin), so every odd-distance partner of a top is thick or thin: dTop = ∞, no top–top exclusions, no Hecke operator, no colength.
+**Setup.** Frob_p = ((+1, −1), h), and c is not a power of Frob, so every place of F = E^{⟨c⟩} above p splits in E. Positions run along the orbit of z ↦ z·Frob·c; even positions lie over w (tops or thin), odd ones over w̄ (thick or thin), so every odd-distance partner of a top is thick or thin: no top–top exclusions, no Hecke operator, no colength.
 
 **Kernel law** [KLAW]. `ThetaExpansionAllPlaces`: the adapted entry of the *global* theta kernel is U·exp(−Σ_{orbits} be), U integral, be satisfying B1–B4. Its supplier `normalisedFamily_standardBases_integrality` (read) is the Hecke-route theorem specialised. Its one arithmetic input, `HostLog` (exp(Σph(X_i))·Θ_orth(ℓ(X)) integral in the LT parameter), comes via `hostAt_inert` from `IntInert` (statement), whose only use of p is (−d/p) = −1; a hyperbolic frame and the class computation `HypShape_of`/`b0` (statements) then give the shape. The signal-specific part is proved and read: σ∘ρ_z = ρ_{z+1}∘conj (`exists_kur_frob_tauEmb_posPl`), so with conjugate-dual adapted bases at adjacent positions (`StdTie.adapted`, a hypothesis) the hermitian pairing is Σσ(g_z)g_{z′} = δ_{z+1,z′}, and each parity block is isotropic (`fOf_isotropic`). B3 then holds by construction (be is built from even-position x and odd-position y; be₀ = cob(ph); the torus average kills bidegree (1,1)); a hand check of the local picture agrees. Stated for every column choice and class pair, the law holds on the whole global lattice through the equality `KerEnt.lat_S`.
 
@@ -243,11 +235,11 @@ Since v_p(a!) ≈ Σ_{e≥1} a/p^e and a/(p²−1) = Σ_{e even ≥ 2} a/p^e, wh
 
 $$\Big(\frac{al}{p}-\mathrm{capU}\Big)_+=b\Big(\frac{a_t}{bp}-1\Big)_+-O(|\theta|),\qquad |\theta|\le\eta+1+\mathrm{kaJ}+c_G+2c_G/p=\mathrm{poly}(x).$$
 
-This is the Riesz kernel (y/n − 1)₊ at n = p, y = a_t/b ≈ x, scale b; e ≥ 3 gives n = p^e. At a thin partner the term is ≈ a_t/p^e, with Riesz length ≥ X′. g0 can exceed the ASK summand by kaJ per level, harmlessly, since only ASK − Ga ≤ LoP is needed.
+This is the Riesz kernel (y/n − 1)₊ at n = p, y = a_t/b ≈ x, scale b; e ≥ 3 gives n = p^e. At a thin partner the Riesz length is ≥ X′.
 
-**Proof: LP duality** (`thmAJetA`, Lemma RA; ENGINE2 read `rowRadiusAssembly` to CLR:299, the final assembly lines unread). Give frame coordinate i the radius 1/(p²−1) + r_i. If every bad bipower W_i^{p^α}W_j^{p^β} satisfies p^α r_i + p^β r_j ≥ 1, then v(κ!·coeff_κ) ≥ Σ_i κ_i(γ_p − r_i) − |coords|·(log_p a + 1). The input `lemmaS` says be is at most one power of p worse than the Dwork weight 1/(p−1), and only on even–odd bipowers X_s^{p^α}X_{s′}^{p^β} with s + α ≡ s′ + β: **each Gaussian factor costs one p.** It is proved and read to `binomial_coefficient_extraction` [KLAW §2.5]: B4 makes the additivity defects of be Dwork-integral; torus quantisation lifts their weight to 1/(p−1) (`Quant`, `LogStep`, statements); by Lucas, non-p-power exponents keep weight 1/(p−1), while on bipowers C(p^α, p^{α−1}) has valuation exactly 1, losing one p; torus invariance forces the congruence. This matches NUMTEST5's forward and backward bipowers (per-minor cost 0.80 against 1 − γ₅ = 0.79). A residually generic frame and Cauchy–Binet carry the bound to products of actual minors. For one top with budget A and caps c_j at odd forward distance j, the primal is max Σ_j n_j subject to 0 ≤ n_j ≤ c_j, Σ_j p^j n_j ≤ A; the dual is min_{ε≥0} A·ε + Σ_j c_j(1 − p^jε)₊. The Lean takes ε = p^{−T} at the first odd level T where the budget binds and charges Σ_j min(c_j, A/p^j); since A·γ_p = Σ_{j odd} A/p^j, the gain is Σ_{j odd}(A/p^j − c_j)₊. The true optimum is larger but not in Riesz form; the weaker charge reproduces ASK prime power by prime power.
+**Proof: LP duality** (`thmAJetA`, Lemma RA; ENGINE2 read `rowRadiusAssembly` to CLR:299, the final assembly lines unread). Give frame coordinate i the radius 1/(p²−1) + r_i. If every bad bipower W_i^{p^α}W_j^{p^β} satisfies p^α r_i + p^β r_j ≥ 1, then v(κ!·coeff_κ) ≥ Σ_i κ_i(γ_p − r_i) − |coords|·(log_p a + 1). The input `lemmaS` says be is at most one power of p worse than the Dwork weight 1/(p−1), and only on even–odd bipowers X_s^{p^α}X_{s′}^{p^β} with s + α ≡ s′ + β: **each Gaussian factor costs one p.** It is proved and read to `binomial_coefficient_extraction` [KLAW §2.5]: B4 makes the additivity defects of be Dwork-integral; torus quantisation lifts their weight to 1/(p−1) (`Quant`, `LogStep`, statements); by Lucas, non-p-power exponents keep weight 1/(p−1), while on bipowers C(p^α, p^{α−1}) has valuation exactly 1, losing one p; torus invariance forces the congruence. This matches NUMTEST5's forward and backward bipowers (per-minor cost 0.80 against 1 − γ₅ = 0.79). A residually generic frame and Cauchy–Binet carry the bound to products of actual minors. For one top with budget A and caps c_j at odd forward distance j, the LP max Σ_j n_j (0 ≤ n_j ≤ c_j, Σ_j p^j n_j ≤ A) is bounded through a dual point at the first odd level where the budget binds, charging Σ_j min(c_j, A/p^j); since A·γ_p = Σ_{j odd} A/p^j, the gain is Σ_{j odd}(A/p^j − c_j)₊. The true optimum is larger but not in Riesz form; the weaker charge reproduces ASK prime power by prime power.
 
-**The backward charge.** Rows behind the top cost Σ_{j<0}c_{s₀+j}p^{−|j|} ≤ γ_p·Wc, Wc the largest cap behind the top. At a signal top those positions are thick or thin, so this is ≈ γ_p·b per top, prime and lift; over signal p ≤ X″ and m lifts, ≈ |TT|·m·b·log X″, x^{ε/3} above LoP, booked in E (errF), not in Ga. ENGINE2 called it plausibly an artefact; NUMTEST5 (§4.8) finds that it pays for something real.
+**The backward charge.** Rows behind the top cost ≤ γ_p·Wc, Wc the largest cap behind the top: ≈ γ_p·b per top, prime and lift, booked in E (errF), not in Ga. NUMTEST5 (§4.8) finds that it pays for something real.
 
 **One lift.** `liftI_of`: the proved exponent at a signal place is g0S + F − ES, ES = vDG + EatI, equal to the ledger's sg symbol for symbol [ENGINE2 §5; KLAW §3].
 
@@ -268,11 +260,11 @@ The iteration is an honest induction on both routes (`chain_ge`, `main_ind`, bot
 
 $$\sum_{j=1}^m\mathrm{gain}_j\ \ge\ \sum_{j=1}^{m}\sum_{s\in TT}\sum_{e\ \mathrm{odd}}\Big(\frac{a_s}{p^{e}}-\mathrm{cap}_{j,s+e}\Big)_+-\sum_j(\mathrm{deLoss}_j+dG_j),$$
 
-with dG_j the automorphism denominators v_p(#Stab) (≈ x^{402} in total, ≪ b). "Multiplicity" means exactly this: the same primes divide each of the m lifts to order a. A normalisation error in one step would be multiplied by m, and nothing in the induction would catch it [CHAININD §0.5]. What composes are the linear maps K_i between the actual global lattices; the orbit route's lattice tie `KerEnt.lat_S` is an equality [ORBIT]. The intermediate lattices cost nothing: each intermediate Fock metric occurs once as target and once as source, and Bost is applied only to the composite *(inferred from HEIGHT §1(b))*.
+with dG_j the automorphism denominators (≪ b). "Multiplicity" means exactly this: the same primes divide each of the m lifts to order a; a normalisation error in one step would be multiplied by m [CHAININD §0.5]. What composes are the linear maps K_i between the actual global lattices. The intermediate lattices cost nothing: each intermediate Fock metric occurs once as target and once as source, and Bost is applied only to the composite *(inferred from HEIGHT §1(b))*.
 
 ### 4.6 Which primes each route serves
 
-ASK counts every inert prime, so the gain side must deliver divisibility at a prime or charge it its whole ASK summand [CHBALANCE oddity 2; LEDGER §0.4, §2c; SERVED §0; GATIE §2b U11]:
+The gain side must deliver divisibility at each inert prime or charge it its whole ASK summand [LEDGER §0.4; SERVED §0; GATIE §2b]:
 
 | class | splitting | partners; ASK summand per (t, j) | route |
 |---|---|---|---|
@@ -280,34 +272,27 @@ ASK counts every inert prime, so the gain side must deliver divisibility at a pr
 | **inertClass** | inert in both; split form iff ord h even | top or thin: ≈ 2 log p·Σ_{i odd} a_t/p^i; no ψ; removed by ThinScales | Hecke route, p < X′; orbit route in [X′(1+Crρ), X″] |
 | **split** | split in K | not in ASK; only via L′/L(1, χ_{−d}) and De's twists | none |
 
-**Dropped primes** (small-order classes, the band around X′, the second kind, p > X″, p = d) are charged their whole ASK with gain 0, each bucket ≤ x^{−1+O(ε)}·U; SERVED books the bad orbits in three inconsistent ways, each within budget [SERVED §1–2].
+**Dropped primes** (small-order classes, the band around X′, p > X″, p = d) are charged their whole ASK with gain 0, each bucket ≤ x^{−1+O(ε)}·U [SERVED §1–2].
 
 ### 4.7 The fixed loss, and why b is exponential
 
 [ADM11 §2a, oddity 1; ENGINE §5]
 deLoss is ≈ f·x^{804}·log a per prime per lift with the Lean's bounds, far above the loss of 1–2 seen numerically (§4.8). The Lean bounds N(j−1)N(j) ≤ N(m)² ≤ η, counts *all integers* ≤ X″, and closes with X″·η ≤ b (`SizeEta`; live: x^{ch+1228}·e^{x^{ε/3}} ≤ e^{x^ε/2}).
 
-**Why b is exponential.** b must dominate poly(x)·X″, and X″ = x·n·X′ contains X′ = e^{x^{ε/3}}, the Riesz length past which ThinScales discards top and thin partners *(inferred)*. The threshold x₀ is existential, depends on ε and the constant record, and is uniform over hosts, as the Landau windows need.
+**Why b is exponential.** b must dominate poly(x)·X″, and X″ contains X′ = e^{x^{ε/3}}, the Riesz length past which ThinScales discards top and thin partners *(inferred)*. The threshold x₀ is existential and uniform over hosts.
 
 ### 4.8 Numerics, and which object they tested
 
 [ENGINE §3; NUMTEST–NUMTEST5; SIGNAL §E; JETA]
 
-| test | object | the Lean's object? | result |
-|---|---|---|---|
-| NUMTEST σ, ℘; NUMTEST2 | D^aσ(0); ℘; σ(z+w)/(σ(z)σ(w)) | no | slopes 1/(p²−1), γ_p, γ_p, as the core predicts |
-| NUMTEST3; NUMTEST4 | length-2 kernel, one entry; length 4 with det(Y)^m blocks | **yes** | worst −0.98; −1.54, det^m costs m |
-| SIGNAL two tops; `jeta_lp.py` | length 4, caps ≤ 8; the top LP | yes; LP arithmetic only | worst −1.13; 0/4000 |
-| **NUMTEST5** | the capped law at a signal place, cap ≈ a/p | **yes**, across the kink | worst −1.00 (length 2), −1.83 (length 4) |
-
-NUMTEST3/4's kernels are GIdx-shaped, and locally the signal-orbit object [ADM2; SIGNAL §5]. Before NUMTEST5 all caps were ≪ a/p, so the kink was never probed.
+NUMTEST and NUMTEST2 (D^aσ(0), ℘, σ-quotients; not the Lean's object) give slopes 1/(p²−1), γ_p as the core predicts. NUMTEST3/4 test the Lean's length-2 and length-4 kernels with det(Y)^m blocks (worst −0.98, −1.54); these kernels are GIdx-shaped, and locally the signal-orbit object [ADM2; SIGNAL §5]. SIGNAL's two-top test gives worst −1.13. All had caps ≪ a/p, so the kink was never probed before NUMTEST5.
 
 **NUMTEST5** tested P1 = Σ_{e odd}(a/p^e − ν_e)₊ (the Lean's `topTerm`) on real theta-kernel jets at the smallest signal place, Θ = th0(z₀+z₁)·th0(c(z₀−z₁)), N(c) = −1: rank-one jets and 2×2 blocks over ℤ[ω], ℤ[i] at p = 5, 7, 11, caps ≤ 220, and a length-4 orbit; exact Leibniz sums mod p^K [NUMTEST5].
 - *Loss O(1):* worst v − P1 is −1.00 over ≈ 250,000 jets, −1.83 at length 4.
 - *The kink* is exactly at ν = a/p and follows the number of minors, not the weight; beyond it v is at σ-level. So **the whole signal-place gain is the (a/p − ν)₊ piece**, as the Riesz weight requires.
-- *The backward charge pays for something real*: crediting γν without it fails at 32,682 of 42,010 points; the Lean's accounting holds and is nearly tight.
-- *Controls* (split primes, anisotropic direction, wrong Gaussian, non-CM curves, scrambled jets) each give thousands of violations.
-- *Limits:* rank ≤ 2, one top, no frames, lattices or chains; sizes tiny against a ≈ x·b; e ≥ 5 never active; not the Lean host's curve.
+- *The backward charge pays for something real*: crediting γν without it fails at 32,682 of 42,010 points.
+- *Controls* (split primes, anisotropic direction, wrong Gaussian, non-CM curves) each give thousands of violations.
+- *Limits:* rank ≤ 2, one top, no frames or chains; sizes tiny against a ≈ x·b.
 
 ---
 
@@ -323,15 +308,15 @@ $$\mathrm{htMap}(B_u)\le\sum_j\log\|K_j\|^2+\log\|P_tL\|^2-\log\kappa-\sum_j\log
 
 $$\log\|K_j\|^2\le\sum_\rho\big(\mathrm{ph}(\nu_{j\rho})-|\nu_{j\rho}|\log\Omega_\rho\big),\qquad \mathrm{ph}(y)=y\log y-y .$$
 
-The conjugate periods Ω_ρ genuinely differ, since they come from different ideal classes. Only their mean enters:
+The conjugate periods Ω_ρ differ (different ideal classes); only their mean enters:
 
 $$\operatorname*{mean}_\rho\log\Omega_\rho=\log\Omega=\gamma+\log(\pi/v)-\frac{L'}{L}(1,\chi_{-d})$$
 
-(sign as in the notation box). This is where the split part of log a! goes [WHYHALF §3.3]. The bound has no slack in the coefficients of ph or logΩ.
+This is where the split part of log a! goes [WHYHALF §3.3]; the bound has no slack in the coefficients of ph or logΩ.
 
 **Chowla–Selberg, in classical form** [STEPE §4; NORMS; REVIEW2 A4]. It is *proved in-tree* from Kronecker's first limit formula and the class number formula: for unit-discriminant lattices (|g₂³ − 27g₃²| = 1), mean over conjugates of log(area/π) = γ + log(2π/√d) − L′/L(1, χ_{−d}) (`mean_log_area`; the elliptic formula for K, not Colmez's). `two_log_brN` converts √d to rd_E. NORMS's script reproduces the identity to 8 decimals for d = 4, 3, and REVIEW2 confirmed the constant independently; for the archimedean size of a jet see §5.5.
 
-**DIV per lift and place** [DIVKEY §2.1; STEPE]. DIV is real-number algebra (`divisor_inequality`, read). For each lift j and place ρ it adds the layer covolume +(p_j − q_j)·w·logΩ (D2), the Fock jet term +Σ_i ph(ν_i) − |ν|·logΩ, and the hook term −logHook from L6's lower bound on λ_j. It substitutes |ν| = a_t[ρ∈TT] + k·w + δ and Σ_i ph(ν) − logHook ≤ ph(a_t)[ρ∈TT] + eE. The k·w·logΩ parts cancel against the covolume, and one ph(a_t) − a_t·logΩ per top per lift remains: the height collapses to Σ_t[m(ph(a_t) − a_t logΩ) − a_t log T_u] + O(|TT|·a·La + m·B₀x^ε).
+**DIV per lift and place** [DIVKEY §2.1; STEPE]. DIV is real-number algebra (read). For each lift and place it adds the layer covolume +(p_j − q_j)·w·logΩ, the Fock jet term Σ_i ph(ν_i) − |ν|·logΩ and the hook term −logHook, substituting |ν| = a_t[ρ∈TT] + k·w + δ and Σ_i ph(ν) − logHook ≤ ph(a_t)[ρ∈TT] + eE. The k·w·logΩ parts cancel against the covolume: the height collapses to Σ_t[m(ph(a_t) − a_t logΩ) − a_t log T_u] + O(|TT|·a·La + m·B₀x^ε).
 
 **On the live record δ and eE are *defined* as the remainders**; the content is their size bound `stepE_num`, proved and read, an elementary Young-diagram inequality: the k-row Fock weight and the (k−1)-row hook weight interlace, the hook product is ≥ the product of row factorials, and the a_t row is not in the hook, so ph(a_t) survives exactly. A Stirling model gives eE ≈ w·log a at a top and ≈ w·log w off it. Summed over m lifts and f places, eE ≈ m·W·x^ε ≈ (δ/2)·B₀, with W = Σ_ρ w_{jρ} ≈ δ·n·b the weight mass of one lift: **B₀ in total, not per lift**, so eE/U ≲ 4x^{9ε/8} and eE does not carry the √x barrier [REVIEW2 B4; SHARP §2.3, correcting STEPE's total]. The top part of the δ bound is slack. The cancelled terms are ≈ k·f·b·x^ε per level, so L6 must be sharp to relative x^{−4}; it rests on an exact Rallis product formula and seven `Published` theorems supplied in-tree [L6 §0].
 
@@ -343,24 +328,16 @@ RR is one global lattice in K^D, glued place by place: at y it is ι(μ(y)) appl
 
 $$\mu(RR^\vee)\le\operatorname{meanLog}\kappa+\sum_j\frac{\mathrm{lcv}(M_j)}{D}+2\sum_j\sum_{y\in Tw}lw\cdot F+LG+\sum_j(E1_j+E2_j)+E3 .$$
 
-It uses det ι = κ^D·∏_j det θ_j, from the proved lemma `SpecDet`: ι and θ_j are similitudes with the same Rallis L-value on matching Hecke parts of equal dimension, not a factorisation of ι [DETSIG; LIVEPATH]. The twisted set Tw is *defined* as the places where an index or F is nonzero; it is finite, with no bound on the residue characteristic [TWSET; LARGETW]. The terms [WHERECONG; INDEXBUDGET; MIRABOLIC; E1LOOSE]:
-
-| term | supplied by | congruence/Galois input |
-|---|---|---|
-| lcv(M_j)/D | Hilbert–Samuel and flat sections (below) | none |
-| 2ΣF | layer derivative content; cancels against Fo (`foTie`) | none |
-| LG | valuation of a Gram determinant | none |
-| **E1**: index of the theta image at Tw | a test lattice of products of short forms, its index bounded by a discriminant and the product formula (≈ m·B₀, tight), inside the theta image by a finite-mirabolic chain (`ThURel`, `IdxAt`); integral surjectivity of theta is never proved | none from the congruence chain; the J0 term uses `CuspUAlt`, base change, Bhatt–Scholze, Chebotarev |
-| **E2**: dual index of the type-part projection at Tw | Hida congruence module ≤ Selmer + Ш + v_l(h_E), with no local term at l (`CongBound_at`, `TopCore`) | **all of it**: `KillAt`, `LinkN`, `VWin`, `OneCharU`, `AutEnd3Alt`, `Row0b`, residual irreducibility (§8) |
-| **E3** = Σ lw·2/ℓ² | the cost of twisting, ≤ 2/ℓ² per place in the mirabolic chain | none (elementary) |
-
-E1's Galois-typed premise is discarded by the proof, so there is no circularity [E1LOOSE]. All three sit in DIV's per-lift error ce·m·x^ε(B₀+Nc).
+It uses det ι = κ^D·∏_j det θ_j, from the proved lemma `SpecDet` (similitudes with the same Rallis L-value on matching Hecke parts of equal dimension) [DETSIG; LIVEPATH]. The twisted set Tw, *defined* as the places where an index or F is nonzero, is finite, with no bound on the residue characteristic [TWSET]. lcv comes from Hilbert–Samuel and flat sections (below); 2ΣF cancels against Fo; LG is a Gram-determinant valuation. The index errors [WHERECONG; INDEXBUDGET; MIRABOLIC; E1LOOSE]:
+- **E1**, the index of the theta image at Tw: a test lattice of products of short forms, its index bounded by a discriminant and the product formula, inside the theta image by a finite-mirabolic chain (`ThURel`); integral surjectivity of theta is never proved; no congruence input, and E1's Galois-typed premise is discarded.
+- **E2**, the dual index of the type-part projection at Tw: Hida congruence module ≤ Selmer + Ш + v_l(h_E), with no local term at l. It carries **all** the congruence and Galois input (§8); Nc is its allowance.
+- **E3** = Σ lw·2/ℓ², the elementary cost of twisting.
 
 **The layer covolume** is [COVOL; VOLUME; HS]
 
 $$\frac{\mathrm{lcv}(M_j)}{D}\le(p_j-q_j)\sum_\rho w_{j\rho}\log\Omega+C\cdot B_0\log\log x,\qquad p_j-q_j=k+2j-1-m .$$
 
-It is proved by descending induction over layers with an effective arithmetic Hilbert–Samuel bound and `FlatDegree`: flat sections on U(p, q) have arithmetic degree (p − q)/2·logΩ + q(…), Chowla–Selberg again. **The flat directions are exact; the error is ∝ q ≤ m** [VOLUME §0.1, §0.5]. The index at the gain primes involves only the *layer* weights, F = (k−1)Σw/(p²−1), which cancels; the a-sized factorial is counted only in the column steps [JOIN §2d].
+It is proved by descending induction over layers with an effective arithmetic Hilbert–Samuel bound and `FlatDegree`: flat sections on U(p, q) have arithmetic degree (p − q)/2·logΩ + q·(log d − lrd E), Chowla–Selberg again. **The flat directions are exact; the error is ∝ q ≤ m** [VOLUME; SHARP], and its sign is not settled (§6.4). The a-sized factorial is counted only in the column steps [JOIN §2d].
 
 ### 5.3 Bost's inequality, rank-free
 
@@ -404,32 +381,21 @@ BRIDGE
 (L15) G_m − SigA ≤ x^{1/2+(eD+eL+6)ε};  SigA ≤ 4o·x^{1/2+ε};  ⇒ G_m(x) ≤ x^{1/2+9ε}     GrowthSizeBound, core_gm
 ```
 
-L8 bounds the HN spread inside L9. The DIV line L1 is the sum of five lines (`divClausesR_of`): D1, the covolume bound of §5.2; D2, Σ_j lcv(M_j)/D ≤ Σ_jΣ_ρ(p_j − q_j)·w_{jρ}·logΩ + El3; D3, a base-to-column passage from μ(RR^∨) to μ(cc); D4, the height bound mean_v log‖B_u‖²_v ≤ h(u) − meanLog κ of §5.1; D5, their sum, with El3 + LG + Σ(E1+E2) + E3 ≤ ce·m·x^ε(B₀+Nc).
+L8 bounds the HN spread inside L9. L1 is the sum of D1 (the covolume bound, §5.2), D2 (the layer covolume), D3 (a base-to-column passage from μ(RR^∨) to μ(cc)), D4 (the height bound of §5.1) and D5, with El3 + LG + Σ(E1+E2) + E3 ≤ ce·m·x^ε(B₀+Nc).
 
 **The tie of Ga to lattices** [GATIE; ADM11]. Ga = Σ_w 2·lw·e_w·(Σ_j gainD_j(w) − τ(w)) is *defined*, its fields pinned by `ParametersFill` to explicit formulas, so L10 compares two piecewise-linear formulas with the same caps and needs no lattice. The content enters through sg(u, w) = Σ_j(gainD_j + F_j − E_{u,j}):
 - N_u = ∏_w 𝔭_w^{−⌊e_w·sg⌋}·NuLat_u has exact slope μ(NuH_u) + Σ_w 2·lwP·⌊e_w·sg⌋; the floor loses ≤ 2·lwP per place with sg ≠ 0, ≤ C·X″ ≪ b in total, once per place;
 - N_u is the source of DIV only if Bk_u(N_u) ⊆ cc (`OneMapIntoCC`), which holds because the period of the **actual** chain image of every φ ∈ NuLat_u has valuation ≥ ⌊e_w·sg⌋ (clause `adm2`). So the inclusion *is* the p-adic divisibility of the actual chain maps;
 - the same fields enter Ga, Fo, Ee, N_u and the proved divisibility; GATIE found no slack.
 
-**The inclusion on every branch** (`admissible_level_two`, read):
-
-| place (p = resChar w) | exponent sg | supplier |
-|---|---|---|
-| p = T_u | −m·EatT ≤ 0 | `Conclusion5Sharp`, `TwistedColumnBoundAtT` |
-| p ∈ {g₀, g₁} | strongly negative (the ΣA·log g main part) | `UsedTuplesBoundByConstant`, a denominator bound (unread) |
-| GIdx, served orbits | Hecke-route gain | `kernel_valuation_served`, moved to the actual columns by `CmpV` |
-| signal, or inertClass with h ≠ 0, p ≤ X″, VV = ∅ | orbit-route gain g0S | `OrbitsWithoutOperator` (§4.3) |
-| inertClass, h = 0, p ≤ X″ | F − EatC | `MediumInertPrimeLengthBound` |
-| p = d | F − EatD | `LossAtDiscriminant` |
-| split, p > X″ | ≤ 0 (integral up to v_p(DGam)) | `IntegralKernelValuation` |
+**The inclusion on every branch** (`admissible_level_two`, read): at p = T_u, sg = −m·EatT (`Conclusion5Sharp`, `TwistedColumnBoundAtT`); at g₀, g₁, strongly negative (`UsedTuplesBoundByConstant`, unread); at GIdx, the Hecke-route gain; at signal p ≤ X″, the orbit-route gain g0S (`OrbitsWithoutOperator`); at inertClass with h = 0 and at p = d, F − EatC and F − EatD; at split p and p > X″, ≤ 0 up to v_p(DGam).
 
 **The zero-chain alarm is closed on the live path**: the auxiliary local chain enters only through `CmpLite`, which must intertwine with the actual K_j. `exists_data_completion` confirms the content lies in this tie: from ASK ≤ Main + error alone one can build a record satisfying every ledger clause [LEDGER §0.6].
 
 **The main terms never meet as numbers** [LEDGER §2b]. m·ph(a_t) − m·a_t·logΩ becomes Main by the exact algebra of L7, and Main is MAIN by definition. **DIVKEY and TU verified L7 by hand**: log(π/v) cancels Count5's log(v/π), the m·lg terms cancel, and only γ and the L′/L constant survive; the signs agree (`Char_at`). A sign error in Chowla–Selberg would show as a Main/MAIN mismatch; §5.1's checks exclude it. The p-adic sum Σ_p γ_p·a·log p appears nowhere: one lift is one Chebyshev identity, with all content in the errors (§5.5) [HEIGHT §2(b); WHYHALF §1.1].
 
 **The cancellations** [ACCOUNT §0.3; LEDGER §2].
-- μ(cc) enters Bost and DIV with coefficient +1 and cancels; only an *upper* bound on μ(RR^∨) is used.
-- Fo (`foTie`), h(u), the m·lg terms and log(π/v) cancel syntactically.
+- μ(cc) cancels between Bost and DIV; only an *upper* bound on μ(RR^∨) is used. Fo, h(u), the m·lg terms and log(π/v) cancel syntactically.
 - The large logΩ terms: Σ_jΣ_ρ(p_j − q_j)·w·logΩ from D2 against −Σ_jΣ_ρ(a_t[ρ∈TT] + k·w + δ)·logΩ from the height leave −m·Σ_t a_t·logΩ plus a residual Σ_j(2j − 1 − m)·Σ_ρ w_{jρ}·logΩ, booked crudely at ≤ 2m²·f·b·La. The record has only |p_j − q_j − k| ≤ m, never Σ_j(p_j − q_j) = mk [DIVKEY §2.5]. In truth the residual is negligible: Σ_j(2j − 1 − m) = 0, and w_{jρ} varies in j by ≤ η + 1 at thick places and ≤ 2b′ elsewhere, so it is poly(x)·m²·f·La ≪ b [SHARP; REVIEW2 A4]. The cancelling terms are ≈ x^{4.5+O(ε)}·U. In the Lean they cancel *syntactically*, through the one `logOm` symbol; that L6 and D2 are each true to relative x^{−4} is a separate claim, resting on `covolume_measure_eq_one`, the `FlatDegreeSt` chain and L6's seven `Published` inputs (§9.4).
 
 **Precision-critical inputs** [ACCOUNT §0.3–0.4; LEDGER §2b]: covolume and height to relative **x^{−4}**; Count5 to relative **1/m**, and log T* − Lam5 ≲ x^{O(ε)} in truth (§5.5); Bessel-frame tightness **η_F ≤ 6x^{−C_H}**; the real divisibility to E ≤ C·B₀ per lift, relative **x^{−1/2+O(ε)}** (§6.3); and, two-sided, `PairGood` at x and `ThinScales`.
@@ -438,7 +404,7 @@ L8 bounds the HN spread inside L9. The DIV line L1 is the sum of five lines (`di
 
 [TU; TDIV; TFLOOR; SHARP] The term −Σ_t a_t·log T_u of DIV supplies the −a·mean log w part of Main: it is where the scale x = a/w enters the archimedean side.
 
-**What T is.** A rational prime (`T_prime`) with f places above it, each with residue field F_T, and π_T ∈ O_E with π_T·π̄_T = T. There is one T per word u (`ColumnsAtT.T`); T's of different words differ by norms from E, with |log T(u) − log T(u′)| ≤ C·log k. It is ADM11's "type prime".
+**What T is.** A rational prime (`T_prime`) with f places above it, each with residue field F_T, and π_T ∈ O_E with π_T·π̄_T = T; one per word u, the T's of different words differing by norms from E (|log T(u) − log T(u′)| ≤ C·log k).
 
 **Its size, and how it is pinned.** Count5 is a sum over the m lifts, so log T ≈ m·log w ≈ m·x^ε and T ≈ (cap)^m, consistent with b^{m/2} ≤ T. T lies in a window T* ≤ T ≤ (1 + 1/(fk))·T* (`T_win`), T* = (D*/d*_u)^{1/(fk)}·Γ^{−2/(fk)}, where D* = (target mass) × (level index) × ∏_ρ(formal degree) and d*_u = (source mass) × (level index) × ∏_ρ(Weyl dimension). The defining identity is D*Γ^{−2}/2 ≤ d*_u·(T^k − 1)^f ≤ e·D*Γ^{−2}; since T^k − 1 is the index of the mirabolic in GL_k(F_T), **T is chosen so that the level-T source dimension matches the target** (the Theorem-S window). Count5's supplier is this explicit dimension-ratio computation (`countF_fam` → … → `division_level_prime_family`, error 11L), not a limit-multiplicity count.
 
@@ -450,15 +416,15 @@ L8 bounds the HN spread inside L9. The DIV line L1 is the sum of five lines (`di
 
 **What bounds T above.** The ledger improves strictly as T grows (gain a·Δ against costs m·EatT·Δ + c|TT|m(a/k + b′)·Δ); only `T_win` stops a larger T. Doubling T violates d*_u(T^k − 1)^f ≤ e·D*Γ^{−2}: the source would outnumber the target and the joint map could not frame, a rank obstruction *(inferred; the frame's use of the upper pin was not re-read)*. The lower pin serves the main term, the upper pin the frame.
 
-**Rigidity** *(TFLOOR's computation, not the Lean's)*. Truth forces log T* − Lam5 ≲ x^{O(ε)}, while the Lean bounds log T above only by cCount·m·L [SHARP]. Inserting the Harish-Chandra formal degree (dsig = dimV(rowLam), Haar measure transferred from the compact form) into the Lean's exact closed form for fk·logXu (`LemmaFiveOneIdentity`), with the shapes of `DataB`, `RowsA`, gives logXu = Lam5₀ − θ, 0 ≤ θ ≲ 3L + O(log k) + O(m²L/k): the (v/π), lg, facProd(r) and k·Σ log w terms cancel exactly, the remainder being the u-column Vandermonde. So log T − Lam5 = O(L), inside the x/m budget. This rests on the formal degree under the unread normalisation `cdScale` being the Harish-Chandra value (consistent with `BaseVolumeEqualsMass`). The stated formal-degree bounds give no matching upper bound (loose by ≈ (m/2)·x^{ε/3} in log T); an excess of e^{Θ(km)} would make the proved chain assert something false.
+**Rigidity** *(TFLOOR's computation, not the Lean's)*. Truth forces log T* − Lam5 ≲ x^{O(ε)}, while the Lean bounds log T above only by cCount·m·L [SHARP]. Inserting the Harish-Chandra formal degree (dsig = dimV(rowLam), Haar measure transferred from the compact form) into the Lean's exact closed form for fk·logXu (`LemmaFiveOneIdentity`), with the shapes of `DataB`, `RowsA`, gives logXu = Lam5₀ − θ, 0 ≤ θ ≲ 3L + O(log k) + O(m²L/k): the (v/π), lg, facProd(r) and k·Σ log w terms cancel exactly, the remainder being the u-column Vandermonde. So log T − Lam5 = O(L), inside the x/m budget. This rests on the formal degree under the unread `cdScale` being the Harish-Chandra value (consistent with `BaseVolumeEqualsMass`); the stated bounds give no matching upper bound (loose by ≈ (m/2)·x^{ε/3}), and an excess of e^{Θ(km)} would make the proved chain false.
 
 **One prime for all lifts.** The record forces it: one `ColumnsAtT.T` per word; level-T data at every level i ≤ m from one `AtTTied u` (`LvTied`); `Eval` sets E = EatT at T for every lift, so sg = −m·EatT. Mathematically, the prime fixing the source dimension at level 0 must be the one the last map divides by at level m, and the jet chain carries that level datum through the intermediate levels; a prime used only at one intermediate level would add cost and no gain *(TFLOOR's reading)*. With one prime per lift and log T_j ≈ x^ε, the T-loss would not grow with m (§6.4).
 
-**One lift, displayed.** Per top, at m = 1, in log‖·‖² units:
+**One lift, displayed.** Per top, at m = 1 in rank N (so the source cost a/k is negligible), in log‖·‖² units:
 
 $$\underbrace{\mathrm{ph}(a)-a\log\Omega}_{\text{Fock jet bound}}\ \underbrace{-\,a\log T}_{\text{last map}}\ \le\ \mathrm{ph}(a)-a\log\Omega-a\operatorname*{mean}_\rho\log\frac{wv}{\pi}-a\,\mathrm{lg}\ =\ a\Big(\log a-\operatorname*{mean}_\rho\log w-1-\gamma+\frac{L'}{L}(1,\chi_{-d})\Big)-a\,\mathrm{lg},$$
 
-with Count5 used in the middle, v and π cancelling, and the a·lg cancelling against adm11's ΣA·lg at g₀, g₁. The p-adic side gives Σ_{p inert} 2 log p·Σ_{e odd}(a/p^e − w)₊ up to errors, and by the explicit formula Σ_n Λ(n)(1 − χ_{−d}(n))(a/n − w)₊ = a(log(a/w) − 1 − γ + L′/L(1, χ_{−d})) + O(w) + (zeros) [TU §2.3]. So one lift is the explicit formula for the inert count at Riesz length a/w ≈ x: the caps w enter both sides identically, as the Riesz cap on the p-adic side and through Count5 on the archimedean side; the floors ⌊e·sg⌋ cost ≤ 2·lwP per place once (§5.4). NORMS checks the first brace numerically: 2·log|D^aσ(0)| − [ph(a) − a·logΩ + (a/6)log|Δ|] = 7.4 and 5.4 at a ≈ 6000 (d = 4, 3), i.e. O(log a). At m = 1 the one-off errors, ≈ |TT|·a·x^ε, swamp the zeros' contribution, and nothing follows (§6.1).
+with Count5 used in the middle, v and π cancelling, and the a·lg cancelling against adm11's ΣA·lg at g₀, g₁. The p-adic side gives Σ_{p inert} 2 log p·Σ_{e odd}(a/p^e − w)₊ up to errors, and by the explicit formula Σ_n Λ(n)(1 − χ_{−d}(n))(a/n − w)₊ = a(log(a/w) − 1 − γ + L′/L(1, χ_{−d})) + O(w) + (zeros) [TU §2.3]. So one lift is the explicit formula for the inert count at Riesz length a/w ≈ x: the caps w enter both sides identically (the Riesz cap p-adically, Count5 archimedeanly), and the floors ⌊e·sg⌋ cost ≤ 2·lwP per place once. NORMS checks the first brace numerically: 2·log|D^aσ(0)| − [ph(a) − a·logΩ + (a/6)log|Δ|] = 7.4 and 5.4 at a ≈ 6000 (d = 4, 3), i.e. O(log a). At m = 1 the one-off errors swamp the zeros' contribution (§6.1).
 
 ---
 
@@ -477,13 +443,13 @@ The budget ErrX5at splits into families [LEDGER §2a; SHARP §2.2]. These are *a
 | **k/n²** | m·Nc, Nc = \|T2\|·k·b·x^{2ε}/n²: the E2 congruence allowance | ≲ x^{1/2−1.875ε} |
 | negligible | LoP = C·nT·m·b; log\|W\|; (η_F+4√e_F)·H_B; MLo5 | ≤ x^ε |
 
-**k/n² is not a non-vanishing term** [NONVAN §0.3, correcting earlier versions of this document]. Nc enters only as an allowance in `LinkN_at`, the congruence-length bound on the E2 exponents, and reaches DIV through `DIVinN`; it appears in neither `Frame_at` nor the Bost line. Non-vanishing enters only indirectly: Theorem S forces k ≳ m⁵·f·log b, and the record clause k ≤ n²·x^{1/2−ε} keeps m·Nc within budget; together they give n ≳ m⁴.
+**k/n² is not a non-vanishing term** [NONVAN §0.3, correcting earlier versions]. Nc is an allowance in `LinkN_at`, the congruence-length bound on the E2 exponents, reaching DIV through `DIVinN`; it appears in neither `Frame_at` nor the Bost line. Non-vanishing enters only indirectly: Theorem S forces k ≳ m⁵·f·log b, and k ≤ n²·x^{1/2−ε} keeps m·Nc within budget; together, n ≳ m⁴.
 
 **The balance.** The Lean replaces this table by L12–L13. Divided by U the bracket is
 
 $$\frac{2a_E(1+m^2/k)}{m\,b\,\delta}+\frac{4nm\,x^{\varepsilon}}{|TT|\,\delta}+\frac{2k\,x^{2\varepsilon}}{n\,|TT|}\ \le\ 8x^{1/2+2\varepsilon}+8x^{1/2+2.625\varepsilon}+4x^{1/2+1.125\varepsilon}\ \lesssim\ x^{O(\varepsilon)}\Big[\frac xm+m+\frac{k}{n^2}\Big],$$
 
-using a_E ≤ 2xb, f = 2n, δ ≥ x^{−ε}, |TT| ≥ x^{−ε/8}n/2 and the window x^{1/2−ε} ≤ m ≤ x^{1/2+ε/2} [LEDGER §2a; WHYHALF §1.3]. So the total error is ≤ 20x^{1/2+2.625ε}·U. With m = 1 the bracket gives G(x) ≲ x^{1+O(ε)}, **no better than the trivial bound**: Mertens already gives G = O(x) unconditionally. The one-off errors then swamp the main-term identity, as in Stepanov at one vanishing order *(DIVKEY's inference; the tree requires m ≥ x^{1/2−ε} and m ≥ 2)*.
+using a_E ≤ 2xb, f = 2n, δ ≥ x^{−ε}, |TT| ≥ x^{−ε/8}n/2 and x^{1/2−ε} ≤ m ≤ x^{1/2+ε/2} [LEDGER §2a]. So the total error is ≤ 20x^{1/2+2.625ε}·U. With m = 1 the bracket gives G(x) ≲ x^{1+O(ε)}, **no better than the trivial bound** *(DIVKEY's inference; the tree requires m ≥ x^{1/2−ε})*.
 
 ### 6.2 The exponent 9
 
@@ -492,7 +458,7 @@ On the live path `topDesWin` is called with e_D = 2, e_L = 0 [LEDGER §0.2, §1]
 - **3** from `GrowthSizeBound` (read): 13/8 from the bracket, 1 from dividing by δ ≥ x^{−ε}, 3/8 from the constant 26 ≤ x^{3ε/8} [DIVKEY §2.7];
 - **1** to absorb 1 + 4o in front of SigA ≤ 4o·x^{1/2+ε}.
 
-The record's parameter inequalities hold for x ≥ x₀(ε) by hand; the existential frame bounds were not checked [LEDGER oddity 2].
+The record's parameter inequalities hold for x ≥ x₀(ε) by hand [LEDGER oddity 2].
 
 ### 6.3 Two precisions, and where each loss is booked
 
@@ -514,13 +480,13 @@ The record's parameter inequalities hold for x ≥ x₀(ε) by hand; the existen
 
 ### 6.4 Stepanov, and what carries the barrier
 
-**Stepanov.** Schematically, ℓN ≤ ℓq + O(q) + O(ℓ²), so ℓ ≈ √q. Here the points are the signal primes at scale x, the vanishing order ℓ is m, the auxiliary polynomial is the joint Bessel period map on N_u, the degree is the product formula (Bost, height, covolume), the one-off degree is the boundary terms, and the ℓ² overhead is the loss at the type prime: each of the m lifts is non-integral at T by about its weight mass, and log T must hold m copies of the Riesz-length normalisation [WHYHALF §2; SHARP oddity 1]. Unlike Stepanov, non-vanishing costs only a polynomial relation k ≳ m⁵·f·log b: **the cap on m is the growth of a per-lift loss, not non-vanishing**. Non-vanishing does fix the host: n ≳ m⁴ ≈ x² (§6.1).
+**Stepanov.** Schematically, ℓN ≤ ℓq + O(q) + O(ℓ²), so ℓ ≈ √q. Here the points are the signal primes, ℓ is m, the auxiliary polynomial is the joint Bessel period map, the degree is the product formula, and the ℓ² overhead is the loss at the type prime: each lift is non-integral at T by about its weight mass, and log T holds m copies of the Riesz-length normalisation [WHYHALF §2; SHARP oddity 1]. Non-vanishing costs only k ≳ m⁵·f·log b: **the cap on m is the growth of a per-lift loss**; non-vanishing fixes the host, n ≳ m⁴ (§6.1).
 
 **The forced-rigidity principle** [REVIEW2 A3; SHARP §1]. The actual consumptions r_i = A_i − B_i of the links A_i ≤ B_i + e_i telescope to ASK − Main ≈ U·(G_m − SigA). In every window G_m − SigA ≥ c√x on a set of positive logarithmic density, so there some link must *actually* lose ≥ c′·U·x^{1/2}; negative slacks (Hadamard defect, h(u) − log‖B_u‖_true, unused divisibility, Count5 slack) cannot carry it. Conversely, if every link is true, the total actual slack is ≤ U·x^{1/2+9ε}, and unconditionally ≲ relative x^{−3.5} of the cancelling terms. If the construction is valid for larger m, the carrier must lose ≳ min(m, √x)·|TT|·b per lift, or the method would prove G = o(√x).
 
 **Allowances far above actual use** [SHARP §2.3]: eE totals ≈ (δ/2)·B₀ (§5.1); the signature residual cancels in truth (§5.4), though booked in absolute value; the adm11 losses at p ≤ X″ use about 1/m of their budget (§6.3); Bost's m-part holds only the u-dependence of the T-loss, U·x^{O(ε)}. E1 and E2 are not shown to be m-sized in truth (E1's J0 piece and E2's Selmer and v_l(h_E) parts are unquantified).
 
-**The term that genuinely grows with m: the loss at T** [SHARP §0.1, §2.3]. At p = T every lift has E_{u,j} = EatT, so sg = −m·EatT. EatT ≥ 2·Σ_τ Wtau, with Wtau ≈ b at thick places *(inferred from the weight formulas)*, so EatT ≳ 2δnb; and log T ≍ m·x^ε (§5.5). Hence Ee_T ≈ m·EatT·log T and, by SHARP's arithmetic,
+**The term that genuinely grows with m: the loss at T** [SHARP §0.1, §2.3]. At p = T every lift has E = EatT, so sg = −m·EatT; EatT ≥ 2·Σ_τ Wtau ≳ 2δnb (Wtau ≈ b at thick places, inferred), and log T ≍ m·x^ε. Hence Ee_T ≈ m·EatT·log T and, by SHARP's arithmetic,
 
 $$2m\,x^{\varepsilon}\ \le\ \mathrm{Ee}_T/U\ \lesssim\ 192\,c_{\rm Count}\,m\,x^{2.1\varepsilon},$$
 
@@ -530,7 +496,7 @@ so ≥ 2x^{1/2+15ε/16} across the window: a defined nonnegative quantity pinned
 
 A second candidate, sign unsettled, is the covolume's q-part (`flatDegVal`'s exact q·(log d − lrd E) and the non-flat Hilbert–Samuel part ∝ q_j·W, both inside l3u).
 
-**The admissible range of m.** The Lean fixes m ≈ x^{1/2−ε/16}, with m ≤ x^{1/2+ε/2}. Re-dimensioned under the Theorem-S constraints (m⁴ ≤ f, x^{3ε/2}·m⁵·f ≤ k ≤ x⁵) and k ≤ n²·x^{1/2−ε}, the largest admissible m is ≈ x^{11/20} *(SHARP's arithmetic)*. There the bracket gives only G ≲ x^{0.55+O(ε)}, and Ee_T ≳ x^{0.55}·U: nothing false follows. Without Ee_T, the actual consumption at m = x^{11/20} would be ≈ x^{0.45+O(ε)}·U, contradicting the Ω-result. One prime for all lifts (§5.5) is what makes Ee_T grow with m.
+**The admissible range of m.** The Lean fixes m ≈ x^{1/2−ε/16}. Re-dimensioned under the Theorem-S constraints (m⁴ ≤ f, x^{3ε/2}·m⁵·f ≤ k ≤ x⁵) and k ≤ n²·x^{1/2−ε}, the largest admissible m is ≈ x^{11/20} *(SHARP's arithmetic)*. There the bracket gives only G ≲ x^{0.55+O(ε)}, and Ee_T ≳ x^{0.55}·U: nothing false follows. Without Ee_T the actual consumption there would be ≈ x^{0.45+O(ε)}·U, contradicting the Ω-result; one prime for all lifts (§5.5) is what makes Ee_T grow with m.
 
 **The core inequality as a statement about zeros** *(SHARP §2.4)*. Fix u₀. ASK − MAIN = De is exactly Σ_χ r̂_{u₀}(χ)·(Riesz error of L(s, χ) at y ≈ x, or at the lengths ≈ X′, X″), over characters of Gal(E/ℚ), with r_{u₀}(h) = #{t ∈ TT : t + h − u₀ ∈ T2} a nonnegative class weight; these are Dirichlet L-functions of conductor dividing d·q·2^{s+2}. The core is a one-sided bound, at the single point y ≈ x, on this weighted sum over zeros: ≤ U·x^{1/2+O(ε)}. GRH implies it (Σ_ξ|r̂(ξ)|/r̂(1) ≤ √2·x^{9ε/16} by Parseval). No known result contradicts it, since the conductors are exp(x^{Θ(ε)}) ≫ x; an adversarial choice of T2 correlated with the primes reaches only x^{1/2}·polylog·x^{ε/16}.
 
@@ -542,19 +508,19 @@ A second candidate, sign unsettled, is the covolume's q-part (`flatDegVal`'s exa
 
 ## 7. Non-vanishing
 
-**Why it is needed.** If the periods B_u vanished, or the joint map fell far short of surjective, Bost would say nothing about the primes. The frame hypothesis excludes this through robust near-surjectivity (§5.3) [RANK §0; NONVAN]; it also forces D_all > 0 and some B_u ≠ 0, so the degenerate "stand-in" records cannot be the live one [JOIN §1c]. Its inputs are a near-tight frame (Theorem S plus the dimension count), a ramified share de ≤ 2f/b, overcompleteness of the word family, and δ_p < 1.
+**Why it is needed.** If the joint map fell far short of surjective, Bost would say nothing about the primes. The frame excludes this through robust near-surjectivity (§5.3), and forces D_all > 0, so degenerate "stand-in" records cannot be live [RANK; NONVAN; JOIN §1c]. Its inputs are a near-tight frame (Theorem S plus the count), a ramified share de ≤ 2f/b, overcompleteness, and δ_p < 1.
 
-**From orthogonality to rank** *(NONVAN's reconstruction)*. Let Q = Σ_u γ_u·P_uP_u* on HH. Then tr Q ≈ Σd_u by the diagonal clause, and tr Q² = Σ_{u,u′}‖K(u,u′)‖²_HS ≤ (1 + η₀ + η₁ + x^{−C_H} + O(√e₀))·(tr Q)²/D_all by the off-diagonal clause, overcompleteness and the count. Since tr Q² ≥ (tr Q)²/D_all with equality iff Q is scalar, Q is a near-tight frame, dimension-free; projecting onto the Bessel rows EE ≅ RR^∨ ⊗ ℂ does not increase codimension. A constant 1 + c in Theorem S, or a relative error c in D_all/D*, would give η_F ≈ c, so the precision needed is x^{−C_H}, polynomial.
+**From orthogonality to rank** *(NONVAN's reconstruction)*. Let Q = Σ_u γ_u·P_uP_u* on HH. Then tr Q ≈ Σd_u by the diagonal clause, and tr Q² = Σ_{u,u′}‖K(u,u′)‖²_HS ≤ (1 + η₀ + η₁ + x^{−C_H} + O(√e₀))·(tr Q)²/D_all by the off-diagonal clause, overcompleteness and the count. Since tr Q² ≥ (tr Q)²/D_all with equality iff Q is scalar, Q is a near-tight frame, dimension-free; projecting onto the Bessel rows EE ≅ RR^∨ ⊗ ℂ keeps codimension small. A constant 1 + c in Theorem S, or an error c in D_all/D*, gives η_F ≈ c, so the precision needed is x^{−C_H}.
 
-**Near-orthogonality (Theorem S)** [PAIRB; COUNTS; THMB; THEOREMS; NONVAN]. The Gram kernel K(u, u′) = (c_uc_{u′})^{−1/2}P_u*P_{u′} has off-diagonal squared Hilbert–Schmidt norm ‖K(u,u′)‖²_HS ≤ (1 + b^{−6})·d_ud_{u′}/D*, the value for random subspaces, and ‖K(u,u) − 1‖²_HS ≤ e₀·d_u. On the live path both clauses are **proved by named theorems** (`at_choice_alt` → `offDiag` → `offDiagonalK0_of_rows`, `theoremS_of_conj` → `theoremS_closedP` → `theoremS_rec` → `pbApplied` → `t_PairBound`), all closed hypotheses discharged from the Siegel–Weil input; `theoremS_selected_of_loops` is dead, so its "conditional" status was stale. The leaves are unread. It is the author's "relative trace formula" (item 16): a **double unfolding of Poincaré series**, with savings from an exact volume identity with Schur orthogonality, sublattice counting, a character-sum cancellation on a hermitian quadric [COUNTS] and Gelfand–Graev multiplicity one. The comparison 2^{−k/2}e^{Cm⁵f log b} ≤ b^{−14} fixes k ≈ x^{9/2+10ε}.
+**Near-orthogonality (Theorem S)** [PAIRB; COUNTS; THMB; THEOREMS; NONVAN]. The Gram kernel K(u, u′) = (c_uc_{u′})^{−1/2}P_u*P_{u′} has off-diagonal squared Hilbert–Schmidt norm ‖K(u,u′)‖²_HS ≤ (1 + b^{−6})·d_ud_{u′}/D*, the value for random subspaces, and ‖K(u,u) − 1‖²_HS ≤ e₀·d_u. On the live path both clauses are **proved by named theorems** (`at_choice_alt` → `offDiag` → … → `t_PairBound`), all closed hypotheses discharged from the Siegel–Weil input; `theoremS_selected_of_loops` is dead, so its "conditional" status was stale. The leaves are unread. It is the author's "relative trace formula" (item 16): a **double unfolding of Poincaré series**, with savings from an exact volume identity with Schur orthogonality, sublattice counting, a character-sum cancellation on a hermitian quadric [COUNTS] and Gelfand–Graev multiplicity one. The comparison 2^{−k/2}e^{Cm⁵f log b} ≤ b^{−14} fixes k ≈ x^{9/2+10ε}.
 
 **The dimension count** [COUNT; SLEAVES; FORMULAGAP; GERMJET; NONVAN]. D_all = dim HH is a limit-multiplicity count for a very regular discrete series of U(k + r_S, r_S + 1)^f in L² of a non-compact quotient:
 
 $$D_{\rm all}\le(1+\eta_1)D^*,\qquad D^*=\text{formal degree}\times\text{covolume},$$
 
-with relative error e^{−nf log n/16}, uniformly in rank. It is live (`count_constants_of_siegelWeil` → `countingTheorem_of_volumeStep`), proved conditionally on the in-tree Siegel–Weil input; its application to *this* HH rests on `rowsTiePT'_of`, unread. `LinkIRR` (δ_p ≤ e^{−x^{ez/7}}, the share of HH outside the Bessel-functional space) is likewise proved by named theorems from Green's classification and Siegel–Weil (`closed_linkIRR_of_join_count`), bodies unread. *Non-compactness*: π∞ is integrable, so R(φ_e) is an exact orthogonal projection onto cusp forms; no spectral decomposition or truncation is used, and the kernel is bounded pointwise region by region. *Where exponential precision comes from*: the very regular weight kills only the far terms (DecGap); the unipotent, thin and deep contributions are small by **rank**, e^{−nf log n/4}, through Siegel–Weil volumes. (This count is not Count5, the explicit ratio that pins T, §5.5.) DecGap rests on a **compression formula** for lowest-K-type matrix coefficients of non-holomorphic discrete series, c_λ(z) = ∏_iΔ_i(z)^{−s_i}, proved via Schmid's first-order system and jet uniqueness (read); it reproduces the known U(1,1) and holomorphic U(2,1) cases and was not found in the literature.
+with relative error e^{−nf log n/16}, uniformly in rank. It is live (`count_constants_of_siegelWeil` → `countingTheorem_of_volumeStep`), proved conditionally on the in-tree Siegel–Weil input; its application to *this* HH rests on `rowsTiePT'_of`, unread. `LinkIRR` (δ_p ≤ e^{−x^{ez/7}}, the share of HH outside the Bessel-functional space) is likewise proved by named theorems from Green's classification and Siegel–Weil (`closed_linkIRR_of_join_count`), bodies unread. *Non-compactness*: π∞ is integrable, so R(φ_e) is an exact orthogonal projection onto cusp forms, with no spectral decomposition or truncation. *Where exponential precision comes from*: the very regular weight kills only the far terms (DecGap); the unipotent, thin and deep contributions are small by **rank**, e^{−nf log n/4}, through Siegel–Weil volumes. (This count is not Count5, the explicit ratio that pins T, §5.5.) DecGap rests on a **compression formula** for lowest-K-type matrix coefficients of non-holomorphic discrete series, c_λ(z) = ∏_iΔ_i(z)^{−s_i}, proved via Schmid's first-order system and jet uniqueness (read); it reproduces the known U(1,1) and holomorphic U(2,1) cases and was not found in the literature.
 
-**Over-delivery.** Theorem S gives 1 + b^{−6}, the count e^{−nf log n/16} and LinkIRR e^{−x^{ez/7}}, where the Bost step needs only x^{−C_H}, x^{−C_H} and δ_p < 1. Even polynomial precision, uniform in rank n ≈ x^{4.5} and degree f ≈ x², is beyond published limit-multiplicity results, which fix the group *(auditor knowledge)* [NONVAN §2.5].
+**Over-delivery.** The Bost step needs only x^{−C_H}, x^{−C_H} and δ_p < 1 from Theorem S, the count and LinkIRR. Even polynomial precision, uniform in rank n ≈ x^{4.5} and degree f ≈ x², is beyond published limit-multiplicity results, which fix the group *(auditor knowledge)* [NONVAN §2.5].
 
 ---
 
@@ -586,10 +552,10 @@ VWin states it for all twists i < x^{401}; against E2's allowance ≈ x^{2.5}·b
 
 | step | read to | main unread items (full list §9.4) |
 |---|---|---|
-| Windowed Landau, quantifiers | C (correct; every body but `iteratedDeriv_laplace`) | — |
-| Bridge, ThinScales | C (exact identity) | TT with exact shares |
-| Host selection (`PairEx`) | C (classical orthogonality, read) | `twist_one`, `page_across`, zero density, progression PNT |
-| Ledger L0–L15 | C (every step and every body read) | — |
+| Windowed Landau, quantifiers | C | — |
+| Bridge, ThinScales | C | TT with exact shares |
+| Host selection (`PairEx`) | C | `twist_one`, `page_across`, zero density, progression PNT |
+| Ledger L0–L15 | C (every body read) | — |
 | Engine core; orbit route at signal primes | N: kernel law and `lemmaS` read to statement leaves [KLAW]; LP assembly to CLR:299 | `IntInert`, `HypShape_of`/`b0`, `Quant`, `LogStep`; `StdTie.adapted` |
 | Hecke route at inertClass primes | C below `adm2`; `adm2` proved, conditional | ≈ 15 site hypotheses (AdmGLt, MInv, FrameLatMapLt) |
 | Composition; tie of Ga to N_u; adm11; floor | C (every branch read) | `DegreeCountBound`, `UsedTuplesBoundByConstant`; ModelsOK producers |
@@ -605,16 +571,7 @@ VWin states it for all twists i < x^{401}; against E2's allowance ≈ x^{2.5}·b
 
 ### 9.2 Where the argument exceeds the published literature
 
-1. Rank-uniform limit multiplicity with exponential precision; the compression formula [COUNT; FORMULAGAP].
-2. Near-orthogonality of Bessel periods to relative b^{−6} by double unfolding [PAIRB; COUNTS; THMB].
-3. p-adic divisibility of high-order jets of higher-rank CM theta kernels: hyperbolic cancellation, LP duality on bipower radii, the cap lemma [ENGINE; ENGINE2; JETA].
-4. Selmer bounds uniform in l for weights up to x^{401}: Skinner–Wiles for U(3) with a determinantal local model [ONECHARU; MODU3; PATCH].
-5. Selmer killing at finite level over a tame tower [KILLAT; LARGETW].
-6. Residual irreducibility at all l from depth-zero types [TWIST].
-7. Galois representations via a stable-range theta lift; crystallinity by l-adic limits [GALREP; ROWCRYS].
-8. Uniform covolume bounds on varying Shimura varieties [VOLUME; HS].
-9. `TopCore`, an integral comparison far outside Fontaine–Laffaille [BEYONDFL; TOPCORE; SENLAT].
-10. An index budget for products of short forms [INDEXBUDGET; E1LOOSE].
+(1) Rank-uniform limit multiplicity with exponential precision; the compression formula [COUNT; FORMULAGAP]. (2) Near-orthogonality of Bessel periods to relative b^{−6} [PAIRB; THMB]. (3) p-adic divisibility of high-order jets of higher-rank CM theta kernels [ENGINE2; KLAW]. (4) Selmer bounds uniform in l for weights up to x^{401}, via U(3) R = T [ONECHARU; PATCH]. (5) Selmer killing over a tame tower [KILLAT]. (6) Residual irreducibility at all l from depth-zero types [TWIST]. (7) Galois representations via a stable-range theta lift [GALREP]. (8) Uniform covolume bounds on varying Shimura varieties [VOLUME]. (9) `TopCore`, far outside Fontaine–Laffaille [TOPCORE]. (10) An index budget for products of short forms [INDEXBUDGET].
 
 ### 9.3 Status of the former holes
 
@@ -623,9 +580,9 @@ The first review's five holes in the reconstruction [REVIEW-MAIN-ARGUMENT A2]: *
 ### 9.4 What rests on statements only
 
 Each item was read at statement level only, or not opened. After round 15 the statement-only items **on the spine** are these [SUMMARY §17–18]:
-- **The type prime** [TU; TDIV; TFLOOR], unread and load-bearing: `cdScale`/`cdScaleTie` (that the formal degree is the Harish-Chandra value, on which log T* − Lam5 = O(L) rests); `Conclusion5Sharp` and `TwistedColumnBoundAtT` (the real T-adic loss of the jet steps); `colsTiedSym_std`, `lowerMap_tie`, `beOnTie_true`, `ipV_co_ofS` (the level-T record); the producers of the L3 floor and of Lo5 (`slopesMF_of_count_fam`, `placesF_of`).
-- **Theorem S and the count** [NONVAN]: their leaves; the in-tree Siegel–Weil input; `rowsTiePT'_of` (count ↔ this HH); the `BesselId` supplier; `irr_row_closed`; `FrameLA1`; `ramRankF_min`.
-- **Kernel law and `lemmaS`** [KLAW], now read to: `IntInert`, `HypShape_of`/`b0`, `BeData.exists_of_curveData`, `Quant`, `LogStep`, the `lat_S` leaves; passed down as hypotheses, the host field `der.frob` and `StdTie.adapted` (supplier `linkR_stdTie_entry` located, unread). The suppliers of AdmGLt, MInv and FrameLatMapLt concern `adm2` on the Hecke route only.
+- **The type prime** [TU; TDIV; TFLOOR], load-bearing: `cdScale`/`cdScaleTie` (the Harish-Chandra normalisation on which log T* − Lam5 = O(L) rests); `Conclusion5Sharp`, `TwistedColumnBoundAtT` (the real T-adic loss); `colsTiedSym_std`, `lowerMap_tie`, `beOnTie_true`, `ipV_co_ofS`; the L3 and Lo5 producers.
+- **Theorem S and the count** [NONVAN]: their leaves; the in-tree Siegel–Weil input; `rowsTiePT'_of`; the `BesselId` supplier; `irr_row_closed`; `FrameLA1`; `ramRankF_min`.
+- **Kernel law and `lemmaS`** [KLAW]: `IntInert`, `HypShape_of`/`b0`, `BeData.exists_of_curveData`, `Quant`, `LogStep`, the `lat_S` leaves; as hypotheses, the host field `der.frob` and `StdTie.adapted`.
 - **Two adm11 inputs** [ADM11]: `DegreeCountBound` and `UsedTuplesBoundByConstant`, which carry the ±C·B₀ precision against ΣA·log g.
 - **Covolume** [NORMS; COVOL]: `covolume_measure_eq_one` and the `FlatDegreeSt` chain.
 - **L6's seven `Published` inputs** [L6].
@@ -642,11 +599,11 @@ Now read, so removed: `PairEx`; the ledger bodies and `stepE_num`; the adm11 pro
 
 ### 9.5 Open conceptual questions
 
-1. **Which inequality carries the barrier.** The identified carrier is the loss at the type prime, Ee_T/U ≥ 2m·x^ε (§6.4) [SHARP]. Open: whether the *real* T-adic loss of the jet steps is ≈ EatT per lift, as the unread `Conclusion5Sharp`/`TwistedColumnBoundAtT` assert, rather than the Weyl-mean cost per level [TFLOOR oddity 2]; the `SeenDef` reading; and the sign of the covolume q-part. WHYHALF calls this the conceptual heart of "why 1/2".
-2. **Rigidity of T.** log T* − Lam5 = O(L) holds in TFLOOR's computation only if the formal degree under `cdScale` is the Harish-Chandra value; the Lean proves no matching upper bound (§5.5).
-3. **Metric sharpness of Bost.** The frame gives robust rank only. Nothing read controls the Hadamard defect of the composite, h(u) − log‖B_u‖_true, or the word-dependent seesaw constant a_u, whose uniformity was not checked [SEESAW oddity 3]; the forced-rigidity principle requires all to be tiny (§6.4).
-4. **The three DIV norms.** No lemma identifies the definite frame of the Rallis-hook input with the `pairK` Fock frame of the jet bound; the tie is the shared logΩ symbol and type-shared frames. A mismatch would falsify L6 or D2 rather than shift Main [STEPE §3.4; NORMS].
-5. **Scale of the numerical evidence.** The checks of §9.6 run far below a ≈ x·b, at rank ≤ 2, with one top; no two-lift composite has been computed.
+1. **Which inequality carries the barrier.** The identified carrier is the loss at T (§6.4) [SHARP]. Open: whether the *real* T-adic loss of the jet steps is ≈ EatT per lift (unread `Conclusion5Sharp`, `TwistedColumnBoundAtT`) rather than the Weyl-mean cost [TFLOOR]; the `SeenDef` reading; the sign of the covolume q-part.
+2. **Rigidity of T.** log T* − Lam5 = O(L) needs the formal degree under `cdScale` to be the Harish-Chandra value; the Lean proves no matching upper bound (§5.5).
+3. **Metric sharpness of Bost.** Nothing read controls the Hadamard defect, h(u) − log‖B_u‖_true, or the word-dependent seesaw constant a_u [SEESAW oddity 3]; the forced-rigidity principle requires all to be tiny (§6.4).
+4. **The three DIV norms.** No lemma identifies the Rallis-hook frame with the `pairK` Fock frame; a mismatch would falsify L6 or D2 rather than shift Main [STEPE §3.4; NORMS].
+5. **Scale of the numerical evidence.** The checks run far below a ≈ x·b, at rank ≤ 2, with one top; no two-lift composite has been computed.
 6. **Layer index against lift index.** Nobody showed that the layer index matches the lift index one for one [ARCH §7.7]. Mram is now identified: the level-0 vectors on which no torus character at T is trivial, with dim Mram/dim Mu0 = (1 − 1/(T − 1))^f [TU; NONVAN].
 7. **Design choices.** Why exactly 3 in the shares; why orbit length n′ > 2 rather than just even; why t has the shape of §1; whether `BehrendSets` chooses T2 [ENDGAME §2.3; WHYHALF §6.3, §6.6].
 
@@ -658,35 +615,33 @@ Three checks bear on the spine; none runs Lean code. **NUMTEST3/4** test the Hec
 
 ### 9.7 Second review: candidate failure points and what was found
 
-A second cold review, with an adversarial pass [REVIEW2], judged the exposition "understandable with gaps": the analytic shell and the ledger algebra close on paper (it re-derived 9 = 5 + 3 + 1, the U range, the balance and the Riesz weight, and checked the Chowla–Selberg constant numerically for d = 3, 4). It ranked five candidate failure points. Round 15 read each.
+A second cold review with an adversarial pass [REVIEW2] judged the exposition "understandable with gaps": the analytic shell and the ledger algebra close on paper (it re-derived the exponent, the U range, the balance and the Riesz weight). It ranked five candidate failure points; round 15 read each.
 
-1. **Metric sharpness of the Bost step.** *Found:* the mean-slope inequality runs through HN pieces, robust rank and a layer cake, and Theorem S's diagonal clause excludes a single heavy functional (§5.3) [TFLOOR B; NONVAN]. *Open:* what controls the Hadamard defect, h(u) − log‖B_u‖_true and a_u (§9.5, item 3).
-2. **The √x barrier is not located.** *Found:* eE totals ≈ B₀, as the review said; the barrier is carried by the loss at the type prime, Ee_T/U ≥ 2m·x^ε (§6.4) [SHARP]. *Open:* this rests on the `SeenDef` reading and on unread hypotheses for the real T-adic loss [TFLOOR].
-3. **T_u and Count5.** *Found:* T is a level prime carrying all m lifts; its gain is the degree of the heavy component read in level-T coordinates, paid by the mean weight in the source slope; the product formula holds in the rank-one model; rank bounds T above; log T* matches Lam5 to O(L) (§5.5) [TU; TDIV; TFLOOR]. *Open:* `cdScale`; `colsTiedSym_std`.
-4. **Leading-coefficient cancellation through one logΩ symbol.** *Unchanged:* the cancellation is syntactic, the truth of L6 and D2 to relative x^{−4} rests on statement-only inputs, and no lemma identifies the three norms (§5.4). The review's check, all three normalisations in U(1,1) or U(2,1), has not been done.
-5. **The kernel law at rank ≈ x^{399}.** *Found:* the signal kernel law and `lemmaS` are read to statement leaves; it is the Hecke-route theorem specialised, and the slope is 1/2 at every place (§4.3) [KLAW]. *Open:* no two-lift composite at rank > 2 has been computed.
+1. **Metric sharpness of Bost.** *Found:* the mean-slope inequality runs through HN pieces, robust rank and a layer cake; Theorem S's diagonal clause excludes a single heavy functional (§5.3) [TFLOOR; NONVAN]. *Open:* the Hadamard defect, h(u) − log‖B_u‖_true, a_u (§9.5).
+2. **The √x barrier is not located.** *Found:* eE totals ≈ B₀, as the review said; the barrier is carried by the loss at T, Ee_T/U ≥ 2m·x^ε (§6.4) [SHARP]. *Open:* the `SeenDef` reading; the real T-adic loss rests on unread hypotheses [TFLOOR].
+3. **T_u and Count5.** *Found:* T is a level prime carrying all m lifts; its gain is the heavy component's degree in level-T coordinates, paid by the mean weight in the source slope; rank bounds it above; log T* matches Lam5 to O(L) (§5.5) [TU; TDIV; TFLOOR]. *Open:* `cdScale`; `colsTiedSym_std`.
+4. **Leading-coefficient cancellation through one logΩ symbol.** *Unchanged:* syntactic cancellation; L6 and D2 at relative x^{−4} rest on statement-only inputs; the review's model check in U(1,1) or U(2,1) has not been done.
+5. **The kernel law at rank ≈ x^{399}.** *Found:* the signal kernel law and `lemmaS` are read to statement leaves, the Hecke-route theorem specialised, slope 1/2 everywhere (§4.3) [KLAW]. *Open:* no two-lift composite at rank > 2 has been computed.
 
-The review also observed that the core is itself of GRH strength for χ_{−d} (§6.4).
-
-**The reviewer's opinion.** The reviewer stated that, on present evidence, it considers the argument as described *very unlikely to be correct*, the likeliest failure being in steps 6–8 rather than in the analytic shell. Its reasons: terms of size x^{4.5}·U cancel along a chain of one-sided inequalities, so every link must be tight to relative x^{−1/2}, and no mechanism for that tightness is described; and the most novel inputs were statement-only. It named what would change its mind: (i) a toy computation (m = 2, small rank) showing the composite jet/Bessel map near-isometric and the three metrics agreeing in their logΩ coefficients; (ii) an identified step whose actual loss is ≳ √x·|TT|·b per lift; (iii) a checkable account of the T mechanism, including what bounds T above; (iv) Theorem S and the kernel law read to classical leaves. Round 15 supplied readings, not proofs, bearing on (ii), (iii) and part of (iv); (i) is untouched. This document reports the opinion and does not adjudicate it.
+**The reviewer's opinion.** The reviewer stated that, on present evidence, it considers the argument as described *very unlikely to be correct*, the likeliest failure being in steps 6–8 rather than in the analytic shell. Its reasons: terms of size x^{4.5}·U cancel along a chain of one-sided inequalities, so every link must be tight to relative x^{−1/2}, with no mechanism for that tightness described; and the most novel inputs were statement-only. What would change its mind: (i) a toy computation (m = 2, small rank) showing the composite near-isometric and the three metrics agreeing; (ii) an identified step losing ≳ √x·|TT|·b per lift; (iii) a checkable account of the T mechanism, including what bounds T above; (iv) Theorem S and the kernel law read to classical leaves. Round 15 supplied readings, not proofs, bearing on (ii), (iii) and part of (iv); (i) is untouched. This document reports the opinion without adjudicating it.
 
 ---
 
 ## 10. Correspondence with the author's timeline
 
-**Located.** (2) Dᵃ(Ω·θ)(0) divisible by p^{a/p+a/p³+…−O(log a)}: γ_p·a, §4. (5) the switch to G_z. (8) iterated theta lifts π ↦ π ⊞ μ_j[t], m ≈ √X: §3. (9) cancellation of order-m terms via Chowla–Selberg: the logΩ cancellation of §5.4 *(inferred match)*. (10) divisibility of the m-fold lift: §4.5. (12) seesaw and Rallis: `MIid`, λ_j. (13) Bost. (14) the cost of each lift: §6; "twisting" matches KillAt and §5.2; "division" plausibly DIV *(inferred)*. (15) an integral structure glued across Hecke characters: RR. (16) a relative trace formula with projected Poincaré series: Theorem S, without GL₅. (17) a weakening of Vandiver: the Ш bound. (18) covolumes, theta-series index, congruences: §5.2. (20) GRH: ⟨ψ⟩ with 4 : 3 shares and windowed Landau.
+**Located.** (2) Dᵃ(Ω·θ)(0) divisible by p^{a/p+a/p³+…−O(log a)}: γ_p·a, §4. (5) the switch to G_z. (8) iterated theta lifts, m ≈ √X: §3. (9) cancellation of order-m terms via Chowla–Selberg: §5.4 *(inferred match)*. (10) divisibility of the m-fold lift: §4.5. (12) seesaw and Rallis. (13) Bost. (14) the cost of each lift: §6; "twisting" matches KillAt, "division" plausibly DIV *(inferred)*. (15) an integral structure glued across Hecke characters: RR. (16) a relative trace formula with projected Poincaré series: Theorem S, without GL₅. (17) a weakening of Vandiver: the Ш bound. (18) covolumes, theta-series index, congruences: §5.2. (20) GRH: ⟨ψ⟩ with 4 : 3 shares and windowed Landau.
 
-**Partly located.** (1) Stepanov: structural only (§6.4). (7) GGP periods; "m non-interlacing weights" is inferred. (19) `BehrendSets`, not traced to the live path.
+**Partly located.** (1) Stepanov: structural (§6.4). (7) GGP periods. (19) `BehrendSets`, not traced to the live path.
 
-**Not located.** (3) the sixfold cover of GL₅ and the Poincaré bundle. (4) W(1_S) ≥ 0 and the bootstrap. (6) W·1_{(0,1]} + X^η·1_{(0,1/X]} ≥ 0. (11) the Iwasawa tower via pigeonhole (candidates: the 2-power layer, KILLAT's tower). (14) the "2/3 a priori" version.
+**Not located.** (3) the sixfold cover of GL₅ and the Poincaré bundle. (4) W(1_S) ≥ 0 and the bootstrap. (6) W·1_{(0,1]} + X^η·1_{(0,1/X]} ≥ 0. (11) the Iwasawa tower via pigeonhole. (14) the "2/3 a priori" version.
 
-Sources: [WHYHALF; LOCALDIV; ARCH; LINKN; CHAININD; SEESAW; L6; RANK; CONGMOD; PAIRB; VWIN; ONECHARU; THETA].
+Sources: [WHYHALF; LOCALDIV; ARCH; LINKN; CHAININD; SEESAW; RANK; THETA].
 
 ---
 
-[^n4]: NUMTEST4's phrase "inert in both" describes inertClass primes, not signal primes [SIGNAL; LEDGER §0.4]. NUMTEST3/4's kernels are GIdx-shaped and locally the signal-orbit object (§4.8).
+[^n4]: NUMTEST4's "inert in both" describes inertClass primes, not signal primes [SIGNAL].
 
-[^tiebm]: The orphaned `TieBm` formulation, in which the middle levels are set to 0, has no consumer, so ARCH's worry about it lapses [SEESAW §0.1].
+[^tiebm]: The orphaned `TieBm` formulation has no consumer [SEESAW §0.1].
 
 **Corrections that change the picture** (newer first; SUMMARY §5–§18 has the full list).
 1. The √x barrier is carried by the loss at the type prime T, not by eE: eE totals ≈ B₀, not m·B₀ (STEPE's sum was wrong), and the signature residual cancels in truth [SHARP; REVIEW2, correcting earlier versions of §5.1, §6.4, §9.5].
@@ -694,4 +649,4 @@ Sources: [WHYHALF; LOCALDIV; ARCH; LINKN; CHAININD; SEESAW; L6; RANK; CONGMOD; P
 3. T is a level prime carrying all m lifts, its size a sum over lifts (log T ≈ m·x^ε); the scaling of the last map is not paid at the places above T but by the mean weight in the source slope [TU; TDIV; TFLOOR; the orchestrator's "T of the size of the cap" was a misreading].
 4. The signal kernel law is the Hecke-route theorem specialised; B3 holds by construction; `lemmaS` is read [KLAW].
 5. The orbit route at signal primes carries the count; the backward charge is needed [ADM2; ENGINE2; NUMTEST5]. b must beat poly(x)·e^{x^{ε/3}} [ADM11]. Σ_j(p_j − q_j) = mk is never used, and m = 1 is trivial [DIVKEY]. One (q, d) per window, by orthogonality [HOSTSEL].
-6. Earlier: the live exponent is 9 [ENDGAME; LEDGER]; the x^{−1} precision is formula against formula [GATIE]; Tw has no cutoff at X″ [TWSET]; congruences enter only through E2 [WHERECONG]; MULTEQ read a dead route [LIVEPATH]; crystallinity via `G2a`; purity from Jacquet–Shalika [ROWCRYS].
+6. Earlier: the live exponent is 9; the x^{−1} precision is formula against formula; Tw has no cutoff; congruences enter only through E2; MULTEQ read a dead route [ENDGAME; GATIE; TWSET; WHERECONG; LIVEPATH].

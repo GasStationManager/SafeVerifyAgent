@@ -1037,3 +1037,11 @@ needs. Unsettled: the sign convention of `ValTied.lat` (TiedStep:118-123) at lev
 i+1, and the T-adic content of `unf`. Second candidate carrier: the covolume q-part, sign
 unsettled. If neither carries it, some proved hypothesis must be false. Reader dispatched
 (CARRIER).
+
+`MAIN-ARGUMENT.md` updated with round 15 (13,481 words): new §5.5 on the type prime T with a
+one-lift display; §6 rewritten from SHARP; k/n² corrected to the E2 allowance; §5.3 and §7
+rewritten (Bost, non-vanishing live); KLAW in §4; REVIEW2's edits applied; §9.7 lists
+REVIEW2's five candidate failure points with status and reports its opinion without
+adjudicating. Unresolved between nodes: whether the loss at T truly carries the barrier
+(SHARP vs TFLOOR/FDEG); the `SeenDef` reading; π vs π̄ for lat 0; the sign of the covolume
+q-part.
