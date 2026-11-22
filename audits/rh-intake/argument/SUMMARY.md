@@ -623,3 +623,22 @@ did not; ℘ is the Gaussian-free w = 0 case. Statements only: `adm2` for the li
 `adm7`, `ZL_bound`, cap = ledger w via `LatTied`. deLoss ≈ r0·r1·log ≈ x^{798+ε} per prime
 per lift: harmless only because b = e^{x^ε} — orchestrator's inference: this is the reason
 b is exponential (π(X″)·x^{798} ≪ b). dSet exclusions not traced into the ledger.
+
+GATIE (no escalation; corrects LEDGER and SUMMARY §11). Ga is defined:
+Ga = Σ_w 2·lwP·e_w·(Σ_j gainD − τ) (DP2:220), from fields pinned by `ParametersFill`
+(IRZ:401-411). "ASK − Ga ≤ LoP" compares two piecewise-linear formulas with the same caps
+and no floors; live producer TS:35/55 `link_gl` → `FamGLmin.link8/link7` →
+`linkGLOBAL7_min` → `linkGLOBAL7_items` → `stLoss7` = `losses_of_small_share_weight`
+(`linkGLOBAL7_pk` is off the live path). The x^{−1} precision is formula against formula,
+not lattices. Tie to lattices through one exponent sg(u,w) = Σ_j(gain + F − E) (DP2:215):
+`NprimeDef` defines N_u = 𝔭^{−⌊e·sg⌋}·NuLat (DDD:16-25); `mu_eq`/`places_at_of` give
+μ(N_u) ≈ μ(M_u) + Ga + Fo − Ee (`SlopesN_at`); DIV needs Bk(N_u) ⊆ cc (`OneMapIntoCC`,
+GTI:78) ← `val2` ← `adm2` (LQP:206): the period of the actual chain image of every
+φ ∈ NuLat has valuation ≥ ⌊e·sg⌋ ← `admissible_level_two` → `WJS.Conclusion1` (ColGe of
+the actual column map) → `period_integral_off_levelPrime` (sg + vDG ≤ totS) → the
+SIGNAL/ORBIT/CHAININD routes. No slack found. Accounting: LoP's O(b) per (top, lift) is the
+top offset b′/x summed over p < X′. Real divisibility losses are booked in E (errF, c6·w/p,
+dl/de, v_p(DGam), FOrb; DE:145-162), charged by adm11 at ≤ C·B0 per lift, the "m" term;
+errF ≈ |TT|·m·b·log X″ (§11's "log log" omitted the log p weight), fits with room
+≈ m·x^{2ε/3}. Rounding once per place on the total exponent, ≤ C·X″ ≪ b. Unread: adm11
+producer `secondComplement_family_of_inputs`; `nprimeMuR_at`; `Ties9` on the GIdx branch.
