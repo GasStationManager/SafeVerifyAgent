@@ -900,3 +900,28 @@ inequality is itself GRH-strength for χ_{−d}. Part B: "LP duality read in ful
 eE classification faithful to a wrong node; rank-only frame and T_u understated. Part C:
 H1, H2, H3, H5 resolved; H4's question remains and is now answered wrongly; one-lift worked
 display still missing; new notation clashes in §2.1. Readers dispatched (SHARP, TU).
+
+TU (no escalation on the stated criteria; one item flagged for an expert). T_u is a
+rational prime (`T_prime`, DK:104-108), f places above it each with residue field of size
+T, an element π_T ∈ O_E with π_T·π̄_T = T (AHF:227); it is ADM11's "type prime". Size pinned
+both sides: T* ≤ T ≤ (1+1/(fk))·T* (`T_win`, RDP:153-154),
+T* = (D*/d*_u)^{1/(fk)}·Γ^{−2/(fk)}; D*, d*_u explicit mass × level-index ×
+Weyl/formal-degree products; defining identity d*_u·(T^k−1)^f ≈ D*/Γ². Reader's reading: T
+is chosen so the level-T source dimension matches the target (the Theorem-S window).
+−a_t·log T enters through `brAt`: the Bessel functional is multiplied by
+∏_τ τ(π̄_T)^{−nBr} and evaluated at points translated by π_T (FSN:137, 197, 204-213);
+`periodFun_le` (IPF:26-88) gives the archimedean factor T^{−nBr}, hA = −Σ_t a_t log T; in
+DIV it survives only through h(u). Product formula: the scaling is NOT paid at the places
+above T. Charged there: m·EatT with EatT·log T ≤ C·B₀ (no a_t), and
+c·|TT|·m(a/k+b′)·log T in Lo5. Instead `Conclusion6` (PFZ:332-343) asserts the scaled last
+map is integral at T with archimedean norm² ≤ ∏T^{−deg}: a claim of genuine T-adic
+divisibility of degree ≈ a_t. It reaches the live path as a family statement (`s10`,
+LPk:229; `pt0`, AGP:303), untraced; `DecoSet.til`, `LastMapNorm` unread. Flag: the ledger
+improves strictly as T grows; only `T_win` (rank match needed by the frame) stops a larger
+T. Reader's hand computation: prime side
+Σ Λ(n)(1−χ(n))(a/n−w)₊ = a(log(a/w) − 1 − γ + L′/L(1,χ)) + O(w) + zeros; archimedean side
+reduces to the same; v and π cancel; signs match. Count5 supplier is an explicit
+dimension-ratio computation (mass ratio, level indices, Weyl dimensions, two-sided
+formal-degree bounds), not limit multiplicity: `countF_fam` → `count_at_of` →
+`family_part_five_of_explicit_constants` → `division_level_prime_family`; error 11L.
+Reader dispatched (TDIV).
