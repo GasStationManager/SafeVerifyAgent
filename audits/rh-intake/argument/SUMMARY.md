@@ -443,3 +443,20 @@ Crystallinity at w | l with automorphic HT weights is a clause `G2a` in `CoreNor
 passed down; discharge not found; `G2a` has no "unramified at l" guard for l ≠ g₀, g₁.
 Unread: integral `SenLat`, Herr-complex facts, `Gauge.main`, closeness lemma. Reader
 dispatched (G2A).
+
+MIRABOLIC (no escalation). Part (B) of the layer index does NOT run through
+`CongBound_at`/KillAt/LinkN/VWin. All lattices sit in Zg_j, the (U,ψ)-eigenpart of the type
+part for a product P of finite mirabolic groups at level primes. Chain in `local_bound`
+(ONL:409): θT = Im ⊇ X₃ (LeafTW2: explicit theta series of the twisted tuple are lifts of
+integral vectors; proved, read) ≈ eJ up to ε (LeafTW1, from the `IdxAt` part of GoodTw) ⊇
+Th0 ⊇ |U|·ThK, then budget (A); Mackey property of the mirabolic pair divides r by |P:U|.
+LeafTW1 mechanism: `ThURel` (twisted theta series = product of Hecke Euler-factor operators
+at auxiliary primes applied to an untwisted one); determinant a unit mod l (Chebotarev
+primes with Frobenius near tame inertia, plus `T3`: every residual eigensystem lifts to a
+known signature, from `sig_all` and semisimplicity); Weierstrass-type evaluation, cost ≤ ε.
+Integral surjectivity of theta is never proved: lift/non-lift congruences appear as index of
+the base theta lattice and are paid by budget (A). Global object: one lattice R ⊆ K^D with
+localisation ι(μ(y))·abelian₂(μ(y)), {μ ≠ μ0} finite; M_j, XE and the target are
+tuple-independent. `ShareRd`: C(T−1, dimY)·del ≤ rk M_ka, proved (independent monomials).
+`QAt` belongs to (A). Unread: `ThURel` supplier, `ExportTie` supplier, `sig_all`/`T3`.
+Open question raised: where the congruence/Selmer machinery then enters the main chain.
