@@ -384,3 +384,23 @@ Breuil–Mézard gives a crystalline lift; consistent. Inputs: `BhattScholzeInte
 the literature; `BlochKatoLocal` passed but discarded; no Fontaine–Laffaille. Non-literature
 content, statement level only: `card_cocycles_independent_mod_coboundaries_le`, `realD`.
 Exc budget confirmed (8b < lStar², |Exc| ≤ 388·Ub⁸, charge ≤ b).
+
+LIVEMULT (no escalation). Live `MultEq` is the same predicate (only `def MultEq` is
+FRA:118; same `IsGoodRep`/`NoFixed`) with gap condition `GapG` (consecutive HC gaps
+≥ 100r⁴). Proof read (TEX:248-558): two simple trace formulas, no stabilisation;
+pseudo-coefficients at ∞, e_τ·h·e_τ at type places, Iwahori coset of a strictly regular
+torus element at an auxiliary split place; types kill elliptic tori with reducible
+characteristic polynomial. (−1)^{pq} is present in `dsChar` and absorbed by an odd-rank
+lemma; r = k+m−1 odd (`odd_r`). Non-tempered at ∞ killed by `LocalPC`, valid because of
+`GapG`. Witness: constructor `bwit_exists_alt`; `Holds` tied to the bundle by definitional
+equality and the field `eq`, transported in `twArgs_exists`; three links untraced
+(transport proof; point record's `Holds` = output of `primRows3_of_parts`; `selB` = b.B).
+`GalD` matches MULTEQ's description. Poles: the `True` conjunct is discarded; holomorphy at
+s₀ = t/2 is part of the conclusion of `SiegelWeilUnitaryConvergent`. Unread bodies:
+`nonFieldT`, `ellipticT`, `localPC_holds`, `SpecX.main`.
+
+Round 10 status of the review's holes: H1 read to literature-shaped inputs; H2 closed; H3
+restated and its consequences rechecked; H4 read; H5 on paper only. Corrections this round:
+`hmt` iff is dead code (CONGMOD, JOIN, KILLAT); no single twist seed (ORDER); MULTEQ read a
+dead route (conclusions survive on the live one). New in-tree mathematics met, at statement
+level: `TopCore` and the cocycle count (BEYONDFL); global index budget `Concl` (TWSET).
