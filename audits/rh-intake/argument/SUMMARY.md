@@ -404,3 +404,23 @@ restated and its consequences rechecked; H4 read; H5 on paper only. Corrections 
 `hmt` iff is dead code (CONGMOD, JOIN, KILLAT); no single twist seed (ORDER); MULTEQ read a
 dead route (conclusions survive on the live one). New in-tree mathematics met, at statement
 level: `TopCore` and the cocycle count (BEYONDFL); global index budget `Concl` (TWSET).
+
+## 14. Round 11
+
+INDEXBUDGET (no escalation; corrects TWSET). `Concl` (WA:424) bounds, at every place, the
+index in M_ka (integral cusp forms of weight ka on layer j) of a TEST lattice Θ spanned by
+T-fold products of short weight-wL forms times short weight-wF forms; no theta lift is
+involved. Index ≤ e·dim + r(λ), Σ r(λ) log Nλ ≤ rk·f·m·b·de2. Reason: determinant and
+product formula. Local: twice the index of restricted forms on a generic curve ≤ ord_λ of
+their discriminant plus a correction (HDA:20). Global: Σ ord_λ(Δ) log Nλ by the product
+formula with Mahler-measure heights, Hadamard, sup norms of explicit forms, height of an
+auxiliary section (HDB:24, NNF:86); sup-norm lower bound for nonzero integral forms by
+evaluation at a CM point and Chowla–Selberg (`LAMwAt`). Not circular: `BoundsMu` takes
+index bounds and lcv(M_j) as separate inputs; no lcv, slope or Rallis scalar on this path.
+Size: per layer ≤ 12·f·m·b, total ≈ m·B0, the same tight "m" bucket; size·log(size) terms
+are divided by T ≥ x^{Bx}·k·f/(m·de2); no factorial term. Literature: Krull–Akizuki,
+Hadamard, Gauss's lemma, product formula, Chowla–Selberg; no arithmetic intersection
+theory. Twisting buys the inclusion Θ ⊆ θ_j T_j (mirabolic chain; last link LeafTW1/TW2 is
+a hypothesis at twisted places only), cost ≤ 2/p² per place. Unopened: suppliers of
+LeafTW1/TW2, `QAt`, `ShareRd` (a dimension inequality the budget depends on); bodies
+`localIdx`, `disc_product`, `heights_arith`, `deepCore`; top-layer inputs.
