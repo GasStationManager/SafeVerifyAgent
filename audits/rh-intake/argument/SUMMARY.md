@@ -511,3 +511,23 @@ GL₃ with l = 101 found no allowed extra class (weight-swapped reducible lifts 
 by T2/T3). Not testable by hand: irreducible 3-dimensional lifts with weights ≫ l; that two
 lifts of ρ̄₂ with the same weights reduce H¹_f to the same line (asserted via the largest
 model).
+
+ROWCRYS (no escalation; completes GALREP). Row0b l-adic clauses
+(`WeightsConjBis.lean:39-73`): every CM field E, every l, every regular algebraic polarized
+cuspidal π on GL_a, no weight bound. `crys`: where π_w is spherical at w | l, r|_w is
+crystalline with HT weights (a−1)/2 − infinity type. `nice`: for abelian Weil image and
+N = 0 (or tame with l > 16a²), de Rham, pst, WD(D_pst) = rc(π_w) Frobenius-semisimple.
+Within BLGGT/Caraiani l = p. Proof is by l-adic limits for essentially every π
+(`LimFinOdd`): geometric seeds U′ with the same weight as U at every embedding not over two
+auxiliary places w₀, v′ (`SameWtOff`); crystallinity claimed only away from w₀, v′, by an
+in-tree Kisin/Berger-type closure theorem `closedAtL` (limit of semistable representations
+with fixed HT multiplicities; Breuil–Kisin frames with bound N = max|J|); all places above
+l covered by three pairwise-apart choices identified by Chebotarev
+(`JoinEndHolds.lean:19-62`). Even rank: two odd-rank theta lifts, peel characters. No
+Published hypothesis on this path; C_cris, dR ⇒ pst and the closure theorem are in-tree
+(statements read). Key unread: `CongUW4`/`wtLacEx_holds` (congruences with weight varying
+only over w₀, v′). Root bundle: `⟨h, recTExists, h⟩`; the ECL field named
+`caraianiLocalGlobalDual` has type `One.M.Row` (in-tree Row0b), misleading name;
+`HypothesesBridge.main` not referenced. Purity in `ConclusionG6`: Jacquet–Shalika bound
+plus half-integral exponents force |α| = 1 (`SixthWeightPurity.lean:18-86`); in-tree
+Jacquet–Shalika; no Ramanujan input.
