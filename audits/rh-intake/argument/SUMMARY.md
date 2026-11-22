@@ -553,3 +553,25 @@ Round 12 status. No defect. Everything named load-bearing in rounds 10–11 has 
 read at least to a mechanism with a live supplier. Deepest unread inputs: `CongUW4` /
 `wtLacEx_holds` (congruences with weight varying over two places); `PerS.image`; in-tree
 C_cris and closure theorem bodies; `ThURel`/`ExportTie` suppliers; `J0`/`ExponentStatement`.
+
+## 16. Round 13: the spine
+
+ENDGAME (no escalation). Landau lemma `zeroFree_of_rpow_window`
+(`LT/ZeroFreeOfRpowWindow.lean:11-14`): G(y) ≤ C·y^θ for every y in windows [Y, Y^{1+δ}],
+Y arbitrarily large; off windows only |g| ≤ Cy²; conclusion: no zero of any L(s, χ_i) (ζ
+included) with Re s > θ. All bodies read except `iteratedDeriv_laplace` (statement).
+Mechanism: k-th Taylor coefficient at σ+iγ is a Laplace transform against u^k e^{−σu}/k!;
+k ≈ (1+δ/2)σU concentrates it on [U, (1+δ)U] (Chernoff); σ ≈ 36/δ² (336 here) so tails with
+the e^{2u} bound lose to σ^{−k}; nearest-singularity argument, real pole with positive
+residue or γ chosen so one complex pole is uniquely nearest. e_D, e_L are error exponents of
+the DIV bound and LossBounds (≥ 0); 7 = 3+3+1. Non-cancellation of zeros needs only
+positive weights: residue at ρ is −1/(ρ(ρ−1)) times a nonnegative combination of
+multiplicities (`poleData.lean:346-383`). c = (3o+1)^{−1} is the Fourier coefficient at ψ^j
+of the share measure (3 + 1_{A₀})/(3o+1); any α ≥ 0, β > 0 would do; no reason found for 3.
+ψ enters as the A/A₀ coordinate of Frobenius. ASK counts primes inert in ℚ(√−d); the pieces
+twisted by χ_{−d}, (·/q), (·/qd) are bounded two-sidedly at the single point y = x by host
+selection (`PairGood.bounds`), so L(ψχ_{−d}) never enters the Landau function. G_m is
+host-independent. Order of choices: ψ; (e_D, e_L, ε₁); s; ε with
+(e_D+e_L+7)ε ≤ (Re s − 1/2)/2; family with 3/2-windows; per x a host; Landau parameters.
+ε → 0 pointwise in s. Inputs not rechecked here: `core_gm` at every x of each window;
+`PairGood`.
