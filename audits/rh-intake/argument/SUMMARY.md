@@ -853,3 +853,28 @@ lost; torus invariance forces s+α ≡ s′+β. Consistent with NUMTEST5 (per-mi
 `BeData.exists_of_curveData`, `Quant`, `LogStep`, leaves of `lat_S`. Hypotheses passed
 down: host field `der.frob`; `StdTie.adapted` (supplier `linkR_stdTie_entry` located,
 unread).
+
+NONVAN (no escalation; corrects MAIN-ARGUMENT §0/§6.1, RANK, LEDGER). Live Bost step L0:
+supplier `frameF_of(frameRealF_of''(… matKF_of …))` (LinkMin.lean:717-719) needs robust
+near-surjectivity, not injectivity: at one complex place of LL the joint map
+⊕B_u : ⊕N_u⊗LL → RR^∨⊗LL has nearly full rank on every subfamily of small total
+codimension; sources overfill the target by ≥ x^{CH}. W = binary words of length k,
+log|W| ≤ (k−3)log 2, |W| ≥ C0·Γ²·x^{CH}. BL = (1−δ_p)⁻¹[4uF·log(1+HH/uF) + (η+4√e)·HH],
+HH = x^{CH}·b. The k/n² term is NOT a non-vanishing term: m·Nc with
+Nc = |T2|·k·b·x^{2ε}/n² is the E2 congruence allowance in `LinkN_at` (GTI:40-43), reaching
+DIV through `DIVinN`. n ≳ m⁴ comes from Theorem S's k ≳ m⁵·f·log b with k ≤ n²·x^{1/2−ε}.
+Theorem S live and proved by named theorems (at_choice_alt → offDiag → … → `t_PairBound`):
+‖K0‖² ≤ (1+b⁻⁶)·d_u·d_u′/D*; `theoremS_selected_of_loops` is dead, so its "conditional"
+status is stale. Counting theorem live (`count_constants_of_siegelWeil` →
+`countingTheorem_of_volumeStep`), relative error e^{−n f log n/16}. FormulaGap,
+`germ_jet_zero` live and read (a twin `formulaGap` is dead). Count5 is a lower bound on
+log T_u, not a multiplicity count; producers unread. Precision used: frame η0, η1,
+√e0 ≤ x^{−CH}/2; δ_p < 1; polynomial precision suffices for orthogonality and the dimension
+count, already beyond published limit multiplicity uniformly in n ≈ x^{4.5}, f ≈ x².
+Non-compactness: integrable discrete series give an exact projection onto cusp forms.
+Exponential precision: far terms by weight (DecGap), unipotent/thin/deep parts by rank via
+Siegel–Weil volumes. `LinkIRR`: δ_p ≤ e^{−x^{ez/7}}, share of HH outside the
+Bessel-functional space; supplier `closed_linkIRR_of_join_count`. Statement only: Theorem S
+leaves, count leaves, in-tree Siegel–Weil, `rowsTiePT'_of`, `BesselId` supplier,
+`irr_row_closed`, `FrameLA1`, `ramRankF_min`. (L10's live supplier `Loss7.stLoss7` was
+already traced by GATIE.)
