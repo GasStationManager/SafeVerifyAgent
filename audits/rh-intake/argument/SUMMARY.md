@@ -494,3 +494,20 @@ Round 11 status. No defect. New in-tree mathematics now read to a mechanism: dis
 index budget; mirabolic chain; `TopCore`. Unread beneath: integral `SenLat` and Herr facts;
 `localIdx`, `disc_product`, `heights_arith`; `ThURel`, `ExportTie` suppliers; three witness
 links (LIVEMULT); Row0b's pst/WD clause for trace-limit representations.
+
+## 15. Round 12
+
+SENLAT (no escalation; corrects TOPCORE §2e sign). `SenLat` (TL2:385-396) is proved
+in-tree: for the Wach module N of any crystalline O-lattice, with E = q, the quotient
+E^{−y}N^Δ/E^kN^Δ is O-free, γ is killed by ∏(γ − χ(γ)^{−x}), eigenspace ranks
+Σ_{j∈[1−k,y]} mult_τ(x−j); exact in characteristic 0, no weight bound. Chain `stmtSen` →
+`senLat_of_tie` → `lattice_at_level` → `lat_eq_fil` read; rests on `PerS.image` (Berger's
+N⊗B_dR⁺ = Fil⁰; statement only). Mod-l step `senMultiset_base_lattice_eq_jumps_mod`
+statement only. Closeness lemma read: a_{i−1} ≤ ⌊(a_i+h_i)/l⌋ iterates to σ; sharp in
+rank 1. Herr/duality inputs standard (Tate duality, Euler characteristic Published and
+passed down). `Gauge.main` read: ∇ has eigenvalue −a on X^aN/X^{a+1}N (window [0, σ+1]);
+push g into X^{σ+3}N, then 1−φ bijective. Reader's tests: rank-1 label shift matches;
+GL₃ with l = 101 found no allowed extra class (weight-swapped reducible lifts are excluded
+by T2/T3). Not testable by hand: irreducible 3-dimensional lifts with weights ≫ l; that two
+lifts of ρ̄₂ with the same weights reduce H¹_f to the same line (asserted via the largest
+model).
