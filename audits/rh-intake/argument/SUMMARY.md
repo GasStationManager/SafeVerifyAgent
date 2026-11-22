@@ -337,3 +337,18 @@ is `ON` at every place of Tw (`on_of_leaves`) with a global remainder budget
 unread). X″ is only where gain and F stop. Cost enters E1 = CE·x^ε(B0+Nc). Consequence:
 twisted-place inputs must hold at unbounded residue characteristic. Reader dispatched
 (LARGETW).
+
+LARGETW (no escalation; corrects ORDER's "single Seed"). W1 is finite (inside
+{resChar ∈ T.pl}, P₁ fixed by the pre-chain) with no size bound, and none is used. Pass 2's
+W1 equals pass 1's (`ExistsExtTwistedPlaces.lean:91-103`; inputs `DatExt`,
+`nonzeroForcedContentPlaces_agree…` at statement level). No single ψ: `ExportAt` gives a
+pack (Q, k′, ψ′) with `GoodTw` separately at each twist index, chosen inductively with
+pairwise disjoint Q; per-index cost 1/l², summable. Local lengths: `point_bound` (proof
+read) gives Σ_{l∈S} log l·lamG(l) ≤ 2000(C+1)³·f·m·b·L² for every finite S; lamG = 0 for
+l > lStar outside Exc ∪ {g₀, g₁} (`CongBound_at`). Residual irreducibility
+(`theorem_three_prime_holds`) has no restriction on l. Oddity for an expert: Hodge–Tate
+weights ≈ b and lStar ≈ b/x^{O(1)}, so zero local defect is claimed for lStar < l < b,
+outside the Fontaine–Laffaille range, via "position data" (weights in short windows not
+divisible by l) and a Wach / prismatic comparison; `UseLoc.main`,
+`exists_localPositionData_off_exceptional_primes` at statement level. Reader dispatched
+(BEYONDFL).
