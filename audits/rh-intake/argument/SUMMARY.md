@@ -793,3 +793,31 @@ Count5; q·(log d − log rd_E), q ≤ m, in the per-lift error. Reader's numeri
 a = 5995), O(log a); with 2Ω the miss is ≈ a·log 2. Tests (a) only. Unopened:
 `covolume_measure_eq_one`, `FlatDegreeSt` chain, `base_lift_test`, `OpNormSqLe`,
 `Bridge.adInner`. Oddity: fockScale uses |τ(ξ₀)| per place, lieFacZ one global x.
+
+NUMTEST5 (exact arithmetic; no counterexample). Capped law tested on real theta-kernel
+jets in the regime cap ≈ a/p. Smallest signal place (orbit length 2):
+Θ = th0(z0+z1)·th0(c(z0−z1)), N(c) = −1; rank-one jets ∂^a_{z0}∂^ν_{z1} and a 2×2 block
+(ξ·X)^a·det(Y)^ν; ℤ[ω] at p = 5 (a ≤ 5p³), ℤ[i] at p = 7 (a ≤ 3p³), both at p = 11
+(a ≤ 6p²), caps ν ≤ 220; and a length-4 orbit (p = 5, a ≤ 320). Finite Leibniz sums mod
+p^K, no truncation. Prediction P1 = Σ_{e odd}(a/p^e − ν_e)₊ (the Lean's `topTerm`, dTop = ∞).
+Worst v − P1: −1.00 over ≈ 250,000 jets (orbit length 2), −0.83 for blocks, −1.83 at
+length 4; worst points at ν ≈ 0 and Legendre-bad a; loss O(1). Kink exactly at ν = a/p; in
+the block it follows the number of minors, not the weight. Slack ≈ +γ_p·ν (safe
+direction). Backward charge: not a pure artefact. The partner row's γ-gain is destroyed by
+a backward neighbour at distance 1 (crediting γν with no backward charge fails at 32,682
+points, by up to 33; at length 4 the forward-only bound fails at 298/390); the Lean's
+accounting (credit γ per unit minus γ·Wc) holds and is nearly tight there; crude (≈ 30×)
+only at backward distance 3. Controls all break the law with thousands of violations: split
+primes, anisotropic direction, wrong Gaussian, non-CM curves, scrambled jets; perturbation
+s₂ = p changes nothing. Validation: 0/248 against a direct double sum, 0/630 against
+`kernel4_lib`. Not tested: rank > 2, several tops, lattice-wide statement, chains, real
+sizes, e ≥ 5, the Lean host's curve. Files: numtest/signal5_*.py, out_signal5_*.txt.
+
+Round 14 status. No defect. On the spine, every step of the one-page chain now has a
+mechanism read from the live path, and three independent numerical checks bear on it
+(NUMTEST3/4: Hecke-route kernel; NUMTEST5: capped law at a signal place across the kink;
+NORMS: period constant and archimedean size at a ≈ 6000). Statement-only on the spine:
+kernel-law suppliers (`normalisedFamily_standardBases_integrality` inputs, `lemmaS`,
+AdmGLt/MInv/FrameLatMapLt); `DegreeCountBound`, `UsedTuplesBoundByConstant`;
+`covolume_measure_eq_one`, `FlatDegreeSt`; L6's seven Published inputs; classical analytic
+inputs under host selection.
