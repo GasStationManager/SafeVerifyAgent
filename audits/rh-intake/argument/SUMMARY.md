@@ -642,3 +642,12 @@ dl/de, v_p(DGam), FOrb; DE:145-162), charged by adm11 at ≤ C·B0 per lift, the
 errF ≈ |TT|·m·b·log X″ (§11's "log log" omitted the log p weight), fits with room
 ≈ m·x^{2ε/3}. Rounding once per place on the total exponent, ≤ C·X″ ≪ b. Unread: adm11
 producer `secondComplement_family_of_inputs`; `nprimeMuR_at`; `Ties9` on the GIdx branch.
+
+`MAIN-ARGUMENT.md` rewritten around the spine (11,488 words): new §0 one-page chain of 14
+steps; §2 from ENDGAME; §4 from ENGINE; §5.2/§5.4/§6 from LEDGER and GATIE; §8 and §9
+consolidated; H5 withdrawn (not a hypothesis of the Lean). Unreconciled between nodes:
+NUMTEST3's prime class (SERVED/ENGINE: inertClass; SIGNAL: signal); whether Σ(p_j−q_j) = mk
+or only |p_j−q_j−k| ≤ m is used (LEDGER infers the latter; `divIneqRecord` unread); what
+LoP pays (WRITEUP: digit sums; GATIE: top offset; GATIE followed). Reviser's least-sure
+steps: Bk(N_u) ⊆ cc on every branch (`Ties9`, adm11 producer unread); reading of E3;
+range of `PairGood`.
