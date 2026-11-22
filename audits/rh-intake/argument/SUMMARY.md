@@ -460,3 +460,21 @@ localisation ι(μ(y))·abelian₂(μ(y)), {μ ≠ μ0} finite; M_j, XE and the 
 tuple-independent. `ShareRd`: C(T−1, dimY)·del ≤ rk M_ka, proved (independent monomials).
 `QAt` belongs to (A). Unread: `ThURel` supplier, `ExportTie` supplier, `sig_all`/`T3`.
 Open question raised: where the congruence/Selmer machinery then enters the main chain.
+
+G2A (no escalation; corrects GALREP on crystallinity). `CoreNormFacts.g2` =
+`DeRhamFamilyAwayAlt ∧ DeRhamJumpsDistinctCondition`; `G2a`
+(TrivialLocalCondition.lean:81-84): at every localisation i with l_i ≠ g₀, g₁, every w | l,
+every r_x is crystalline with HT jumps the infinity-type weights; no explicit guard.
+Constructor `facts_of_galois_preconditions_of_cutRec` (TPS/CFacts.lean:45-57) fills it by
+`de_rham_points_weight_jumps_alt` (read): parameter unramified at w, local–global
+compatibility at l gives de Rham + unramified WD + right jumps, `CrysIffWD` (Fontaine's
+criterion) gives crystalline. l-adic input from `Row0b` via its `nice` clause (pst + WD
+matching; `AboveB.crys`), so Row0b does carry crystalline content at l. Guard is
+structural: `NData.SQ_l` (level and twist places not above l_i), `NAut.locV_unr`, the
+`IsBCV` inert clause. Crystalline is the real notion: `IsCrysW` tied by `loc_tie` to
+dim (V⊗B)^{G_K} = [K₀:ℚ_l]·dim V with B identified with in-tree `Per.Bcris`; same predicate
+as in TopCore. Twists: χ₁ ramified only at Q_i, away from l_i. Oddities: `IsBCV` demands an
+unramified base-change parameter at non-split w | l even for l ∈ {q, d, small} (claim of
+`adm1`; live TopCore call excludes these l); `g4p` is `True` (not on this path); Row0b's
+pst/WD clause for theta-lift and trace-limit representations not verified; sibling bundle
+`HypothesesBridge.main` uses Published `CaraianiLocalGlobal` instead, live one undetermined.
