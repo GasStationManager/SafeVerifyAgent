@@ -41,7 +41,7 @@ Each is capped by the number of minors at the partner position s+e. Hence Σ_{e 
 ### 1.1 Field, space, lattice, Gaussian (the Lean says)
 
 - **Fields.** K = ℚ(√−d) imaginary quadratic. E ⊃ K is the host CM field, with CM type Tau ≃ Gal(E/K) (NUMTEST3 §A;
-  LEAVES L-B). p ≥ 5 is inert in K (`Std.five_le`, FGS:89-91).
+  LEAVES L-B). p ≥ 5 is inert in K (`Std.five_le`, FGS:92).
 - **Complex space.** VV = ℂ^{Tau × N′ × N} (XIC:148): an N′×N matrix variable at each τ ∈ Tau. Hom_E(E^N, E^{N′}) embeds
   by x ↦ (δ·τ(x(e_j)_i))_{τ,i,j} (`embH`, XIC:150-153).
 - **Hermitian form.** H(z, w) = area(Λ)^{−1}·Σ_{τ,i,j} z_{τij}·w̄_{τij} (`HV`, XIC:155-156; `sc` = area⁻¹ at KTH:30).
@@ -141,12 +141,12 @@ So the statement holds **on the whole integral lattice Int_j** (skeleton step 5)
 | (a2) | adm2 + RestBeta + RestGc + RestSInt ⇒ InClass | MV/DworkExponentialRestrictions.lean:95-105, 137-139; MV/KernelExpansionOfRestrictions.lean:116-140 | **read** |
 | (a3) | RestBeta: be ≃ Gser(c, σc) | `restBeta`, MV/BiadditiveSecondVariable.lean:137 | stmt (GAUSSCLASS read the step list) |
 | (a4) | RestGc: exp(−Gser) in rescaled coords = exp(−(ϖ^{p+1}/p)·hh_u)·V | statement DER:19-27; `restGc` MV/CommonEigenvectorThird.lean:21-22 → TwoSums | read by GAUSSCLASS; I read the statements |
-| (a5) | Dwork: (ϖ^{p+1})^k/k! integral, which absorbs the exponential | `piFact` used at KernelExpansionOfRestrictions.lean:126; `PiFactorial` OddLogRelation.lean:66-69 | stmt; elementary |
+| (a5) | Dwork: (ϖ^{p+1})^k/k! integral, which absorbs the exponential | `piFact` used at KernelExpansionOfRestrictions.lean:126; `PiFactorial` OddLogRelation.lean:65-69 | stmt; elementary |
 | (b) | arithmetic leaves (Kronecker theta integrality; NormRel; fourth-power trick; coset averaging) | LEAVES §L-A, L-C | read by LEAVES |
 | (c) | isotropy and duality of the hyperbolic frame; self-Gaussians cancel | RF:808-822, 825-835, 861-895, 935-1000; HPS:114-152 | **read** |
 | (d) | cap lemma | FLN/MinorProdBlockDegree.lean:36-55; FLN/FinsuppStepInduction.lean:227-243, 746-785 | **read** |
 | (e) | Dwork/Legendre exponent | FLN/NormNatCastLeOfDvd.lean:397-545; FLN/NormLeOfDvd.lean:202-405; FLN/ABArith.lean:35-260 | **read** |
-| (f) | odd e, −w, positive part | UTS/StatementE.lean:95-138; FLN/EntryAOneParity.lean:177-200; ABArith.lean:193-238 | **read** (HhDecomp proof: stmt + GAUSSCLASS hand check) |
+| (f) | odd e, −w, positive part | UTS/StatementE.lean:95-138; FLN/EntryAOneParity.lean:177-215; ABArith.lean:193-238 | **read** (HhDecomp proof: stmt + GAUSSCLASS hand check) |
 
 ### (a) Why the restricted theta is in the Gaussian class, and what that means integrally
 
@@ -167,7 +167,7 @@ FGS:200-208). In the second library u = uS(c, σc) with u_s = c for s odd and �
    - The 1/p part of Gser is (c·x·y^p − σc·x^p·y)/p.
    - Under x = ϖ·(even positions), y = ϖ·(odd positions) it becomes (π/p)·Σ c·S_t·S_{t′}^p·(trace pairing), and the
      trace pairing gives δ_{t, t′+1}.
-   - The higher Gser terms have valuation ≥ 1/(p−1) + p − 2 after rescaling (`ValTable`, OddLogRelation.lean:56-62),
+   - The higher Gser terms have valuation ≥ 1/(p−1) + p − 2 after rescaling (`ValTable`, OddLogRelation.lean:58-64),
      so they are absorbed into V.
 4. RestSInt: U stays integral in the rescaled variables (§1.3).
 5. The hh′ = hh + pG change is absorbed: exp(−(π/p)(hh + pG)) = exp(−(π/p)hh′)·exp(πG) (`exp_change`, :94-112, read).
@@ -240,10 +240,10 @@ anisotropic rows). In the Lean the served condition is exactly the hypothesis he
   Σ_c m_c, where m_c is the per-factor maximum.
 - **HitsCapPos** (FLN/MinorProdBlockDegree.lean:36-55). Let all derivatives in S sit at position s₀ with one common ξ. If
   Σ_{k∈S} β_k > #{minors at s₀}, the derivative of the product of minors is 0.
-- **Use in the count** (`entryExcessBound_of`, FLN/EntryAOneParity.lean:177-200+). The B-type pieces of hh at level
+- **Use in the count** (`entryExcessBound_of`, FLN/EntryAOneParity.lean:177-215). The B-type pieces of hh at level
   e = 2e′+1 from top s have direction bBof = colDir(s+e, ξ_s^{p^e}, b) (UTS/StatementE.lean:118-120). For fixed (s, e′)
   this is one ξ, at position s+e.
-  - So iN(s, e′) ≤ capN(s+e) (`hcapN`).
+  - So iN(s, e′) ≤ capN(s+e) (`hcapN`, :213).
   - Degree gives p^e·(chN + iN) ≤ al_s (`level_le`), where chN counts A-type (top×top) pieces.
 
 **"Cap = weight."** capN(s+e) is the number of minors at the partner: ν_{j+1,s+e,1} at a non-top partner, and ν₂ at a
@@ -295,7 +295,7 @@ variables keep γ_p·al.
   al/p^e − iN ≥ (al/p^e − cap)₊. Summing over e with Σ_{e odd} al/p^e = γ·al (`oddPowerInvSumIdentity`) turns
   γ·al − Σ_e iN − Σ_e chN into Σ_e (al/p^e − cap)₊.
 - **dSet.** For e ∈ dSet(s) (the partner is another top), A- and B-pieces together use up to al/p^e and that level
-  contributes 0. The A-piece accounting is in `charge_exists`/`ChargeLemma` (EntryAOneParity.lean:58-100;
+  contributes 0. The A-piece accounting is in `charge_exists`/`ChargeLemma` (EntryAOneParity.lean:55-126;
   ABArith.lean:185-191).
 
 ## 3. Reconciliation with the numerics
@@ -413,7 +413,7 @@ Read this round:
 - UTS/StatementE.lean (all); UTS/StatementAB.lean:1-142; UTS/StatementG.lean:1-60; UTS/OddLogRelation.lean:1-95;
   UTS/CyclicPowerClassOfExpEquiv.lean:60-140; UTS/KOneConsequence.lean (all);
 - FLN/NormLeOfDvd.lean:196-405; FLN/NormNatCastLeOfDvd.lean:286-545; FLN/ABArith.lean (all);
-  FLN/EntryAOneParity.lean:1-200; FLN/MinorProdBlockDegree.lean:36-75; FLN/FinsuppStepInduction.lean:150-260, 700-785;
+  FLN/EntryAOneParity.lean:1-215; FLN/MinorProdBlockDegree.lean:36-75; FLN/FinsuppStepInduction.lean:150-260, 700-785;
   FLN/EGaussK.lean:38-60, 132-158;
 - Formalism/GaussJetBounds/StatementI.lean:1-40; Formalism/GaussJetBounds/Statement.lean:15-60;
   Formalism/GrowthSums/StatementA.lean:63-112;
