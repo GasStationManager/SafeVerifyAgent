@@ -352,3 +352,19 @@ outside the Fontaine–Laffaille range, via "position data" (weights in short wi
 divisible by l) and a Wach / prismatic comparison; `UseLoc.main`,
 `exists_localPositionData_off_exceptional_primes` at statement level. Reader dispatched
 (BEYONDFL).
+
+LIVEPATH (no escalation; corrects DETSIG's consumer and MULTEQ's route). Top-down term
+trace from ECL. (a) Seesaw: live `MIstar2` producer `miStar2_at_realisation_alt` ←
+`joint_of_famAllQ_alt` ← `SeeSaw.mainX_of_lawsX` (20 steps; consumer side confirmed). H2
+closed. (b) `BoundsMu`: live consumer `divClausesR_of`, same `IndefSide.boundsMu`; live
+record from `base_lifts_package_of_primitive_links` (the producer DETSIG read); producers at
+`LinksLemmas.lean:401`, `ConcretePkgSpec.lean:179` not live. Caveat: `PrimRows3` is read off
+a bundle witness (`of_wit_alt`); the constructor storing it was not confirmed. (c) `MultEq`:
+live producer `PsCo.Pc.multEq_of_sides` via `twisted_multiplicity_one`; MULTEQ's route
+(`member_bundles_large_ue` … `multEq_of_trCusp`) is dead (only entry `EveryCharacterE.lean`,
+uncalled). `siegelEisensteinSimplePole : UnusedSlot72`, a Prop defined as `True`; its only
+live consumer `ResidueKilled.dm_of_two` ignores it, and the live
+`DoublingMethodLocalZetaIntegrals` has a literal `True` conjunct where a pole clause was:
+the pole statement is removed, not proved, and consumers are typed against the weaker
+version. Other `True` slots: ECL:372 (unused), `TopShapeAlt True True` (unused). Script
+check of 182 root field types: no other Prop defined as `True`. Reader dispatched (LIVEMULT).
