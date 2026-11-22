@@ -952,3 +952,32 @@ lift to carry the same T-denominators (with one prime per lift the loss would no
 with m and the method would prove a false bound).
 NOTE (orchestrator): b^{m/2} ≤ T here versus TU's "T of the size of the cap" — the two
 nodes disagree on the size of T by a factor m in the exponent; to be reconciled by TDIV.
+
+Reconciliation (orchestrator): no disagreement on the size of T. Count5 reads
+log T_u ≥ Σ_j mean_ρ log(w_{jρ}·v/π) + m·lg, a sum over the m lifts, so log T ≈ m·log w and
+T ≈ (cap)^m, consistent with SHARP's b^{m/2} ≤ T. The phrase "T of the size of the cap" in
+the TU entry above was the orchestrator's misreading. One prime T carries all m lifts.
+
+TDIV (no escalation; corrects TU on where T is paid). "Translated by π_T" is a lattice
+operation: `DecoSet.til` (SLU:165-177) sends a row lattice N to N ⊕ O·e_last with level
+datum f_P(x) = h(π_T e_last, x) mod P; its kernel is N ⊕ O·z0, z0 = π_T e_last,
+h(z0, z0) = T; the live column point is K.lat ⊕ O·z0 (`TilTied`, LCU:109-125). `brC`
+scales by τ(π̄_T)^{−nBr}, nBr = |λ| − |σ| the last-row degree. Integrality at T: live chain
+`aPt0` → `formsMap_at_every_trueColumnMember` → `classMap_estimate_of_partial` →
+`Pt_integral`/`Pt_loc` (FMT:2192-2263); `lat_co` ← `ValTied.lat` (TStep:118-123) defines
+integrality of a form at a point by coordinates in a basis of the point's dual lattice; at a
+level-T point the dual coordinate is h(z0, y) = π̄_T·y_last, so divisibility by π̄^{nBr} in
+standard coordinates IS the integral structure there; `LowerMapTieS` (RP:16-26) identifies
+the unscaled branching map in z0-coordinates with the scaled one. `s10`,
+`LevelPrimeItems` are not used by the live `FamGLmin`. Archimedean: `periodFun_le` is the
+scalar |π̄|^{−2nBr} times the `LastMapNorm` Fock identity at Gram 1; T^{−a} enters once.
+Rank-one model (reader's): L = π·O, f = c·y^n integral iff cπ̄^{−n} integral;
+|p|² = T^{−n}‖f‖²/n!; integral f ≠ 0 forces ‖f‖² ≥ n!·T^n, so the source slope drops by
+(n/2)·log T and the gain cancels: product formula holds. In rank N the source pays the
+average weight per dimension, ≈ (|λ|/N)·log T ≈ (a/k + b′)·log T, the Lo5 term; the gain is
+the degree of the extracted component nBr ≈ a; net ≈ a(1 − m/k)·log T, legitimate in a
+slope inequality because the period functional reads only the heavy component. Doubling T
+violates d*_u(T^k − 1)^f ≤ e·D*Γ^{−2}: the source would outnumber the target; a rank
+obstruction (inferred; frame step not re-read). Unread: `colsTiedSym_std`, `lowerMap_tie`,
+`beOnTie_true`, `ipV_co_ofS`; the L3 source floor and the Lo5 log T term for the same
+level-T lattice.
