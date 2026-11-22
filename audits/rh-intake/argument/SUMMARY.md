@@ -773,3 +773,23 @@ Kronecker's first limit formula and the class number formula
 log(area/π) = γ + log(2π/√d) − L′/L(1, χ_{−d}) for unit-discriminant lattices; reader's hand
 derivation matches sign and constant and reproduces the Faltings-height form; `two_log_brN`
 accounts for rd_E vs √d; d ≡ 3 mod 4 on the D7 host. Reader dispatched (NORMS).
+
+NORMS (no escalation). Only input (a) carries the coefficient of a: a_t appears only in
+`BlockBound` (the hook product omits the a_t row; the covolume involves only caps w), so
+m·(ph(a_t) − a_t·logΩ) comes from one proved theorem in one metric, the column Fischer form
+`pairK` (⟨z^m, z^m⟩ = m!, extremal vector of norm 1; CoefMod:21-31, 160-176;
+NormFockLSqLe:71-77); N_u has the same frame (`nuIn_norm`). A c^{weight} mismatch between
+(a) and (b)/(c) would falsify L6 or D2 by ≈ k·f·b·|log c|, not shift Main. (b) and (c) read
+the same record fields `IndefData.XW`, `.lam`, `XT`; XW = frameOf(Gram bW) in HW with inner
+product ∏dimK·(Schur-normalised L², Haar νW); adjoints in HW, HV. The (2πx)^{−|wt|/2}
+factor is one definition `lieFacZ`, used in petW, the adelic dictionary and the
+flat-section degree; cancels in `ExactRatio`. `fockModel` (proved) identifies the
+Weil-representation L² norm with Fischer norm × ‖vacuum‖². logΩ coefficients per lift and
+place: (a) −(a_t[top] + k·w + δ); (b) 0; (c) +(p_j − q_j)·w; log(π/v) cancels against
+Count5; q·(log d − log rd_E), q ≤ m, in the per-lift error. Reader's numerics
+(`numtest/normcheck_cs.py`): γ + log(2π/√d) − L′/L(1, χ_{−d}) = log(area(L₁)/π) for the
+Δ = 1 lattice to 8 decimals (1.47633597, d = 4; 1.49750497, d = 3);
+2·log|D^aσ(0)| − [ph(a) − a·logΩ + (a/6)log|Δ|] = 7.4 (d = 4, a = 5997), 5.4 (d = 3,
+a = 5995), O(log a); with 2Ω the miss is ≈ a·log 2. Tests (a) only. Unopened:
+`covolume_measure_eq_one`, `FlatDegreeSt` chain, `base_lift_test`, `OpNormSqLe`,
+`Bridge.adInner`. Oddity: fockScale uses |τ(ξ₀)| per place, lieFacZ one global x.

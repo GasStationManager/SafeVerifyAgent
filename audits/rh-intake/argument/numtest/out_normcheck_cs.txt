@@ -1,0 +1,33 @@
+
+## curve A (d=4, Z[i]): g2=4, g3=0, Delta=g2^3-27g3^2=64
+   area(L) = 6.875185818020;  area(L_1), Delta=1 rescaling = 13.750371636041
+   L(1,chi) = 0.7853981634 (2 pi h/(w sqrt d) = 0.7853981634);  L'/L(1,chi) = 0.24560958
+   closed form L'/L(1,chi_-4) = gamma + 2log2 + 3log pi - 4 log Gamma(1/4) = 0.24560958
+   Lean logOmega = gamma + log(2pi/sqrt d) - L'/L   = 1.47633597
+   log(area(L_1)/pi)                              = 1.47633597   (Chowla-Selberg: should agree)
+   predicted slope -(1/2)log(area(L)/pi)          = -0.391594
+      a | 2log|D^a| | log a! - a*log(area/pi) | remainder R(a) | R(a)/log a | (2log|D^a| - log a!)/a | -log(area/pi)
+     301 |    1185.33 |    1184.87 |     0.458 |   0.080 | -0.781666 | -0.783189
+     601 |    2774.99 |    2777.98 |    -2.984 |  -0.466 | -0.788153 | -0.783189
+    1501 |    8305.76 |    8306.15 |    -0.398 |  -0.054 | -0.783454 | -0.783189
+    3001 |   18678.21 |   18681.68 |    -3.469 |  -0.433 | -0.784345 | -0.783189
+    4501 |   29841.85 |   29841.65 |     0.201 |   0.024 | -0.783144 | -0.783189
+    5997 |   41481.64 |   41479.48 |     2.167 |   0.249 | -0.782827 | -0.783189
+   at a=5997: 2log|D^a| - [ph(a) - a*logOm_Lean + (a/6)log|Delta|] = 7.435  (log a = 8.70)
+   control: same with logOm + log 2 (area/(2 pi) convention): 4164.2
+
+## curve B (d=3, Z[w]): g2=0, g3=4, Delta=g2^3-27g3^2=-432
+   area(L) = 5.108115717833;  area(L_1), Delta=1 rescaling = 14.044556133046
+   L(1,chi) = 0.6045997881 (2 pi h/(w sqrt d) = 0.6045997881);  L'/L(1,chi) = 0.36828162
+   Lean logOmega = gamma + log(2pi/sqrt d) - L'/L   = 1.49750497
+   log(area(L_1)/pi)                              = 1.49750497   (Chowla-Selberg: should agree)
+   predicted slope -(1/2)log(area(L)/pi)          = -0.243050
+      a | 2log|D^a| | log a! - a*log(area/pi) | remainder R(a) | R(a)/log a | (2log|D^a| - log a!)/a | -log(area/pi)
+     301 |    1276.36 |    1274.30 |     2.062 |   0.361 | -0.479251 | -0.486101
+     601 |    2958.36 |    2956.53 |     1.828 |   0.286 | -0.483059 | -0.486101
+    1501 |    8747.60 |    8752.08 |    -4.487 |  -0.613 | -0.489090 | -0.486101
+    3001 |   19574.36 |   19573.24 |     1.116 |   0.139 | -0.485729 | -0.486101
+    4501 |   31179.67 |   31178.84 |     0.830 |   0.099 | -0.485916 | -0.486101
+    5995 |   43244.85 |   43244.69 |     0.166 |   0.019 | -0.486073 | -0.486101
+   at a=5995: 2log|D^a| - [ph(a) - a*logOm_Lean + (a/6)log|Delta|] = 5.434  (log a = 8.70)
+   control: same with logOm + log 2 (area/(2 pi) convention): 4160.9
