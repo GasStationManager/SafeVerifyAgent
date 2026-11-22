@@ -925,3 +925,30 @@ dimension-ratio computation (mass ratio, level indices, Weyl dimensions, two-sid
 formal-degree bounds), not limit multiplicity: `countF_fam` → `count_at_of` →
 `family_part_five_of_explicit_constants` → `division_level_prime_family`; error 11L.
 Reader dispatched (TDIV).
+
+SHARP (no escalation; corrects MAIN-ARGUMENT §6 and STEPE's total). Bookkeeping:
+B₀ = f·m·b·x^ε (DA:200), Nc = |T2|·k·b·x^{2ε}/n² (DA:204-210), U = |TT|·m·b·δ/2
+(GB:119-122). Budget/U ≈ m·x^{O(ε)}: every B₀-proportional entry (covolume l3u, E1, eE, pq
+residual, δ, eP; m·cE·B₀; cSl1·m·B₀ in the Bost term). ≈ x/m: Count5, DIV boundary terms,
+source floor, |TT|·a·La. ≈ k/n²: m·Nc (E2). Negligible: LoP, log|W|, (η+4√e)·HH, MLo5.
+Actual sizes: eE totals ≈ (δ/2)·B₀, /U ≲ x^{9ε/8} (REVIEW2 is right); the signature
+residual cancels in truth (Σ_j(2j−1−m) = 0, w nearly j-independent), booked in absolute
+value; adm11 losses at p ≤ X″ ≈ W·x^{ε/3} per lift, budget ≈ m times actual use; E1, E2 not
+shown m-sized in truth. The term that genuinely grows with m: the T_u-adic part of Ee, a
+defined nonnegative quantity. At the type prime every lift has E = EatT (DE:159-161),
+sg = −m·EatT (WDS:887-901), EatT ≥ 2·Σ_τ Wtau (DE:103-107; Wtau ≈ b at thick places by
+inference), log T_u ≍ m·x^ε (b^{m/2} ≤ T, DP2:252; QSB:27-30). Result (reader's
+arithmetic): 2m·x^ε ≤ Ee_T/U ≲ 192·cCount·m·x^{2.1ε}. Caveat: depends on reading `SeenDef`
+(DE:62-64) as true above T. Second candidate, sign unsettled: the covolume's q-part
+(`flatDegVal` contains q·(log d − lrd E); non-flat Hilbert–Samuel term ∝ q_j·W). m: fixed
+≈ x^{1/2−ε/16} (RV:30), m ≤ x^{1/2+ε/2} (GB:113); re-dimensioned, the largest admissible m
+is ≈ x^{11/20}, where the bracket gives only x^{0.55}; nothing false follows. Core
+inequality as a statement about zeros: one-sided bound at y ≈ x on a weighted sum over
+zeros of Dirichlet L-functions of conductor dividing d·q·2^{s+2}, weights the Fourier
+coefficients of a nonnegative class function; implied by GRH; no known contradiction.
+Questions raised: truth forces log T* − Lam5 ≲ x^{O(ε)} (the Lean bounds log T above only
+by cCount·m·L; comparing logXu with Lam5 is a finite decisive check); what forces every
+lift to carry the same T-denominators (with one prime per lift the loss would not grow
+with m and the method would prove a false bound).
+NOTE (orchestrator): b^{m/2} ≤ T here versus TU's "T of the size of the cap" — the two
+nodes disagree on the size of T by a factor m in the exponent; to be reconciled by TDIV.
