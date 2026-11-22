@@ -1045,3 +1045,23 @@ REVIEW2's five candidate failure points with status and reports its opinion with
 adjudicating. Unresolved between nodes: whether the loss at T truly carries the barrier
 (SHARP vs TFLOOR/FDEG); the `SeenDef` reading; π vs π̄ for lat 0; the sign of the covolume
 q-part.
+
+CARRIER (no escalation; a consistent scenario exists). The loss at T is class (b), a cost
+built into a definition: EatT a defined formula (DE:103-107), E pinned by `EDef`
+(DE:171-172) and `ETDef` (PFZ:319-322), N_u = ∏𝔭^{−⌊e·sg⌋}·NuLat with sg = −m·EatT at T.
+The chain's bound always exceeds c·U·√x; constraint (II) cannot fail for the chain as
+built. The cost is not forced: no lower bound on any T-loss seen; `kerP` (KLP:17-59) via
+`PTerm` gives upper bounds on denominators only; waste ≤ C·m·B₀ (`WeightBudgetBound`).
+From the definitions (reader's): `ValTied.lat` (TStep:115-121) is integrality in
+dual-lattice coordinates with factor det(B⁻¹z)^s (ILB:40-47), same convention at levels i
+and i+1; sharp and divDe twists cancel to (t+1)/2 per τ per lift (DK:223-225); the tree
+proves a GAIN T^{f(t+1)/2} at unseen places (KerBar, FSt:220-222); `unf` is an abstract
+field. True det-part loss ≈ f(t+1)/2·log T per lift. Honest carrier (reader's inference):
+the covolume q-part. `flatDegVal` has an exact q·(log d − lrd E) term (EFS:751-755;
+FDS:12-21); the main covolume term keeps only (p−q) (ZON:63-64); the q-part sits in the
+l3u allowance; on live hosts log d − lrd E ≈ ½ log d > 0; total
+≈ Σ_j 2(m−j)·W·(log d − lrd E) ≈ m·U·x^{O(ε)}. Caveats: factor linking covolume to flat
+degree inferred; a cancelling q·log d term in the Rallis scalar not excluded. The g-prime
+loss m·ΣA·lg is forced in truth to relative x^{−1/2}. Falsifiable prediction: the m-fold
+composite matches the product of step bounds to relative ≈ x^{−4}. Recorded as
+MAIN-ARGUMENT §9.8.
