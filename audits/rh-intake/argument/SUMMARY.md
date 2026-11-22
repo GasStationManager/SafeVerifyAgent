@@ -981,3 +981,37 @@ violates d*_u(T^k − 1)^f ≤ e·D*Γ^{−2}: the source would outnumber the ta
 obstruction (inferred; frame step not re-read). Unread: `colsTiedSym_std`, `lowerMap_tie`,
 `beOnTie_true`, `ipV_co_ofS`; the L3 source floor and the Lo5 log T term for the same
 level-T lattice.
+
+TFLOOR (no escalation; one normalisation open). A. Rigidity: the Lean has an exact closed
+form for fk·logXu (`LemmaFiveOneIdentity`, T3E:126-138). Reader's computation with the true
+formal degree (Harish-Chandra: dsig = dimV(rowLam) for Haar measure transferred from the
+compact form) and the shapes in `DataB` (STL:500-516), `RowsA` (T3E:115-121):
+logXu = Lam5₀ − θ, 0 ≤ θ ≲ 3L + O(log k) + O(m²L/k); the (v/π), lg, facProd(r), k·Σlog w
+terms cancel exactly; the remainder is the u-column Vandermonde, O(L). So
+log T − Lam5 = O(L), inside the x/m budget: the rigidity requirement holds in truth. No
+matching upper bound is proved (`SigmaDegreeTwoSidedBoundOfGap`'s upper half is loose by
+≈ (m/2)·x^{ε/3}). Load-bearing and unread: that the formal degree under `cdScale` equals
+the Harish-Chandra value (consistent with `BaseVolumeEqualsMass`, T3E:89); an excess of
+e^{Θ(km)} would make the proved chain false. B. L3 floor is `SlopesM_at` (QLD:173-175) via
+`flipTwoThree.Conclusion5/6`, on VV(λ₀)-valued forms on the level-T class set with the
+Fock metric normalised by the extremal vector; its T-term −Σ_t(a_t/k)·log T is the
+Weyl-symmetric mean exponent |λ|/k; "(1+m/k)" is that term with log T ≤ Cc·m·La. Lo5 is
+the colength of NuLat_u in Mram above T, same lattice. Model Sym^a with one scaled
+coordinate (reader's): covolume shift (a/N)·log T; matches. Mean-slope Bost without
+semistability: Bost on each HN piece (μ_min(E′) ≤ μ_max(F) + h), robust rank, layer cake;
+Theorem S's diagonal clause prevents a single heavy functional from killing light pieces;
+−a·log T sits in h(u), common to all of N_u. "Rank only" suffices if it means robust rank.
+C. One prime for all lifts is forced by the record (`ColumnsAtT.T` per word; `LvTied` from
+one `AtTTied`; `Eval` sets E = EatT at T for every lift). Open: EatT is a maximum over
+levels charged m times (conservative); SHARP's "does not prove too much" needs the real
+T-adic loss ≈ EatT per lift, supplied as hypotheses `Conclusion5Sharp`,
+`TwistedColumnBoundAtT` (unread).
+
+Round 15 status. No defect. REVIEW2's top three candidate failure points were each read:
+(1) mean-slope Bost is by HN pieces + robust rank + layer cake (TFLOOR B); (2) the barrier
+is carried by the loss at the type prime T (SHARP), not by the Fock–hook loss; (3) T is a
+level prime carrying all m lifts, its gain is the degree of the heavy component read in
+level-T coordinates, paid by the mean weight in the source slope (TU, TDIV, TFLOOR), and
+log T* matches the main term to O(L) given the Harish-Chandra normalisation of the formal
+degree. Unread and load-bearing: `cdScale`/`cdScaleTie`; `Conclusion5Sharp`,
+`TwistedColumnBoundAtT`; `colsTiedSym_std`; Theorem S and count leaves.
