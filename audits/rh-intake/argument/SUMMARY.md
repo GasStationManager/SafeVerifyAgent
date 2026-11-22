@@ -673,3 +673,23 @@ step; dlogH. L′/L(1, χ_{−d}) ≤ 4 log x from host selection under a zero-f
 zero in Re s > 1 − 1/400 among its twists removed by zero density (≤ U^{3/8} against
 ≥ U^{9/10}). Unread: `twist_one`, `page_across`, `zero_density_box`, progression PNT chain.
 Note: the host conductor is exponential in a power of Y, consistent with b = e^{x^ε}.
+
+ADM2 (no escalation). `adm2` (`ExtensionLocalCondition`, FGS:162-170): kernel =
+exp(−Ph)·U, kernel = z = 0 Taylor series of θ_{c,c′} in hyperbolic LT-log coordinates
+(x_e, y_e), U(ℓ(X)) with bounded coefficients in the height-2 parameter, ℓ = Σ X^{p^{2j}}/p^j,
+no growth allowed; Ph fixed up to ≃, Ph ≃ Σ_e be(x_e, y_e), no diagonal terms. It does not
+claim σ* integral (in one variable it is the tautology ph = −log σ*); content is the class
+of be ≃ Gser(c, σc) with 1/p part c(xy^p − x^p y)/p (Dieudonné theory). Chain
+`first_kernel_law_global_small` → `first_kernel_small_of_frame` (FKS:21-83) → K1LT:253:
+orthonormal integrality of θ_{L,L′}/∏σ* (`IntInert`), hyperbolic frame, one-letter law
+`VIntegral` (read to leaves: T·σ*(z+t)/σ*(z) for prime-to-p torsion t, σ-addition formula,
+torsion integrality, root extraction; no supersingularity used). Reader's check: the
+self-Gaussian ph ≃ c·x^{p+1}/p predicts v ≥ −⌊a/(p+1)⌋ for the coefficient of W^a,
+W = z/ϖ, which is NUMTEST's a/(p²−1) converted; attained, so c is a unit. `posOK`: position
+= CM-type element orbRep_v·(1,h)^s; σ∘iw_v = iw_v∘Frob, Frob = (c0, h) at inertClass p;
+"served" = class GIdx (inertClass, HNeZero), n′ = ord h even; supplier proved
+(`exists_locId_host`, `posCompat_of_base`, `pos_at_site`). Conditional on ~15 hypotheses
+passed to the site record (`Joint.At.K1`); suppliers of AdmGLt, MInv, FrameLatMapLt
+unopened; `H.der.frob` is a field of the host record. SCOPE: this route (and NODE-ENGINE)
+serves inertClass primes only; signal primes, which per LEDGER are the ones reaching thick
+places and carrying the count, go through the orbit route. Reader dispatched (ENGINE2).
