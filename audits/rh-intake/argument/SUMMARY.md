@@ -732,3 +732,22 @@ p > X″ → exponent ≤ 0 (`IntegralKernelValuation`). `Ties9` is parameter ma
 `CmpLite`, which must intertwine with the actual K_j, so `zeroCh` cannot reach adm2.
 Unread: `DegreeCountBound`, `UsedTuplesBoundByConstant` (carry the ±C·B0 precision against
 ΣA·log g); producers of ModelsOK/twU.
+
+ENGINE2 (no escalation). Orbit route at a signal prime, one lift. Frob = ((+1,−1),h), c not
+a power of Frob, every place of F above p splits in E; orbit of positions under
+z ↦ z·Frob·c has even length nP = 2·ord(2h) (DF:19-21, 53-68), so self-Gaussian
+cancellation is available here too. Every odd partner of a top is thick or thin, dTop = ∞.
+Kernel law `ThetaExpansionAllPlaces` (OP:186-190): kernel = U·exp(−Σ_orbits be), U
+integral in LT parameters, B3 (no purely even- or odd-position monomials); supplier
+`normalisedFamily_standardBases_integrality` (NFS:19-30; top level read, two of three
+inputs statements). Statement per top: v ≥ Σ_{e odd}(gap/p^e − ν₀(s+e))₊ − γ_p·Wc + base
+terms; ν₀ = family weight − kaJ + u₀ (`row_le`); thick family weight ∈ [b, b+η+1]
+(GIRZ:148); so e = 1 gives b·(a_t/(bp) − 1)₊ + O(poly x), the Riesz weight. Proof:
+`thmAJetA` and LemmaRA read in full; `lemmaS` (be at most one p worse than weight 1/(p−1),
+only on even–odd bipowers) statement only; top LP max Σn_j s.t. n_j ≤ cap_j, Σp^j n_j ≤ A,
+dual min Aε + Σcap_j(1 − p^jε)₊; the Lean charges Σ min(cap_j, A/p^j). errF ≈ γ_p·tops·b
+from backward factors, booked in E. `liftI_of` exponent g0S + F − ES = ledger's
+gain + F − E. `chain_ge` composes linear maps. Numerics: `jeta_lp.py` tested LP arithmetic
+only; `signal_twotops.py` tested real jets at rank 1, p = 5, caps ≤ 8, never in the regime
+cap ≈ a/p. Expert check first: kernel law at signal primes and `lemmaS`. Experiment
+dispatched (NUMTEST5).
