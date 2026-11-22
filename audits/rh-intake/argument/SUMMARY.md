@@ -693,3 +693,21 @@ passed to the site record (`Joint.At.K1`); suppliers of AdmGLt, MInv, FrameLatMa
 unopened; `H.der.frob` is a field of the host record. SCOPE: this route (and NODE-ENGINE)
 serves inertClass primes only; signal primes, which per LEDGER are the ones reaching thick
 places and carrying the count, go through the orbit route. Reader dispatched (ENGINE2).
+
+DIVKEY (no escalation; settles two disagreements). DIV live chain `divIneqRecord`
+(SixthReductionExplicit:9) → `divisor_inequality` (TheoremDivIneq:12) = assembly
+(DivAssembly:11-42) + absorption (AbsorbE:26-203), real-number algebra: per lift j and
+place ρ add covolume term +pq_j·w·logΩ, Fock jet term +Σph(ν) − |ν|·logΩ, hook term
+−logHook; substitute |ν| = a_t[top] + k·w + δ and Σph(ν) − logHook ≤ ph(a_t)[top] + eE;
+the k·w·logΩ parts cancel; one ph(a_t) − a_t·logΩ per top per lift remains. Oddity: on the
+live record δ and eE are DEFINED as these remainders (NumbersLink:35-39, 578-579), so the
+two substitutions hold by definition and the content is their size bound `stepE_num`
+(NumbersLink:388), body unread. Key identity verified by hand by the reader: exact; the
+log(π/v) and lg terms cancel; L′/L sign agrees on both sides (Main gets +L′/L from
+−a·logΩ; MAIN gets +ell(chC), `Char_at`); logΩ is one shared symbol, so a sign error in the
+in-tree Chowla–Selberg would appear as a Main/MAIN mismatch, not in the identity. m²La/k
+from `lowB` via `Conclusion5` (producer untraced), negligible. Σ_j(p_j − q_j) = mk is never
+used: only |pq_j − k| ≤ m, once, in a triangle inequality; p_j − q_j cancels the k·w logΩ
+coefficient leaving (2j−1−m)·w per lift, counted in the "m" family only through a crude
+bound (it would vanish if w were independent of j). m = 1 (reader's inference): the ledger
+gives G ≲ x^{1+O(ε)}, no better than trivial; the tree never allows m = 1.
