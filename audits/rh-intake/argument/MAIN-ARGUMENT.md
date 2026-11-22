@@ -590,7 +590,7 @@ VWin states it for all twists i < x^{401}; against E2's allowance ≈ x^{2.5}·b
 | Bridge, ThinScales | C (exact identity) | TT with exact shares |
 | Host selection (`PairEx`) | C (classical orthogonality, read) | `twist_one`, `page_across`, zero density, progression PNT |
 | Ledger L0–L15 | C (every step and every body read) | — |
-| Engine core; orbit route at signal primes | C to statement leaves: kernel law and `lemmaS` read [KLAW]; LP assembly read to CLR:299 | `IntInert`, `HypShape_of`/`b0`, `Quant`, `LogStep`; `StdTie.adapted` |
+| Engine core; orbit route at signal primes | N: kernel law and `lemmaS` read to statement leaves [KLAW]; LP assembly to CLR:299 | `IntInert`, `HypShape_of`/`b0`, `Quant`, `LogStep`; `StdTie.adapted` |
 | Hecke route at inertClass primes | C below `adm2`; `adm2` proved, conditional | ≈ 15 site hypotheses (AdmGLt, MInv, FrameLatMapLt) |
 | Composition; tie of Ga to N_u; adm11; floor | C (every branch read) | `DegreeCountBound`, `UsedTuplesBoundByConstant`; ModelsOK producers |
 | Seesaw `MIid` | N (live) | the supplier's own hypotheses |
