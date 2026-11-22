@@ -598,3 +598,28 @@ Lean; only `ga_le_at`, far too weak; `exists_data_completion` (PCh:306) shows th
 SizeData₂ clauses are satisfiable from ASK ≤ Main + error alone with Ga := ASK − LoP, so
 content lies in the ties to real lattices. Unread: `proposition_size_bound`, `core_ineq`,
 `divIneqRecord`, `windowInequality_of_artinInputs`; hop TS:52 → `linkGLOBAL7_pk` inferred.
+
+ENGINE (no escalation). One lift, one inert prime, as a paper proof. θ_{c,c′} (`kerTh` =
+`thC`, KerTh.lean:26-31; XiIndCClass.lean:148-239): reduced theta function on
+ℂ^{Tau×N′×N}, form H = area⁻¹·Σ z·w̄, lattice δ·Φ_Tau(AA0·Hom(N, N′)), a finite Heisenberg
+sum of torsion translates of one vacuum theta built from th0 = U_t(σ*)/U_t(σ*)(0).
+Variables are log coordinates z = ℓ(X), ℓ the height-2 Honda logarithm; integral means
+integral in z/ϖ, ϖ^{p²−1} = p, so v(∂^n f(0)) ≥ v(n!) − |n|/(p²−1). Exponent per top s and
+lift: v ≥ Σ_{e odd, e∉dSet(s)} (a_s/p^e − cap_{s+e})₊ − deLoss, for every jet (top linear
+forms)^a × (column minors), i.e. on the whole integral lattice Int_j. cap = number of
+minors at the partner position (ν₁, or ν₂ at a top; FGS:36-38, 398-419); at a non-top
+partner this is λ_{s,1} + w_{j+1}(s). Read to the bottom, downstream of clause `adm2`
+(kernel at a served place = exp(−Ph)·(LT-integral), Ph a hyperbolic cross Gaussian):
+Gaussian class (adm2 + RestBeta + RestGc + Dwork); self-Gaussian cancellation (Frobenius
+rotates positions by one, orbit length n′ even, `iso_fK`/`dual_fK`,
+`hyperbolic_plane_split`); cap lemma (multiplication by a linear form is adjoint to a
+directional derivative; shifted minors are a rank-one update, each absorbs at most one
+derivative); Legendre (`TermBound`, `StarArith`); odd e (Legendre gives Σ_{e≥1} a/p^e, the
+height-2 rescaling costs Σ_{e even} a/p^e; Gaussian monomials have degree p^{2l+1});
+composition `main_ind` (each step for an arbitrary element of Int_j, gains add). Numerics:
+NUMTEST3/4 tested the Lean's object; NUMTEST (σ alone keeps its self-Gaussian) and NUMTEST2
+did not; ℘ is the Gaussian-free w = 0 case. Statements only: `adm2` for the live kernel
+(`first_kernel_law_global_small`), `posOK`, `decomposition_of_hh`, generic-frame `reduce`,
+`adm7`, `ZL_bound`, cap = ledger w via `LatTied`. deLoss ≈ r0·r1·log ≈ x^{798+ε} per prime
+per lift: harmless only because b = e^{x^ε} — orchestrator's inference: this is the reason
+b is exponential (π(X″)·x^{798} ≪ b). dSet exclusions not traced into the ledger.
