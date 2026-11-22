@@ -821,3 +821,12 @@ kernel-law suppliers (`normalisedFamily_standardBases_integrality` inputs, `lemm
 AdmGLt/MInv/FrameLatMapLt); `DegreeCountBound`, `UsedTuplesBoundByConstant`;
 `covolume_measure_eq_one`, `FlatDegreeSt`; L6's seven Published inputs; classical analytic
 inputs under host selection.
+
+`MAIN-ARGUMENT.md` updated with round 14 (12,460 words): §4 rebuilt with a shared core, the
+orbit route at signal primes as the main case and the Hecke route second; host selection in
+§0/§2.3; DIV, Chowla–Selberg and norms in §5.1; ADM11 in §5.4/§6.3; signature and m = 1
+claims corrected; §9.6 lists the three numerical checks. Contradictions between nodes
+recorded there: backward charge is not an artefact (NUMTEST5 vs ENGINE2, JETA); deLoss
+≈ x^{804} closing through η (ADM11 vs ENGINE); signature residual is a booking choice
+(DIVKEY vs WHYHALF); NUMTEST3/4 kernels are GIdx-shaped. Still open: no lemma links the
+Fock-jet norm to the Rallis-hook norm (STEPE/NORMS).
