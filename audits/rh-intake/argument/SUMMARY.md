@@ -651,3 +651,25 @@ or only |p_j−q_j−k| ≤ m is used (LEDGER infers the latter; `divIneqRecord`
 LoP pays (WRITEUP: digit sums; GATIE: top offset; GATIE followed). Reviser's least-sure
 steps: Bk(N_u) ⊆ cc on every branch (`Ties9`, adm11 producer unread); reading of E3;
 range of `PairGood`.
+
+## 17. Round 14: statement-only items on the spine
+
+HOSTSEL (no escalation). `PairGood` (`CB/PairGood.lean:18-30`, `CB/ExistsPageN.lean:27-37`):
+q prime ≡ 3 mod 8 with log q ∈ (Y^{ε/5}/2, Y^{ε/5}]; d prime ≡ 7 mod 16,
+log d ≍ Y^{ε/5}log²Y, q | d+1 and every odd p ≤ Y^{ε/5} divides d+1. Required:
+|g_χ(y)| ≤ y^{1/2+ε/2} and |L′/L(1,χ)| ≤ 4 log y for every ξ mod N (not only ⟨ψ⟩), every
+(i,j) ≠ 0, every y ∈ [Y, X]; Riesz weight. `winPairs` fixes one (q, d) at Y = X^{1/J}
+before quantifying over x; used at y = x for each x of a window [Z, Z^{3/2}] (plus one
+Lipschitz step). Averaging is elementary orthogonality, not the quadratic large sieve:
+every modulus q > Z² = Y^{800K} (`MSB/meanSqK.lean:91-106`), reciprocity turns Σ_q(nn′/q)
+into Σ_q(q/s), bounded by Y^{−B}·#P except one s = n* (`twistK`: Gallagher-type PNT in
+progressions, Landau–Page, Siegel, in-tree; n* pairs bounded trivially); diagonal
+≤ C·y log y; `bad_share` (Markov, dyadic blocks) gives bad proportion ≲ Y^{−τ} on the whole
+range. Simultaneity: structural host data are built for every (q, d) with `PairGood`
+(`supplyOfAdmOf`/`hostOfFieldOf`; ∀-quantified; inferred from hypothesis shapes, bodies of
+`levelData`, `topsChoiceH`, `fieldChi` unread); averaging excludes ≤ ½ of q then ≤ ½ of d.
+Consumers: `.bdG` → `sigA_le` only; `bdL` → `charsA`; QDq → ValuesAtX → De and Lipschitz
+step; dlogH. L′/L(1, χ_{−d}) ≤ 4 log x from host selection under a zero-free box; d with a
+zero in Re s > 1 − 1/400 among its twists removed by zero density (≤ U^{3/8} against
+≥ U^{9/10}). Unread: `twist_one`, `page_across`, `zero_density_box`, progression PNT chain.
+Note: the host conductor is exponential in a power of Y, consistent with b = e^{x^ε}.
