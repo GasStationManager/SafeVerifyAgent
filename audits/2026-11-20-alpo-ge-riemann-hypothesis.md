@@ -13,6 +13,16 @@ walk beyond the top three levels; no-supplier and junk-value passes; any reading
 mathematics. The argument was not reconstructed, so nothing here says *why* the
 theorem would be true.
 
+Update 2026-11-23. A joint statement by the Lean FRO and the Mathlib Initiative
+(`leanprover-community.github.io/blog/posts/riemann-hypothesis/`, dated 2026-11-21) reports
+that the exported proof was checked by Lean's kernel, con-leche, con-ron and other
+independent checkers, and that comparator and `con-leche --compare` confirm the statement
+against Mathlib's `RiemannHypothesis`. The post gives no archive hash, versions, axiom
+output or per-checker verdicts, so it was not matched to the archive hashed here; it is
+recorded as an external report, not as a rung run by this audit. If it concerns the same
+artifact, E1 is discharged by others and what remains is E2: nobody is reported to have
+read the argument. The reconstruction in `rh-intake/argument/` is this audit's work on E2.
+
 A second pass on metaprogramming, big integers and kernel computation is in
 [`2026-11-20-alpo-ge-riemann-hypothesis-kernel-surface.md`](2026-11-20-alpo-ge-riemann-hypothesis-kernel-surface.md).
 
