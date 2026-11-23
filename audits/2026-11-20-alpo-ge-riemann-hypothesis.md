@@ -23,6 +23,22 @@ recorded as an external report, not as a rung run by this audit. If it concerns 
 artifact, E1 is discharged by others and what remains is E2: nobody is reported to have
 read the argument. The reconstruction in `rh-intake/argument/` is this audit's work on E2.
 
+Second update 2026-11-23. A verification-status page by Andrew Sutherland
+(`math.mit.edu/~drew/grh/`, last updated 2026-11-23 14:35 UTC, "checks run with Claude
+Code") names as its source archive `lean.tar.gz` joined from the 14 parts, 239,275,554
+bytes, SHA-256 `9631b4f0…49c7fc`: **the same archive hashed here.** It reports: all 175,187
+modules compile (Lean v4.33.1, Mathlib v4.33.1); `#print axioms` on the five headline
+theorems gives `[propext, Classical.choice, Quot.sound]` (its `audit.log`, read); nanoda,
+the default kernel and con-leche/con-ron (master builds) accept the export; a sandboxed
+`lake build` from a fresh download gives a byte-identical export; Comparator v4.33.0
+passes. Caveats stated there: the original build invoked `lean` directly, not `lake build`;
+the Comparator run used a stub for its build step; bundled v4.36.0 con-leche/con-ron
+declined (one reflexive inductive type unsupported); one `.olean` is byte-nondeterministic;
+the paranoid-kernel replay and `lake comparator` v4.36.0 were still running. None of its
+logs or the 7.7 GB export were downloaded or re-verified by this audit. On that page's
+evidence E1 is discharged by an independent party for this exact archive; the open item is
+E2 (the argument), which that page does not address.
+
 A second pass on metaprogramming, big integers and kernel computation is in
 [`2026-11-20-alpo-ge-riemann-hypothesis-kernel-surface.md`](2026-11-20-alpo-ge-riemann-hypothesis-kernel-surface.md).
 

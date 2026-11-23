@@ -1082,3 +1082,9 @@ variable ≈ m·a·log m; non-extremal start costs only 0.1–3 per step (cluste
 nearly maximal singular values). Limits: one embedding, no Heisenberg/class sums, rank ≤ 4,
 m ≤ 8, kernel factorisation inferred. Files: numtest/composite6_*.py, out_composite6_*.txt.
 Recorded as MAIN-ARGUMENT §9.9.
+
+External reports (2026-11-23). `math.mit.edu/~drew/grh/` is a verification-status page, not
+a mathematical overview; it reports a full compile, clean `#print axioms`, and acceptance by
+nanoda, the default kernel and con-leche/con-ron for the archive with our SHA-256. No
+written account of the argument by a human reader was found; the reconstruction here has
+nothing external to be compared against yet.
