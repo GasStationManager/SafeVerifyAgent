@@ -1,0 +1,57 @@
+y^2 = x^3 - x, D = 26
+  unitary 3/5,4i/5             p= 3: integral up to total degree 26
+  unitary 3/5,4i/5             p= 7: integral up to total degree 26
+  unitary 3/5,4i/5             p=11: integral up to total degree 26
+  unitary 3/5,4i/5             p=19: integral up to total degree 26
+  unitary 3/5,4i/5             p=23: integral up to total degree 26
+  unitary 3/5,4i/5             p=13: integral up to total degree 26
+  unitary 3/5,4i/5             p=17: integral up to total degree 26
+     [0.1s]
+  unitary real 3/5,4/5         p= 3: integral up to total degree 26
+  unitary real 3/5,4/5         p= 7: integral up to total degree 26
+  unitary real 3/5,4/5         p=11: integral up to total degree 26
+  unitary real 3/5,4/5         p=19: integral up to total degree 26
+  unitary real 3/5,4/5         p=23: integral up to total degree 26
+  unitary real 3/5,4/5         p=13: integral up to total degree 26
+  unitary real 3/5,4/5         p=17: integral up to total degree 26
+     [0.1s]
+  C-orthogonal 5/4,3i/4        p= 3: NOT integral; first negative at total degree 12 T1^3T2^9 (v=-1); worst v=-2; #neg=31
+  C-orthogonal 5/4,3i/4        p= 7: NOT integral; first negative at total degree 8 T1^0T2^8 (v=-1); worst v=-3; #neg=77
+  C-orthogonal 5/4,3i/4        p=11: NOT integral; first negative at total degree 12 T1^0T2^12 (v=-1); worst v=-2; #neg=57
+  C-orthogonal 5/4,3i/4        p=19: NOT integral; first negative at total degree 20 T1^0T2^20 (v=-1); worst v=-1; #neg=16
+  C-orthogonal 5/4,3i/4        p=23: NOT integral; first negative at total degree 24 T1^0T2^24 (v=-1); worst v=-1; #neg=4
+  C-orthogonal 5/4,3i/4        p=13: integral up to total degree 26
+  C-orthogonal 5/4,3i/4        p=17: integral up to total degree 26
+     [0.1s]
+  cols norm1, not orthog       p= 3: NOT integral; first negative at total degree 12 T1^3T2^9 (v=-1); worst v=-2; #neg=31
+  cols norm1, not orthog       p= 7: NOT integral; first negative at total degree 8 T1^1T2^7 (v=-1); worst v=-3; #neg=65
+  cols norm1, not orthog       p=11: NOT integral; first negative at total degree 12 T1^1T2^11 (v=-1); worst v=-2; #neg=51
+  cols norm1, not orthog       p=19: NOT integral; first negative at total degree 20 T1^1T2^19 (v=-1); worst v=-1; #neg=12
+  cols norm1, not orthog       p=23: NOT integral; first negative at total degree 24 T1^1T2^23 (v=-1); worst v=-1; #neg=2
+  cols norm1, not orthog       p=13: integral up to total degree 26
+  cols norm1, not orthog       p=17: integral up to total degree 26
+     [0.1s]
+  shear [[1,1],[0,1]]          p= 3: NOT integral; first negative at total degree 4 T1^0T2^4 (v=-1); worst v=-8; #neg=78
+  shear [[1,1],[0,1]]          p= 7: NOT integral; first negative at total degree 8 T1^0T2^8 (v=-1); worst v=-3; #neg=66
+  shear [[1,1],[0,1]]          p=11: NOT integral; first negative at total degree 12 T1^0T2^12 (v=-1); worst v=-2; #neg=50
+  shear [[1,1],[0,1]]          p=19: NOT integral; first negative at total degree 20 T1^0T2^20 (v=-1); worst v=-1; #neg=13
+  shear [[1,1],[0,1]]          p=23: NOT integral; first negative at total degree 24 T1^0T2^24 (v=-1); worst v=-1; #neg=3
+  shear [[1,1],[0,1]]          p=13: integral up to total degree 26
+  shear [[1,1],[0,1]]          p=17: integral up to total degree 26
+     [0.0s]
+  Kronecker exp(-be(x,y))      p= 3: NOT integral; first negative at total degree 4 T1^1T2^3 (v=-1); worst v=-8; #neg=67
+  Kronecker exp(-be(x,y))      p= 7: NOT integral; first negative at total degree 8 T1^1T2^7 (v=-1); worst v=-3; #neg=61
+  Kronecker exp(-be(x,y))      p=11: NOT integral; first negative at total degree 12 T1^1T2^11 (v=-1); worst v=-2; #neg=43
+  Kronecker exp(-be(x,y))      p=19: NOT integral; first negative at total degree 20 T1^1T2^19 (v=-1); worst v=-1; #neg=10
+  Kronecker exp(-be(x,y))      p=23: NOT integral; first negative at total degree 24 T1^1T2^23 (v=-1); worst v=-1; #neg=2
+  Kronecker exp(-be(x,y))      p=13: integral up to total degree 26
+  Kronecker exp(-be(x,y))      p=17: integral up to total degree 26
+     [0.0s]
+  identity                     p= 3: integral up to total degree 26
+  identity                     p= 7: integral up to total degree 26
+  identity                     p=11: integral up to total degree 26
+  identity                     p=19: integral up to total degree 26
+  identity                     p=23: integral up to total degree 26
+  identity                     p=13: integral up to total degree 26
+  identity                     p=17: integral up to total degree 26
+     [0.0s]

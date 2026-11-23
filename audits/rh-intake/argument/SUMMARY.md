@@ -1114,3 +1114,28 @@ a rank effect (Siegel mean value); `rowsTiePT'_of` is glue, tie by record field
 CuspFrame, LoopRowS sub-leaves, KppOffC, KExpansion bodies, NormBound mass identities. Open
 for an expert: uniformity over all word pairs of the deterministic bounds on non-main
 orbits. Scripts: numtest/thms/.
+
+INTINERT (no escalation; corrects KLAW's status entries and ADM2's "tautology" for this
+statement). `IntInert` (IKT/StatementInt.lean:9-24; TLM:27-295): for an admitted pair
+(L, L′) (even ranks, self-dual for Σ x̄y), Y = AA0·Hom(L, L′) with form Tr_{E/K} tr(x y*),
+AA0 = 𝔟⁻¹; for any p-local orthonormal O_K-basis b of Y,
+θ(Σ_i b_i·u⁻¹·log_W T_i)·∏_i u⁻¹T_i/σ*(u⁻¹·log_W T_i) has coefficients in O_{ℂ_p}; θ any
+p-integral combination of prime-to-p torsion translates of θ_{L,L′}; variables are the
+formal parameters of an integral Weierstrass model with Δ = 1 (the move to the Lubin–Tate
+parameter is later, via CurveDict); every p ≥ 5 with (−d/p) = −1. Proof complete in-tree,
+no Published input beyond CM good reduction: weak approximation for U(n) and uniqueness of
+unimodular hermitian lattices at p; prime-to-p coset averaging; tensor powers; one copy
+from a fourfold Lagrange isometry of prime-to-p index with κ a p-unit and a fourth-power
+trick; invariance of Σph under unitary frame changes over ℤ_{p²} (the only use of
+inertness: Frobenius acts as complex conjugation on O_K); integrality of the one-variable
+Kronecker quotient at prime-to-p torsion. Y is unimodular everywhere: different(E/K) = 𝔟𝔟̄
+with 𝔟 + 𝔟̄ = 1 (DataHost.lean:64-67) and E/E⁺ unramified at finite primes (`IsCMUnram`);
+primes where E/K ramifies split in K; no inert prime is bad. Reader's exact computation
+(rank 2, to total degree 26 for ℤ[i], 30 for ℤ[ω]): unitary frames integral at inert
+p = 3, 5, 7, 11, 19, 23; frames breaking unitarity in the cross term, and the bare
+two-variable Kronecker function, first fail at T₁T₂^p with v = −1, at inert p only; split
+primes integral. `HypShape_of` is proved (KappaIntegralOfCalculation.lean:42-109, read);
+`b0` proved (top level read); `StdTie.adapted` from `AdaptedBases.exists_sys` (one global
+unitary matrix; rests on `inGenus_of_selfDual`, unread); `der.frob` states Frobenius =
+Artin map. Unopened: `BeData.exists_of_curveData`, `Quant`, `LogStep`, `lat_S` leaves.
+Scripts: numtest/intinert/.

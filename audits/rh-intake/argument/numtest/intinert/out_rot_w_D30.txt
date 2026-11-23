@@ -1,0 +1,16 @@
+y^2 = x^3 + 1 (Z[w]), D = 30
+  unitary 5/13,12w/13          p= 5: integral up to total degree 30
+  unitary 5/13,12w/13          p=11: integral up to total degree 30
+  unitary 5/13,12w/13          p= 7: integral up to total degree 30
+  unitary 5/13,12w/13          p=13: NOT integral; first negative at total degree 6 T1^0T2^6 (v=-3); worst v=-29; #neg=92
+     [0.1s]
+  cols norm1, not orthog       p= 5: NOT integral; first negative at total degree 30 T1^5T2^25 (v=-1); worst v=-1; #neg=2
+  cols norm1, not orthog       p=11: NOT integral; first negative at total degree 12 T1^1T2^11 (v=-1); worst v=-2; #neg=64
+  cols norm1, not orthog       p= 7: integral up to total degree 30
+  cols norm1, not orthog       p=13: NOT integral; first negative at total degree 6 T1^0T2^6 (v=-3); worst v=-31; #neg=95
+     [0.1s]
+  Kronecker exp(-be(x,y))      p= 5: NOT integral; first negative at total degree 6 T1^1T2^5 (v=-1); worst v=-6; #neg=72
+  Kronecker exp(-be(x,y))      p=11: NOT integral; first negative at total degree 12 T1^1T2^11 (v=-1); worst v=-2; #neg=60
+  Kronecker exp(-be(x,y))      p= 7: integral up to total degree 30
+  Kronecker exp(-be(x,y))      p=13: integral up to total degree 30
+     [0.0s]
