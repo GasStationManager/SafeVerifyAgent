@@ -1065,3 +1065,20 @@ degree inferred; a cancelling q·log d term in the Rallis scalar not excluded. T
 loss m·ΣA·lg is forced in truth to relative x^{−1/2}. Falsifiable prediction: the m-fold
 composite matches the product of step bounds to relative ≈ x^{−4}. Recorded as
 MAIN-ARGUMENT §9.8.
+
+NUMTEST6 (composition of lifts in an archimedean model; within allowance). Structure read
+from the Lean: each step has its own matrix variable Z_j ∈ M_{N_j×N_{j−1}} (`DVar`,
+ThDistC:18); `jetMap`/`subD`/`jetLin` (ThDistC:20-40); ν^{(j+1)} = pad ν^{(j)} + n_{j+1}
+(`IsStepWeight` PWN:15-17), so the top-column degree stays a_t + w′; extremal Fischer
+norm² = hook product (brute force). No variable is reused; no (a+a′)!/(a!a′!). Model:
+kernels = products over matrix entries of one principal CM theta of area π, Ω = 1. Results
+(logs of squared norms): H₈ ≤ 7 (same kernel), ≤ 11 (different), A = 48…1536, vs
+A·log 2 = 33…1065; rank-growing tower H ≤ 3.1; persistent cap row H₆ ≤ 18; total defect
+linear in m with increment = one-step slack of BlockBound (29→92, O(rank²·log a), booked as
+f·Nn²·La); one-step calibration w·log A + 11…22 reproduces STEPE; Young-diagram remainder
+Σ_j eE_j ≤ 0.96·m·w·La (k = 2–4, m ≤ 8). Controls: rotated-frame rank-one kernel loses
+exactly A·log(1/|u₀₀|²) per step; cD = √2 shifts by exactly A·log 2 per step; reused top
+variable ≈ m·a·log m; non-extremal start costs only 0.1–3 per step (cluster of 7–118
+nearly maximal singular values). Limits: one embedding, no Heisenberg/class sums, rank ≤ 4,
+m ≤ 8, kernel factorisation inferred. Files: numtest/composite6_*.py, out_composite6_*.txt.
+Recorded as MAIN-ARGUMENT §9.9.

@@ -1,0 +1,67 @@
+V1: Fischer norm of extremal vectors = hook product
+  n=2 nu=(1, 0): Fischer=1  hook=1  OK
+  n=2 nu=(1, 1): Fischer=2  hook=2  OK
+  n=2 nu=(2, 0): Fischer=2  hook=2  OK
+  n=2 nu=(2, 1): Fischer=3  hook=3  OK
+  n=2 nu=(2, 2): Fischer=12  hook=12  OK
+  n=2 nu=(3, 0): Fischer=6  hook=6  OK
+  n=2 nu=(3, 1): Fischer=8  hook=8  OK
+  n=2 nu=(3, 2): Fischer=24  hook=24  OK
+  n=2 nu=(3, 3): Fischer=144  hook=144  OK
+  n=2 nu=(4, 0): Fischer=24  hook=24  OK
+  n=2 nu=(4, 1): Fischer=30  hook=30  OK
+  n=2 nu=(4, 2): Fischer=80  hook=80  OK
+  n=2 nu=(4, 3): Fischer=360  hook=360  OK
+  n=3 nu=(1, 0, 0): Fischer=1  hook=1  OK
+  n=3 nu=(1, 1, 0): Fischer=2  hook=2  OK
+  n=3 nu=(1, 1, 1): Fischer=6  hook=6  OK
+  n=3 nu=(2, 0, 0): Fischer=2  hook=2  OK
+  n=3 nu=(2, 1, 0): Fischer=3  hook=3  OK
+  n=3 nu=(2, 1, 1): Fischer=8  hook=8  OK
+  n=3 nu=(2, 2, 0): Fischer=12  hook=12  OK
+  n=3 nu=(2, 2, 1): Fischer=24  hook=24  OK
+  n=3 nu=(2, 2, 2): Fischer=144  hook=144  OK
+  n=3 nu=(3, 0, 0): Fischer=6  hook=6  OK
+  n=3 nu=(3, 1, 0): Fischer=8  hook=8  OK
+  n=3 nu=(3, 1, 1): Fischer=20  hook=20  OK
+  n=3 nu=(3, 2, 0): Fischer=24  hook=24  OK
+  n=3 nu=(3, 2, 1): Fischer=45  hook=45  OK
+  n=3 nu=(3, 2, 2): Fischer=240  hook=240  OK
+  n=3 nu=(3, 3, 0): Fischer=144  hook=144  OK
+  n=3 nu=(3, 3, 1): Fischer=240  hook=240  OK
+  n=3 nu=(4, 0, 0): Fischer=24  hook=24  OK
+  n=3 nu=(4, 1, 0): Fischer=30  hook=30  OK
+  n=3 nu=(4, 1, 1): Fischer=72  hook=72  OK
+  n=3 nu=(4, 2, 0): Fischer=80  hook=80  OK
+  n=3 nu=(4, 2, 1): Fischer=144  hook=144  OK
+  n=3 nu=(4, 3, 0): Fischer=360  hook=360  OK
+V1 PASS
+
+V2: Sym^A steps vs brute force (random integer stand-in moments)
+  A=5 1->2: max|lib - brute| = 4.44e-16 (max entry 3.27) OK
+  A=6 2->2: max|lib - brute| = 8.53e-14 (max entry 172) OK
+  A=5 2->3: max|lib - brute| = 2.27e-12 (max entry 3.95e+03) OK
+  A=4 3->4: max|lib - brute| = 2.33e-09 (max entry 5.82e+06) OK
+  A=4 2->4: max|lib - brute| = 2.18e-11 (max entry 5.08e+04) OK
+V2 PASS
+
+V3: det^w square surrogate vs brute force
+  A=4 w=1: max err 4.26e-14 (max entry 51.1) OK
+  A=5 w=2: max err 3.55e-14 (max entry 15.2) OK
+  A=6 w=3: max err 5.05e-15 (max entry 0.909) OK
+V3 PASS
+
+V4: hook product, cells vs Frobenius form
+  (5,): 4.7874917428 4.7874917428 OK
+  (3, 3): 4.9698132996 4.9698132996 OK
+  (7, 2, 2): 11.5490645116 11.5490645116 OK
+  (40, 10, 10, 3): 145.9490946458 145.9490946458 OK
+  (100, 30, 29, 0): 513.0824449074 513.0824449074 OK
+V4 PASS
+
+V5: theta moments (principal lattices, area pi); window stability and 1-variable sharpness
+  Zi shift=0.0: window diff 8.9e-16; S1=1.6692; nonzero p mod 4 ; p=40: 2log|d~|=-0.11; p=100: 2log|d~|=+0.89; p=200: 2log|d~|=+0.64; p=400: 2log|d~|=+2.90
+  Zi shift=0.5: window diff 9.0e-16; S1=1.6692; nonzero p mod 2 ; p=40: 2log|d~|=+2.00; p=100: 2log|d~|=-0.21; p=200: 2log|d~|=+1.55; p=400: 2log|d~|=+1.93
+  Zw shift=0.0: window diff 8.9e-16; S1=1.3986; nonzero p mod 2 ; p=40: 2log|d~|=-0.80; p=100: 2log|d~|=+1.01; p=200: 2log|d~|=-1.62; p=400: 2log|d~|=-0.15
+  O7 shift=0.0: window diff 9.2e-16; S1=1.6341; nonzero p mod 2 ; p=40: 2log|d~|=+2.29; p=100: 2log|d~|=-4.39; p=200: 2log|d~|=-0.32; p=400: 2log|d~|=-2.23
+  O7 shift=0.5: window diff 8.9e-16; S1=1.6341; nonzero p mod 2 ; p=40: 2log|d~|=+2.29; p=100: 2log|d~|=-4.39; p=200: 2log|d~|=-0.32; p=400: 2log|d~|=-2.23
