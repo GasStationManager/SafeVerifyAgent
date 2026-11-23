@@ -1088,3 +1088,29 @@ a mathematical overview; it reports a full compile, clean `#print axioms`, and a
 nanoda, the default kernel and con-leche/con-ron for the archive with our SHA-256. No
 written account of the argument by a human reader was found; the reconstruction here has
 nothing external to be compared against yet.
+
+## 19. Round 16
+
+THMS (no escalation). Theorem S (`TheoremSSelected`, ThmSOwn.lean:669-674;
+LinkSFinalP.lean:18-112): for distinct words u ≠ u′,
+‖K0(u,u′)‖²_HS ≤ (1+b⁻⁶)·d_u·d_u′/D*, K0 the double-unfolded kernel of
+(c_u c_u′)^{−1/2}·P_u*P_u′; identity and degenerate orbits vanish for u ≠ u′. Diagonal
+clause ‖K0(u,u) − 1‖² ≤ Γ_P·d_u²/D*, Γ_P = e^{C_B m⁵ f log b}. Meaning: d_u·d_u′/D* is the
+random-subspace value, so every pair is at most (1+b⁻⁶) × the random level; with the count,
+diagonal clause and overfill the average over pairs is ≈ 1; equivalent to a near-tight
+frame. Mechanism: main term from generic open double cosets (exact mass identity ×
+Bessel/Plancherel inequality, ∫HS² ≤ 1/d_π); b⁻⁶ from the level (Gelfand–Graev loss
+∏(1+3/g_v), f/g ≤ b⁻⁷) and local-density corrections; NOT weight × displacement (weight
+only for convergence and gaps). Reader's SL₂ model: the edge effect is real (Gram of
+P_1..P_50 at k = 600 has smallest eigenvalue 0.002) but the Lean is in the index ≫ weight
+regime; blocks of size b reproduce the clauses (‖K_uu − 1‖² ≈ b²/D; cross-block mean ratio
+0.97–0.99; maximum excess ≈ 1/b; frame tightness 0.20 → 0.016 as overfill 3 → 24).
+Injectivity radius is in the count: `near_unipotent` (ConjPowOfMulEqOne.lean:93-140, read):
+trace divisibility mod g₀ > 4n and Newton's identities give displacement > 10⁻⁶/(n⁸f²).
+Counting theorem: FarBound hε²/16 ≈ 50(Cg+4)n³f·log(b·rd) vs ≈ 44n^{2.5}f·log X closes;
+deep bound decays like least^{12n²f}; dominant error the thin/cusp volume e^{−nf log n/4},
+a rank effect (Siegel mean value); `rowsTiePT'_of` is glue, tie by record field
+`AutTie.D_eq`. Statement only: NearModerate, FarModerate, Deep, FlagRare/VolumeStep,
+CuspFrame, LoopRowS sub-leaves, KppOffC, KExpansion bodies, NormBound mass identities. Open
+for an expert: uniformity over all word pairs of the deterministic bounds on non-main
+orbits. Scripts: numtest/thms/.
