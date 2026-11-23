@@ -1139,3 +1139,24 @@ primes integral. `HypShape_of` is proved (KappaIntegralOfCalculation.lean:42-109
 unitary matrix; rests on `inGenus_of_selfDual`, unread); `der.frob` states Frobenius =
 Artin map. Unopened: `BeData.exists_of_curveData`, `Quant`, `LogStep`, `lat_S` leaves.
 Scripts: numtest/intinert/.
+
+QPART (no escalation; weakens CARRIER §4). DIV uses only
+lcv(M_j)/D ≤ Σ_ρ(p_j−q_j)·w·logΩ + C·B₀·log log x (ZON:63-66), logΩ = γ + log(2π/rd_E) − L′/L
+(v = rd_E/2, DH:143). The q-term appears inside `FlatAt` for j < m: +2q_j·W·(log d − lrd E),
+exact, from flatDegVal; twist lemma (FTS:14) books +2q_j·W·lrd E; `twice_twist_ge`
+(FBA:76-102) puts both into (11CA+83)·unitE, keeping only the absolute value. Reader's hand
+derivation from the hypotheses of `hermitian_metric_log_norm_formula` (HMS:8):
+deg = (p−q)/2·(x − ½log d) + (p+q)/2·(log d − lrd E), equal term by term to the Lean's; the
+q-part is a finite-place defect (different of E/ℚ minus v(d); EFS:183-184, 219-223); at
+archimedean places the conjugate directions use the inverse of the same period. Open: the
+`lieFacZ` factor does not distinguish p from q directions; whether `degree_frames` /
+`exists_constSec` cancels it exactly is unread. Size: ½log d − ½log q − 2log n ≤
+log d − lrd E ≤ ½log d − (e+1)log 2. No compensating term on the Rallis side (the dropped
+q-side hook is ≥ 0). But the q-term is exact only relative to μ(uM), bounded from below
+only (UAt), natural size ≈ x^{4ε/5} larger: a true carrier is NOT established. Covolume
+chain: `covolume_measure_eq_one` supplies `OneMeasure` = ExactRatio + volume bounds + index
+bound; arithmetic Hilbert–Samuel not used in literature form (Published q9 faithful but off
+the HSAt path); precision from effective Chow-form `SlopeBound`, one-sided `VolumeTheoremX`,
+exact `FlatDegree`; each layer uses one deep cover of itself; non-compactness pushed into
+unread RootOrigin/GoodOrigin. fockScale vs lieFacZ resolved: ξ₀ = −1/(N𝔠_K·√−d) (DH:149).
+Recorded with THMS and INTINERT in MAIN-ARGUMENT §9.10.
