@@ -1186,3 +1186,34 @@ suppliers untraced; `abelian_cm_comp_laws_bound`, `hermitian_geometric_hypothesi
 unread. Every link from lcv(M_j) to μ(uM) is a lower bound on a slope, the direction DIV
 needs. uM = layer weight minus its parallel anchor part minus c₀·(Hodge weight) (CXC:34),
 μ(uM) ≥ −C·unitE (CXC:138).
+
+ORBITS2 (no escalation; corrects THMS's diagonal constant). A word: binary string; at every
+real place letter l shifts coordinate l+1 of the U(k) highest weight by Del
+(DataS.lean:29-31) and the word picks the norm T_u of the anisotropic Bessel vector; all
+words share one discrete series σ, one isotropic flag, the same level data
+(T_u ≡ 1 mod (g₀g₁)²). Orbits: double cosets of N_Λ × N_Λ′ refined by lattice pairs
+(TermOp.lean:76-91), classified by G = |D_{r+1}|² − TT′|D_r|² into identity, degenerate
+(G = 0), generic, non-generic (FourParts.lean:152-168). Identity and degenerate orbits are
+exactly 0 for u ≠ u′ by Schur's lemma: the stabiliser at ∞ contains a full U(k) and the
+two U(k)-types have different highest weights
+(DistinctWordsDistinctParameters.lean:727-838; KappaOffDiagonal.lean:93-108;
+SchurCoreA.lean:72-83). Corank ≥ 2 and non-scalar pairs: level saving (2/g)^{(s−1)kf}; the
+pair enters only through T_u/T_u′ ≤ A and Weyl-dimension ratios ≤ A^k, A = e^{7/4}C₀
+(`Sizes3b`); reader's script: worst log(dim ratio)/k ≈ 0.34 vs log A ≥ 1.75. Non-generic
+pairs uniform (`Stand` proved for every pair). Main term: δ ≤ b⁻⁷ made at the first letter
+where the words differ (`SzHyp`, `BetaOnCut` gives √(y/Del) on a window there; supplier
+body unread; `SizesMain` for every choice of letter). Diagonal:
+‖K0(u,u) − 1‖² ≤ Γ·d_u²/D*, Γ = GamP = e^{CGam m⁵ f log b} (not gamB), ≤ C₀·d_u/Γ.
+Published: `FormalDegreeCompactDual` matches Harish-Chandra; `DiscreteSeriesUpqExists` name
+only; `SiegelMassRatio` in-tree. Statement only: `cplxNF`, `leviTens`, `wfrSpan`,
+corank-cell counts, `TermVolumeSmallCellBound`, `beta_bound_on_boundary`,
+`final_smallness`, `PairsDegCutC`, live `DiagC` supplier, `OOLintSumC_holds`,
+`KExpansionC_holds`, carrier leaves.
+
+Round 17 status. No defect. Items 1–5 of the reading list are done. On the main inequality
+every link now has a mechanism read from the live path; six numerical experiments and four
+hand/numeric checks bear on it. Unread beneath: the geometric bundle `Top.Given` and the
+open/compact link; `hasInfNorm_value`; the content bodies under Theorem S and the count
+listed above; in-tree proofs of classical theorems (Siegel–Weil, comparison theorems, mass
+formulas); items 6–7 of the list (GL₃ test of `TopCore`; congruences with weight varying
+over two places), which feed only E2.
