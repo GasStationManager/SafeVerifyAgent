@@ -1160,3 +1160,29 @@ the HSAt path); precision from effective Chow-form `SlopeBound`, one-sided `Volu
 exact `FlatDegree`; each layer uses one deep cover of itself; non-compactness pushed into
 unread RootOrigin/GoodOrigin. fockScale vs lieFacZ resolved: ξ₀ = −1/(N𝔠_K·√−d) (DH:149).
 Recorded with THMS and INTINERT in MAIN-ARGUMENT §9.10.
+
+## 20. Round 17
+
+DEGFRAMES (no escalation; corrects NORMS's wording; closes QPART's open coefficient check).
+The Hodge-to-`homN` transport is `homN_eq_exp_hodge`
+(UnfSectionNormBoundAtHeight.lean:121-209), called from `exists_constSec`; `degree_frames`
+(KroneckerCharacterPeriodFormula.lean:104-146) is only a finite-place shift by
+q(log d − lrd E). `lieFacZ` uses the SIGNED weight sum ΣG, not |G| (IPM:664-665): flat
+weight −1 on each p-direction, +1 on each q-direction, ΣG = q−p (`sum_flatWt`),
+lieFacZ = (2πx)^{(p−q)/2}; the Hodge Gram in the uniformisation frame carries one factor
+2πx per direction (Γ = π·Hm), so `HasInfNorm` has +(p/2)log 2πx − (q/2)log 2πx; the proof
+closes by an exact `ring` identity; nothing left over. Reader's hand computation: Hodge
+norm = (2πx)^{−ΣG/2} × model norm for a general weight; in rank one 2πx = π/area, exactly
+the conversion to the metric whose conjugate mean is logΩ. Residual risk only in the
+unopened `hasInfNorm_value`. Non-compactness: cusp forms are sections on the open model
+holomorphic on the uniformisations (IPM:425-427); boundedness from Koecher principles
+proved in-tree ([E:ℚ]/2 > 1 or > 2; `koecher_principle_unit_constant` ignores its Published
+premise). Deep cover = the same layer at deeper level and larger coefficient field, where
+every component carries flat sections. Volume side: RootOrigin/HodgeCpt, a normal
+compactifying cover with semi-abelian extension, log-singular Hodge lines with a smooth
+regularisation; no Lan/Mumford/Burgos–Kramer–Kühn theorem is a direct premise; the bundle
+`Top.Given` (resolution, Fargues–Hodge–Tate, GAGA, toroidal compatibility) is used,
+suppliers untraced; `abelian_cm_comp_laws_bound`, `hermitian_geometric_hypothesis_holds`
+unread. Every link from lcv(M_j) to μ(uM) is a lower bound on a slope, the direction DIV
+needs. uM = layer weight minus its parallel anchor part minus c₀·(Hodge weight) (CXC:34),
+μ(uM) ≥ −C·unitE (CXC:138).
