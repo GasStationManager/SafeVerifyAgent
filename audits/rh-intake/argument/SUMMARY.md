@@ -1217,3 +1217,9 @@ open/compact link; `hasInfNorm_value`; the content bodies under Theorem S and th
 listed above; in-tree proofs of classical theorems (Siegel–Weil, comparison theorems, mass
 formulas); items 6–7 of the list (GL₃ test of `TopCore`; congruences with weight varying
 over two places), which feed only E2.
+
+## 21. Close (2026-11-28)
+
+The audit is wrapped up. Final status, verdict by rung, denominators and open items are in
+`audits/2026-11-28-alpo-ge-riemann-hypothesis-final-status.md`. No agent is running; no
+escalation is open.

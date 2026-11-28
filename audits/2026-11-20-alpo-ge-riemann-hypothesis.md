@@ -1,5 +1,7 @@
 # alpo.ge `lean.tar.gz` — claimed Lean proof of RH and GRH for Dirichlet L-functions
 
+**Superseded in part: see the [final status of 2026-11-28](2026-11-28-alpo-ge-riemann-hypothesis-final-status.md).** The text below is the report as of 2026-11-20 with two dated updates.
+
 Status: **ESCALATE, 2026-11-20. The claim is neither confirmed nor refuted.** The rung
 that decides it did not run: the headline was **not built**, so there is no
 `#print axioms` for it and no independent checker saw it. Every one of the 175,187
